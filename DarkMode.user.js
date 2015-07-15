@@ -858,10 +858,10 @@ function main(w)
                 "fans": "Sklaven",
                 "usersFound": "Benutzer gefunden",
                 "numberSeperator": ".",
-                "trendingPeople": "Besonders bed¸rftig",
-                "editorsPick": "Auserw‰hlte",
+                "trendingPeople": "Besonders bed√ºrftig",
+                "editorsPick": "Auserw√§hlte",
                 "friends": "Verfolgte",
-                "trendingTags": "Erb‰rmliche Tags",
+                "trendingTags": "Erb√§rmliche Tags",
                 "streamerOffline": "%1 ist offline.",
                 "in": " in "
             }
