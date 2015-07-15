@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
 // @version 0.0.1
