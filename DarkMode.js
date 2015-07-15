@@ -4,6 +4,8 @@
 // @version 0.0.1
 // @match *://younow.com/*
 // @match *://www.younow.com/*
+// @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
+// @grant none
 // @updateURL https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/DarkMode.js
 // @downloadURL https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/DarkMode.js
 // ==/UserScript==
