@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.0.2
+// @version 0.0.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -16,19 +16,12 @@ function main(w)
     {
       window.DarkModeInstance = new window.DarkMode();
     }
- 
+
     
     w.DarkModeInstance = null;
     w.DarkMode = function()
     {
-        var self = this;
-        var s = setInterval(function(){
-            if ($('.nav-logo') != null)
-            {
-                self.init();
-                clearInterval(s);
-            }
-        }, 100);
+        this.init();
     };
     
     w.DarkMode.prototype.init = function()
@@ -193,7 +186,6 @@ function main(w)
             }
         }
         this.lastTooltipObject = data;
-        console.log(this.elements["tooltip"].width());
         if (e.pageX + this.elements["tooltip"].width() > $(window).width() - 20)
             this.elements["tooltip"].css("left", e.pageX - 320 - 5);
         if (e.pageY + this.elements["tooltip"].height() > $(window).height() - 100)
@@ -583,7 +575,7 @@ function main(w)
     
     w.DarkMode.prototype.switchStream = function()
     {
-        flowplayer("streamView", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
+        flowplayer("streamView", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/flowplayer-3.2.18.swf", {
             clip: {
                 url: this.currentStreamer.media.stream,
                 live: true,
@@ -921,22 +913,22 @@ function main(w)
     {
         images:
         {
-            "logo": "https://thatcrazytattooedbaldbroad.files.wordpress.com/2011/06/whore.png",
-            "star": "http://www.fancyicons.com/free-icons/136/stars/png/16/star_black_16.png",
-            "live": "http://icons.iconarchive.com/icons/fatcow/farm-fresh/16/webcam-icon.png",
-            "disconnected": "http://png.findicons.com/files/icons/1581/silk/16/disconnect.png",
-            "connected": "http://png.findicons.com/files/icons/1581/silk/16/connect.png",
-            "youtube": "http://icons.iconarchive.com/icons/dakirby309/windows-8-metro/16/Web-Youtube-alt-2-Metro-icon.png",
-            "facebook": "http://icons.iconarchive.com/icons/danleech/simple/16/facebook-icon.png",
-            "twitter": "http://icons.iconarchive.com/icons/dakirby309/windows-8-metro/16/Web-Twitter-alt-2-Metro-icon.png",
-            "googleplus": "http://icons.iconarchive.com/icons/dakirby309/windows-8-metro/16/Web-Google-plus-alt-Metro-icon.png",
-            "bars": "http://cdn2.younow.com/angularjsapp/src/assets/images/icons_v3/icon_bar_sm.png",
-            "coins": "http://cdn2.younow.com/angularjsapp/src/assets/images/icons_v3/menu_user_coins1.png",
-            "views": "http://png.findicons.com/files/icons/2448/wpzoom_developer/48/eye.png",
-            "time": "http://icons.iconarchive.com/icons/icons8/windows-8/24/Very-Basic-Clock-icon.png",
-            "fans": "http://icons.iconarchive.com/icons/icons8/windows-8/32/Users-Group-icon.png",
-            "likes": "http://icons.iconarchive.com/icons/icons8/windows-8/24/Hands-Thumbs-Up-icon.png",
-            "shares": "http://icons.iconarchive.com/icons/icons8/ios7/24/Very-Basic-Electric-Megaphone-Filled-icon.png",
+            "logo": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/whore.png",
+            "star": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/star_black_16.png",
+            "live": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/webcam-icon.png",
+            "disconnected": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/disconnect.png",
+            "connected": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/connect.png",
+            "youtube": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Web-Youtube-alt-2-Metro-icon.png",
+            "facebook": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/facebook-icon.png",
+            "twitter": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Web-Twitter-alt-2-Metro-icon.png",
+            "googleplus": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Web-Google-plus-alt-Metro-icon.png",
+            "bars": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/icon_bar_sm.png",
+            "coins": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/menu_user_coins1.png",
+            "views": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/eye.png",
+            "time": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Very-Basic-Clock-icon.png",
+            "fans": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Users-Group-icon.png",
+            "likes": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Hands-Thumbs-Up-icon.png",
+            "shares": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Very-Basic-Electric-Megaphone-Filled-icon.png",
         },
         languages: 
         {
@@ -1000,110 +992,129 @@ function main(w)
       
     })();
     
-    if (window.location.href != "http://www.younow.com/explore/")
-    {
-        window.location.href = "http://www.younow.com/explore/";
-        window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
-    }
-    var css = '.btn-primary { visibility: hidden;} ' +
-    '#darkModeLoader { background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000; }'+
-    '#darkModeLoader span {display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: \'Shadows Into Light\', cursive;}';
-    var darkModeLoader = null;
+    
+    // rerouting if in user is in dark mode
     if (window.localStorage.getItem("inDarkMode") == "1")
     {
-        css += 'body, html {background: #000; overflow: hidden;}'+
-            '.navbar {border-bottom: 0px;background: #666; border-bottom: 1px solid #777;}'+
-            '.nav-logo {float: left; width: 110px; margin-left: 10px; }'+
-            '.navbar-content {width: 100% !important;min-width:0px !important; max-width: 100000px !important;}'+
-            '#darkPage {position:absolute; top: 50px; left: 0px; z-index:100; width: 100%; height: calc(100% - 50px);}'+
-            '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
-            '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
-            '#darkPage #userList {padding: 20px; float: left; width: 100%; height:100%; overflow-y:auto;}'+
-            '#darkPage .userProfile {float: left; display: block; width: 142px; height: 180px; margin: 5px; background: #333; border: 1px solid #555; border-radius: 5px; padding: 5px; }'+
-            '#darkPage .userProfile div {border: 1px solid #111; background: url(http://cdn2.younow.com/images/nothumb.jpg) no-repeat; background-size: 130px 130px; float: left; clear: both; width: 130px; height: 130px; overflow: hidden; }'+
-            '#darkPage .userProfile div img {height: 130px; float: left; clear: both; display: block; position: relative; margin-top: 0px; }'+
-            '#darkPage .userProfile div span {padding-left: 5px; position: relative; margin-top: -30px; float: left; clear: both; z-index:500; line-height: 30px; font-weight: bold; color: #fff; display: block; width:130px;height:30px; font-size:14px;background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00000000\', endColorstr=\'#000000\',GradientType=0 ); }'+
-            '#darkPage .userProfile img {float: left; margin-top:3px; margin-right: 3px; }'+
-            '#darkPage .userProfile strong {color: #fff; white-space: nowrap; line-height: 22px; display: block; float: left; width: 130px; height:22px; overflow: hidden; text-overflow: ellipsis; clear: both; }'+
-            '#darkPage .userProfile small {color: #999; display:block; float: left; clear: both; }'+
-            '#darkPage h2 {color: #eee; margin-top:0px;}'+
-            '#darkPage #left strong {color: #ddd; margin-top:0px; height: 25px; line-height: 25px; }'+
-            '#darkPage #left { padding: 10px; }'+
-            '#darkPage #left a { color: #aaa; }'+
-            '#trendingPeople, #trendingTags, #featuredUsers, #friends { overflow: hidden; overflow-y: auto; }'+
-            '#stream { width: 100%; height: 100%; }'+
-            '#streamInfo { width: 100%; line-height: 40px; padding-left: 5px; color: #ddd; height: 40px; float: left; clear: both; background: #333; border-bottom: 1px solid #555;}'+
-            '#stream .outer { width: 100%; height: calc(100% - 180px); float:left; clear:both; border-bottom: 1px solid #555; }'+
-            '#stream .stream { width: calc(100% - 350px); height: 100%; float: left; }'+
-            '#stream #streamView { width: 100%; height: calc(100% - 30px); }'+
-            '#stream #streamBar { width: 100%; height: 30px; background: #333; color: #eee; border-top: 1px solid #555;}'+ 
-            '#stream #streamInfo .right { float: right; color: #faa; font-weight: bold; margin-right: 5px;}'+ 
-            '#stream #streamBar .item { float: left; margin-top: 5px; margin-right: 5px; margin-left: 5px;}'+ 
-            '#stream #streamBar .item img { float: left; margin-top:2px;height: 16px; margin-right: 5px; }'+ 
-            '#stream #chat { float: right !important; width: 349px !important; border-left: 1px solid #333; height: 100%; float: right;}'+
-            '#stream #chatMessages { padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 150px);}'+
-            '#stream #chatMessages li { margin: 5px; clear: both; float: left; }'+
-            '#stream #chatMessages li img { float: left; margin-right: 5px; }'+
-            '#stream #chatMessages li span { font-family: Segoe UI; font-size: 12px; display: block; float: left; max-width: 270px;}'+
-            '#stream #chatOptions { padding: 10px; color: #ddd; width: 349px; height: 100px; border-top: 1px solid #777; background: #222; }'+
-            '#stream #chatOptions input { margin-left: 5px; margin-right: 5px; color: #000; }'+
-            '#stream #chat textarea { height: 50px; width: 349px; padding: 5px; border: 1px solid #555; color: #eee; background: #333; max-width: 349px; max-height: 50px;}'+
-            '#stream #trendingList { height: 140px; padding: 10px; overflow-x: auto; white-space: nowrap; }'+
-            '#stream #trendingList img { width: 100px; height: 100px; margin-right: 5px; display: inline-block; }'+
-            '#tooltip { position: absolute; z-index: 100; background: #333; -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75); }'+
-            '#tooltip .img { float: left; width: 128px; height: 128px; }'+
-            '#tooltip .content { float: left; min-width: 200px; }'+
-            '#tooltip .title { float: left; padding-top: 4px; padding-left: 5px; clear: both; width: 100%; height: 25px; background: #666; color: #ddd; font-weight: bold; font-size: 13px; }'+
-            '#tooltip .value { float: left; clear: both; margin-left: 5px; margin-top: 5px; color: #999; }'+
-            '#tooltip .value img { float: left; }'+
-            '#tooltip .value span { float: left; margin-left: 5px; }'+
-            '.dropdown-menu {background: #555 !important;}'+
-            '.dropdown-menu li {border-top-color: #666 !important;}'+
-            '.dropdown-menu li a {color: #eee !important;}'+
-            '.dropdown-menu li a:hover {background: #666 !important;}'+
-            '.dropdown-menu .active, .searchResult-more {background: #777 !important;}'+
-            'span {color: #fff !important;}'+
-            '.error {margin: 20px; border-radius:10px; border:1px solid #f00; background:#a00;padding:10px;font-size:20px;text-align:center;color: #fff !important;}'+
-            '.line-clamp:after {background: none !important;}'+
-            '.user {background: #777 !important; color: #eee !important;}'+
-            '.ynicon-carrot-up {color: #777 !important;}'+
-            '.ynicon-user, .ynicon-settings, .ynicon-audience, .ynicon-logout {color: #eee !important;}';
-        darkModeLoader = document.createElement("div");
-        darkModeLoader.setAttribute("id", "darkModeLoader");
-        var span = document.createElement("span");
-        span.style.opacity = 0;
-        span.setAttribute("id", "darkModeLoaderLabel");
-        span.innerHTML = "Loading...";
-        darkModeLoader.appendChild(span);
-        
-        document.body.appendChild(darkModeLoader);
+        if (window.location.href != "http://www.younow.com/explore/")
+        {
+            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/explore");
+            //window.location.href = "http://www.younow.com/explore/";
+            window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
+        }
     }
     
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    if (style.styleSheet)
-        style.styleSheet.cssText = css;
-    else 
-        style.appendChild(document.createTextNode(css));
-    head.appendChild(style);
+    function startDarkMode()
+    {
+        var css = '.btn-primary { width: auto !important; } ' +
+            '#darkModeLoader { background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000; }'+
+            '#darkModeLoader span {display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: \'Shadows Into Light\', cursive;}';
+        var darkModeLoader = null;
+        if (window.localStorage.getItem("inDarkMode") == "1")
+        {
+            css += 'body, html {background: #000; overflow: hidden;}'+
+                '.navbar {border-bottom: 0px;background: #666; border-bottom: 1px solid #777;}'+
+                '.nav-logo {float: left; width: 110px; margin-left: 10px; }'+
+                '.navbar-content {width: 100% !important;min-width:0px !important; max-width: 100000px !important;}'+
+                '#darkPage {position:absolute; top: 50px; left: 0px; z-index:100; width: 100%; height: calc(100% - 50px);}'+
+                '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
+                '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
+                '#darkPage #userList {padding: 20px; float: left; width: 100%; height:100%; overflow-y:auto;}'+
+                '#darkPage .userProfile {float: left; display: block; width: 142px; height: 180px; margin: 5px; background: #333; border: 1px solid #555; border-radius: 5px; padding: 5px; }'+
+                '#darkPage .userProfile div {border: 1px solid #111; background: url(http://cdn2.younow.com/images/nothumb.jpg) no-repeat; background-size: 130px 130px; float: left; clear: both; width: 130px; height: 130px; overflow: hidden; }'+
+                '#darkPage .userProfile div img {height: 130px; float: left; clear: both; display: block; position: relative; margin-top: 0px; }'+
+                '#darkPage .userProfile div span {padding-left: 5px; position: relative; margin-top: -30px; float: left; clear: both; z-index:500; line-height: 30px; font-weight: bold; color: #fff; display: block; width:130px;height:30px; font-size:14px;background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00000000\', endColorstr=\'#000000\',GradientType=0 ); }'+
+                '#darkPage .userProfile img {float: left; margin-top:3px; margin-right: 3px; }'+
+                '#darkPage .userProfile strong {color: #fff; white-space: nowrap; line-height: 22px; display: block; float: left; width: 130px; height:22px; overflow: hidden; text-overflow: ellipsis; clear: both; }'+
+                '#darkPage .userProfile small {color: #999; display:block; float: left; clear: both; }'+
+                '#darkPage h2 {color: #eee; margin-top:0px;}'+
+                '#darkPage #left strong {color: #ddd; margin-top:0px; height: 25px; line-height: 25px; }'+
+                '#darkPage #left { padding: 10px; }'+
+                '#darkPage #left a { color: #aaa; }'+
+                '#trendingPeople, #trendingTags, #featuredUsers, #friends { overflow: hidden; overflow-y: auto; }'+
+                '#stream { width: 100%; height: 100%; }'+
+                '#streamInfo { width: 100%; line-height: 40px; padding-left: 5px; color: #ddd; height: 40px; float: left; clear: both; background: #333; border-bottom: 1px solid #555;}'+
+                '#stream .outer { width: 100%; height: calc(100% - 180px); float:left; clear:both; border-bottom: 1px solid #555; }'+
+                '#stream .stream { width: calc(100% - 350px); height: 100%; float: left; }'+
+                '#stream #streamView { width: 100%; height: calc(100% - 30px); }'+
+                '#stream #streamBar { width: 100%; height: 30px; background: #333; color: #eee; border-top: 1px solid #555;}'+ 
+                '#stream #streamInfo .right { float: right; color: #faa; font-weight: bold; margin-right: 5px;}'+ 
+                '#stream #streamBar .item { float: left; margin-top: 5px; margin-right: 5px; margin-left: 5px;}'+ 
+                '#stream #streamBar .item img { float: left; margin-top:2px;height: 16px; margin-right: 5px; }'+ 
+                '#stream #chat { float: right !important; width: 349px !important; border-left: 1px solid #333; height: 100%; float: right;}'+
+                '#stream #chatMessages { padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 150px);}'+
+                '#stream #chatMessages li { margin: 5px; clear: both; float: left; }'+
+                '#stream #chatMessages li img { float: left; margin-right: 5px; }'+
+                '#stream #chatMessages li span { font-family: Segoe UI; font-size: 12px; display: block; float: left; max-width: 270px;}'+
+                '#stream #chatOptions { padding: 10px; color: #ddd; width: 349px; height: 100px; border-top: 1px solid #777; background: #222; }'+
+                '#stream #chatOptions input { margin-left: 5px; margin-right: 5px; color: #000; }'+
+                '#stream #chat textarea { height: 50px; width: 349px; padding: 5px; border: 1px solid #555; color: #eee; background: #333; max-width: 349px; max-height: 50px;}'+
+                '#stream #trendingList { height: 140px; padding: 10px; overflow-x: auto; white-space: nowrap; }'+
+                '#stream #trendingList img { width: 100px; height: 100px; margin-right: 5px; display: inline-block; }'+
+                '#tooltip { position: absolute; z-index: 100; background: #333; -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75); }'+
+                '#tooltip .img { float: left; width: 128px; height: 128px; }'+
+                '#tooltip .content { float: left; min-width: 200px; }'+
+                '#tooltip .title { float: left; padding-top: 4px; padding-left: 5px; clear: both; width: 100%; height: 25px; background: #666; color: #ddd; font-weight: bold; font-size: 13px; }'+
+                '#tooltip .value { float: left; clear: both; margin-left: 5px; margin-top: 5px; color: #999; }'+
+                '#tooltip .value img { float: left; }'+
+                '#tooltip .value span { float: left; margin-left: 5px; }'+
+                '.dropdown-menu {background: #555 !important;}'+
+                '.dropdown-menu li {border-top-color: #666 !important;}'+
+                '.dropdown-menu li a {color: #eee !important;}'+
+                '.dropdown-menu li a:hover {background: #666 !important;}'+
+                '.dropdown-menu .active, .searchResult-more {background: #777 !important;}'+
+                'span {color: #fff !important;}'+
+                '.error {margin: 20px; border-radius:10px; border:1px solid #f00; background:#a00;padding:10px;font-size:20px;text-align:center;color: #fff !important;}'+
+                '.line-clamp:after {background: none !important;}'+
+                '.user {background: #777 !important; color: #eee !important;}'+
+                '.ynicon-carrot-up {color: #777 !important;}'+
+                '.ynicon-user, .ynicon-settings, .ynicon-audience, .ynicon-logout {color: #eee !important;}';
+            darkModeLoader = document.createElement("div");
+            darkModeLoader.setAttribute("id", "darkModeLoader");
+            var span = document.createElement("span");
+            span.style.opacity = 0;
+            span.setAttribute("id", "darkModeLoaderLabel");
+            span.innerHTML = "Loading...";
+            darkModeLoader.appendChild(span);
+
+            document.body.appendChild(darkModeLoader);
+        }
+
+        var head = document.head || document.getElementsByTagName('head')[0];
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        if (style.styleSheet)
+            style.styleSheet.cssText = css;
+        else 
+            style.appendChild(document.createTextNode(css));
+        head.appendChild(style);
+
+        window.addEventListener("load", function() {
+            var script1 = document.createElement("script");
+            script1.addEventListener('load', function() {
+                var script = document.createElement("script");
+                script.addEventListener('load', function() {
+                    var script = document.createElement("script");
+                    script.textContent = "(" + callback.toString() + ")();";
+                    document.body.appendChild(script);
+                }, false);
+                script.setAttribute("src", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/jquery.min.js");
+                document.body.appendChild(script);
+            });
+            script1.setAttribute("src", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/flowplayer-3.2.13.min.js");
+            document.body.appendChild(script1);
+        });
+    }
     
+    var waitForYouNow = setInterval(function(){
+        console.log("CHECK");
+        if (document.body.getElementsByClassName("nav-logo").length > 0)
+        {
+            startDarkMode();
+            clearInterval(waitForYouNow);
+        }
+    }, 100);
     
-    window.addEventListener("load", function() {
-      var script1 = document.createElement("script");
-      script1.addEventListener('load', function() {
-          var script = document.createElement("script");
-          script.addEventListener('load', function() {
-              var script = document.createElement("script");
-              script.textContent = "(" + callback.toString() + ")();";
-              document.body.appendChild(script);
-          }, false);
-          script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
-          document.body.appendChild(script);
-      });
-      script1.setAttribute("src", "http://releases.flowplayer.org/js/flowplayer-3.2.13.min.js");
-      document.body.appendChild(script1);
-    });
 }
 
 // Inject our main script. Yes, this is bad. But you are trying to do bad things either.
