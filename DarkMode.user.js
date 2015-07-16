@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.0.3
+// @version 0.0.4
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -575,7 +575,7 @@ function main(w)
     
     w.DarkMode.prototype.switchStream = function()
     {
-        flowplayer("streamView", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/flowplayer-3.2.18.swf", {
+        flowplayer("streamView", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
             clip: {
                 url: this.currentStreamer.media.stream,
                 live: true,
@@ -901,9 +901,14 @@ function main(w)
         this.button.click(function(){
             window.localStorage.setItem("inDarkMode", self.inDarkMode=="1"?"0":"1");
             if (self.inDarkMode == "1")
-                window.location.href = window.location.href.replace("#","");
+            {
+                window.location.href = window.location.href.replace("hidden/","");
+            }
             else 
-                window.location.href = window.location.href.replace("younow.com/","younow.com/#");
+            {
+                window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
+                window.location.href = "http://www.younow.com/explore/";
+            }
         });
         
         button.remove();
@@ -998,8 +1003,8 @@ function main(w)
     {
         if (window.location.href != "http://www.younow.com/explore/")
         {
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/explore");
-            //window.location.href = "http://www.younow.com/explore/";
+            //window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/explore");
+            window.location.href = "http://www.younow.com/explore/";
             window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
         }
     }
@@ -1089,21 +1094,21 @@ function main(w)
             style.appendChild(document.createTextNode(css));
         head.appendChild(style);
 
-        window.addEventListener("load", function() {
-            var script1 = document.createElement("script");
-            script1.addEventListener('load', function() {
+        var script1 = document.createElement("script");
+        script1.setAttribute("type", "text/javascript");
+        script1.addEventListener('load', function() {
+            var script = document.createElement("script");
+            script.setAttribute("type", "text/javascript");
+            script.addEventListener('load', function() {
                 var script = document.createElement("script");
-                script.addEventListener('load', function() {
-                    var script = document.createElement("script");
-                    script.textContent = "(" + callback.toString() + ")();";
-                    document.body.appendChild(script);
-                }, false);
-                script.setAttribute("src", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/jquery.min.js");
+                script.textContent = "(" + callback.toString() + ")();";
                 document.body.appendChild(script);
-            });
-            script1.setAttribute("src", "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/flowplayer-3.2.13.min.js");
-            document.body.appendChild(script1);
+            }, false);
+            script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
+            document.body.appendChild(script);
         });
+        script1.setAttribute("src", "http://releases.flowplayer.org/js/flowplayer-3.2.13.min.js");
+        document.body.appendChild(script1);
     }
     
     var waitForYouNow = setInterval(function(){
