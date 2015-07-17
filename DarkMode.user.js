@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.3
+// @version 0.1.4
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -759,7 +759,7 @@ function main(w)
                                                (osVersion!=""?'<div class="label">'+this.language.osVersion+':</div><div class="value">'+osVersion+'</div>':'')+
                                                (provider!=""?'<div class="label">'+this.language.provider+':</div><div class="value">'+provider+'</div>':'')+
                                                '<h2>Stream</h2>'+
-                                               '<div class="label">'+this.language.streamURL+':</div><div class="value">rtmp://'+this.currentStreamer.media.host+this.currentStreamer.media.app+'/'+this.currentStreamer.media.stream+'</div>'+
+                                               '<div class="label">'+this.language.streamURL+':</div><div class="value">rtmp://'+this.currentStreamer.media.host+this.currentStreamer.media.app+'/'+this.currentStreamer.media.stream+'<br /><a id="copyStreamURL">'+this.language.copy+'</a><textarea id="streamURL" style="display:none;">rtmp://'+this.currentStreamer.media.host+this.currentStreamer.media.app+'/'+this.currentStreamer.media.stream+'</textarea></div>'+
                                                '<div class="label">'+this.language.displayViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.display_viewers)+'</div>'+
                                                '<div class="label">'+this.language.mobileViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.mviewers)+'</div>'+
                                                '<div class="label">'+this.language.maxViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.maxConcurrentViewers)+'</div>'+
@@ -773,6 +773,16 @@ function main(w)
                                                '<div class="label">'+this.language.fps+':</div><div class="value">'+this.addCommas(this.currentStreamer.lastQuality.fps)+'</div>'
                                               );
                 this.streamerUpdated = false;
+                $('#copyStreamURL').click(function(e){
+                    $('#streamURL').css("display", "block");
+                    $('#streamURL').select();
+
+                    try {
+                        document.execCommand('copy');
+                    } catch (err) {
+                    }
+                    $('#streamURL').css("display", "none");
+                });
             }
         }
     };
@@ -1118,6 +1128,7 @@ function main(w)
                 'giftsValue': 'Wert aller Geschenke',
                 'newFans': 'Neue Sklaven',
                 'bitrate': 'Bitrate (kbps)',
+                'copy': 'Kopieren',
                 'fps': 'FPS',
                 'levelNeeded': '%1 bis Level %2',
                 'streamURL': 'Stream URL',
