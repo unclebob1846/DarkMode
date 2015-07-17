@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.0
+// @version 0.1.1
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -222,7 +222,7 @@ function main(w)
         {
             var self = this;
             $.ajax({
-                url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.username, 
+                url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
                 jsonp: "callback",
                 dataType: "jsonp",
                 success: function(json, b, c)
@@ -574,7 +574,7 @@ function main(w)
     w.DarkMode.prototype.openStream = function(name)
     {
         this.currentStreamer = {
-            username: name
+            user: {profileUrlString: name}
         };
         var self = this;
         if ($('#stream').length == 0)
@@ -633,7 +633,7 @@ function main(w)
         }
 
         $.ajax({
-            url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.username, 
+            url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
             jsonp: "callback",
             dataType: "jsonp",
             success: function(json, b, c)
