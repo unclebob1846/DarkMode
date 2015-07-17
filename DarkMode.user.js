@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.6
+// @version 0.1.7
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -160,36 +160,55 @@ function main(w)
         }
     };
     
+    w.DarkMode.prototype.updateTooltip = function(data)
+    {
+        if (data["type"] == "streamer" || data["type"] == "friend")
+        {
+            var extra = "";
+            if (data["viewers"] != null)
+                extra += '<div class="value"><img style="margin-top:3px;" width="16" src="'+this.config.images.views+'" /><span>'+this.addCommas(data["viewers"])+'</span></div>';
+            if (data["likes"] != null)
+                extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.likes+'" /><span>'+this.addCommas(data["likes"])+'</span></div>';
+            if (data["shares"] != null)
+                extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.shares+'" /><span>'+this.addCommas(data["shares"])+'</span></div>';
+            if (data["fans"] != null)
+                extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.fans+'" /><span>'+this.addCommas(data["fans"])+'</span></div>';
+            if (data["isWatching"] != null)
+                extra += '<div class="value"><img style="margin-top:3px;" width="16" src="'+this.config.images.views+'" /><span>'+data["isWatching"]+'</span></div>';
+            var pic = this.getProfilePicture(data.userid);
+            var c = "";
+            if (data.broadcastId != null)
+            {
+                pic = this.getBroadcastPicture(data.broadcastId)
+                var c = "wide";
+            }
+            this.elements["tooltip"].html('<div class="img '+c+'"><img height="128" src="'+pic+'" /></div><div class="content"><div class="title"><img src="'+this.config.images.star+'" style="float:left;margin-right: 5px;"/>'+data["level"]+' '+data["username"]+'</div>'+extra+'</div>');
+        }
+        if (data["type"] == "likeCost")
+        {
+            if (this.currentStreamer.username == "drachenlord_offiziell")
+                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="'+this.config.images.coins+'" />'+this.language.nobodyLikesDragon+'</div>');
+            else
+                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="'+this.config.images.coins+'" />'+data["cost"]+'</div>');
+        }
+    };
     w.DarkMode.prototype.showTooltip = function(e, data)
     {
         
-        this.elements["tooltip"].css("top", e.pageY + 5);
         this.elements["tooltip"].css("left", e.pageX + 5);
         this.elements["tooltip"].css("display", "block");
         
         if (this.lastTooltipObject != data)
         {
-            if (data["type"] == "streamer" || data["type"] == "friend")
-            {
-                var extra = "";
-                if (data["viewers"] != null)
-                    extra += '<div class="value"><img style="margin-top:3px;" width="16" src="'+this.config.images.views+'" /><span>'+this.addCommas(data["viewers"])+'</span></div>';
-                if (data["likes"] != null)
-                    extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.likes+'" /><span>'+this.addCommas(data["likes"])+'</span></div>';
-                if (data["shares"] != null)
-                    extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.shares+'" /><span>'+this.addCommas(data["shares"])+'</span></div>';
-                if (data["fans"] != null)
-                    extra += '<div class="value"><img style="margin-top:3px;" height="16" src="'+this.config.images.fans+'" /><span>'+this.addCommas(data["fans"])+'</span></div>';
-                if (data["isWatching"] != null)
-                    extra += '<div class="value"><img style="margin-top:3px;" width="16" src="'+this.config.images.views+'" /><span>'+data["isWatching"]+'</span></div>';
-                this.elements["tooltip"].html('<div class="img"><img height="128" src="'+this.getProfilePicture(data.userid)+'" /></div><div class="content"><div class="title"><img src="'+this.config.images.star+'" style="float:left;margin-right: 5px;"/>'+data["level"]+' '+data["username"]+'</div>'+extra+'</div>');
-            }
+            this.updateTooltip(data);
         }
         this.lastTooltipObject = data;
         if (e.pageX + this.elements["tooltip"].width() > $(window).width() - 20)
             this.elements["tooltip"].css("left", e.pageX - 320 - 5);
-        if (e.pageY + this.elements["tooltip"].height() > $(window).height() - 100)
-            this.elements["tooltip"].css("top", e.pageY - this.elements["tooltip"].height() - 5);
+        if (e.pageY - this.elements["tooltip"].height() < 5)
+            this.elements["tooltip"].css("top", e.pageY + 5);
+        else 
+            this.elements["tooltip"].css("top", e.pageY - 5 - this.elements["tooltip"].height());
         
     };
     w.DarkMode.prototype.addCommas = function(n){
@@ -268,9 +287,28 @@ function main(w)
         }
     };
     
+    w.DarkMode.prototype.like = function(channelId)
+    {
+        var self = this;
+        $.ajax({
+            url: 'http://www.younow.com/php/api/broadcast/like', 
+            method: "POST",
+            data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": channelId},
+            success: function(json, b, c)
+            {
+                self.currentStreamer.nextLikeCost = json["nextLikeCost"];
+                if (self.lastTooltipObject != null && self.lastTooltipObject.type == "likeCost")
+                {
+                    self.lastTooltipObject.cost = self.currentStreamer.nextLikeCost;
+                    self.updateTooltip(self.lastTooltipObject);
+                }
+            }
+        });
+    };
+    
     w.DarkMode.prototype.addTrendingUser = function(data)
     {
-        var el = $('<a href="/hidden/'+data.profile+'"><img src="'+this.getProfilePicture(data.userId)+'" /></a>');
+        var el = $('<a href="/hidden/'+data.profile+'"><img src="'+this.getBroadcastPicture(data.broadcastId)+'" /></a>');
         var obj = {
             type: "streamer",
             username: data["username"],
@@ -280,7 +318,7 @@ function main(w)
             viewers: data["viewers"],
             shares: data["shares"],
             likes: data["likes"],
-            tag: data["tags"][0],
+            tag: data["tags"][0]
         };
         var self = this;
         el.mousemove(function(e){self.showTooltip(e, obj);});
@@ -390,6 +428,7 @@ function main(w)
                 obj["tag"] = data["tags"][0];
             if (data["fans"] != null)
                 obj["fans"] = data["fans"];
+            obj["broadcastId"] = data["broadcastId"];
             if (data["channelName"] != null && data["channelName"] != data["profile"])
             {
                 obj["type"] = "friend";
@@ -579,7 +618,25 @@ function main(w)
         var self = this;
         if ($('#stream').length == 0)
         {
-            this.elements["right"].html('<div id="stream"><div id="streamInfo"></div><div class="outer"><div class="stream"><div id="streamView"></div><div id="streamBar"></div></div><div id="chat"><a class="tab active" id="chatButton">'+this.language.chat+'</a><a class="tab" id="audienceButton">'+this.language.audience+'</a><a class="tab last" id="infoButton">'+this.language.infos+'</a><div id="infoList"></div><ul id="viewerList"></ul><ul id="chatMessages"></ul><div id="chatOptions"><div class="option"><input type="radio" name="writeTo" checked id="writeInChat" />'+this.language.writeInChat+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTrending" />'+this.language.writeInTrending+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTag" />'+this.language.writeInTag+'<input type="text" id="intoTag" /></div></div><textarea id="chatMessage" maxlength="150"></textarea></div></div><div id="trendingList"></div></div>');
+            this.elements["right"].html('<div id="stream"><div id="streamInfo"></div><div class="outer"><div class="stream"><div id="streamView"></div><div id="streamBar">'+
+                                        '<div class="item"><img id="likeImage" src="'+this.config.images.likes+'" /><span id="likeCount"></span></div><div class="item"><img src="'+this.config.images.shares+'" /><span id="shareCount"></span></div><div style="float:right;" class="item"><img src="'+this.config.images.time+'" /><span id="streamTime"></span></div><div style="float:right;" class="item"><img src="'+this.config.images.views+'" /><span id="viewerCount"></span></div>'+
+                                        '</div></div><div id="chat"><a class="tab active" id="chatButton">'+this.language.chat+'</a><a class="tab" id="audienceButton">'+this.language.audience+'</a><a class="tab last" id="infoButton">'+this.language.infos+'</a><div id="infoList"></div><ul id="viewerList"></ul><ul id="chatMessages"></ul><div id="chatOptions"><div class="option"><input type="radio" name="writeTo" checked id="writeInChat" />'+this.language.writeInChat+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTrending" />'+this.language.writeInTrending+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTag" />'+this.language.writeInTag+'<input type="text" id="intoTag" /></div></div><textarea id="chatMessage" maxlength="150"></textarea></div></div><div id="trendingList"></div></div>');
+            this.elements["likeImage"]       = $('#likeImage');
+            this.elements["likeImage"].click(function(){
+                if (self.currentStreamer.username != "drachenlord_offiziell")
+                    self.like(self.currentStreamer.userId);
+            });
+            this.elements["likeImage"].mousemove(function(e){
+                self.showTooltip(e, {"type": "likeCost", "cost": self.currentStreamer.nextLikeCost});
+            });
+            this.elements["likeImage"].mouseout(function(e){
+                self.hideTooltip();
+            });
+            this.elements["likeCount"]       = $('#likeCount');
+            this.elements["shareCount"]      = $('#shareCount');
+            this.elements["viewerCount"]     = $('#viewerCount');
+            this.elements["streamTime"]      = $('#streamTime');
+            
             this.elements["chatButton"]      = $('#chatButton');
             this.elements["chatOptions"]     = $('#chatOptions');
             this.elements["audienceButton"]  = $('#audienceButton');
@@ -713,8 +770,11 @@ function main(w)
                 extraRight = '<div class="right">'+this.language.minChatLevel.replace("%1", this.currentStreamer.minChatLevel)+'</div>';
             this.elements["streamInfo"].html('<img src="'+this.getProfilePicture(this.currentStreamer.userId)+'" style="margin-top:-5px;margin-right:5px;" height="30" /><img src="'+this.config.images.star+'" style="margin-right: 5px;margin-top:-4px;" />'+Math.floor(this.currentStreamer.userlevel)+' <strong>'+this.currentStreamer.username+'</strong> ('+this.currentStreamer.country+') '+this.language.in+' <a href="/hidden/explore/tag/'+this.currentStreamer.tags[0]+'">#'+this.currentStreamer.tags[0]+'</A> : '+this.currentStreamer.user.description+extraRight);
 
-
-            this.elements["streamBar"].html('<div class="item"><img src="'+this.config.images.likes+'" />'+this.currentStreamer.likes+'</div><div class="item"><img src="'+this.config.images.shares+'" />'+this.currentStreamer.shares+'</div><div style="float:right;" class="item"><img src="'+this.config.images.time+'" />'+this.parseTime(this.duration)+'</div><div style="float:right;" class="item"><img src="'+this.config.images.views+'" />'+this.currentStreamer.viewers+'</div>');
+            this.elements["likeCount"].html(this.addCommas(this.currentStreamer.likes));
+            this.elements["shareCount"].html(this.addCommas(this.currentStreamer.shares));
+            this.elements["viewerCount"].html(this.addCommas(this.currentStreamer.viewers));;
+            this.elements["streamTime"].html(this.parseTime(this.duration));
+            
             var device = this.currentStreamer.broadcasterInfo.substring(0, this.currentStreamer.broadcasterInfo.indexOf('{'));
             var connection = "";
             var osVersion = "";
@@ -936,6 +996,7 @@ function main(w)
     
     w.DarkMode.prototype.createProfileBox = function(data)
     {
+        console.log(data);
         var userid = "";
         var username = "";
         var profile = "";
@@ -979,9 +1040,14 @@ function main(w)
         }
     };
     
+    w.DarkMode.prototype.getBroadcastPicture = function(broadcastId)
+    {
+        return this.youNow.config.broadcasterThumb+broadcastId;
+    };
+    
     w.DarkMode.prototype.getProfilePicture = function(userid)
     {
-        return this.youNow.config.broadcasterThumb+userid;
+        return 'http://cdn2.younow.com/php/api/channel/getImage/channelId='+userid;
     };
     
     w.DarkMode.prototype.hijackAngular = function()
@@ -1139,6 +1205,7 @@ function main(w)
                 'connection': 'Verbindung',
                 'provider': 'Serviceprovider',
                 'browser': 'Browser',
+                'nobodyLikesDragon': 'Niemand mag Drache',
             }
         },
         deviceMapping:
@@ -1264,12 +1331,12 @@ function main(w)
                 '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
                 '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
                 '#darkPage #userList {padding: 20px; float: left; width: 100%; height:100%; overflow-y:auto;}'+
-                '#darkPage .userProfile {float: left; display: block; width: 185px; height: 180px; margin: 5px; background: #333; border: 1px solid #555; border-radius: 5px; padding: 5px; }'+
-                '#darkPage .userProfile div {border: 1px solid #111; background: url(http://cdn2.younow.com/images/nothumb.jpg) no-repeat; background-size: 173px 130px; float: left; clear: both; width: 173px; height: 130px; overflow: hidden; }'+
+                '#darkPage .userProfile {float: left; display: block; width: 142px; height: 180px; margin: 5px; background: #333; border: 1px solid #555; border-radius: 5px; padding: 5px; }'+
+                '#darkPage .userProfile div {border: 1px solid #111; background: url(http://cdn2.younow.com/images/nothumb.jpg) no-repeat; background-size: 130px 130px; float: left; clear: both; width: 130px; height: 130px; overflow: hidden; }'+
                 '#darkPage .userProfile div img {height: 130px; float: left; clear: both; display: block; position: relative; margin-top: 0px; }'+
                 '#darkPage .userProfile div span {padding-left: 5px; position: relative; margin-top: -30px; float: left; clear: both; z-index:500; line-height: 30px; font-weight: bold; color: #fff; display: block; width:173px;height:30px; font-size:14px;background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,1)));background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=\'#00000000\', endColorstr=\'#000000\',GradientType=0 ); }'+
                 '#darkPage .userProfile img {float: left; margin-top:3px; margin-right: 3px; }'+
-                '#darkPage .userProfile strong {color: #fff; white-space: nowrap; line-height: 22px; display: block; float: left; width: 173px; height:22px; overflow: hidden; text-overflow: ellipsis; clear: both; }'+
+                '#darkPage .userProfile strong {color: #fff; white-space: nowrap; line-height: 22px; display: block; float: left; width: 130px; height:22px; overflow: hidden; text-overflow: ellipsis; clear: both; }'+
                 '#darkPage .userProfile small {color: #999; display:block; float: left; clear: both; }'+
                 '#darkPage h2 {color: #eee; margin-top:0px;}'+
                 '#darkPage #left strong {color: #ddd; margin-top:0px; height: 25px; line-height: 25px; }'+
@@ -1307,8 +1374,9 @@ function main(w)
                 '#stream #chat textarea { height: 50px; width: 360px; padding: 5px; border: 1px solid #555; color: #eee; background: #333; max-width: 360px; max-height: 50px;}'+
                 '#stream #trendingList { height: 140px; padding: 10px; overflow-x: auto; white-space: nowrap; }'+
                 '#stream #trendingList img { width: 133px; height: 100px; margin-right: 5px; display: inline-block; }'+
-                '#tooltip { position: absolute; z-index: 100; background: #333; -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75); }'+
-                '#tooltip .img { float: left; width: 170px; height: 128px; }'+
+                '#tooltip { color: #ddd; position: absolute; z-index: 10000; background: #333; -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75); }'+
+                '#tooltip .img { float: left; width: 128px; height: 128px; }'+
+                '#tooltip .wide { width: 170px !important; }'+
                 '#tooltip .content { float: left; min-width: 200px; }'+
                 '#tooltip .title { float: left; padding-top: 4px; padding-left: 5px; clear: both; width: 100%; height: 25px; background: #666; color: #ddd; font-weight: bold; font-size: 13px; }'+
                 '#tooltip .value { float: left; clear: both; margin-left: 5px; margin-top: 5px; color: #999; }'+
