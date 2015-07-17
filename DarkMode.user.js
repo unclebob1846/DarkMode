@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.0.4
+// @version 0.0.5
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -287,6 +287,30 @@ function main(w)
         this.elements["trendingList"].append(el);
     };
     
+    w.DarkMode.prototype.tickUpdateViewers = function()
+    {
+        if (this.currentStreamer != null && this.elements["viewerList"] != null && this.elements["viewerList"].css("display") == "block")
+        {
+            var self = this;
+            $.ajax({
+                url: 'http://cdn2.younow.com/php/api/broadcast/audience/channelId='+this.currentStreamer.userId+'/numOfRecords=200/start=0', 
+                jsonp: "callback",
+                method: "GET",
+                dataType: "json",
+                success: function(json, b, c)
+                {
+                    self.elements["viewerList"].html("");
+                    for (var i = 0; i < json.audience.length; i++)
+                    {
+                        self.elements["viewerList"].append($('<li><a href="/hidden/'+json.audience[i].name+'"><img width="34" height="34" src="'+self.getProfilePicture(json.audience[i].userId)+'" /><span><img src="'+self.config.images.star+'" />'+json.audience[i].level+' '+json.audience[i].name+'<small>'+json.audience[i].location.country+' ('+json.audience[i].fans+' '+self.language.fans+')</small></span></a></li>'));
+                    }
+                    
+                    //self.addSearchElements(json);
+                }
+            });
+        }
+    };
+    
     w.DarkMode.prototype.tickTrending = function()
     {
         var self = this;
@@ -505,9 +529,47 @@ function main(w)
         }
         /*
         */
-        
+
     };
-    
+
+    w.DarkMode.prototype.openAudience = function()
+    {
+        this.elements["chatMessage"].css("display", "none");
+        this.elements["chatMessages"].css("display", "none");
+        this.elements["chatOptions"].css("display", "none");
+        this.elements["infoList"].css("display", "none");
+        this.elements["viewerList"].css("display", "block");
+        this.elements["chatButton"].removeClass("active");
+        this.elements["infoButton"].removeClass("active");
+        this.elements["audienceButton"].addClass("active");
+        this.tickUpdateViewers();
+    };
+
+    w.DarkMode.prototype.openChat = function()
+    {
+        this.elements["chatMessage"].css("display", "block");
+        this.elements["chatMessages"].css("display", "block");
+        this.elements["chatMessages"].scrollTop(this.elements["chatMessages"][0].scrollHeight);
+        this.elements["chatOptions"].css("display", "block");
+        this.elements["viewerList"].css("display", "none");
+        this.elements["infoList"].css("display", "none");
+        this.elements["audienceButton"].removeClass("active");
+        this.elements["infoButton"].removeClass("active");
+        this.elements["chatButton"].addClass("active");
+    };
+
+    w.DarkMode.prototype.openInfo = function()
+    {
+        this.elements["chatMessage"].css("display", "none");
+        this.elements["chatMessages"].css("display", "none");
+        this.elements["chatOptions"].css("display", "none");
+        this.elements["viewerList"].css("display", "none");
+        this.elements["infoList"].css("display", "block");
+        this.elements["chatButton"].removeClass("active");
+        this.elements["audienceButton"].removeClass("active");
+        this.elements["infoButton"].addClass("active");
+    };
+
     w.DarkMode.prototype.openStream = function(name)
     {
         this.currentStreamer = {
@@ -516,7 +578,22 @@ function main(w)
         var self = this;
         if ($('#stream').length == 0)
         {
-            this.elements["right"].html('<div id="stream"><div id="streamInfo"></div><div class="outer"><div class="stream"><div id="streamView"></div><div id="streamBar"></div></div><div id="chat"><ul id="chatMessages"></ul><div id="chatOptions"><div class="option"><input type="radio" name="writeTo" checked id="writeInChat" />'+this.language.writeInChat+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTrending" />'+this.language.writeInTrending+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTag" />'+this.language.writeInTag+'<input type="text" id="intoTag" /></div></div><textarea id="chatMessage" maxlength="150"></textarea></div></div><div id="trendingList"></div></div>');
+            this.elements["right"].html('<div id="stream"><div id="streamInfo"></div><div class="outer"><div class="stream"><div id="streamView"></div><div id="streamBar"></div></div><div id="chat"><a class="tab active" id="chatButton">'+this.language.chat+'</a><a class="tab" id="audienceButton">'+this.language.audience+'</a><a class="tab last" id="infoButton">'+this.language.infos+'</a><div id="infoList"></div><ul id="viewerList"></ul><ul id="chatMessages"></ul><div id="chatOptions"><div class="option"><input type="radio" name="writeTo" checked id="writeInChat" />'+this.language.writeInChat+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTrending" />'+this.language.writeInTrending+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTag" />'+this.language.writeInTag+'<input type="text" id="intoTag" /></div></div><textarea id="chatMessage" maxlength="150"></textarea></div></div><div id="trendingList"></div></div>');
+            this.elements["chatButton"]      = $('#chatButton');
+            this.elements["chatOptions"]     = $('#chatOptions');
+            this.elements["audienceButton"]  = $('#audienceButton');
+            this.elements["infoButton"]      = $('#infoButton');
+            this.elements["audienceButton"].click(function(e){
+                self.openAudience();
+            });
+            this.elements["infoButton"].click(function(e){
+                self.openInfo();
+            });
+            this.elements["chatButton"].click(function(e){
+                self.openChat();
+            });
+            this.elements["viewerList"]      = $('#viewerList');
+            this.elements["infoList"]        = $('#infoList');
             this.elements["intoTag"]         = $('#intoTag');
             this.elements["writeInTag"]      = $('#writeInTag');
             this.elements["writeInTrending"] = $('#writeInTrending');
@@ -553,7 +630,7 @@ function main(w)
                 }
             });
         }
-        
+
         $.ajax({
             url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.username, 
             jsonp: "callback",
@@ -572,7 +649,7 @@ function main(w)
             }
         });
     };
-    
+
     w.DarkMode.prototype.switchStream = function()
     {
         flowplayer("streamView", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
@@ -604,7 +681,7 @@ function main(w)
         this.timeStart = d.getTime();
         this.duration = this.currentStreamer.length;
         var self = this;
-        
+
         this.pusher = new Pusher('d5b7447226fc2cd78dbb', {cluster:"younow"});
         this.channel = this.pusher.subscribe("public-channel_"+this.currentStreamer.userId);
         this.channel.bind('onLikes', function(data){
@@ -621,10 +698,10 @@ function main(w)
         });
         for (var i = 0; i < this.currentStreamer.comments.length; i++)
             this.addChatMessage(this.currentStreamer.comments[i]);
-        
+
         this.updateStreamerInfo();
     };
-    
+
     w.DarkMode.prototype.updateStreamerInfo = function()
     {
         if ($('#stream').length != 0 && this.elements["streamInfo"] != null)
@@ -634,20 +711,49 @@ function main(w)
                 extraRight = '<div class="right">'+this.language.minChatLevel.replace("%1", this.currentStreamer.minChatLevel)+'</div>';
             this.elements["streamInfo"].html('<img src="'+this.getProfilePicture(this.currentStreamer.userId)+'" style="margin-top:-5px;margin-right:5px;" height="30" /><img src="'+this.config.images.star+'" style="margin-right: 5px;margin-top:-4px;" />'+Math.floor(this.currentStreamer.userlevel)+' <strong>'+this.currentStreamer.username+'</strong> ('+this.currentStreamer.country+') '+this.language.in+' <a href="/hidden/explore/tag/'+this.currentStreamer.tags[0]+'">#'+this.currentStreamer.tags[0]+'</A> : '+this.currentStreamer.user.description+extraRight);
 
-            var hours = Math.floor(this.duration / (60 * 60));
-            var minutes = Math.floor(this.duration / (60)) % 60;
-            var seconds = this.duration % 60;
-            var time = "";
-            if (hours > 0) time += hours + ":";
-            if (minutes > 9) time += minutes + ":";
-            else time += "0"+minutes+":";
-            if (seconds > 9) time += seconds;
-            else time += "0"+seconds;
-            
-            this.elements["streamBar"].html('<div class="item"><img src="'+this.config.images.likes+'" />'+this.currentStreamer.likes+'</div><div class="item"><img src="'+this.config.images.shares+'" />'+this.currentStreamer.shares+'</div><div style="float:right;" class="item"><img src="'+this.config.images.time+'" />'+time+'</div><div style="float:right;" class="item"><img src="'+this.config.images.views+'" />'+this.currentStreamer.viewers+'</div>');
+
+            this.elements["streamBar"].html('<div class="item"><img src="'+this.config.images.likes+'" />'+this.currentStreamer.likes+'</div><div class="item"><img src="'+this.config.images.shares+'" />'+this.currentStreamer.shares+'</div><div style="float:right;" class="item"><img src="'+this.config.images.time+'" />'+this.parseTime(this.duration)+'</div><div style="float:right;" class="item"><img src="'+this.config.images.views+'" />'+this.currentStreamer.viewers+'</div>');
+            this.elements["infoList"].html('<h2>Streamer</h2>'+
+                                           '<div class="label">'+this.language.age+':</div><div class="value">'+this.currentStreamer.age+'</div>'+
+                                           '<div class="label">'+this.language.barsEarned+':</div><div class="value">'+this.addCommas(this.currentStreamer.barsEarned)+'</div>'+
+                                           '<div class="label">'+this.language.coins+':</div><div class="value">'+this.addCommas(this.currentStreamer.coins)+'</div>'+
+                                           '<div class="label">'+this.language.maxLikes+':</div><div class="value">'+this.addCommas(this.currentStreamer.maxLikesInBroadcast)+'</div>'+
+                                           '<div class="label">'+this.language.country+':</div><div class="value">'+this.currentStreamer.country+'</div>'+
+                                           '<div class="label">'+this.language.fans+':</div><div class="value">'+this.addCommas(this.currentStreamer.totalFans)+'</div>'+
+                                           '<div class="label">'+this.language.partner+':</div><div class="value">'+this.language.partnerStatus[this.currentStreamer.partner]+'</div>'+
+                                           '<div class="label">'+this.language.level+':</div><div class="value">'+Math.floor(this.currentStreamer.userlevel)+' ('+this.language.levelNeeded.replace("%1", (this.currentStreamer.userlevel - Math.floor(this.currentStreamer.userlevel) * 100)+'%').replace("%2", Math.ceil(this.currentStreamer.userlevel))+')</div>'+
+                                           '<div class="label">'+this.language.device+':</div><div class="value">'+this.currentStreamer.broadcasterInfo.substring(0, this.currentStreamer.broadcasterInfo.indexOf('{'))+'</div>'+
+                                           '<h2>Stream</h2>'+
+                                           '<div class="label">'+this.language.displayViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.display_viewers)+'</div>'+
+                                           '<div class="label">'+this.language.mobileViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.mviewers)+'</div>'+
+                                           '<div class="label">'+this.language.maxViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.maxConcurrentViewers)+'</div>'+
+                                           '<div class="label">'+this.language.points+':</div><div class="value">'+this.addCommas(this.currentStreamer.points)+'</div>'+
+                                           '<div class="label">'+this.language.tag+':</div><div class="value">#'+this.currentStreamer.tags[0]+'</div>'+
+                                           '<div class="label">'+this.language.position+':</div><div class="value">#'+this.currentStreamer.position+'</div>'+
+                                           '<div class="label">'+this.language.reconnects+':</div><div class="value">#'+this.currentStreamer.reconnects+'</div>'+
+                                           '<div class="label">'+this.language.featuredTime+':</div><div class="value">'+this.parseTime(this.currentStreamer.featuredTime)+'</div>'+
+                                           '<div class="label">'+this.language.giftsValue+':</div><div class="value">'+this.addCommas(this.currentStreamer.giftsValue)+'</div>'+
+                                           '<div class="label">'+this.language.newFans+':</div><div class="value">'+this.addCommas(this.currentStreamer.fans)+'</div>'+
+                                           '<div class="label">'+this.language.bitrate+':</div><div class="value">'+this.addCommas(this.currentStreamer.lastQuality.bitrate)+'</div>'+
+                                           '<div class="label">'+this.language.fps+':</div><div class="value">'+this.addCommas(this.currentStreamer.lastQuality.fps)+'</div>'
+                                           );
         }
     };
-    
+
+    w.DarkMode.prototype.parseTime = function(d)
+    {
+        var hours = Math.floor(d / (60 * 60));
+        var minutes = Math.floor(d / (60)) % 60;
+        var seconds = d % 60;
+        var time = "";
+        if (hours > 0) time += hours + ":";
+        if (minutes > 9) time += minutes + ":";
+        else time += "0"+minutes+":";
+        if (seconds > 9) time += seconds;
+        else time += "0"+seconds;
+        return time;
+    };
+            
     w.DarkMode.prototype.explore = function(query, page)
     {
         var el = $('<div id="userList"></div>');
@@ -954,7 +1060,32 @@ function main(w)
                 "writeInChat": "In den Chat",
                 "writeInTrending": "In alle Chats des aktuellen Tags",
                 "writeInTag": "In alle Chats des Tags:",
-                "chatWarning": "Mit großer Macht, kommt große Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
+                "chatWarning": "Mit großer Macht kommt große Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
+                "audience": "Zuschauer",
+                "chat": "Chat",
+                "infos": "Streamer-Info",
+                'age': 'Alter',
+                'barsEarned': 'Bars verdient',
+                'coins': 'Coins',
+                'maxLikes': 'Maximal erreichte Likes',
+                'country': 'Land',
+                'partner': 'Partnerstatus',
+                'level': 'Level',
+                'device': 'Gerät/Browser',
+                'displayViewers': 'Desktop-Zuschauer',
+                'mobileViewers': 'Mobil-Zuschauer',
+                'maxViewers': 'Höchste Zuschauerzahl',
+                'points': 'Punkte',
+                'tag': 'Tag',
+                'position': 'Position',
+                'reconnects': 'Reconnects',
+                'featuredTime': 'Zeit gefeatured',
+                'giftsValue': 'Wert aller Geschenke',
+                'newFans': 'Neue Sklaven',
+                'bitrate': 'Bitrate (kbps)',
+                'fps': 'FPS',
+                'levelNeeded': '%1 bis Level %2',
+                'partnerStatus': ["Kein Partner", "Partner", "Anwärter"],
             }
         },
         maxMessages: 200,
@@ -966,6 +1097,7 @@ function main(w)
             reloadStreamData: 5000,
             updateStreamData: 1000,
             reloadTagTrending: 5000,
+            updateViewers: 5000,
         }
     };
     
@@ -1008,6 +1140,7 @@ function main(w)
             window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
         }
     }
+
     
     function startDarkMode()
     {
@@ -1040,20 +1173,32 @@ function main(w)
                 '#stream { width: 100%; height: 100%; }'+
                 '#streamInfo { width: 100%; line-height: 40px; padding-left: 5px; color: #ddd; height: 40px; float: left; clear: both; background: #333; border-bottom: 1px solid #555;}'+
                 '#stream .outer { width: 100%; height: calc(100% - 180px); float:left; clear:both; border-bottom: 1px solid #555; }'+
-                '#stream .stream { width: calc(100% - 350px); height: 100%; float: left; }'+
+                '#stream .stream { width: calc(100% - 360px); height: 100%; float: left; }'+
                 '#stream #streamView { width: 100%; height: calc(100% - 30px); }'+
                 '#stream #streamBar { width: 100%; height: 30px; background: #333; color: #eee; border-top: 1px solid #555;}'+ 
                 '#stream #streamInfo .right { float: right; color: #faa; font-weight: bold; margin-right: 5px;}'+ 
                 '#stream #streamBar .item { float: left; margin-top: 5px; margin-right: 5px; margin-left: 5px;}'+ 
                 '#stream #streamBar .item img { float: left; margin-top:2px;height: 16px; margin-right: 5px; }'+ 
-                '#stream #chat { float: right !important; width: 349px !important; border-left: 1px solid #333; height: 100%; float: right;}'+
-                '#stream #chatMessages { padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 150px);}'+
+                '#stream #chat { float: right !important; width: 360px !important; border-left: 1px solid #333; height: 100%; float: right;}'+
+                '#stream #chat a.tab { cursor: pointer; color: #ddd; text-align: center; text-decoration: none; font-size:12px; font-weight: bold; float: left; border-bottom: 1px solid #555; height: 25px; line-height:25px; width: 119px; border-right: 1px solid #666; background: #333; }'+
+                '#stream #chat a.last { border-right: none !important; width: 120px !important; }'+
+                '#stream #chat a:hover.tab, #stream #chat a.active { background: #555; }'+
+                '#stream #infoList { display: none; padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 25px); clear: both;}'+
+                '#stream #infoList h2 { padding-left: 5px; width: 100%; font-size: 14px; float: left; clear: both; font-weight: bold; margin: 0px; margin-bottom: 5px; padding-bottom: 3px; border-bottom: 1px solid #555;}'+
+                '#stream #infoList div.label { float: left; text-align: left; clear: both; color: #ddd; font-weight:bold; width: 140px; }'+
+                '#stream #infoList div.value { float: right; font-size: 11px; color: #bbb; width: 190px; text-align:right; }'+
+                '#stream #viewerList { display: none; padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 25px); clear: both;}'+
+                '#stream #viewerList li { margin: 5px; clear: both; float: left; }'+
+                '#stream #viewerList li img { float: left; margin-right: 5px; }'+
+                '#stream #viewerList li span { font-family: Segoe UI; font-size: 14px; display: block; float: left; max-width: 270px; color: #ddd; font-weight: bold;}'+
+                '#stream #viewerList li small { font-family: Segoe UI; font-size: 12px; display: block; float: left; clear: both; max-width: 270px; color: #999;}'+
+                '#stream #chatMessages { padding: 5px; overflow-y: auto; overflow-x:hidden; height: calc(100% - 170px); clear: both;}'+
                 '#stream #chatMessages li { margin: 5px; clear: both; float: left; }'+
                 '#stream #chatMessages li img { float: left; margin-right: 5px; }'+
                 '#stream #chatMessages li span { font-family: Segoe UI; font-size: 12px; display: block; float: left; max-width: 270px;}'+
-                '#stream #chatOptions { padding: 10px; color: #ddd; width: 349px; height: 100px; border-top: 1px solid #777; background: #222; }'+
+                '#stream #chatOptions { padding: 10px; color: #ddd; width: 360px; height: 95px; border-top: 1px solid #555; background: #222; }'+
                 '#stream #chatOptions input { margin-left: 5px; margin-right: 5px; color: #000; }'+
-                '#stream #chat textarea { height: 50px; width: 349px; padding: 5px; border: 1px solid #555; color: #eee; background: #333; max-width: 349px; max-height: 50px;}'+
+                '#stream #chat textarea { height: 50px; width: 360px; padding: 5px; border: 1px solid #555; color: #eee; background: #333; max-width: 360px; max-height: 50px;}'+
                 '#stream #trendingList { height: 140px; padding: 10px; overflow-x: auto; white-space: nowrap; }'+
                 '#stream #trendingList img { width: 100px; height: 100px; margin-right: 5px; display: inline-block; }'+
                 '#tooltip { position: absolute; z-index: 100; background: #333; -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75); }'+
