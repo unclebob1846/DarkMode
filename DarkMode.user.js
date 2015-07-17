@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.0.8
+// @version 0.1.0
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -715,17 +715,17 @@ function main(w)
 
             this.elements["streamBar"].html('<div class="item"><img src="'+this.config.images.likes+'" />'+this.currentStreamer.likes+'</div><div class="item"><img src="'+this.config.images.shares+'" />'+this.currentStreamer.shares+'</div><div style="float:right;" class="item"><img src="'+this.config.images.time+'" />'+this.parseTime(this.duration)+'</div><div style="float:right;" class="item"><img src="'+this.config.images.views+'" />'+this.currentStreamer.viewers+'</div>');
             var device = this.currentStreamer.broadcasterInfo.substring(0, this.currentStreamer.broadcasterInfo.indexOf('{'));
-            for (var k in this.config.deviceMapping)
-            {
-                device = device.replace(k, this.config.deviceMapping[k]);
-            }
             var connection = "";
             var osVersion = "";
             var provider = "";
             var browser = "";
             var numCommas = (device.match(/,/g) || []).length;
-            if (device.length < 25) //PHONE!
+            if (device.length < 40) //PHONE!
             {
+                for (var k in this.config.deviceMapping)
+                {
+                    device = device.replace(k, this.config.deviceMapping[k]);
+                }
                 var parts = device.split(",");   
                 device = parts[0];
                 connection = parts[1];
