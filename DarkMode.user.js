@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.4
+// @version 0.1.5
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -764,8 +764,8 @@ function main(w)
                                                '<div class="label">'+this.language.mobileViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.mviewers)+'</div>'+
                                                '<div class="label">'+this.language.maxViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.maxConcurrentViewers)+'</div>'+
                                                '<div class="label">'+this.language.tag+':</div><div class="value">#'+this.currentStreamer.tags[0]+'</div>'+
-                                               '<div class="label">'+this.language.position+':</div><div class="value">#'+this.currentStreamer.position+'</div>'+
-                                               '<div class="label">'+this.language.reconnects+':</div><div class="value">#'+this.currentStreamer.reconnects+'</div>'+
+                                               '<div class="label">'+this.language.position+':</div><div class="value">'+this.currentStreamer.position+'</div>'+
+                                               '<div class="label">'+this.language.reconnects+':</div><div class="value">'+this.currentStreamer.reconnects+'</div>'+
                                                '<div class="label">'+this.language.featuredTime+':</div><div class="value">'+this.parseTime(this.currentStreamer.featuredTime)+'</div>'+
                                                '<div class="label">'+this.language.giftsValue+':</div><div class="value">'+this.addCommas(this.currentStreamer.giftsValue)+'</div>'+
                                                '<div class="label">'+this.language.newFans+':</div><div class="value">'+this.addCommas(this.currentStreamer.fans)+'</div>'+
