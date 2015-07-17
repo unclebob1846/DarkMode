@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.2
+// @version 0.1.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -801,7 +801,6 @@ function main(w)
             if (self.currentSearch.finished != true && self.currentSearch.loading != true)
             {
                 var l = el[0].scrollHeight - el.height() - 50;
-                console.log(el.scrollTop() + " => " + l);
                 if (el.scrollTop() > l && (event.originalEvent.wheelDelta < 0 || event.originalEvent.detail > 0)) 
                 {
                     self.currentSearch.page += 1;
@@ -988,7 +987,6 @@ function main(w)
         }
         
         var r = allServices('younow');
-        console.log(r);
         this.youNow = {
             config : r.config,
             api: r.Api,
