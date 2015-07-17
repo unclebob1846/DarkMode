@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.0.5
+// @version 0.0.6
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -721,13 +721,13 @@ function main(w)
                                            '<div class="label">'+this.language.country+':</div><div class="value">'+this.currentStreamer.country+'</div>'+
                                            '<div class="label">'+this.language.fans+':</div><div class="value">'+this.addCommas(this.currentStreamer.totalFans)+'</div>'+
                                            '<div class="label">'+this.language.partner+':</div><div class="value">'+this.language.partnerStatus[this.currentStreamer.partner]+'</div>'+
-                                           '<div class="label">'+this.language.level+':</div><div class="value">'+Math.floor(this.currentStreamer.userlevel)+' ('+this.language.levelNeeded.replace("%1", (this.currentStreamer.userlevel - Math.floor(this.currentStreamer.userlevel) * 100)+'%').replace("%2", Math.ceil(this.currentStreamer.userlevel))+')</div>'+
+                                           '<div class="label">'+this.language.level+':</div><div class="value">'+Math.floor(this.currentStreamer.userlevel)+' ('+this.language.levelNeeded.replace("%1", Math.floor((this.currentStreamer.userlevel - Math.floor(this.currentStreamer.userlevel)) * 100)+'%').replace("%2", Math.ceil(this.currentStreamer.userlevel))+')</div>'+
+                                           '<div class="label">'+this.language.points+':</div><div class="value">'+this.addCommas(this.currentStreamer.points)+'</div>'+
                                            '<div class="label">'+this.language.device+':</div><div class="value">'+this.currentStreamer.broadcasterInfo.substring(0, this.currentStreamer.broadcasterInfo.indexOf('{'))+'</div>'+
                                            '<h2>Stream</h2>'+
                                            '<div class="label">'+this.language.displayViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.display_viewers)+'</div>'+
                                            '<div class="label">'+this.language.mobileViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.mviewers)+'</div>'+
                                            '<div class="label">'+this.language.maxViewers+':</div><div class="value">'+this.addCommas(this.currentStreamer.maxConcurrentViewers)+'</div>'+
-                                           '<div class="label">'+this.language.points+':</div><div class="value">'+this.addCommas(this.currentStreamer.points)+'</div>'+
                                            '<div class="label">'+this.language.tag+':</div><div class="value">#'+this.currentStreamer.tags[0]+'</div>'+
                                            '<div class="label">'+this.language.position+':</div><div class="value">#'+this.currentStreamer.position+'</div>'+
                                            '<div class="label">'+this.language.reconnects+':</div><div class="value">#'+this.currentStreamer.reconnects+'</div>'+
