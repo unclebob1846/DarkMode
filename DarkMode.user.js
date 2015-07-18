@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.1
+// @version 0.2.2
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -584,7 +584,7 @@ function main(w)
         this.elements["massLike"] = $('#massLike');
         this.elements["maxLikeCost"] = $('#maxLikeCost');
         this.elements["maxLikeCost"].change(function(){
-            self.config.maxLikeCost = this.elements["maxLikeCost"].val();
+            self.config.maxLikeCost = self.elements["maxLikeCost"].val();
         });
         this.elements["chatBotEnabled"].change(function(){
             if (self.elements["chatBotEnabled"].is(":checked"))
