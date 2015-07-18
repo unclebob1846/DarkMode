@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.1.7
+// @version 0.2.0
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -103,11 +103,69 @@ function main(w)
             window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/"+b);
             window.localStorage.setItem("browse", "");
         }
+        
+        var a = $('.navbar-content');
+        a.append($('<button id="commandCentral" class="btn-confirm btn pull-right" style="margin-right:10px;">'+this.language.commandCentral+'</button>'));
+        a.append($('<div style="float: right;margin-top:-5px;margin-right: 10px;"><span id="nextMessageIn"></span></div>'));
+        var self = this;
+        this.elements["nextMessageIn"] = $('#nextMessageIn');
+        this.elements["commandCentral"] = $('#commandCentral');
+        this.elements["commandCentral"].click(function(){
+            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/commandCentral");
+        });
+    };
+    
+    w.DarkMode.prototype.massLike = function()
+    {
+        if (this.massLikeTimer == null || this.massLikeTimer <= 0)
+        {
+            if(this.lastMassLikePage == null)
+                this.lastMassLikePage = -1;
+
+            var self = this;
+            this.likesGiven = 0;
+            $.ajax({
+                url: 'https://qz0xcgubgq.algolia.io/1/indexes/'+this.youNow.config.settings.PeopleSearchIndex+'/query', 
+                jsonp: "callback",
+                method: "POST",
+                contentType: "application/json;charset=UTF-8",
+                data: "{\"params\":\"query=&hitsPerPage=50&page="+(this.lastMassLikePage+1)+"&attributesToHighlight=none\"}",
+                processData: false,
+                headers: {
+                    "X-Algolia-API-Key":this.youNow.config.settings.PeopleSearchApiKey,
+                    "X-Algolia-Application-Id":this.youNow.config.settings.PeopleSearchAppId,
+                    "X-Algolia-TagFilters":this.youNow.config.settings.PeopleSearchSecurityTags,
+                },
+                dataType: "json",
+                success: function(json, b, c)
+                {
+                    if (json.nbPages <= self.lastMassLikePage)
+                        self.lastMassLikePage = -1;
+                    for (var i = 0; i < json.hits.length; i++)
+                    {
+                        $.ajax({
+                            url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+json.hits[i].profile, 
+                            success: function(json2, b, c)
+                            {
+                                if (json2.nextLikeCost <= self.config.maxLikeCost)
+                                {
+                                    self.like(json2.userId);
+                                    self.likesGiven++;
+                                    if (self.elements["likesGiven"] != null)
+                                        self.elements["likesGiven"].html(self.language.likesGiven.replace("%1", self.likesGiven));
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+            this.lastMassLikePage = (this.lastMassLikePage+1);
+            this.massLikeTimer = 10000;
+        }
     };
     
     w.DarkMode.prototype.tick = function()
     {
-
         var d = new Date();
         var cTime = d.getTime();
         for (var key in this.config.ticks)
@@ -127,6 +185,37 @@ function main(w)
         this.elements["friendsContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
         this.elements["trendingPeopleContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
         this.elements["trendingTagsContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
+        var time = cTime - this.lastTick;
+        if (this.massLikeTimer > 0) {
+            this.massLikeTimer -= time;
+            
+            if (this.elements["waitForMassLike"] != null)
+            {
+                if (this.massLikeTimer <= 0)
+                    this.elements["waitForMassLike"].html("");
+                else
+                    this.elements["waitForMassLike"].html(this.language.waitForMassLike.replace("%1", this.parseTime(this.massLikeTimer/1000)));
+            }
+        }
+        if (this.config.chatbot.active)
+        {
+            this.elements["nextMessageIn"].html('<strong>'+this.language.chatBot+'</strong><br />'+this.language.nextMessageIn + ' ' + this.parseTime(this.config.chatbot.timeRemaining / 1000));
+            if (this.lastTick != null)
+            {
+                
+                this.config.chatbot.timeRemaining -= time;
+                if (this.config.chatbot.timeRemaining <= 0)
+                {
+                    this.tickChatBot();
+                    this.config.chatbot.timeRemaining = this.config.chatbot.interval;
+                }
+            }
+        }
+        else 
+        {
+            this.elements["nextMessageIn"].html("");
+        }
+        this.lastTick = cTime;
     };
     
     w.DarkMode.prototype.tickOnlineFriends = function()
@@ -186,7 +275,7 @@ function main(w)
         }
         if (data["type"] == "likeCost")
         {
-            if (this.currentStreamer.username == "drachenlord_offiziell")
+            if (this.currentStreamer.username.toLowerCase() == "drachenlord_offiziell")
                 this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="'+this.config.images.coins+'" />'+this.language.nobodyLikesDragon+'</div>');
             else
                 this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="'+this.config.images.coins+'" />'+data["cost"]+'</div>');
@@ -296,11 +385,14 @@ function main(w)
             data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": channelId},
             success: function(json, b, c)
             {
-                self.currentStreamer.nextLikeCost = json["nextLikeCost"];
-                if (self.lastTooltipObject != null && self.lastTooltipObject.type == "likeCost")
+                if (self.currentStreamer != null && self.currentStreamer.userId == channelId)
                 {
-                    self.lastTooltipObject.cost = self.currentStreamer.nextLikeCost;
-                    self.updateTooltip(self.lastTooltipObject);
+                    self.currentStreamer.nextLikeCost = json["nextLikeCost"];
+                    if (self.lastTooltipObject != null && self.lastTooltipObject.type == "likeCost")
+                    {
+                        self.lastTooltipObject.cost = self.currentStreamer.nextLikeCost;
+                        self.updateTooltip(self.lastTooltipObject);
+                    }
                 }
             }
         });
@@ -453,6 +545,61 @@ function main(w)
         }
     };
     
+    w.DarkMode.prototype.commandCentral = function()
+    {
+        this.elements["right"].html('<div style="padding:20px;">'+
+                                    '<h3>'+this.language.chatBot+'</h3>'+
+                                    '<input type="checkbox" id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
+                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.chatbotEnabled+' </span></div>'+
+                                    '<div style="float:left;clear:both;width:120px;"><span>'+this.language.chatBotInterval+':</span></div>'+
+                                    '<div style="float:left;"><input type="number" min="60" id="chatBotInterval" value="'+(this.config.chatbot.interval/1000)+'" /></div>'+
+                                    '<div style="float:left; clear: both;margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotMessage+'</h4>'+
+                                    '<textarea id="chatBotMessages" style="width:100%; height: 200px;">'+this.config.chatbot.messages.join("\n")+'</textarea></div>'+
+                                    '<div style="float:left; margin-left: 10px; margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotIgnored+'</h4>'+
+                                    '<textarea id="chatBotIgnored" style="width:100%; height: 200px;">'+this.config.chatbot.knownIdiots.join("\n")+'</textarea></div>'+
+                                    '<h3 style="clear: both;margin-top: 10px;float: left;">'+this.language.massLike+'</h3>'+
+                                    '<div style="color:#ddd;float:left; width: 120px; clear: both;">'+this.language.massLikeCost+':</div>'+
+                                    '<div style="float:left;"><input value="'+this.config.maxLikeCost+'" type="number" min="5" id="maxLikeCost" /></div>'+
+                                    '<div style="clear: both; float: left; margin-left: 120px; margin-top: 5px;"><button id="massLike" class="btn btn-confirm">'+this.language.massLike+'</button><span style="margin-left:10px;margin-top:4px;" id="waitForMassLike"></span></div>'+
+                                    '<div style="clear:both; float: left; margin-left: 120px; margin-top:5px;"><span id="likesGiven"></span></div></div>');
+        var self = this;
+        //a.append($('<div style="margin-top:-5px;color:#ddd; margin-right:10px;" class="pull-right"><input type="checkbox" id="chatBotEnabled" style="margin-right:5px;margin-top:3px;float:left;" /><div style="float:left;"><span>'+this.language.chatbotEnabled+' <br />'+this.language.nextMessageIn+' </span><span id="nextMessageIn">'+this.parseTime(this.config.chatbot.timeRemaining)+'</span></div></div>'));
+        this.elements["likesGiven"] = $('#likesGiven');
+        this.elements["waitForMassLike"] = $('#waitForMassLike');
+                                    this.elements["chatBotInterval"] = $('#chatBotInterval');
+        this.elements["chatBotInterval"].change(function(){
+            self.config.chatbot.interval = this.elements["chatBotInterval"].val() * 1000;
+            self.config.chatbot.timeRemaining = self.config.chatbot.interval;
+        });
+        this.elements["chatBotMessages"] = $('#chatBotMessages');
+        this.elements["chatBotMessages"].change(function(){
+            self.config.chatbot.messages = self.elements["chatBotMessages"].val().split("\n");
+        });
+        this.elements["chatBotIgnored"] = $('#chatBotIgnored');
+        this.elements["chatBotIgnored"].change(function(){
+            self.config.chatbot.knownIdiots = self.elements["chatBotIgnored"].val().split("\n");
+        });
+        
+        this.elements["chatBotEnabled"] = $('#chatBotEnabled');
+        this.elements["massLike"] = $('#massLike');
+        this.elements["maxLikeCost"] = $('#maxLikeCost');
+        this.elements["maxLikeCost"].change(function(){
+            self.config.maxLikeCost = this.elements["maxLikeCost"].val();
+        });
+        this.elements["chatBotEnabled"].change(function(){
+            if (self.elements["chatBotEnabled"].is(":checked"))
+            {
+                self.config.chatbot.timeRemaining = self.config.chatbot.interval;
+                self.config.chatbot.active = true;
+            }
+            else
+                self.config.chatbot.active = false;
+        });
+        this.elements["massLike"].click(function(){
+            self.massLike();
+        });
+        //this.elements["nextMessageIn"] = $('#nextMessageIn');
+    };
     w.DarkMode.prototype.updatePage = function()
     {
         if (this.pusher != null)
@@ -472,7 +619,11 @@ function main(w)
                 this.explore(this.path[2], 0);
             else if (this.path.length > 1)
             {
-                if (this.path[1] == "settings")
+                if (this.path[1] == "commandCentral")
+                {
+                    this.commandCentral();
+                }
+                else if (this.path[1] == "settings")
                 {
                     //TODO: Settings page
                 }
@@ -499,7 +650,7 @@ function main(w)
                 jsonp: "callback",
                 method: "POST",
                 dataType: "json",
-                data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.currentStreamer.userId, "comment": message},
+                data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "comment": message},
                 success: function(json, b, c)
                 {
 
@@ -623,7 +774,7 @@ function main(w)
                                         '</div></div><div id="chat"><a class="tab active" id="chatButton">'+this.language.chat+'</a><a class="tab" id="audienceButton">'+this.language.audience+'</a><a class="tab last" id="infoButton">'+this.language.infos+'</a><div id="infoList"></div><ul id="viewerList"></ul><ul id="chatMessages"></ul><div id="chatOptions"><div class="option"><input type="radio" name="writeTo" checked id="writeInChat" />'+this.language.writeInChat+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTrending" />'+this.language.writeInTrending+'</div><div class="option"><input type="radio" name="writeTo" id="writeInTag" />'+this.language.writeInTag+'<input type="text" id="intoTag" /></div></div><textarea id="chatMessage" maxlength="150"></textarea></div></div><div id="trendingList"></div></div>');
             this.elements["likeImage"]       = $('#likeImage');
             this.elements["likeImage"].click(function(){
-                if (self.currentStreamer.username != "drachenlord_offiziell")
+                if (self.currentStreamer.username.toLowerCase() != "drachenlord_offiziell")
                     self.like(self.currentStreamer.userId);
             });
             this.elements["likeImage"].mousemove(function(e){
@@ -851,7 +1002,7 @@ function main(w)
     {
         var hours = Math.floor(d / (60 * 60));
         var minutes = Math.floor(d / (60)) % 60;
-        var seconds = d % 60;
+        var seconds = Math.floor(d % 60);
         var time = "";
         if (hours > 0) time += hours + ":";
         if (minutes > 9) time += minutes + ":";
@@ -996,7 +1147,6 @@ function main(w)
     
     w.DarkMode.prototype.createProfileBox = function(data)
     {
-        console.log(data);
         var userid = "";
         var username = "";
         var profile = "";
@@ -1079,6 +1229,63 @@ function main(w)
         
     };
     
+    w.DarkMode.prototype.tickChatBot = function()
+    {
+        if (this.config.chatbot.active)
+        {
+            if (this.config.chatbot.already == null)
+                this.config.chatbot.already = {};
+            var self = this;
+            $.ajax({
+                url: 'https://qz0xcgubgq.algolia.io/1/indexes/'+this.youNow.config.settings.PeopleSearchIndex+'/query', 
+                jsonp: "callback",
+                method: "POST",
+                contentType: "application/json;charset=UTF-8",
+                data: "{\"params\":\"query="+this.config.chatbot.tag+"&hitsPerPage=100&page=0&attributesToHighlight=none&restrictSearchableAttributes=tag\"}",
+                processData: false,
+                headers: {
+                    "X-Algolia-API-Key":this.youNow.config.settings.PeopleSearchApiKey,
+                    "X-Algolia-Application-Id":this.youNow.config.settings.PeopleSearchAppId,
+                    "X-Algolia-TagFilters":this.youNow.config.settings.PeopleSearchSecurityTags,
+                },
+                dataType: "json",
+                success: function(json, b, c)
+                {
+                    for (var i = 0; i < json.hits.length; i++)
+                    {
+                        if (!(self.config.chatbot.knownIdiots.indexOf(json.hits[i].profile.toLowerCase()) > - 1))
+                        {
+                            var channelID = json.hits[i].objectID
+                            var possible = self.config.chatbot.messages.slice();
+                            if (self.config.chatbot.already["channel"+ channelID] != null)
+                            {
+                                self.config.chatbot.already["channel" + channelID].sort(function(a,b) {
+                                    return a - b;
+                                });
+                                self.config.chatbot.already["channel" + channelID].reverse();
+                                for (var j = 0; j < self.config.chatbot.already["channel" + channelID].length; j++)
+                                {
+                                    possible.splice(self.config.chatbot.already["channel" + channelID][j], 1);
+                                }
+                            }
+                            else 
+                            {
+                                self.config.chatbot.already["channel" + channelID] = [];
+                            }
+                            if (possible.length != 0)
+                            {
+                                var ind = Math.floor(Math.random() * possible.length);
+                                var message = possible[ind];
+                                self.sendChatMessage(json.hits[i].objectID, message);
+                                self.config.chatbot.already["channel" + channelID].push(self.config.chatbot.messages.indexOf(message));
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    };
+    
     w.DarkMode.prototype.youNow = {};
     w.DarkMode.prototype.selectLanguage = function(s) 
     {
@@ -1090,6 +1297,7 @@ function main(w)
         this.language = this.config.languages[s];
     }
     w.DarkMode.prototype.inDarkMode = false;
+    
     w.DarkMode.prototype.createButton = function()
     {
         var container = $(".user-actions");
@@ -1131,7 +1339,6 @@ function main(w)
         
         button.remove();
     };
-    
     
     w.DarkMode.prototype.config = 
     {
@@ -1197,6 +1404,8 @@ function main(w)
                 'newFans': 'Neue Sklaven',
                 'bitrate': 'Bitrate (kbps)',
                 'copy': 'Kopieren',
+                'massLike': 'Massenlike',
+                'massLikeCost': 'Maximale Kosten',
                 'fps': 'FPS',
                 'levelNeeded': '%1 bis Level %2',
                 'streamURL': 'Stream URL',
@@ -1206,6 +1415,16 @@ function main(w)
                 'provider': 'Serviceprovider',
                 'browser': 'Browser',
                 'nobodyLikesDragon': 'Niemand mag Drache',
+                'commandCentral': 'Kommando-Zentrale',
+                'chatbotEnabled': 'Chatbot aktivieren.',
+                'nextMessageIn': 'Nächste Nachricht in:',
+                'chatBotMessage': 'Nachrichten',
+                'chatBotIgnored': 'Ignorierte Nutzer',
+                'chatBotInterval': 'Interval',
+                'chatBot': 'Chatbot',
+                'waitForMassLike': 'Bitte warte %1',
+                'likesGiven': '%1 Likes gegeben.',
+                
             }
         },
         deviceMapping:
@@ -1260,7 +1479,19 @@ function main(w)
             'NT 6.0': 'Vista',
             'NT 5.2': 'XP x64',
             'NT 5.1': 'XP x86',
+            'samsung SM-G800F': 'Samsung Galaxy S5 Mini',
+            'samsung SM-G920F': 'Samsung Galaxy S6',
+            'samsung SM-G900F': 'Samsung Galaxy S5',
+            'samsung GT-I9505': 'Samsung Galaxy S4',
+            'samsung SM-A300FU': 'Samsung Galaxy A3',
+            'samsung GT-I9305': 'Samsung Galaxy S3',
+            'samsung GT-I9100': 'Samsung Galaxy S2',
+            'samsung GT-I9000': 'Samsung Galaxy S1',
+            'samsung GT-I8190': 'Samsung Galaxy S3 mini',
+            'LGE LG-D373': 'LG L80',
+            'HUAWEI G7-L01': 'Huawei Ascend G7',
         },
+        maxLikeCost: 5,
         maxMessages: 200,
         ticks:
         {
@@ -1271,6 +1502,182 @@ function main(w)
             updateStreamData: 1000,
             reloadTagTrending: 5000,
             updateViewers: 5000,
+        },
+        chatbot: {
+            timeRemaining: 2 * 60 * 1000,
+            interval: 2 * 60 * 1000,
+            active: false,
+            tag: "deutsch",
+            knownIdiots: [
+                "braui.93",
+            ],
+            messages: [
+                "Was für Musik hörst du so?",
+                "Was hast du heute schon so gemacht?",
+                "Was sind deine Hobbies?",
+                "Woher kommst du eigentlich?",
+                "Wie alt bist du?",
+                "Wann streamst du immer?",
+                "Was ist dein Lieblingsurlaubsland?",
+                "Wo hast du zuletzt Urlaub gemacht?",
+                "Magst du Einhörner?",
+                "Welches ist dein Lieblingseis?",
+                "Was ist dein Lieblingslied?",
+                "Magst du Pferde?",
+                "Mir ist langweilig :(",
+                "Wie heißt du?",
+                "Hast du Geschwister?",
+                "Wo wurdest du geboren?",
+                "Wann hast du das letzte mal geduscht?",
+                "Welche Farbe hat dein Schreibtisch?",
+                "Bist du froh mit deinem Geschlecht?",
+                "Was ist der romantischste Platz für ein Rendesvouz?",
+                "Bist du gerade verliebt?",
+                "Was war der letzte Film, den du gesehen hast?",
+                "Wenn du Kreide wärst, welche Farbe hättest du?",
+                "Was ist der seltsamste Name, den du je gehört hast?",
+                "Welches Buch hast du als letztes gelesen?",
+                "Wenn du einen Tag Weltherrscher wärst, was würdest du ändern?",
+                "Was ist dein Lieblingsspruch?",
+                "Welches Handy hast du?",
+                "Wie ist das Wetter gerade?",
+                "Was hast du letzte Nacht gemacht?",
+                "Was sind deine Lieblingsfilme?",
+                "Was ist dein Lieblingsessen?",
+                "Was trinkst du am liebsten?",
+                "Welchen Alkohol magst du am meisten?",
+                "Was hast du als Bildschirmhintergrund?",
+                "Glaubst du an Liebe auf den ersten Blick?",
+                "Was isst du immer zum Frühstück?",
+                "Wieviele Kinder willst du mal haben?",
+                "Was ist deine Lieblings-Fernsehserie?",
+                "Glaubst du an den Himmel?",
+                "Glaubst du an Wunder?",
+                "Mit wievielen Kissen schläfst du?",
+                "Was ist dein Lieblingssport?",
+                "Was ist dein Lieblingszitat?",
+                "Was ist das Wichtigste für dich im Leben?",
+                "Was ist unter deinem Bett?",
+                "Was ist dein Lieblingstier?",
+                "Warst du schonmal auf einem Konzert?",
+                "Warst du schon einmal im Krankenhaus?",
+                "Was ist dein Traumberuf?",
+                "Welchen Promi würdest du gerne einmal kennenlernen?",
+                "Was ist deine Lieblings Website?",
+                "Was ist dein Lieblingsauto?",
+                "Wann war dein erster Kuss?",
+                "Bist du zufrieden mit deinem Leben?",
+                "Welche Augenfarbe magst du am meisten?",
+                "Rauchst du?",
+                "Was war dein schönster Traum?",
+                "Wovor hast du am meisten Angst?",
+                "Welche 3 Dinge würdest du auf eine einsame Insel mitnehmen?",
+                "Bist du ein Sommer oder Wintermensch?",
+                "Was ist deine Lieblingsfarbe?",
+                "Was sind deine Wünsche für die Zukunft?",
+                "Geld oder Liebe?",
+                "Hast du Spitznamen?",
+                "Herr der Ringe oder Harry Potter?",
+                "Bist du mit der Regierung zufrieden?",
+                "Liest du Zeitung?",
+                "Glaubst du an Geister?",
+                "Glaubst du an Übernatürliches?",
+                "Hast du ein Vorbild?",
+                "Wie würdest du dich in einem Satz beschreiben?",
+                "Wir würdest du deine Tochter nennen?",
+                "Wie würdest du deinen Sohn nennen?",
+                "McDonalds oder Burger King?",
+                "Hast du eine Glückszahl?",
+                "Ist das Glas halb voll oder halb leer?",
+                "Apfel oder Pfirsich?",
+                "Mars oder Twixx?",
+                "Vampir oder Werwolf?",
+                "Wie kommt das \"Nicht betreten\" Schild auf den Rasen?",
+                "Welchen Ton hat dein Wecker?",
+                "Hast du Macken?",
+                "Wie würdest du gerne heißen?",
+                "Für was gibst du das meiste Geld aus?",
+                "Hast du Facebook?",
+                "Hast du Instagram?",
+                "Hast du Twitter?",
+                "Hast du einen YouTube Kanal?",
+                "Hast du einen Hund?",
+                "Hast du eine Katze?",
+                "Hat es bei dir heute geregnet?",
+                "Gehst du ins Fitnessstudio?",
+                "Lebst du vegan?",
+                "Magst du Kinder?",
+                "Magst du Bier?",
+                "Willst du später heiraten?",
+                "Welches Shampoo verwendest du?",
+                "Knoblauch oder Zwiebeln?",
+                "In welchen Städten warst du schon?",
+                "Bist du eher gut oder böse?",
+                "Bist du brav oder rebellisch?",
+                "Wieviele Lagen hat euer Toilettenpapier?",
+                "Bist du tollpatschig?",
+                "Bist du spontan?",
+                "Erzähl mal einen Witz!",
+                "Bist du Rechts- oder Linkshänder?",
+                "Was war zuerst da? Das Huhn oder das Ei?",
+                "Achtest du sehr auf Rechtschreibung?",
+                "Zeichnest du gerne?",
+                "Spielst du ein Musikinstrument?",
+                "Hattest du Latein in der Schule?",
+                "Wie definierst du Liebe?",
+                "Cola oder Fanta?",
+                "Bist du ein Land- oder Stadtmensch?",
+                "Wie findest du die Simpsons?",
+                "Kennst du Futurama?",
+                "Spaghetti oder Pizza?",
+                "Welches Parfüm verwendest du?",
+                "Was hältst du von Religionen?",
+                "Gehst du lieber ins Schwimmbad oder an den See?",
+                "Was für ein Deo verwendest du?",
+                "Hast du irgendwelche Allergien?",
+                "Welcher Sport sollte deiner Meinung nach Nationalsport werden?",
+                "Was war das verrückteste, was du je getan hast?",
+                "Wie groß ist dein Zimmer?",
+                "Wie willst du beerdigt werden?",
+                "Wenn du einen Wunsch freihättest, welcher wäre das?",
+                "Wie würdest du dich selbst beschreiben?",
+                "Hast du Flugangst?",
+                "Duscht oder badest du lieber?",
+                "Wie lang sind deine Haare?",
+                "Wie groß bist du?",
+                "Kannst du ohne dein Handy leben?",
+                "Was ist deine Lieblingsband?",
+                "Kannst du Ski fahren?",
+                "Kannst du Snowboarden?",
+                "Fährst du Longboard?",
+                "Wo siehst du dich in 10 Jahren?",
+                "Wo siehst du dich in 20 Jahren?",
+                "Was tust du, wenn du im Lotto gewinnst?",
+                "Wie gut ist dein Gedächtnis?",
+                "Bist du ein Nachtmensch?",
+                "Bist du Frühaufsteher oder Langschläfer?",
+                "Hast du Angst vorm Tod?",
+                "Wer ist dein Lieblings-Comedian?",
+                "Isst du gerne Fisch?",
+                "Grillst du gerne?",
+                "Wieso ist die Banane krumm?",
+                "Hast du einen Partner?",
+                "Hast du dir schonmal die Haare gefärbt?",
+                "Welcher Dino wärst du?",
+                "Magst du Züge?",
+                "Was hast du für Haustiere?",
+                "Was hast du für einen PC?",
+                "Kannst du gut Kochen?",
+                "Was ist dein Lieblingsbrettspiel?",
+                "Gehst du auf die Gamescom?",
+                "Wen bewunderst du am meisten?",
+                "Was würdest du dir mit einer Million Euro kaufen?",
+                "Was ist dein Lieblingsbild?",
+                "Was war das letzte was du dir gekauft hast?",
+                "Wann warst du das letzte mal bei McDonalds?",
+                "Wann warst du das letzte mal bei Burger King?",
+                "Was ist dein Lieblings-Videospiel?",
+            ],
         }
     };
     
@@ -1323,10 +1730,11 @@ function main(w)
         var darkModeLoader = null;
         if (window.localStorage.getItem("inDarkMode") == "1")
         {
-            css += 'body, html {background: #000; overflow: hidden;}'+
+            css += 'body, html {background: #000; overflow: hidden;font-family: Segoe UI; }'+
                 '.navbar {border-bottom: 0px;background: #666; border-bottom: 1px solid #777 !important;}'+
-                '.nav-logo {float: left; width: 110px; margin-left: 10px; }'+
+                '.nav-logo {float: left; width: 110px; margin-left: 10px; margin-right: 80px !important; }'+
                 '.navbar-content {width: 100% !important;min-width:0px !important; max-width: 100000px !important;}'+
+                'input[type=text], textarea {background:#333; font-size:11px; font-family: Segoe UI; color: #ddd !important; border: 1px solid #666;}'+
                 '#darkPage {position:absolute; top: 50px; left: 0px; z-index:100; width: 100%; height: calc(100% - 50px);}'+
                 '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
                 '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
@@ -1339,6 +1747,8 @@ function main(w)
                 '#darkPage .userProfile strong {color: #fff; white-space: nowrap; line-height: 22px; display: block; float: left; width: 130px; height:22px; overflow: hidden; text-overflow: ellipsis; clear: both; }'+
                 '#darkPage .userProfile small {color: #999; display:block; float: left; clear: both; }'+
                 '#darkPage h2 {color: #eee; margin-top:0px;}'+
+                '#darkPage h3 {color: #eee; margin-top:0px;}'+
+                '#darkPage h4 {color: #eee; margin-top:0px;}'+
                 '#darkPage #left strong {color: #ddd; margin-top:0px; height: 25px; line-height: 25px; }'+
                 '#darkPage #left { padding: 10px; }'+
                 '#darkPage #left a { color: #aaa; }'+
