@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.2
+// @version 0.2.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -549,7 +549,7 @@ function main(w)
     {
         this.elements["right"].html('<div style="padding:20px;">'+
                                     '<h3>'+this.language.chatBot+'</h3>'+
-                                    '<input type="checkbox" id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
+                                    '<input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
                                     '<div style="float:left;margin-top:5px;"><span>'+this.language.chatbotEnabled+' </span></div>'+
                                     '<div style="float:left;clear:both;width:120px;"><span>'+this.language.chatBotInterval+':</span></div>'+
                                     '<div style="float:left;"><input type="number" min="60" id="chatBotInterval" value="'+(this.config.chatbot.interval/1000)+'" /></div>'+
