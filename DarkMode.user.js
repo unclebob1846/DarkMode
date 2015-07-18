@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.0
+// @version 0.2.1
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -568,7 +568,7 @@ function main(w)
         this.elements["waitForMassLike"] = $('#waitForMassLike');
                                     this.elements["chatBotInterval"] = $('#chatBotInterval');
         this.elements["chatBotInterval"].change(function(){
-            self.config.chatbot.interval = this.elements["chatBotInterval"].val() * 1000;
+            self.config.chatbot.interval = self.elements["chatBotInterval"].val() * 1000;
             self.config.chatbot.timeRemaining = self.config.chatbot.interval;
         });
         this.elements["chatBotMessages"] = $('#chatBotMessages');
@@ -848,7 +848,7 @@ function main(w)
             {
                 if (json["errorCode"] > 0)
                 {
-                    self.elements["right"].html('<div class="error">'+self.language.streamerOffline.replace("%1", self.currentStreamer.username)+'</div>');
+                    self.elements["right"].html('<div class="error">'+self.language.streamerOffline.replace("%1", name)+'</div>');
                 }
                 else 
                 {
@@ -1734,7 +1734,7 @@ function main(w)
                 '.navbar {border-bottom: 0px;background: #666; border-bottom: 1px solid #777 !important;}'+
                 '.nav-logo {float: left; width: 110px; margin-left: 10px; margin-right: 80px !important; }'+
                 '.navbar-content {width: 100% !important;min-width:0px !important; max-width: 100000px !important;}'+
-                'input[type=text], textarea {background:#333; font-size:11px; font-family: Segoe UI; color: #ddd !important; border: 1px solid #666;}'+
+                'input[type=text], input[type=number], textarea {background:#333; font-size:11px; font-family: Segoe UI; color: #ddd !important; border: 1px solid #666;}'+
                 '#darkPage {position:absolute; top: 50px; left: 0px; z-index:100; width: 100%; height: calc(100% - 50px);}'+
                 '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
                 '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
