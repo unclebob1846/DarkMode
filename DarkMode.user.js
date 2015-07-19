@@ -259,12 +259,16 @@ function main(w)
             {
                 if (this.massLiker.step == 'logout')
                 {
+                    this.massLiker.logoutTimeout = 5000;
                     this.youNow.session.logout();
                     this.massLiker.step = 'waitForLogout';
                     this.massLiker.stats.logouts++;
                 }
                 else if (this.massLiker.step == 'waitForLogout')
                 {
+                    this.massLiker.logoutTimeout -= 100;
+                    if (this.massLiker.logoutTimeout < 0)
+                        this.massLiker.step = 'logout';
                     if (this.youNow.session.user.userId == 0)
                     {
                         this.massLiker.step = 'login';
@@ -272,11 +276,15 @@ function main(w)
                 }
                 else if (this.massLiker.step == 'login')
                 {
+                    this.massLiker.loginTimeout = 5000;
                     this.youNow.session.auth(this.config.massLiker.login);
                     this.massLiker.step = 'waitForLogin';
                 }
                 else if (this.massLiker.step == 'waitForLogin')
                 {
+                    this.massLiker.loginTimeout -= 100;
+                    if (this.massLiker.loginTimeout < 0)
+                        this.massLiker.step = 'login';
                     if (this.youNow.session.user.userId != 0)
                     {
                         this.massLiker.currentTask = 'fetchingUsers';
