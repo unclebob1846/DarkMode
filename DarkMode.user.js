@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.6
+// @version 0.2.7
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -117,7 +117,7 @@ function main(w)
     
     w.DarkMode.prototype.massLikerLike = function(userNum)
     {
-        if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()))
+        if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()) == -1)
         {
             var self = this;
             $.ajax({
@@ -735,7 +735,7 @@ function main(w)
                                     '<div style="float:left;"><input style="width:150px;" value="'+this.config.massLiker.maxLikeCost+'" type="number" min="5" id="maxLikeCost" /></div>'+
                                     '<div style="margin-top:5px;color:#ddd;float:left; width: 120px; clear: both;">'+this.language.login+':</div>'+
                                     '<div style="margin-top:5px;float:left;"><select style="width:150px;" id="massLikerLogin">'+
-                                    '<option '+(this.config.massLiker.login == 'twitter'?"selected":"")+' value="twitter" name="twitter">Twitter</option>'+
+                                    '<option '+(this.config.massLiker.login == 'twitter'?"selected":"")+' value="Twitter" name="Twitter">Twitter</option>'+
                                     '<option '+(this.config.massLiker.login == 'instagram'?"selected":"")+' value="instagram" name="instagram">Instagram</option>'+
                                     '<option '+(this.config.massLiker.login == 'google'?"selected":"")+' value="google" name="google">Google+</option>'+
                                     '<option '+(this.config.massLiker.login == 'facebook'?"selected":"")+' value="facebook" name="facebook">Facebook</option>'+
