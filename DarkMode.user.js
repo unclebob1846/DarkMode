@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.5
+// @version 0.2.6
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -117,7 +117,7 @@ function main(w)
     
     w.DarkMode.prototype.massLikerLike = function(userNum)
     {
-        if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost)
+        if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()))
         {
             var self = this;
             $.ajax({
@@ -203,6 +203,7 @@ function main(w)
                                 {
                                     self.massLiker.users.push({
                                         'id': json.hits[i].objectID,
+                                        'profile': json.hits[i].profile,
                                         'cost': 5,
                                     });
                                 }
@@ -1728,6 +1729,9 @@ function main(w)
             likeThreshold: 800,
             active: false,
             login: "twitter",
+            ignoreUsers: [
+                "drachenlord_offiziell",
+            ],
         },
         ticks:
         {
