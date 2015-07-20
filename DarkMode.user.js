@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.0
+// @version 0.3.2
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -26,6 +26,28 @@ function main(w)
 
     w.DarkMode.prototype.init = function()
     {
+        var lVersion = "0.3.2";
+        if (window.localStorage.getItem("lastVersion") == lVersion)
+        {
+            if (window.localStorage.getItem("config.massLiker.likeThreshold") != null)
+                this.config.massLiker.likeThreshold = parseInt(window.localStorage.getItem("config.massLiker.likeThreshold"));
+            if (window.localStorage.getItem("config.massLiker.maxLikeCost") != null)
+                this.config.massLiker.maxLikeCost = parseInt(window.localStorage.getItem("config.massLiker.maxLikeCost"));
+            if (window.localStorage.getItem("config.massLiker.giftThreshold") != null)
+                this.config.massLiker.giftThreshold = parseInt(window.localStorage.getItem("config.massLiker.giftThreshold"));
+            if (window.localStorage.getItem("config.massLiker.keepCoins") != null)
+                this.config.massLiker.keepCoins = parseInt(window.localStorage.getItem("config.massLiker.keepCoins"));
+            if (window.localStorage.getItem("config.massLiker.login") != null)
+                this.config.massLiker.login = window.localStorage.getItem("config.massLiker.login");
+            if (window.localStorage.getItem("config.massLiker.giveGifts") != null)
+                this.config.massLiker.giveGifts = window.localStorage.getItem("config.massLiker.giveGifts")=="true";
+            if (window.localStorage.getItem("config.massLiker.alternative") != null)
+                this.config.massLiker.alternative = window.localStorage.getItem("config.massLiker.alternative")=="true";
+            if (window.localStorage.getItem("config.massLiker.ignoreUsers") != null)
+                this.config.massLiker.ignoreUsers = window.localStorage.getItem("config.massLiker.ignoreUsers").split("\n");
+            
+        }
+        window.localStorage.setItem("lastVersion", lVersion);
         this.UAParser = new UAParser();
         this.selectLanguage(null);
         this.lastTicks = {};
@@ -345,8 +367,16 @@ function main(w)
                         this.massLiker.step = 'login';
                     if (this.youNow.session.user.userId != 0)
                     {
-                        this.massLiker.currentTask = 'gifting';
-                        this.massLiker.step = 'check';
+                        if (this.config.massLiker.giveGifts)
+                        {
+                            this.massLiker.currentTask = 'gifting';
+                            this.massLiker.step = 'check';
+                        }
+                        else 
+                        {
+                            this.massLiker.currentTask = 'fetchingUsers';
+                            this.massLiker.step = 'sendingRequests';
+                        }
                     }
                 }
             }
@@ -902,6 +932,8 @@ function main(w)
                                     '<div style="float:left;"><input style="width:150px;" value="'+this.config.massLiker.maxLikeCost+'" type="number" min="5" id="maxLikeCost" /></div>'+
                                     '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.likeThreshold+':</div>'+
                                     '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.likeThreshold+'" type="number" min="800" id="likeThreshold" /></div>'+
+                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.giveGifts?'checked':'')+' type="checkbox" id="giveGifts" style="clear:both;margin-right:5px;margin-top:4px;float:left;" /></div>'+
+                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.giveGifts+' </span></div>'+
                                     '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.giftThreshold+':</div>'+
                                     '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.giftThreshold+'" type="number" id="giftThreshold" /></div>'+
                                     '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.keepCoins+':</div>'+
@@ -913,7 +945,7 @@ function main(w)
                                     '<option '+(this.config.massLiker.login == 'google'?"selected":"")+' value="google" name="google">Google+</option>'+
                                     '<option '+(this.config.massLiker.login == 'facebook'?"selected":"")+' value="facebook" name="facebook">Facebook</option>'+
                                     '</select></div>'+
-                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.alternative?'checked':'')+' type="checkbox" id="massLikerAlternative" style="clear:both;margin-right:5px;margin-top:8px;float:left;" /></div>'+
+                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.alternative?'checked':'')+' type="checkbox" id="massLikerAlternative" style="clear:both;margin-right:5px;margin-top:4px;float:left;" /></div>'+
                                     '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerAlternative+' </span></div>'+
                                     '</div>'+
                                     '<div style="float: left; width: 290px;">'+
@@ -954,6 +986,7 @@ function main(w)
         this.elements["ignoreUsers"] = $('#ignoreUsers');
         this.elements["ignoreUsers"].change(function(){
             self.config.massLiker.ignoreUsers = self.elements["ignoreUsers"].val().toLowerCase().split("\n");
+            window.localStorage.setItem("config.massLiker.ignoreUsers", self.elements["ignoreUsers"].val().toLowerCase());
         });
 
         this.elements["massLikerEnabled"] = $('#massLikerEnabled');
@@ -970,38 +1003,61 @@ function main(w)
                 self.config.massLiker.active = false;
         });
 
+        this.elements["giveGifts"] = $('#giveGifts');
+        this.elements["giveGifts"].change(function(){
+            if (self.elements["giveGifts"].is(":checked"))
+            {
+                window.localStorage.setItem("config.massLiker.giveGifts", "true");
+                self.config.massLiker.giveGifts = true;
+            }
+            else
+            {
+                window.localStorage.setItem("config.massLiker.giveGifts", "false");
+                self.config.massLiker.giveGifts = false;
+            }
+        });
+        
         this.elements["massLikerAlternative"] = $('#massLikerAlternative');
         this.elements["massLikerAlternative"].change(function(){
             if (self.elements["massLikerAlternative"].is(":checked"))
             {
+                window.localStorage.setItem("config.massLiker.alternative", "true");
                 self.config.massLiker.alternative = true;
             }
             else
+            {
+                window.localStorage.setItem("config.massLiker.alternative", "false");
                 self.config.massLiker.alternative = false;
+            }
         });
 
         this.elements["massLikerLogin"] = $('#massLikerLogin');
         this.elements["massLikerLogin"].change(function(){
             self.config.massLiker.login = self.elements["massLikerLogin"].val();
+            window.localStorage.setItem("config.massLiker.login", self.config.massLiker.login);
         });
 
         this.elements["giftThreshold"] = $('#giftThreshold');
         this.elements["giftThreshold"].change(function(){
             self.config.massLiker.giftThreshold = parseInt(self.elements["giftThreshold"].val());
+            window.localStorage.setItem("config.massLiker.giftThreshold", self.config.massLiker.giftThreshold);
         });
 
         this.elements["keepCoins"] = $('#keepCoins');
         this.elements["keepCoins"].change(function(){
             self.config.massLiker.keepCoins = parseInt(self.elements["keepCoins"].val());
+            window.localStorage.setItem("config.massLiker.keepCoins", self.config.massLiker.keepCoins);
         });
 
         this.elements["likeThreshold"] = $('#likeThreshold');
         this.elements["likeThreshold"].change(function(){
             self.config.massLiker.likeThreshold = parseInt(self.elements["likeThreshold"].val());
+            window.localStorage.setItem("config.massLiker.likeThreshold", self.config.massLiker.likeThreshold);
         });
         this.elements["maxLikeCost"] = $('#maxLikeCost');
         this.elements["maxLikeCost"].change(function(){
             self.config.massLiker.maxLikeCost = parseInt(self.elements["maxLikeCost"].val());
+            window.localStorage.setItem("config.massLiker.maxLikeCost", self.config.massLiker.maxLikeCost);
         });
 
         //this.elements["nextMessageIn"] = $('#nextMessageIn');
@@ -1892,6 +1948,7 @@ function main(w)
                 'keepCoins': 'Hohe Kante',
                 'giftThreshold': 'Bescherung ab',
                 'ignoreUsers': 'Unartige User',
+                'giveGifts': 'Bescherung',
                 'massLikerAlternative': 'Alternativer Suchmodus',
             }
         },
@@ -1967,6 +2024,7 @@ function main(w)
             login: "twitter",
             giftThreshold: 200000,
             keepCoins: 10000,
+            giveGifts: true,
             ignoreUsers: [
                 "drachenlord_offiziell",
                 "braui.93",
