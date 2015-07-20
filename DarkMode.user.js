@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.2.7
+// @version 0.3.0
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -14,16 +14,16 @@ function main(w)
 {
     function callback()
     {
-      window.DarkModeInstance = new window.DarkMode();
+        window.DarkModeInstance = new window.DarkMode();
     }
 
-    
+
     w.DarkModeInstance = null;
     w.DarkMode = function()
     {
         this.init();
     };
-    
+
     w.DarkMode.prototype.init = function()
     {
         this.UAParser = new UAParser();
@@ -46,7 +46,7 @@ function main(w)
         }
         this.createButton();
     };
-    
+
     w.DarkMode.prototype.applyDarkMode = function()
     {
         $('#main').remove();
@@ -70,7 +70,7 @@ function main(w)
         this.elements["left"].append((this.elements["trendingTagsHeader"] = $('<strong>'+this.language["trendingTags"]+'</strong>')));
         this.elements["left"].append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
         this.elements["left"].append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
-        
+
         $(document.body).append(this.page);
         $(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
         this.page.append(this.elements["left"]);
@@ -81,7 +81,7 @@ function main(w)
         this.youNow.urlRouter.listen = function(){};
         this.youNow.urlRouter.href = function(c, d, e){return ""; };
         this.youNow.urlRouter.push = function(c, d, e){ };
-        
+
         this.youNow.state.get = function(a, b){return true;};
         this.youNow.state.go = function(a, b, c){return true;};
         this.youNow.state.href = function(a, b, c){return "";};
@@ -95,7 +95,7 @@ function main(w)
         this.youNow.broadcasterService.switchToBroadcast = function(a){return false;};
         this.youNow.broadcasterService.trackBroadcaster = function(){return false;};
         this.youNow.broadcasterService.updateBroadcaster = function(a,b,d){return false;};
-        
+
         setInterval(function(){self.tick();}, 100);
         var b = window.localStorage.getItem("browse");
         if (b != null && b != "")
@@ -103,7 +103,7 @@ function main(w)
             window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/"+b);
             window.localStorage.setItem("browse", "");
         }
-        
+
         var a = $('.navbar-content');
         a.append($('<button id="commandCentral" class="btn-confirm btn pull-right" style="margin-right:10px;">'+this.language.commandCentral+'</button>'));
         a.append($('<div style="float: right;margin-top:-5px;margin-right: 10px;"><span id="nextMessageIn"></span></div>'));
@@ -111,10 +111,10 @@ function main(w)
         this.elements["nextMessageIn"] = $('#nextMessageIn');
         this.elements["commandCentral"] = $('#commandCentral');
         this.elements["commandCentral"].click(function(){
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/commandCentral");
+            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/");
         });
     };
-    
+
     w.DarkMode.prototype.massLikerLike = function(userNum)
     {
         if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()) == -1)
@@ -148,7 +148,18 @@ function main(w)
         }
         return false;
     };
-    
+
+    w.DarkMode.prototype.massLikerGift = function(send)
+    {
+        var self = this;
+        this.sendGift(send.id, send.giftId, send.quantity, function(){
+            self.massLiker.sentGifts++;
+            if (send.giftId == 25) self.massLiker.stats.spentHearts += send.quantity;
+            if (send.giftId == 21) self.massLiker.stats.spentHundredLikes += send.quantity;
+            self.massLiker.stats.spentCoins += send.cost;
+        });
+    };
+
     w.DarkMode.prototype.tickMassLike = function()
     {
         if (this.config.massLiker.active == true)
@@ -170,6 +181,9 @@ function main(w)
                         'givenLikes': 0,
                         'givenLikesRound': 0,
                         'logouts': 0,
+                        'spentCoins': 0,
+                        'spentHearts': 0,
+                        'spentHundredLikes': 0,
                     }
                 };
             }
@@ -181,40 +195,84 @@ function main(w)
                     this.massLiker.users = [];
                     this.massLiker.currentTask = "fetchingUsers";
                     this.massLiker.userRequestsFinished = 0;
+                    this.massLiker.userRequestsSent = 10;
                     this.massLiker.step = "waiting";
-                    for (var i = 0; i < 10; i++)
-                    {
+                    if (this.config.massLiker.alternative){
                         $.ajax({
-                            url: 'https://qz0xcgubgq.algolia.io/1/indexes/'+this.youNow.config.settings.PeopleSearchIndex+'/query', 
-                            jsonp: "callback",
-                            method: "POST",
-                            contentType: "application/json;charset=UTF-8",
-                            data: "{\"params\":\"query=&hitsPerPage=100&page="+i+"&attributesToHighlight=none\"}",
-                            processData: false,
-                            headers: {
-                                "X-Algolia-API-Key":this.youNow.config.settings.PeopleSearchApiKey,
-                                "X-Algolia-Application-Id":this.youNow.config.settings.PeopleSearchAppId,
-                                "X-Algolia-TagFilters":this.youNow.config.settings.PeopleSearchSecurityTags,
-                            },
+                            url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=0/locale=ww', 
+                            method: "GET",
                             dataType: "json",
                             success: function(json, b, c)
                             {
-                                for (var i = 0; i < json.hits.length; i++)
+                                for (var j = 0; j < json["trending_users"].length; j++)
                                 {
                                     self.massLiker.users.push({
-                                        'id': json.hits[i].objectID,
-                                        'profile': json.hits[i].profile,
+                                        'id': json["trending_users"][j].userId,
+                                        'profile': json["trending_users"][j].profile,
                                         'cost': 5,
                                     });
                                 }
+                                var pages = Math.ceil(json["total"] / 50);
+                                for (var l = 1; l < pages; l++)
+                                {
+                                    $.ajax({
+                                        url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom='+(50 * l)+'/locale=ww', 
+                                        method: "GET",
+                                        dataType: "json",
+                                        success: function(jsonx, b, c)
+                                        {
+                                            for (var k = 0; k < jsonx["trending_users"].length; k++)
+                                            {
+                                                self.massLiker.users.push({
+                                                    'id': jsonx["trending_users"][k].userId,
+                                                    'profile': jsonx["trending_users"][k].profile,
+                                                    'cost': 5,
+                                                });
+                                            }
+                                            self.massLiker.userRequestsFinished++;
+                                        }
+                                    });
+                                }
+                                self.massLiker.userRequestsSent = pages;
                                 self.massLiker.userRequestsFinished++;
                             }
                         });
                     }
-                } 
+                    else {
+                        for (var i = 0; i < 10; i++)
+                        {
+                            $.ajax({
+                                url: 'https://qz0xcgubgq.algolia.io/1/indexes/'+this.youNow.config.settings.PeopleSearchIndex+'/query', 
+                                jsonp: "callback",
+                                method: "POST",
+                                contentType: "application/json;charset=UTF-8",
+                                data: "{\"params\":\"query=&hitsPerPage=100&page="+i+"&attributesToHighlight=none\"}",
+                                processData: false,
+                                headers: {
+                                    "X-Algolia-API-Key":this.youNow.config.settings.PeopleSearchApiKey,
+                                    "X-Algolia-Application-Id":this.youNow.config.settings.PeopleSearchAppId,
+                                    "X-Algolia-TagFilters":this.youNow.config.settings.PeopleSearchSecurityTags,
+                                },
+                                dataType: "json",
+                                success: function(json, b, c)
+                                {
+                                    for (var i = 0; i < json.hits.length; i++)
+                                    {
+                                        self.massLiker.users.push({
+                                            'id': json.hits[i].objectID,
+                                            'profile': json.hits[i].profile,
+                                            'cost': 5,
+                                        });
+                                    }
+                                    self.massLiker.userRequestsFinished++;
+                                }
+                            });
+                        }
+                    } 
+                }
                 else if (this.massLiker.step == "waiting")
                 {
-                    if (this.massLiker.userRequestsFinished == 10)
+                    if (this.massLiker.userRequestsFinished == this.massLiker.userRequestsSent)
                     {
                         this.massLiker.currentTask = "liking";
                         this.massLiker.step = "sendingRequests";
@@ -225,11 +283,11 @@ function main(w)
             {
                 if (this.massLiker.step == 'sendingRequests')
                 {
-                    
+
                     this.youNow.session.getSession();
                     this.massLiker.stats.currentRoundStart = new Date();
                     this.massLiker.stats.currentRound++;
-                    
+
                     this.massLiker.likeRequestsFinished = 0;
                     this.massLiker.stats.givenLikesRound = 0;
                     var sent = 0;
@@ -287,12 +345,101 @@ function main(w)
                         this.massLiker.step = 'login';
                     if (this.youNow.session.user.userId != 0)
                     {
+                        this.massLiker.currentTask = 'gifting';
+                        this.massLiker.step = 'check';
+                    }
+                }
+            }
+            else if (this.massLiker.currentTask == 'gifting')
+            {
+                if (this.massLiker.step == 'check')
+                {
+                    if (this.youNow.session.user.coins > this.config.massLiker.giftThreshold)
+                    {
+                        this.massLiker.step = 'fetchingUsers';
+                    }
+                    else 
+                    {
+                        this.massLiker.currentTask = 'fetchingUsers';
+                        this.massLiker.step = 'sendingRequests';
+                    }
+                } 
+                else if (this.massLiker.step == 'fetchingUsers')
+                {
+                    this.massLiker.giftUsers = [];
+                    this.massLiker.step = 'waiting';
+                    $.ajax({
+                        url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=1000000/locale=ww', 
+                        method: "GET",
+                        dataType: "json",
+                        success: function(json, b, c)
+                        {
+                            var index = json["total"] - 50;
+                            $.ajax({
+                                url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom='+index+'/locale=ww', 
+                                method: "GET",
+                                dataType: "json",
+                                success: function(json, b, c)
+                                {
+                                    for (var i = 0; i < json["trending_users"].length; i++)
+                                    {
+                                        if (json["trending_users"][i].viewers <= 1 && self.config.massLiker.ignoreUsers.indexOf(json["trending_users"][i].profile.toLowerCase()) == -1)
+                                            self.massLiker.giftUsers.push({id: json["trending_users"][i].userId});
+                                    }
+                                    self.massLiker.step = 'sending';
+                                }
+                            });
+                        }
+                    });
+                }
+                else if (this.massLiker.step == 'sending')
+                {
+                    var remainingCoins = this.youNow.session.user.coins - this.config.massLiker.keepCoins;
+                    var startCoins = remainingCoins - 0;
+                    var currentLevel = this.youNow.session.user.realLevel;
+
+                    var sendList = [];
+                    for (var i = 0; i < this.massLiker.giftUsers.length; i++)
+                    {
+                        if (currentLevel >= 3 && remainingCoins > 30000)
+                        {
+                            sendList.push({'id':this.massLiker.giftUsers[i].id, 'giftId': 21, 'quantity': 1, 'cost': 30000});
+                            remainingCoins -= 30000;
+                        }
+                        else if (remainingCoins >= 100) 
+                        {
+                            var quantity = Math.floor(remainingCoins / 100);
+                            if (currentLevel < 3 && quantity >= 100)
+                                quantity = 100;
+                            else if (quantity >= 12)
+                                quantity = Math.floor(5 + Math.random() * 6);
+                            sendList.push({'id':this.massLiker.giftUsers[i].id, 'giftId': 25, 'quantity': quantity, 'cost': quantity * 100});
+                            remainingCoins -= quantity * 100;
+                        }
+                        else 
+                        {
+                            break;
+                        }
+                    }
+
+                    this.massLiker.giftsToSend = sendList.length;
+                    this.massLiker.sentGifts = 0;
+                    for (var i = 0; i < sendList.length; i++)
+                    {
+                        this.massLikerGift(sendList[i]);
+                    }
+                    this.massLiker.step = 'love';
+                }
+                else if (this.massLiker.step == 'love')
+                {
+                    if (this.massLiker.giftsToSend == this.massLiker.sentGifts)
+                    {
                         this.massLiker.currentTask = 'fetchingUsers';
                         this.massLiker.step = 'sendingRequests';
                     }
                 }
             }
-            
+
             var stats = $('#massLikerStats');
             if (stats.length > 0)
             {
@@ -318,7 +465,13 @@ function main(w)
                                '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.usersCount+':</div>'+
                                '<div style="float:left; color: #ddd; width: 400px;" id="usersCount">'+this.addCommas(this.massLiker.users.length)+':</div>'+
                                '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.logins+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="logouts">'+this.addCommas(this.massLiker.stats.logouts)+':</div>');
+                               '<div style="float:left; color: #ddd; width: 400px;" id="logouts">'+this.addCommas(this.massLiker.stats.logouts)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentCoins+':</div>'+
+                               '<div style="float:left; color: #ddd; width: 400px;" id="spentCoins">'+this.addCommas(this.massLiker.stats.spentCoins)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentHearts+':</div>'+
+                               '<div style="float:left; color: #ddd; width: 400px;" id="spentHearts">'+this.addCommas(this.massLiker.stats.spentHearts)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentHundredLikes+':</div>'+
+                               '<div style="float:left; color: #ddd; width: 400px;" id="spentHundredLikes">'+this.addCommas(this.massLiker.stats.spentHundredLikes)+'</div>');
                     this.elements["runningTime"] = $('#runningTime');
                     this.elements["likesPerSecond"] = $('#likesPerSecond');
                     this.elements["currentRound"] = $('#currentRound');
@@ -329,6 +482,9 @@ function main(w)
                     this.elements["usersCount"] = $('#usersCount');
                     this.elements["uniqueUsers"] = $('#uniqueUsers');
                     this.elements["logouts"] = $('#logouts');
+                    this.elements["spentCoins"] = $('#spentCoins');
+                    this.elements["spentHearts"] = $('#spentHearts');
+                    this.elements["spentHundredLikes"] = $('#spentHundredLikes');
                 }
                 this.elements["runningTime"].html(this.parseTime((d.getTime() - this.massLiker.stats.start.getTime()) / 1000));
                 this.elements["likesPerSecond"].html(this.addCommas(likesPerSecond));
@@ -340,11 +496,14 @@ function main(w)
                 this.elements["usersCount"].html(this.addCommas(this.massLiker.users.length));
                 this.elements["uniqueUsers"].html(this.addCommas(this.massLiker.stats.uniqueUsers));
                 this.elements["logouts"].html(this.addCommas(this.massLiker.stats.logouts));
+                this.elements["spentCoins"].html(this.addCommas(this.massLiker.stats.spentCoins));
+                this.elements["spentHearts"].html(this.addCommas(this.massLiker.stats.spentHearts));
+                this.elements["spentHundredLikes"].html(this.addCommas(this.massLiker.stats.spentHundredLikes));
             }
         }
-        
+
     };
-    
+
     w.DarkMode.prototype.tick = function()
     {
         var d = new Date();
@@ -369,7 +528,7 @@ function main(w)
         var time = cTime - this.lastTick;
         if (this.massLikeTimer > 0) {
             this.massLikeTimer -= time;
-            
+
             if (this.elements["waitForMassLike"] != null)
             {
                 if (this.massLikeTimer <= 0)
@@ -383,7 +542,7 @@ function main(w)
             this.elements["nextMessageIn"].html('<strong>'+this.language.chatBot+'</strong><br />'+this.language.nextMessageIn + ' ' + this.parseTime(this.config.chatbot.timeRemaining / 1000));
             if (this.lastTick != null)
             {
-                
+
                 this.config.chatbot.timeRemaining -= time;
                 if (this.config.chatbot.timeRemaining <= 0)
                 {
@@ -398,7 +557,7 @@ function main(w)
         }
         this.lastTick = cTime;
     };
-    
+
     w.DarkMode.prototype.tickOnlineFriends = function()
     {
         if (this.youNow.session.user != null && this.youNow.session.user.userId > 0)
@@ -429,7 +588,7 @@ function main(w)
             });
         }
     };
-    
+
     w.DarkMode.prototype.updateTooltip = function(data)
     {
         if (data["type"] == "streamer" || data["type"] == "friend")
@@ -464,10 +623,10 @@ function main(w)
     };
     w.DarkMode.prototype.showTooltip = function(e, data)
     {
-        
+
         this.elements["tooltip"].css("left", e.pageX + 5);
         this.elements["tooltip"].css("display", "block");
-        
+
         if (this.lastTooltipObject != data)
         {
             this.updateTooltip(data);
@@ -479,7 +638,7 @@ function main(w)
             this.elements["tooltip"].css("top", e.pageY + 5);
         else 
             this.elements["tooltip"].css("top", e.pageY - 5 - this.elements["tooltip"].height());
-        
+
     };
     w.DarkMode.prototype.addCommas = function(n){
         var rx=  /(\d+)(\d{3})/;
@@ -494,7 +653,7 @@ function main(w)
     {
         this.elements["tooltip"].css("display", "none");
     };
-    
+
     w.DarkMode.prototype.tickUpdateStreamData = function()
     {
         if (this.currentStreamer != null)
@@ -504,7 +663,7 @@ function main(w)
             this.updateStreamerInfo();
         }
     };
-    
+
     w.DarkMode.prototype.tickReloadStreamData = function()
     {
         if ($('#stream').length > 0 && this.currentStreamer != null)
@@ -529,7 +688,7 @@ function main(w)
             });
         }
     };
-    
+
     w.DarkMode.prototype.tickReloadTagTrending = function()
     {
         if ($('#stream').length > 0 && this.currentStreamer != null)
@@ -556,7 +715,7 @@ function main(w)
             });
         }
     };
-    
+
     w.DarkMode.prototype.like = function(channelId)
     {
         var self = this;
@@ -578,7 +737,7 @@ function main(w)
             }
         });
     };
-    
+
     w.DarkMode.prototype.addTrendingUser = function(data)
     {
         var el = $('<a href="/hidden/'+data.profile+'"><img src="'+this.getBroadcastPicture(data.broadcastId)+'" /></a>');
@@ -598,7 +757,7 @@ function main(w)
         el.mouseout(function(e){self.hideTooltip();});
         this.elements["trendingList"].append(el);
     };
-    
+
     w.DarkMode.prototype.tickUpdateViewers = function()
     {
         if (this.currentStreamer != null && this.elements["viewerList"] != null && this.elements["viewerList"].css("display") == "block")
@@ -616,13 +775,13 @@ function main(w)
                     {
                         self.elements["viewerList"].append($('<li><a href="/hidden/'+json.audience[i].name+'"><img width="34" height="34" src="'+self.getProfilePicture(json.audience[i].userId)+'" /><span><img src="'+self.config.images.star+'" />'+json.audience[i].level+' '+json.audience[i].name+'<small>'+json.audience[i].location.country+' ('+json.audience[i].fans+' '+self.language.fans+')</small></span></a></li>'));
                     }
-                    
+
                     //self.addSearchElements(json);
                 }
             });
         }
     };
-    
+
     w.DarkMode.prototype.tickTrending = function()
     {
         var self = this;
@@ -648,18 +807,18 @@ function main(w)
                     self.elements["editorsPickArrow"].css("display", "none")
                     self.elements["editorsPickContent"].css("display", "none")
                 }
-                    self.elements["trendingPeopleContent"].html("");
+                self.elements["trendingPeopleContent"].html("");
                 for (i = 0; i < json["trending_users"].length; i++)
                     self.addSideEntry(json["trending_users"][i], self.elements["trendingPeopleContent"]);
                 self.elements["trendingTagsContent"].html("");
                 for (i = 0; i < json["trending_tags"].length; i++)
                     self.addSideEntry(json["trending_tags"][i], self.elements["trendingTagsContent"]);
-                
+
                 //self.addSearchElements(json);
             }
         });
     };
-    
+
     w.DarkMode.prototype.addSideEntry = function(data, container)
     {
         if (data["tag"] != null)
@@ -711,7 +870,7 @@ function main(w)
             el.mouseout(function(e){self.hideTooltip();});
         }
     };
-    
+
     w.DarkMode.prototype.tickRouting = function()
     {
         var location = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
@@ -725,11 +884,11 @@ function main(w)
             this.updatePage();
         }
     };
-    
+
     w.DarkMode.prototype.commandCentral = function()
     {
         this.elements["right"].html('<div style="padding:20px;">'+
-                                    '<h3>'+this.language.chatBot+'</h3>'+
+                                    /*'<h3>'+this.language.chatBot+'</h3>'+
                                     '<div style="float:left; clear: both; margin-left: 120px;"><input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
                                     '<div style="float:left;margin-top:5px;"><span>'+this.language.chatbotEnabled+' </span></div></div>'+
                                     '<div style="float:left;clear:both;width:120px;"><span>'+this.language.chatBotInterval+':</span></div>'+
@@ -737,27 +896,38 @@ function main(w)
                                     '<div style="float:left; clear: both;margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotMessage+'</h4>'+
                                     '<textarea id="chatBotMessages" style="width:100%; height: 200px;">'+this.config.chatbot.messages.join("\n")+'</textarea></div>'+
                                     '<div style="float:left; margin-left: 10px; margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotIgnored+'</h4>'+
-                                    '<textarea id="chatBotIgnored" style="width:100%; height: 200px;">'+this.config.chatbot.knownIdiots.join("\n")+'</textarea></div>'+
-                                    '<h3 style="clear: both;margin-top: 10px;float: left;">'+this.language.massLike+'</h3>'+
-                                    '<div style="color:#ddd;float:left; width: 120px; clear: both;">'+this.language.massLikeCost+':</div>'+
+                                    '<textarea id="chatBotIgnored" style="width:100%; height: 200px;">'+this.config.chatbot.knownIdiots.join("\n")+'</textarea></div>'+*/
+                                    '<h3 style="clear: both;margin-top: 0px;float: left;">'+this.language.massLike+'</h3>'+
+                                    '<div style="float:left; clear:both; width: 340px;"><div style="color:#ddd;float:left; width: 170px; clear: both;">'+this.language.massLikeCost+':</div>'+
                                     '<div style="float:left;"><input style="width:150px;" value="'+this.config.massLiker.maxLikeCost+'" type="number" min="5" id="maxLikeCost" /></div>'+
-                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 120px; clear: both;">'+this.language.login+':</div>'+
+                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.likeThreshold+':</div>'+
+                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.likeThreshold+'" type="number" min="800" id="likeThreshold" /></div>'+
+                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.giftThreshold+':</div>'+
+                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.giftThreshold+'" type="number" id="giftThreshold" /></div>'+
+                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.keepCoins+':</div>'+
+                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.keepCoins+'" type="number" id="keepCoins" /></div>'+
+                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.login+':</div>'+
                                     '<div style="margin-top:5px;float:left;"><select style="width:150px;" id="massLikerLogin">'+
                                     '<option '+(this.config.massLiker.login == 'twitter'?"selected":"")+' value="Twitter" name="Twitter">Twitter</option>'+
                                     '<option '+(this.config.massLiker.login == 'instagram'?"selected":"")+' value="instagram" name="instagram">Instagram</option>'+
                                     '<option '+(this.config.massLiker.login == 'google'?"selected":"")+' value="google" name="google">Google+</option>'+
                                     '<option '+(this.config.massLiker.login == 'facebook'?"selected":"")+' value="facebook" name="facebook">Facebook</option>'+
                                     '</select></div>'+
-                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 120px; clear: both;">'+this.language.likeThreshold+':</div>'+
-                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.likeThreshold+'" type="number" min="800" id="likeThreshold" /><span style="margin-left: 5px;">'+this.language.dontChange+'</span></div>'+
-                                    '<div style="float:left; clear: both; margin-left: 120px; margin-top:5px;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
-                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerEnabled+' </span></div></div>'+
-                                    '<div id="massLikerStats"></div>'+
-                                    '</div>');
+                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.alternative?'checked':'')+' type="checkbox" id="massLikerAlternative" style="clear:both;margin-right:5px;margin-top:8px;float:left;" /></div>'+
+                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerAlternative+' </span></div>'+
+                                    '</div>'+
+                                    '<div style="float: left; width: 290px;">'+
+                                    '<strong style="color:#ddd;">'+this.language.ignoreUsers+'</strong>'+
+                                    '<textarea id="ignoreUsers" style="width:100%; height: 103px;">'+this.config.massLiker.ignoreUsers.join("\n")+'</textarea>'+
+            '</div>'+
+            '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
+            '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerEnabled+' </span></div></div>'+
+            '<div id="massLikerStats"></div>'+
+            '</div>');
         var self = this;
         //a.append($('<div style="margin-top:-5px;color:#ddd; margin-right:10px;" class="pull-right"><input type="checkbox" id="chatBotEnabled" style="margin-right:5px;margin-top:3px;float:left;" /><div style="float:left;"><span>'+this.language.chatbotEnabled+' <br />'+this.language.nextMessageIn+' </span><span id="nextMessageIn">'+this.parseTime(this.config.chatbot.timeRemaining)+'</span></div></div>'));
         this.elements["massLikerStats"] = $('#massLikerStats');
-        this.elements["chatBotInterval"] = $('#chatBotInterval');
+        /*this.elements["chatBotInterval"] = $('#chatBotInterval');
         this.elements["chatBotInterval"].change(function(){
             self.config.chatbot.interval = self.elements["chatBotInterval"].val() * 1000;
             self.config.chatbot.timeRemaining = self.config.chatbot.interval;
@@ -779,9 +949,13 @@ function main(w)
             }
             else
                 self.config.chatbot.active = false;
+        });*/
+
+        this.elements["ignoreUsers"] = $('#ignoreUsers');
+        this.elements["ignoreUsers"].change(function(){
+            self.config.massLiker.ignoreUsers = self.elements["ignoreUsers"].val().toLowerCase().split("\n");
         });
-        
-        
+
         this.elements["massLikerEnabled"] = $('#massLikerEnabled');
         this.elements["massLikerEnabled"].change(function(){
             if (self.elements["massLikerEnabled"].is(":checked"))
@@ -789,27 +963,47 @@ function main(w)
                 self.config.massLiker.active = true;
                 if (self.massLiker != null)
                 {
-                    self.massLiker.stats.start = new Date();
+                    self.massLiker = null;
                 }
             }
             else
                 self.config.massLiker.active = false;
         });
-        
+
+        this.elements["massLikerAlternative"] = $('#massLikerAlternative');
+        this.elements["massLikerAlternative"].change(function(){
+            if (self.elements["massLikerAlternative"].is(":checked"))
+            {
+                self.config.massLiker.alternative = true;
+            }
+            else
+                self.config.massLiker.alternative = false;
+        });
+
         this.elements["massLikerLogin"] = $('#massLikerLogin');
         this.elements["massLikerLogin"].change(function(){
             self.config.massLiker.login = self.elements["massLikerLogin"].val();
         });
-        
+
+        this.elements["giftThreshold"] = $('#giftThreshold');
+        this.elements["giftThreshold"].change(function(){
+            self.config.massLiker.giftThreshold = parseInt(self.elements["giftThreshold"].val());
+        });
+
+        this.elements["keepCoins"] = $('#keepCoins');
+        this.elements["keepCoins"].change(function(){
+            self.config.massLiker.keepCoins = parseInt(self.elements["keepCoins"].val());
+        });
+
         this.elements["likeThreshold"] = $('#likeThreshold');
         this.elements["likeThreshold"].change(function(){
-            self.config.massLiker.likeThreshold = self.elements["likeThreshold"].val();
+            self.config.massLiker.likeThreshold = parseInt(self.elements["likeThreshold"].val());
         });
         this.elements["maxLikeCost"] = $('#maxLikeCost');
         this.elements["maxLikeCost"].change(function(){
-            self.config.massLiker.maxLikeCost = self.elements["maxLikeCost"].val();
+            self.config.massLiker.maxLikeCost = parseInt(self.elements["maxLikeCost"].val());
         });
-        
+
         //this.elements["nextMessageIn"] = $('#nextMessageIn');
     };
     w.DarkMode.prototype.updatePage = function()
@@ -820,8 +1014,9 @@ function main(w)
             this.pusher = null;
         }
         this.elements["right"].html("");
-        if (this.path.length == 0)
+        if (this.path.length == 0 || this.path[0] == "")
         {
+            this.commandCentral();
         }
         else if (this.path[0] == "hidden")
         {
@@ -852,9 +1047,31 @@ function main(w)
             window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/"+window.location.href.replace("http://www.younow.com/",""));
         }
     };
-    
+
+    w.DarkMode.prototype.sendGift = function(streamId, giftId, quantity, callback)
+    {
+        $.ajax({
+            url: 'http://www.younow.com/php/api/broadcast/gift', 
+            jsonp: "callback",
+            method: "POST",
+            dataType: "json",
+            data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "giftId": giftId, "quantity": quantity},
+            success: function(json, b, c)
+            {
+                if (callback != null)
+                    callback();
+            },
+            error: function(a, b, c)
+            {
+                if (callback != null)
+                    callback();
+            }
+        });
+    };
     w.DarkMode.prototype.sendChatMessage = function(streamId, message)
     {
+        this.sendGift(streamId, 25, 100);
+        return null;
         if (this.elements["writeInChat"].is(':checked'))
         {
             $.ajax({
@@ -999,7 +1216,7 @@ function main(w)
             this.elements["shareCount"]      = $('#shareCount');
             this.elements["viewerCount"]     = $('#viewerCount');
             this.elements["streamTime"]      = $('#streamTime');
-            
+
             this.elements["chatButton"]      = $('#chatButton');
             this.elements["chatOptions"]     = $('#chatOptions');
             this.elements["audienceButton"]  = $('#audienceButton');
@@ -1137,7 +1354,7 @@ function main(w)
             this.elements["shareCount"].html(this.addCommas(this.currentStreamer.shares));
             this.elements["viewerCount"].html(this.addCommas(this.currentStreamer.viewers));;
             this.elements["streamTime"].html(this.parseTime(this.duration));
-            
+
             var device = this.currentStreamer.broadcasterInfo.substring(0, this.currentStreamer.broadcasterInfo.indexOf('{'));
             var connection = "";
             var osVersion = "";
@@ -1163,7 +1380,7 @@ function main(w)
                 device = this.UAParser.getDevice().vendor + " " + this.UAParser.getDevice().model;
                 device = device.replace("undefined", "").replace("undefined", "").trim();
             }
-            
+
             if (this.streamerUpdated)
             {
                 this.elements["infoList"].html('<h2>Streamer</h2>'+
@@ -1223,7 +1440,7 @@ function main(w)
         else time += "0"+seconds;
         return time;
     };
-            
+
     w.DarkMode.prototype.explore = function(query, page)
     {
         var el = $('<div id="userList"></div>');
@@ -1251,7 +1468,7 @@ function main(w)
         };
         this.addSearchResults();
     };
-    
+
     w.DarkMode.prototype.addSearchResults = function()
     {
         this.currentSearch.loading = true;
@@ -1274,7 +1491,7 @@ function main(w)
                     self.addSearchElements(json);
                 }
             });
-            
+
         }
         else if (this.currentSearch.query.charAt(0) == "#")
         {
@@ -1319,7 +1536,7 @@ function main(w)
             });
         }
     };
-    
+
     w.DarkMode.prototype.parseNumber = function(n)
     {
         var self = this;
@@ -1331,7 +1548,7 @@ function main(w)
             return w;
         });
     };
-    
+
     w.DarkMode.prototype.addSearchElements = function(json)
     {
         if (json["trending_users"] != null)
@@ -1356,7 +1573,7 @@ function main(w)
             }
         }
     };
-    
+
     w.DarkMode.prototype.createProfileBox = function(data)
     {
         var userid = "";
@@ -1387,7 +1604,7 @@ function main(w)
             tagSpan = '<span>#'+tag+'</span>';
         return $('<a href="/hidden/'+username+'" class="userProfile"><div><img src="'+this.getProfilePicture(userid)+'" />'+tagSpan+'</div><strong><img src="'+this.config.images.star+'" />'+level+' '+username+'</strong><small>'+this.parseNumber(fans)+' '+this.language.fans+'</small></a>');
     };
-    
+
     w.DarkMode.prototype.addChatMessage = function(message)
     {
         var wasBottom = false;
@@ -1401,17 +1618,17 @@ function main(w)
             this.elements["chatMessages"].animate({ scrollTop: this.elements["chatMessages"][0].scrollHeight}, 200)
         }
     };
-    
+
     w.DarkMode.prototype.getBroadcastPicture = function(broadcastId)
     {
         return this.youNow.config.broadcasterThumb+broadcastId;
     };
-    
+
     w.DarkMode.prototype.getProfilePicture = function(userid)
     {
         return 'http://cdn2.younow.com/php/api/channel/getImage/channelId='+userid;
     };
-    
+
     w.DarkMode.prototype.hijackAngular = function()
     {
         function allServices(mod, r) {
@@ -1423,7 +1640,7 @@ function main(w)
             });
             return r;
         }
-        
+
         var r = allServices('younow');
         console.log(r);
         this.youNow = {
@@ -1443,9 +1660,9 @@ function main(w)
             twitter: r["twitter"],
             googleplus: r["google"],
         };
-        
+
     };
-    
+
     w.DarkMode.prototype.tickChatBot = function()
     {
         if (this.config.chatbot.active)
@@ -1502,7 +1719,7 @@ function main(w)
             });
         }
     };
-    
+
     w.DarkMode.prototype.youNow = {};
     w.DarkMode.prototype.selectLanguage = function(s) 
     {
@@ -1514,16 +1731,16 @@ function main(w)
         this.language = this.config.languages[s];
     }
     w.DarkMode.prototype.inDarkMode = false;
-    
+
     w.DarkMode.prototype.createButton = function()
     {
         var container = $(".user-actions");
         var button = $(".user-actions").find("[translate=header_golive]");
         var self = this;
-        
+
         this.button = $("<button></button>");
         this.button.attr("class", "pull-right btn btn-primary");
-        
+
         if (this.inDarkMode == "1")
         {
             this.button.html(this.language["goLight"]);
@@ -1538,9 +1755,9 @@ function main(w)
         }
         this.button.css('height', '27');
         this.button.css('visibility', 'visible');
-        
+
         this.button.insertAfter(container);
-        
+
         this.button.click(function(){
             window.localStorage.setItem("inDarkMode", self.inDarkMode=="1"?"0":"1");
             if (self.inDarkMode == "1")
@@ -1553,12 +1770,12 @@ function main(w)
                 window.location.href = "http://www.younow.com/explore/";
             }
         });
-        
+
         button.remove();
     };
-    
+
     w.DarkMode.prototype.config = 
-    {
+        {
         images:
         {
             "logo": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/whore.png",
@@ -1665,6 +1882,17 @@ function main(w)
                 'likesPerSecond': 'Likes pro Sekunde',
                 'currentRound': 'Runde',
                 'currentRoundTime': 'Rundenzeit',
+                'spentCoins': 'Ausgegebene Coins',
+                'spentHearts': 'Verschickte Herzen',
+                'spentHundredLikes': 'Verschickte 100x Likes',
+                'love': 'Lieeebeee',
+                'sending': 'Verschicken',
+                'gifting': 'Bescherung',
+                'check': 'Prüfen...',
+                'keepCoins': 'Hohe Kante',
+                'giftThreshold': 'Bescherung ab',
+                'ignoreUsers': 'Unartige User',
+                'massLikerAlternative': 'Alternativer Suchmodus',
             }
         },
         deviceMapping:
@@ -1737,27 +1965,31 @@ function main(w)
             likeThreshold: 800,
             active: false,
             login: "twitter",
+            giftThreshold: 200000,
+            keepCoins: 10000,
             ignoreUsers: [
                 "drachenlord_offiziell",
+                "braui.93",
+                "anku",
             ],
-        },
-        ticks:
-        {
-            trending: 5000,
-            onlineFriends: 5000,
-            routing: 100,
-            reloadStreamData: 5000,
-            updateStreamData: 1000,
-            reloadTagTrending: 5000,
-            updateViewers: 5000,
-            massLike: 100,
-        },
-        chatbot: {
-            timeRemaining: 2 * 60 * 1000,
-            interval: 2 * 60 * 1000,
-            active: false,
-            tag: "deutsch",
-            knownIdiots: [
+                },
+                ticks:
+                {
+                trending: 5000,
+                onlineFriends: 5000,
+                routing: 100,
+                reloadStreamData: 5000,
+                updateStreamData: 1000,
+                reloadTagTrending: 5000,
+                updateViewers: 5000,
+                massLike: 100,
+                },
+                chatbot: {
+                timeRemaining: 2 * 60 * 1000,
+                interval: 2 * 60 * 1000,
+                active: false,
+                tag: "deutsch",
+                knownIdiots: [
                 "braui.93",
             ],
             messages: [
@@ -1927,38 +2159,38 @@ function main(w)
                 "Wann warst du das letzte mal bei Burger King?",
                 "Was ist dein Lieblings-Videospiel?",
             ],
-        }
-    };
-    
-    WebFontConfig = {
-        google: { families: [ 'Shadows+Into+Light::latin' ] },
+                }
+                };
+
+                WebFontConfig = {
+                google: { families: [ 'Shadows+Into+Light::latin' ] },
         active: function()
         {
             var o = 0.0;
             ab = setInterval(function()
-            {
-                o += 0.05;
-                if (o >= 1)
-                {
-                    o = 1;
-                    clearInterval(ab);
-                }
-                document.getElementById("darkModeLoaderLabel").style.opacity = o;
-            }, 20);
+                             {
+                                 o += 0.05;
+                                 if (o >= 1)
+                                 {
+                                     o = 1;
+                                     clearInterval(ab);
+                                 }
+                                 document.getElementById("darkModeLoaderLabel").style.opacity = o;
+                             }, 20);
         }
     };
     (function() {
-      var wf = document.createElement('script');
-      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-      
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+
     })();
-    
-    
+
+
     // rerouting if in user is in dark mode
     if (window.localStorage.getItem("inDarkMode") == "1")
     {
@@ -1970,7 +2202,7 @@ function main(w)
         }
     }
 
-    
+
     function startDarkMode()
     {
         var css = '.btn-primary { width: auto !important; } ' +
@@ -2101,7 +2333,7 @@ function main(w)
             clearInterval(waitForYouNow);
         }
     }, 100);
-    
+
 }
 
 // Inject our main script. Yes, this is bad. But you are trying to do bad things either.
