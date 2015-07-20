@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.2
+// @version 0.3.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -135,6 +135,9 @@ function main(w)
         this.elements["commandCentral"].click(function(){
             window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/");
         });
+        
+        $(document.body).append((this.onSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/on.mp3" />')));
+        $(document.body).append((this.offSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/off.mp3" />')));
     };
 
     w.DarkMode.prototype.massLikerLike = function(userNum)
@@ -993,6 +996,8 @@ function main(w)
         this.elements["massLikerEnabled"].change(function(){
             if (self.elements["massLikerEnabled"].is(":checked"))
             {
+                self.onSound.prop("currentTime",0);
+                self.onSound.trigger("play");
                 self.config.massLiker.active = true;
                 if (self.massLiker != null)
                 {
@@ -1000,7 +1005,11 @@ function main(w)
                 }
             }
             else
+            {
+                self.offSound.prop("currentTime",0);
+                self.offSound.trigger("play");
                 self.config.massLiker.active = false;
+            }
         });
 
         this.elements["giveGifts"] = $('#giveGifts');
