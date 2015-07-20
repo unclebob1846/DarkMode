@@ -8,3 +8,5 @@ Follow these easy steps to setup the script in your browser:
 4. Browse to [younow.com](http://www.younow.com) and enjoy the Dark Mode!
 
 **Welcome to the dark side of YouNow!**
+
+**NOTICE:** Make sure you let TamperMonkey check for updates sometimes. To do so, click on the TamperMonkey Icon in your browser bar and select "Check scripts for updates".
