@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.3
+// @version 0.3.4
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -148,6 +148,10 @@ function main(w)
             $.ajax({
                 url: 'http://www.younow.com/php/api/broadcast/like', 
                 method: "POST",
+                headers: {
+                    'X-Requested-By': this.youNow.session.user.requestBy,
+                    'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                },
                 data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.massLiker.users[userNum].id},
                 success: function(json, b, c)
                 {
@@ -227,6 +231,10 @@ function main(w)
                             url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=0/locale=ww', 
                             method: "GET",
                             dataType: "json",
+                            headers: {
+                                'X-Requested-By': this.youNow.session.user.requestBy,
+                                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                            },
                             success: function(json, b, c)
                             {
                                 for (var j = 0; j < json["trending_users"].length; j++)
@@ -403,6 +411,10 @@ function main(w)
                     this.massLiker.step = 'waiting';
                     $.ajax({
                         url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=1000000/locale=ww', 
+                        headers: {
+                            'X-Requested-By': this.youNow.session.user.requestBy,
+                            'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                        },
                         method: "GET",
                         dataType: "json",
                         success: function(json, b, c)
@@ -412,6 +424,10 @@ function main(w)
                                 url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom='+index+'/locale=ww', 
                                 method: "GET",
                                 dataType: "json",
+                                headers: {
+                                    'X-Requested-By': self.youNow.session.user.requestBy,
+                                    'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                                },
                                 success: function(json, b, c)
                                 {
                                     for (var i = 0; i < json["trending_users"].length; i++)
@@ -1120,6 +1136,10 @@ function main(w)
             jsonp: "callback",
             method: "POST",
             dataType: "json",
+            headers: {
+                'X-Requested-By': this.youNow.session.user.requestBy,
+                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+            },
             data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "giftId": giftId, "quantity": quantity},
             success: function(json, b, c)
             {
@@ -1144,6 +1164,10 @@ function main(w)
                 jsonp: "callback",
                 method: "POST",
                 dataType: "json",
+                headers: {
+                    'X-Requested-By': this.youNow.session.user.requestBy,
+                    'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                },
                 data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "comment": message},
                 success: function(json, b, c)
                 {
@@ -1167,6 +1191,10 @@ function main(w)
                             jsonp: "callback",
                             method: "POST",
                             dataType: "json",
+                            headers: {
+                                'X-Requested-By': this.youNow.session.user.requestBy,
+                                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                            },
                             data: {"tsi": self.config.tsi, "tdi": self.config.tdi, "userId": self.youNow.session.user.userId, "channelId": json.onBroadcastPlay.queues[0].items[i].userId, "comment": message},
                             success: function(json, b, c)
                             {
@@ -1202,6 +1230,10 @@ function main(w)
                             jsonp: "callback",
                             method: "POST",
                             dataType: "json",
+                            headers: {
+                                'X-Requested-By': self.youNow.session.user.requestBy,
+                                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                            },
                             data: {"tsi": self.config.tsi, "tdi": self.config.tdi, "userId": self.youNow.session.user.userId, "channelId": json.hits[i].objectID, "comment": message},
                             success: function(json, b, c)
                             {
