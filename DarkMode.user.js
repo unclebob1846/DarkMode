@@ -12,6 +12,7 @@
 
 function main(w)
 {
+
     function callback()
     {
         window.DarkModeInstance = new window.DarkMode();
@@ -122,7 +123,7 @@ function main(w)
         var b = window.localStorage.getItem("browse");
         if (b != null && b != "")
         {
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/"+b);
+            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/"+b);
             window.localStorage.setItem("browse", "");
         }
 
@@ -139,19 +140,31 @@ function main(w)
         $(document.body).append((this.onSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/on.mp3" />')));
         $(document.body).append((this.offSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/off.mp3" />')));
     };
-
+    
     w.DarkMode.prototype.massLikerLike = function(userNum)
     {
         if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()) == -1)
         {
             var self = this;
+            window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/"+this.massLiker.users[userNum].profile);
             $.ajax({
+                xhr: function() {
+                    var xhr = jQuery.ajaxSettings.xhr();
+                    var setRequestHeader = xhr.setRequestHeader;
+                    xhr.setRequestHeader = function(name, value) {
+                        if (name == 'X-Requested-With') return;
+                        setRequestHeader.call(this, name, value);
+                    }
+                    return xhr;
+                },
                 url: 'http://www.younow.com/php/api/broadcast/like', 
                 method: "POST",
                 headers: {
+                    'Accept': 'application/json, text/plain, */*',
                     'X-Requested-By': this.youNow.session.user.requestBy,
-                    'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+                    //'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
                 },
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.massLiker.users[userNum].id},
                 success: function(json, b, c)
                 {
@@ -180,6 +193,7 @@ function main(w)
 
     w.DarkMode.prototype.massLikerGift = function(send)
     {
+        window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/"+send.profile);
         var self = this;
         this.sendGift(send.id, send.giftId, send.quantity, function(){
             self.massLiker.sentGifts++;
@@ -193,6 +207,7 @@ function main(w)
     {
         if (this.config.massLiker.active == true)
         {
+            this.config.ignoreRouting = true;
             if (this.massLiker == null)
             {
                 this.massLiker = {
@@ -327,6 +342,7 @@ function main(w)
                     }
                     this.massLiker.sentLikeRequests = sent;
                     this.massLiker.step = "waiting";
+                    window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
                 }
                 if (this.massLiker.step == 'waiting')
                 {
@@ -421,7 +437,7 @@ function main(w)
                                     for (var i = 0; i < json["trending_users"].length; i++)
                                     {
                                         if (json["trending_users"][i].viewers <= 1 && self.config.massLiker.ignoreUsers.indexOf(json["trending_users"][i].profile.toLowerCase()) == -1)
-                                            self.massLiker.giftUsers.push({id: json["trending_users"][i].userId});
+                                            self.massLiker.giftUsers.push({id: json["trending_users"][i].userId, 'profile': json["trending_users"][i].profile});
                                     }
                                     self.massLiker.step = 'sending';
                                 }
@@ -466,6 +482,7 @@ function main(w)
                         this.massLikerGift(sendList[i]);
                     }
                     this.massLiker.step = 'love';
+                    window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
                 }
                 else if (this.massLiker.step == 'love')
                 {
@@ -777,7 +794,7 @@ function main(w)
 
     w.DarkMode.prototype.addTrendingUser = function(data)
     {
-        var el = $('<a href="/hidden/'+data.profile+'"><img src="'+this.getBroadcastPicture(data.broadcastId)+'" /></a>');
+        var el = $('<a href="/'+data.profile+'"><img src="'+this.getBroadcastPicture(data.broadcastId)+'" /></a>');
         var obj = {
             type: "streamer",
             username: data["username"],
@@ -810,7 +827,7 @@ function main(w)
                     self.elements["viewerList"].html("");
                     for (var i = 0; i < json.audience.length; i++)
                     {
-                        self.elements["viewerList"].append($('<li><a href="/hidden/'+json.audience[i].name+'"><img width="34" height="34" src="'+self.getProfilePicture(json.audience[i].userId)+'" /><span><img src="'+self.config.images.star+'" />'+json.audience[i].level+' '+json.audience[i].name+'<small>'+json.audience[i].location.country+' ('+json.audience[i].fans+' '+self.language.fans+')</small></span></a></li>'));
+                        self.elements["viewerList"].append($('<li><a href="/'+json.audience[i].name+'"><img width="34" height="34" src="'+self.getProfilePicture(json.audience[i].userId)+'" /><span><img src="'+self.config.images.star+'" />'+json.audience[i].level+' '+json.audience[i].name+'<small>'+json.audience[i].location.country+' ('+json.audience[i].fans+' '+self.language.fans+')</small></span></a></li>'));
                     }
 
                     //self.addSearchElements(json);
@@ -861,7 +878,7 @@ function main(w)
         if (data["tag"] != null)
         {
             // it's a tag!
-            container.append($('<li><a href="/hidden/explore/tag/'+data["tag"]+'">#'+data["tag"]+'</a></li>'));
+            container.append($('<li><a href="/explore/tag/'+data["tag"]+'">#'+data["tag"]+'</a></li>'));
         }
         else 
         {
@@ -876,7 +893,7 @@ function main(w)
             else 
                 level = Math.floor(data["userlevel"]);
             // seems like a user.
-            var el = $('<li><a href="/hidden/'+data["profile"]+'">'+username+'</a></li>');
+            var el = $('<li><a href="/'+data["profile"]+'">'+username+'</a></li>');
             container.append(el);
             var self = this;
             var obj = {
@@ -910,15 +927,18 @@ function main(w)
 
     w.DarkMode.prototype.tickRouting = function()
     {
-        var location = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
-        if (location != this.lastLocation)
+        if (!this.config.massLiker.active)
         {
-            this.lastLocation = location;
-            if (location.indexOf("/") > - 1)
-                this.path = location.split("/");
-            else
-                this.path = [location];
-            this.updatePage();
+            var location = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
+            if (location != this.lastLocation)
+            {
+                this.lastLocation = location;
+                if (location.indexOf("/") > - 1)
+                    this.path = location.split("/");
+                else
+                    this.path = [location];
+                this.updatePage();
+            }
         }
     };
 
@@ -1087,34 +1107,26 @@ function main(w)
         {
             this.commandCentral();
         }
-        else if (this.path[0] == "hidden")
+        else if (this.path[0] == "explore")
         {
-            if (this.path.length > 3)
-                this.explore("#"+this.path[3], 0);
-            else if (this.path.length > 2)
-                this.explore(this.path[2], 0);
+            if (this.path.length > 2)
+                this.explore("#"+this.path[2], 0);
             else if (this.path.length > 1)
-            {
-                if (this.path[1] == "commandCentral")
-                {
-                    this.commandCentral();
-                }
-                else if (this.path[1] == "settings")
-                {
-                    //TODO: Settings page
-                }
-                else 
-                {
-                    this.openStream(this.path[1]);
-                }
-            }
+                this.explore(this.path[1], 0);
             else
                 this.explore(null, 0);
         }
+        else if (this.path[0] == "settings") {
+            // TODO
+        }
         else 
         {
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/hidden/"+window.location.href.replace("http://www.younow.com/",""));
-        }
+            this.openStream(this.path[0]);
+        }/*
+        else 
+        {
+            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/"+window.location.href.replace("http://www.younow.com/",""));
+        }*/
     };
 
     w.DarkMode.prototype.sendGift = function(streamId, giftId, quantity, callback)
@@ -1430,7 +1442,7 @@ function main(w)
             var extraRight = "";
             if (this.currentStreamer.minChatLevel > 0)
                 extraRight = '<div class="right">'+this.language.minChatLevel.replace("%1", this.currentStreamer.minChatLevel)+'</div>';
-            this.elements["streamInfo"].html('<img src="'+this.getProfilePicture(this.currentStreamer.userId)+'" style="margin-top:-5px;margin-right:5px;" height="30" /><img src="'+this.config.images.star+'" style="margin-right: 5px;margin-top:-4px;" />'+Math.floor(this.currentStreamer.userlevel)+' <strong>'+this.currentStreamer.username+'</strong> ('+this.currentStreamer.country+') '+this.language.in+' <a href="/hidden/explore/tag/'+this.currentStreamer.tags[0]+'">#'+this.currentStreamer.tags[0]+'</A> : '+this.currentStreamer.user.description+extraRight);
+            this.elements["streamInfo"].html('<img src="'+this.getProfilePicture(this.currentStreamer.userId)+'" style="margin-top:-5px;margin-right:5px;" height="30" /><img src="'+this.config.images.star+'" style="margin-right: 5px;margin-top:-4px;" />'+Math.floor(this.currentStreamer.userlevel)+' <strong>'+this.currentStreamer.username+'</strong> ('+this.currentStreamer.country+') '+this.language.in+' <a href="/explore/tag/'+this.currentStreamer.tags[0]+'">#'+this.currentStreamer.tags[0]+'</A> : '+this.currentStreamer.user.description+extraRight);
 
             this.elements["likeCount"].html(this.addCommas(this.currentStreamer.likes));
             this.elements["shareCount"].html(this.addCommas(this.currentStreamer.shares));
@@ -1684,7 +1696,7 @@ function main(w)
         var tagSpan = "";
         if (tag != "")
             tagSpan = '<span>#'+tag+'</span>';
-        return $('<a href="/hidden/'+username+'" class="userProfile"><div><img src="'+this.getProfilePicture(userid)+'" />'+tagSpan+'</div><strong><img src="'+this.config.images.star+'" />'+level+' '+username+'</strong><small>'+this.parseNumber(fans)+' '+this.language.fans+'</small></a>');
+        return $('<a href="/'+username+'" class="userProfile"><div><img src="'+this.getProfilePicture(userid)+'" />'+tagSpan+'</div><strong><img src="'+this.config.images.star+'" />'+level+' '+username+'</strong><small>'+this.parseNumber(fans)+' '+this.language.fans+'</small></a>');
     };
 
     w.DarkMode.prototype.addChatMessage = function(message)
@@ -1844,7 +1856,8 @@ function main(w)
             window.localStorage.setItem("inDarkMode", self.inDarkMode=="1"?"0":"1");
             if (self.inDarkMode == "1")
             {
-                window.location.href = window.location.href.replace("hidden/","");
+                window.location.reload();
+                //window.location.href = window.location.href;
             }
             else 
             {
@@ -2042,6 +2055,7 @@ function main(w)
             'LGE LG-D373': 'LG L80',
             'HUAWEI G7-L01': 'Huawei Ascend G7',
         },
+        ignoreRouting: false,
         maxMessages: 200,
         massLiker: {
             maxLikeCost: 10,
