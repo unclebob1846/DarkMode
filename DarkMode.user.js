@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.5
+// @version 0.3.6
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -1151,8 +1151,6 @@ function main(w)
     };
     w.DarkMode.prototype.sendChatMessage = function(streamId, message)
     {
-        this.sendGift(streamId, 25, 100);
-        return null;
         if (this.elements["writeInChat"].is(':checked'))
         {
             $.ajax({
