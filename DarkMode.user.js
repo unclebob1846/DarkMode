@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.7
+// @version 0.3.8
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -1124,10 +1124,6 @@ function main(w)
             jsonp: "callback",
             method: "POST",
             dataType: "json",
-            headers: {
-                'X-Requested-By': this.youNow.session.user.requestBy,
-                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
-            },
             data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "giftId": giftId, "quantity": quantity},
             success: function(json, b, c)
             {
