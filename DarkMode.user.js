@@ -1121,9 +1121,12 @@ function main(w)
     {
         $.ajax({
             url: 'http://www.younow.com/php/api/broadcast/gift', 
-            jsonp: "callback",
             method: "POST",
             dataType: "json",
+            headers: {
+                'X-Requested-By': this.youNow.session.user.requestBy,
+                'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
+            },
             data: {"tsi": this.config.tsi, "tdi": this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": streamId, "giftId": giftId, "quantity": quantity},
             success: function(json, b, c)
             {
