@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.9
+// @version 0.4.0
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -329,6 +329,7 @@ function main(w)
                         this.massLiker.stats.currentRoundStart = new Date();
                         this.massLiker.stats.currentRound++;
                         this.massLiker.likeRequestsFinished = 0;
+                        this.massLiker.sentLikeRequests = 0;
                         this.massLiker.stats.givenLikesRound = 0;
                         this.massLiker.currentPos = 0;
                     }
@@ -344,10 +345,10 @@ function main(w)
                         var sent = 0;
                         for (; this.massLiker.currentPos < this.massLiker.users.length; this.massLiker.currentPos++)
                         {
-                            if (sent >= this.config.massLiker.intervalLikes)
-                                break;
                             if (this.massLikerLike(this.massLiker.currentPos))
                                 sent++;
+                            if (sent >= this.config.massLiker.intervalLikes)
+                                break;
                         }
                         this.massLiker.sentLikeRequests += sent;
                         window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
@@ -363,7 +364,15 @@ function main(w)
                     if (this.massLiker.likeRequestsFinished >= this.massLiker.sentLikeRequests)
                     {
                         if (this.massLiker.stats.givenLikesRound > this.config.massLiker.likeThreshold)
+                        {
                             this.massLiker.step = 'sendingRequests';
+                            this.massLiker.stats.currentRoundStart = new Date();
+                            this.massLiker.stats.currentRound++;
+                            this.massLiker.likeRequestsFinished = 0;
+                            this.massLiker.sentLikeRequests = 0;
+                            this.massLiker.stats.givenLikesRound = 0;
+                            this.massLiker.currentPos = 0;
+                        }
                         else
                         {
                             this.massLiker.currentTask = 'relog';
