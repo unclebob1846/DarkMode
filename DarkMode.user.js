@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.4.0
+// @version 0.4.1
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -27,6 +27,7 @@ function main(w)
 
     w.DarkMode.prototype.init = function()
     {
+        this.loggedIn = false;
         var lVersion = "0.3.9";
         if (window.localStorage.getItem("lastVersion") == lVersion)
         {
@@ -166,7 +167,6 @@ function main(w)
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
                     'X-Requested-By': this.youNow.session.user.requestBy,
-                    //'X-NewRelic-ID': 'VgECUl9WGwAFVFJWAQI=',
                 },
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.massLiker.users[userNum].id},
@@ -207,6 +207,135 @@ function main(w)
         });
     };
 
+    w.DarkMode.prototype.recreateAccount = function()
+    {
+        var login = "";
+        if (this.youNow.session.user.twitterAuth == 1)
+            login = "twitter";
+        else if (this.youNow.session.user.googleAuth == 1)
+            login = "google";
+        else if (this.youNow.session.user.instagramAuth == 1)
+            login = "instagram";
+        else if (this.youNow.session.user.facebookAuth == 1)
+            login = "facebook";
+        
+        this.recreater = {
+            'renameOnLogin': this.youNow.session.user.profile,
+            'task': 'remove',
+            'login': login,
+        };
+    };
+    
+    w.DarkMode.prototype.tickRecreater = function()
+    {
+        if (this.recreater != null)
+        {
+            if (this.recreater.task == 'remove')
+            {
+                var self = this;
+                $.ajax({
+                    xhr: function() {
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        var setRequestHeader = xhr.setRequestHeader;
+                        xhr.setRequestHeader = function(name, value) {
+                            if (name == 'X-Requested-With') return;
+                            setRequestHeader.call(this, name, value);
+                        }
+                        return xhr;
+                    },
+                    url: 'http://www.younow.com/php/api/channel/updateSettings', 
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'X-Requested-By': this.youNow.session.user.requestBy,
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.youNow.session.user.userId, "deactivation": 1},
+                    success: function(json, b, c)
+                    {
+                        self.youNow.session.logout();
+                        self.recreater.task = 'waitForLogout';
+                    },
+                    error: function(a, b, c)
+                    {
+                    }
+                });
+                this.recreater.task = 'waiting';
+            }
+            else if (this.recreater.task == 'waitForLogout')
+            {
+                if (this.youNow.session.user.userId == 0)
+                {
+                    this.recreater.task = 'login';
+                }
+            }
+            else if (this.recreater.task == 'login')
+            {
+                this.youNow.session.auth(this.recreater.login);
+                this.recreater.task = 'waitForLogin';
+            }
+            else if (this.recreater.task == 'waitForLogin')
+            {
+                if (this.youNow.session.user.userId > 0)
+                {
+                    this.recreater.task = 'restoreAccount';
+                }
+            }
+            else if (this.recreater.task == 'restoreAccount')
+            {
+                var self = this;
+                $.ajax({
+                    xhr: function() {
+                        var xhr = jQuery.ajaxSettings.xhr();
+                        var setRequestHeader = xhr.setRequestHeader;
+                        xhr.setRequestHeader = function(name, value) {
+                            if (name == 'X-Requested-With') return;
+                            setRequestHeader.call(this, name, value);
+                        }
+                        return xhr;
+                    },
+                    url: 'http://www.younow.com/php/api/channel/updateSettings', 
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'X-Requested-By': this.youNow.session.user.requestBy,
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": this.youNow.session.user.userId, "profileUrlString": this.recreater.renameOnLogin},
+                    success: function(json, b, c)
+                    {
+                        self.youNow.session.getSession();
+                    },
+                    error: function(a, b, c)
+                    {
+                    }
+                });
+                
+                this.recreater.task = 'finished';
+            }
+        }
+    };
+    
+    w.DarkMode.prototype.tickDesign = function()
+    {
+        var userMenu = $('.user-menu');
+        if (userMenu.length == 0)
+            this.loggedIn = false;
+        else 
+        {
+            if (this.loggedIn == false)
+            {
+                var dropdownMenu = userMenu.children(".dropdown-menu");
+                var el = $('<li style="cursor:pointer;"><a><i class="ynicon ynicon-logout" href /><span>'+this.language.recreateAccount+'</span></a></li>');
+                var self = this;
+                el.click(function(){
+                    self.recreateAccount();
+                });
+                dropdownMenu.append(el);
+            }
+            this.loggedIn = true;
+        }
+    };
     w.DarkMode.prototype.tickMassLike = function()
     {
         if (this.config.massLiker.active == true)
@@ -2030,6 +2159,7 @@ function main(w)
                 'massLikerAlternative': 'Alternativer Suchmodus',
                 'intervalLikes': 'Max. Likes',
                 'interval': 'Pro',
+                'recreateAccount':'Neu registrieren',
             }
         },
         deviceMapping:
@@ -2124,6 +2254,8 @@ function main(w)
                 reloadTagTrending: 5000,
                 updateViewers: 5000,
                 massLike: 100,
+                design: 100,
+                recreater: 100,
                 },
                 chatbot: {
                 timeRemaining: 2 * 60 * 1000,
