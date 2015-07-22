@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.3.8
+// @version 0.3.9
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -27,7 +27,7 @@ function main(w)
 
     w.DarkMode.prototype.init = function()
     {
-        var lVersion = "0.3.2";
+        var lVersion = "0.3.9";
         if (window.localStorage.getItem("lastVersion") == lVersion)
         {
             if (window.localStorage.getItem("config.massLiker.likeThreshold") != null)
@@ -46,6 +46,10 @@ function main(w)
                 this.config.massLiker.alternative = window.localStorage.getItem("config.massLiker.alternative")=="true";
             if (window.localStorage.getItem("config.massLiker.ignoreUsers") != null)
                 this.config.massLiker.ignoreUsers = window.localStorage.getItem("config.massLiker.ignoreUsers").split("\n");
+            if (window.localStorage.getItem("config.massLiker.intervalLikes") != null)
+                this.config.massLiker.intervalLikes = parseInt(window.localStorage.getItem("config.massLiker.intervalLikes").split("\n"));
+            if (window.localStorage.getItem("config.massLiker.interval") != null)
+                this.config.massLiker.interval = parseInt(window.localStorage.getItem("config.massLiker.interval").split("\n"));
             
         }
         window.localStorage.setItem("lastVersion", lVersion);
@@ -216,6 +220,7 @@ function main(w)
                     'likeRequestsFinished': 0,
                     'userRequestsFinished': 0,
                     'users': [],
+                    'lastInterval': new Date().getTime() - this.config.massLiker.interval * 1000,
                     'stats': {
                         'start': new Date(),
                         'currentRoundStart': new Date(),
@@ -320,6 +325,12 @@ function main(w)
                     {
                         this.massLiker.currentTask = "liking";
                         this.massLiker.step = "sendingRequests";
+                        this.youNow.session.getSession();
+                        this.massLiker.stats.currentRoundStart = new Date();
+                        this.massLiker.stats.currentRound++;
+                        this.massLiker.likeRequestsFinished = 0;
+                        this.massLiker.stats.givenLikesRound = 0;
+                        this.massLiker.currentPos = 0;
                     }
                 }
             }
@@ -327,22 +338,25 @@ function main(w)
             {
                 if (this.massLiker.step == 'sendingRequests')
                 {
-
-                    this.youNow.session.getSession();
-                    this.massLiker.stats.currentRoundStart = new Date();
-                    this.massLiker.stats.currentRound++;
-
-                    this.massLiker.likeRequestsFinished = 0;
-                    this.massLiker.stats.givenLikesRound = 0;
-                    var sent = 0;
-                    for (var i = 0; i < this.massLiker.users.length; i++)
+                    var dd = new Date();
+                    if (this.massLiker.lastInterval <= dd.getTime() - this.config.massLiker.interval * 1000)
                     {
-                        if (this.massLikerLike(i))
-                            sent++;
+                        var sent = 0;
+                        for (; this.massLiker.currentPos < this.massLiker.users.length; this.massLiker.currentPos++)
+                        {
+                            if (sent >= this.config.massLiker.intervalLikes)
+                                break;
+                            if (this.massLikerLike(this.massLiker.currentPos))
+                                sent++;
+                        }
+                        this.massLiker.sentLikeRequests += sent;
+                        window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
+                        if (this.massLiker.currentPos == this.massLiker.users.length)
+                        {
+                            this.massLiker.step = "waiting";
+                        }
+                        this.massLiker.lastInterval = dd.getTime();
                     }
-                    this.massLiker.sentLikeRequests = sent;
-                    this.massLiker.step = "waiting";
-                    window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
                 }
                 if (this.massLiker.step == 'waiting')
                 {
@@ -965,6 +979,10 @@ function main(w)
                                     '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.giftThreshold+'" type="number" id="giftThreshold" /></div>'+
                                     '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.keepCoins+':</div>'+
                                     '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.keepCoins+'" type="number" id="keepCoins" /></div>'+
+                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.intervalLikes+':</div>'+
+                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.intervalLikes+'" type="number" id="intervalLikes" /></div>'+
+                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.interval+':</div>'+
+                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.interval+'" type="number" id="interval" /></div>'+
                                     '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.login+':</div>'+
                                     '<div style="margin-top:5px;float:left;"><select style="width:150px;" id="massLikerLogin">'+
                                     '<option '+(this.config.massLiker.login == 'twitter'?"selected":"")+' value="Twitter" name="Twitter">Twitter</option>'+
@@ -1070,6 +1088,18 @@ function main(w)
             window.localStorage.setItem("config.massLiker.login", self.config.massLiker.login);
         });
 
+        this.elements["intervalLikes"] = $('#intervalLikes');
+        this.elements["intervalLikes"].change(function(){
+            self.config.massLiker.intervalLikes = parseInt(self.elements["intervalLikes"].val());
+            window.localStorage.setItem("config.massLiker.intervalLikes", self.config.massLiker.intervalLikes);
+        });
+        
+        this.elements["interval"] = $('#interval');
+        this.elements["interval"].change(function(){
+            self.config.massLiker.interval = parseInt(self.elements["interval"].val());
+            window.localStorage.setItem("config.massLiker.interval", self.config.massLiker.interval);
+        });
+        
         this.elements["giftThreshold"] = $('#giftThreshold');
         this.elements["giftThreshold"].change(function(){
             self.config.massLiker.giftThreshold = parseInt(self.elements["giftThreshold"].val());
@@ -1989,6 +2019,8 @@ function main(w)
                 'ignoreUsers': 'Unartige User',
                 'giveGifts': 'Bescherung',
                 'massLikerAlternative': 'Alternativer Suchmodus',
+                'intervalLikes': 'Max. Likes',
+                'interval': 'Pro',
             }
         },
         deviceMapping:
@@ -2058,12 +2090,14 @@ function main(w)
         ignoreRouting: false,
         maxMessages: 200,
         massLiker: {
-            maxLikeCost: 10,
+            maxLikeCost: 5,
             likeThreshold: 800,
             active: false,
             login: "twitter",
             giftThreshold: 200000,
             keepCoins: 10000,
+            interval: 1,
+            intervalLikes: 1,
             giveGifts: true,
             ignoreUsers: [
                 "drachenlord_offiziell",
