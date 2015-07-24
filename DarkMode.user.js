@@ -6,8 +6,8 @@
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
 // @grant none
-// @updateURL https://FluffyFishGames.github.io/JuhNau-Darkmode/master/DarkMode.user.js
-// @downloadURL https://FluffyFishGames.github.io/JuhNau-Darkmode/master/DarkMode.user.js
+// @updateURL https://FluffyFishGames.github.io/DarkMode.user.js
+// @downloadURL https://FluffyFishGames.github.io/DarkMode.user.js
 // ==/UserScript==
 
 function main(w)
