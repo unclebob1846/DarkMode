@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.4.1
+// @version 0.4.2
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -75,8 +75,62 @@ function main(w)
         this.createButton();
     };
 
+    w.DarkMode.prototype.selectHeader = function(key)
+    {
+        var c = 0;
+        for (var k in this.headers)
+        {
+            c++;
+        }
+        for (var k in this.headers)
+        {
+            if (k == key)
+            {
+                this.headers[k].li.css("height", "calc(100% - "+((c - 1) * 30)+"px)");
+            }
+            else 
+            {
+                this.headers[k].li.css("height", 30);
+            }
+        }
+        
+    };
+    
+    w.DarkMode.prototype.openSettings = function(key)
+    {
+        window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/settings/"+key);
+    };
+    
+    w.DarkMode.prototype.addHeader = function(header, key)
+    {
+        var self = this;
+        var li = $('<li></li>');
+        
+        var headerEl = $('<div class="header">'+header.label+'</div>');
+        var contentEl = $('<div class="content"></div>');
+        if (header.hasSettings == true)
+        {
+            var icon = $('<div style="cursor:pointer;float:right;margin-top:-3px;"><img src="'+this.config.images.settings+'" /></div>');
+            icon.click(function(e){
+                self.openSettings(key);
+                e.stopPropagation();
+            });
+            headerEl.append(icon);
+        }
+        header.header = headerEl;
+        header.content = contentEl;
+        header.li = li;
+        header.header.click(function(){
+            self.selectHeader(key);
+        });
+        li.append(headerEl);
+        li.append(contentEl);
+        this.elements["left"].append(li);
+    };
+    
     w.DarkMode.prototype.applyDarkMode = function()
     {
+        var self = this;
         $('#main').remove();
         $('.newFooter').remove();
         $('.nav-logo').children()[0].remove();
@@ -84,26 +138,57 @@ function main(w)
         $('[ng-model=searchBox]').attr("placeholder", "Search AttentionWhore");
         this.page = $('<div id="darkPage"></div>');
         this.elements = {};
-        this.elements["left"] = $('<div id="left"></div>');
+        this.headers = {
+            "userList":
+            {
+                "label": this.language.userList,
+                "hasSettings": false,
+            },
+            "massLiker":
+            {
+                "label": this.language.massLiker,
+                "hasSettings": true,
+            },
+            "chatBot":
+            {
+                "label": this.language.chatBot,
+                "hasSettings": true,
+            }
+        };
+        this.elements["left"] = $('<ul id="left"></ul>');
+        for (var key in this.headers)
+        {
+            this.addHeader(this.headers[key], key);
+        }
+        
+        this.selectHeader("userList");
+        
         this.elements["right"] = $('<div id="right"></div>');
-        this.elements["left"].append((this.elements["trendingPeopleHeader"] = $('<strong>'+this.language["trendingPeople"]+'</strong>')));
-        this.elements["left"].append((this.elements["trendingPeopleArrow"] = $('<div class="arrow"></div>')));
-        this.elements["left"].append((this.elements["trendingPeopleContent"] = $('<ul id="trendingPeople"></ul>')));
-        this.elements["left"].append((this.elements["editorsPickHeader"] = $('<strong>'+this.language["editorsPick"]+'</strong>')));
-        this.elements["left"].append((this.elements["editorsPickArrow"] = $('<div class="arrow"></div>')));
-        this.elements["left"].append((this.elements["editorsPickContent"] = $('<ul id="editorsPick"></ul>')));
-        this.elements["left"].append((this.elements["friendsHeader"] = $('<strong>'+this.language["friends"]+'</strong>')));
-        this.elements["left"].append((this.elements["friendsArrow"] = $('<div class="arrow"></div>')));
-        this.elements["left"].append((this.elements["friendsContent"] = $('<ul id="friends"></ul>')));
-        this.elements["left"].append((this.elements["trendingTagsHeader"] = $('<strong>'+this.language["trendingTags"]+'</strong>')));
-        this.elements["left"].append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
-        this.elements["left"].append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
+        this.headers["userList"].content.append((this.elements["trendingPeopleHeader"] = $('<strong>'+this.language["trendingPeople"]+'</strong>')));
+        this.headers["userList"].content.append((this.elements["trendingPeopleArrow"] = $('<div class="arrow"></div>')));
+        this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul id="trendingPeople"></ul>')));
+        this.headers["userList"].content.append((this.elements["editorsPickHeader"] = $('<strong>'+this.language["editorsPick"]+'</strong>')));
+        this.headers["userList"].content.append((this.elements["editorsPickArrow"] = $('<div class="arrow"></div>')));
+        this.headers["userList"].content.append((this.elements["editorsPickContent"] = $('<ul id="editorsPick"></ul>')));
+        this.headers["userList"].content.append((this.elements["friendsHeader"] = $('<strong>'+this.language["friends"]+'</strong>')));
+        this.headers["userList"].content.append((this.elements["friendsArrow"] = $('<div class="arrow"></div>')));
+        this.headers["userList"].content.append((this.elements["friendsContent"] = $('<ul id="friends"></ul>')));
+        this.headers["userList"].content.append((this.elements["trendingTagsHeader"] = $('<strong>'+this.language["trendingTags"]+'</strong>')));
+        this.headers["userList"].content.append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
+        this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
 
+        this.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
+                                               '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerEnabled+' </span></div></div>'+
+                                               '<div id="massLikerStats"></div>');
+        
+        this.headers["chatBot"].content.html('<div style="float:left; clear: both;"><input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />'+
+                                             '<div style="float:left;margin-top:5px;"><span>'+this.language.chatbotEnabled+' </span></div></div>');
+        
         $(document.body).append(this.page);
         $(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
         this.page.append(this.elements["left"]);
         this.page.append(this.elements["right"]);
-        var self = this;
+
         this.youNow.urlRouter.update = function(a){return true;};
         this.youNow.urlRouter.sync = function(){};
         this.youNow.urlRouter.listen = function(){};
@@ -133,17 +218,36 @@ function main(w)
         }
 
         var a = $('.navbar-content');
-        a.append($('<button id="commandCentral" class="btn-confirm btn pull-right" style="margin-right:10px;">'+this.language.commandCentral+'</button>'));
-        a.append($('<div style="float: right;margin-top:-5px;margin-right: 10px;"><span id="nextMessageIn"></span></div>'));
+//        a.append($('<div style="float: right;margin-top:-5px;margin-right: 10px;"><span id="nextMessageIn"></span></div>'));
         var self = this;
-        this.elements["nextMessageIn"] = $('#nextMessageIn');
-        this.elements["commandCentral"] = $('#commandCentral');
-        this.elements["commandCentral"].click(function(){
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/");
-        });
+  //      this.elements["nextMessageIn"] = $('#nextMessageIn');
         
         $(document.body).append((this.onSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/on.mp3" />')));
         $(document.body).append((this.offSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/off.mp3" />')));
+        
+        var self = this;
+        this.elements["massLikerEnabled"] = $('#massLikerEnabled');
+        this.elements["massLikerEnabled"].change(function(){
+            if (self.elements["massLikerEnabled"].is(":checked"))
+            {
+                self.onSound.prop("currentTime",0);
+                self.onSound.trigger("play");
+                self.config.massLiker.active = true;
+                if (self.massLiker != null)
+                {
+                    self.massLiker = null;
+                }
+            }
+            else
+            {
+                if (self.massLiker.previousUrl != null)
+                    window.history.replaceState({"html":"","pageTitle":""},"", self.massLiker.previousUrl);
+                self.offSound.prop("currentTime",0);
+                self.offSound.trigger("play");
+                self.config.massLiker.active = false;
+            }
+        });
+        
     };
     
     w.DarkMode.prototype.massLikerLike = function(userNum)
@@ -471,6 +575,8 @@ function main(w)
                     var dd = new Date();
                     if (this.massLiker.lastInterval <= dd.getTime() - this.config.massLiker.interval * 1000)
                     {
+
+                    this.massLiker.previousUrl = window.location.href;
                         var sent = 0;
                         for (; this.massLiker.currentPos < this.massLiker.users.length; this.massLiker.currentPos++)
                         {
@@ -480,7 +586,8 @@ function main(w)
                                 break;
                         }
                         this.massLiker.sentLikeRequests += sent;
-                        window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
+                        window.history.replaceState({"html":"","pageTitle":""},"", this.massLiker.previousUrl);
+                        this.massLiker.previousUrl = null;
                         if (this.massLiker.currentPos == this.massLiker.users.length)
                         {
                             this.massLiker.step = "waiting";
@@ -602,7 +709,7 @@ function main(w)
                     var remainingCoins = this.youNow.session.user.coins - this.config.massLiker.keepCoins;
                     var startCoins = remainingCoins - 0;
                     var currentLevel = this.youNow.session.user.realLevel;
-
+                    this.massLiker.previousUrl = window.location.href;
                     var sendList = [];
                     for (var i = 0; i < this.massLiker.giftUsers.length; i++)
                     {
@@ -634,7 +741,8 @@ function main(w)
                         this.massLikerGift(sendList[i]);
                     }
                     this.massLiker.step = 'love';
-                    window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/");
+                    window.history.replaceState({"html":"","pageTitle":""},"",  this.massLiker.previousUrl );
+                    this.massLiker.previousUrl = null;
                 }
                 else if (this.massLiker.step == 'love')
                 {
@@ -653,31 +761,31 @@ function main(w)
                 var likesPerSecond = Math.floor((this.massLiker.stats.givenLikes / ((d.getTime() - this.massLiker.stats.start.getTime()) / 1000)) * 10) / 10;
                 if (stats.html() == "")
                 {
-                    stats.html('<h3 style="float: left; clear:both;margin-top:10px;">'+this.language.massLikerStats+'</h3>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.runningTime+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="runningTime">'+this.parseTime((d.getTime() - this.massLiker.stats.start.getTime()) / 1000)+'</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.likesPerSecond+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="likesPerSecond">'+this.addCommas(likesPerSecond)+'</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.currentRound+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="currentRound">'+this.addCommas(this.massLiker.stats.currentRound)+'</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.currentRoundTime+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="currentRoundTime">'+this.parseTime((d.getTime() - this.massLiker.stats.currentRoundStart.getTime()) / 1000)+'</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.currentTask+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="currentTask">'+this.language[this.massLiker.currentTask]+': '+this.language[this.massLiker.step]+'</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.givenLikes+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="givenLikes">'+this.addCommas(this.massLiker.stats.givenLikes)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.givenLikesRound+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="givenLikesRound">'+this.addCommas(this.massLiker.stats.givenLikesRound)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.usersCount+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="usersCount">'+this.addCommas(this.massLiker.users.length)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.logins+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="logouts">'+this.addCommas(this.massLiker.stats.logouts)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentCoins+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="spentCoins">'+this.addCommas(this.massLiker.stats.spentCoins)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentHearts+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="spentHearts">'+this.addCommas(this.massLiker.stats.spentHearts)+':</div>'+
-                               '<div style="float:left; color: #ddd; clear: both; width: 200px;">'+this.language.spentHundredLikes+':</div>'+
-                               '<div style="float:left; color: #ddd; width: 400px;" id="spentHundredLikes">'+this.addCommas(this.massLiker.stats.spentHundredLikes)+'</div>');
+                    stats.html(''+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-weight:bold;">'+this.language.runningTime+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="runningTime">'+this.parseTime((d.getTime() - this.massLiker.stats.start.getTime()) / 1000)+'</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.likesPerSecond+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="likesPerSecond">'+this.addCommas(likesPerSecond)+'</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.currentRound+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="currentRound">'+this.addCommas(this.massLiker.stats.currentRound)+'</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.currentRoundTime+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="currentRoundTime">'+this.parseTime((d.getTime() - this.massLiker.stats.currentRoundStart.getTime()) / 1000)+'</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.currentTask+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="currentTask">'+this.language[this.massLiker.currentTask]+': '+this.language[this.massLiker.step]+'</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.givenLikes+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="givenLikes">'+this.addCommas(this.massLiker.stats.givenLikes)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.givenLikesRound+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="givenLikesRound">'+this.addCommas(this.massLiker.stats.givenLikesRound)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.usersCount+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="usersCount">'+this.addCommas(this.massLiker.users.length)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.logins+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="logouts">'+this.addCommas(this.massLiker.stats.logouts)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.spentCoins+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="spentCoins">'+this.addCommas(this.massLiker.stats.spentCoins)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.spentHearts+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="spentHearts">'+this.addCommas(this.massLiker.stats.spentHearts)+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px;font-weight:bold;">'+this.language.spentHundredLikes+':</div>'+
+                               '<div style="float:left; color: #ddd; clear: both; width: 180px; font-size:10px;" id="spentHundredLikes">'+this.addCommas(this.massLiker.stats.spentHundredLikes)+'</div>');
                     this.elements["runningTime"] = $('#runningTime');
                     this.elements["likesPerSecond"] = $('#likesPerSecond');
                     this.elements["currentRound"] = $('#currentRound');
@@ -727,23 +835,12 @@ function main(w)
             boxes--;
         if (this.elements["friendsContent"].css("display") == "none")
             boxes--;
-        this.elements["editorsPickContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
-        this.elements["friendsContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
-        this.elements["trendingPeopleContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
-        this.elements["trendingTagsContent"].css("height", "calc("+(1/boxes*100)+"% - 25px)");
+        this.elements["editorsPickContent"].css("height", "calc("+(1/boxes*100)+"% - 20px)");
+        this.elements["friendsContent"].css("height", "calc("+(1/boxes*100)+"% - 20px)");
+        this.elements["trendingPeopleContent"].css("height", "calc("+(1/boxes*100)+"% - 20px)");
+        this.elements["trendingTagsContent"].css("height", "calc("+(1/boxes*100)+"% - 20px)");
         var time = cTime - this.lastTick;
-        if (this.massLikeTimer > 0) {
-            this.massLikeTimer -= time;
-
-            if (this.elements["waitForMassLike"] != null)
-            {
-                if (this.massLikeTimer <= 0)
-                    this.elements["waitForMassLike"].html("");
-                else
-                    this.elements["waitForMassLike"].html(this.language.waitForMassLike.replace("%1", this.parseTime(this.massLikeTimer/1000)));
-            }
-        }
-        if (this.config.chatbot.active)
+        /*if (this.config.chatbot.active)
         {
             this.elements["nextMessageIn"].html('<strong>'+this.language.chatBot+'</strong><br />'+this.language.nextMessageIn + ' ' + this.parseTime(this.config.chatbot.timeRemaining / 1000));
             if (this.lastTick != null)
@@ -760,7 +857,7 @@ function main(w)
         else 
         {
             this.elements["nextMessageIn"].html("");
-        }
+        }*/
         this.lastTick = cTime;
     };
 
@@ -872,7 +969,7 @@ function main(w)
 
     w.DarkMode.prototype.tickReloadStreamData = function()
     {
-        if ($('#stream').length > 0 && this.currentStreamer != null)
+        if (this.currentStreamer != null)
         {
             var self = this;
             $.ajax({
@@ -883,7 +980,7 @@ function main(w)
                 {
                     if (json["errorCode"] > 0)
                     {
-                        self.elements["right"].html('<div class="error">'+self.language.streamerOffline.replace("%1", self.currentStreamer.username)+'</div>');
+                        self.openProfile(self.currentStreamer.user.profileUrlString);
                     }
                     else 
                     {
@@ -894,7 +991,38 @@ function main(w)
             });
         }
     };
+    
+    w.DarkMode.prototype.openProfile = function(username)
+    {
+        this.elements["right"].html("");
+        if (this.currentStreamer == null || this.currentStreamer.user == null || this.currentStreamer.user.profileUrlString != username || this.currentStreamer.userId == null)
+        {
+            this.currentStreamer = {user:{profileUrlString: username}};
+            var self = this;
+            $.ajax({
+                url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
+                success: function(json, b, c)
+                {
+                    self.currentStreamer.user = {profileUrlString: username};
+                    self.currentStreamer = json;
+                    self.updateProfilePage();
+                }
+            });
+        }
+    };
 
+    w.DarkMode.prototype.updateProfilePage = function()
+    {
+        this.elements["right"].html("");
+        $.ajax({
+            url: 'http://cdn2.younow.com/php/api/channel/getInfo/channelId='+this.currentSteamer.userId, 
+            success: function(json, b, c)
+            {
+                console.log(json);
+            }
+        });
+    };
+    
     w.DarkMode.prototype.tickReloadTagTrending = function()
     {
         if ($('#stream').length > 0 && this.currentStreamer != null)
@@ -1166,103 +1294,166 @@ function main(w)
                 self.config.chatbot.active = false;
         });*/
 
-        this.elements["ignoreUsers"] = $('#ignoreUsers');
-        this.elements["ignoreUsers"].change(function(){
-            self.config.massLiker.ignoreUsers = self.elements["ignoreUsers"].val().toLowerCase().split("\n");
-            window.localStorage.setItem("config.massLiker.ignoreUsers", self.elements["ignoreUsers"].val().toLowerCase());
-        });
-
-        this.elements["massLikerEnabled"] = $('#massLikerEnabled');
-        this.elements["massLikerEnabled"].change(function(){
-            if (self.elements["massLikerEnabled"].is(":checked"))
-            {
-                self.onSound.prop("currentTime",0);
-                self.onSound.trigger("play");
-                self.config.massLiker.active = true;
-                if (self.massLiker != null)
-                {
-                    self.massLiker = null;
-                }
-            }
-            else
-            {
-                self.offSound.prop("currentTime",0);
-                self.offSound.trigger("play");
-                self.config.massLiker.active = false;
-            }
-        });
-
-        this.elements["giveGifts"] = $('#giveGifts');
-        this.elements["giveGifts"].change(function(){
-            if (self.elements["giveGifts"].is(":checked"))
-            {
-                window.localStorage.setItem("config.massLiker.giveGifts", "true");
-                self.config.massLiker.giveGifts = true;
-            }
-            else
-            {
-                window.localStorage.setItem("config.massLiker.giveGifts", "false");
-                self.config.massLiker.giveGifts = false;
-            }
-        });
-        
-        this.elements["massLikerAlternative"] = $('#massLikerAlternative');
-        this.elements["massLikerAlternative"].change(function(){
-            if (self.elements["massLikerAlternative"].is(":checked"))
-            {
-                window.localStorage.setItem("config.massLiker.alternative", "true");
-                self.config.massLiker.alternative = true;
-            }
-            else
-            {
-                window.localStorage.setItem("config.massLiker.alternative", "false");
-                self.config.massLiker.alternative = false;
-            }
-        });
-
-        this.elements["massLikerLogin"] = $('#massLikerLogin');
-        this.elements["massLikerLogin"].change(function(){
-            self.config.massLiker.login = self.elements["massLikerLogin"].val();
-            window.localStorage.setItem("config.massLiker.login", self.config.massLiker.login);
-        });
-
-        this.elements["intervalLikes"] = $('#intervalLikes');
-        this.elements["intervalLikes"].change(function(){
-            self.config.massLiker.intervalLikes = parseInt(self.elements["intervalLikes"].val());
-            window.localStorage.setItem("config.massLiker.intervalLikes", self.config.massLiker.intervalLikes);
-        });
-        
-        this.elements["interval"] = $('#interval');
-        this.elements["interval"].change(function(){
-            self.config.massLiker.interval = parseInt(self.elements["interval"].val());
-            window.localStorage.setItem("config.massLiker.interval", self.config.massLiker.interval);
-        });
-        
-        this.elements["giftThreshold"] = $('#giftThreshold');
-        this.elements["giftThreshold"].change(function(){
-            self.config.massLiker.giftThreshold = parseInt(self.elements["giftThreshold"].val());
-            window.localStorage.setItem("config.massLiker.giftThreshold", self.config.massLiker.giftThreshold);
-        });
-
-        this.elements["keepCoins"] = $('#keepCoins');
-        this.elements["keepCoins"].change(function(){
-            self.config.massLiker.keepCoins = parseInt(self.elements["keepCoins"].val());
-            window.localStorage.setItem("config.massLiker.keepCoins", self.config.massLiker.keepCoins);
-        });
-
-        this.elements["likeThreshold"] = $('#likeThreshold');
-        this.elements["likeThreshold"].change(function(){
-            self.config.massLiker.likeThreshold = parseInt(self.elements["likeThreshold"].val());
-            window.localStorage.setItem("config.massLiker.likeThreshold", self.config.massLiker.likeThreshold);
-        });
-        this.elements["maxLikeCost"] = $('#maxLikeCost');
-        this.elements["maxLikeCost"].change(function(){
-            self.config.massLiker.maxLikeCost = parseInt(self.elements["maxLikeCost"].val());
-            window.localStorage.setItem("config.massLiker.maxLikeCost", self.config.massLiker.maxLikeCost);
-        });
 
         //this.elements["nextMessageIn"] = $('#nextMessageIn');
     };
+    
+    w.DarkMode.prototype.showSettings = function()
+    {
+        this.elements["right"].html('<div id="settings"><div class="tabBar"><a style="width:33.3%;" id="accountTab">'+this.language.account+'</a><a style="width:33.3%;" id="massLikerTab">'+this.language.massLiker+'</a><a style="width:33.4%;" id="chatBotTab">'+this.language.chatBot+'</a></div><div id="settingsContainer" style="width:100%;"></div></div>');
+        this.elements["accountTab"] = $('#accountTab');
+        this.elements["massLikerTab"] = $('#massLikerTab');
+        this.elements["chatBotTab"] = $('#chatBotTab');
+        this.elements["settingsContainer"] = $('#settingsContainer');
+        var self = this;
+        this.elements["accountTab"].click(function(){
+            self.openSettings("account");
+        });
+        this.elements["massLikerTab"].click(function(){
+            self.openSettings("massLiker");
+        });
+        this.elements["chatBotTab"].click(function(){
+            self.openSettings("chatBot");
+        });
+    };
+    
+    w.DarkMode.prototype.switchSettingsTab = function(key)
+    {
+        this.elements["accountTab"].removeClass("active");
+        this.elements["massLikerTab"].removeClass("active");
+        this.elements["chatBotTab"].removeClass("active");
+        var self = this;
+        
+        if (key == "account")
+        {
+            this.elements["accountTab"].addClass("active");
+            this.elements["settingsContainer"].html("More to come :)");
+        }
+        if (key == "massLiker")
+        {
+            this.elements["massLikerTab"].addClass("active");
+            this.elements["settingsContainer"].html('<h3 style="clear: both;margin-top: 0px;float: left;">'+this.language.massLike+'</h3>'+
+                                                    '<div style="float:left; clear:both; width: 360px;"><div style="color:#ddd;float:left; width: 170px; clear: both;">'+this.language.massLikeCost+':</div>'+
+                                                    '<div style="float:left;"><input style="width:150px;" value="'+this.config.massLiker.maxLikeCost+'" type="number" min="5" id="maxLikeCost" /></div>'+
+                                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.likeThreshold+':</div>'+
+                                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.likeThreshold+'" type="number" min="800" id="likeThreshold" /></div>'+
+                                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.giveGifts?'checked':'')+' type="checkbox" id="giveGifts" style="clear:both;margin-right:5px;margin-top:4px;float:left;" /></div>'+
+                                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.giveGifts+' </span></div>'+
+                                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.giftThreshold+':</div>'+
+                                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.giftThreshold+'" type="number" id="giftThreshold" /></div>'+
+                                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.keepCoins+':</div>'+
+                                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.keepCoins+'" type="number" id="keepCoins" /></div>'+
+                                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.intervalLikes+':</div>'+
+                                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.intervalLikes+'" type="number" id="intervalLikes" /></div>'+
+                                                    '<div style="color:#ddd;margin-top: 5px;float:left; width: 170px; clear: both;">'+this.language.interval+':</div>'+
+                                                    '<div style="float:left;margin-top: 5px;"><input style="width:150px;" value="'+this.config.massLiker.interval+'" type="number" id="interval" /></div>'+
+                                                    '<div style="margin-top:5px;color:#ddd;float:left; width: 170px; clear: both;">'+this.language.loginWith+':</div>'+
+                                                    '<div style="margin-top:5px;float:left;"><select style="width:150px;" id="massLikerLogin">'+
+                                                    '<option '+(this.config.massLiker.login == 'twitter'?"selected":"")+' value="Twitter" name="Twitter">Twitter</option>'+
+                                                    '<option '+(this.config.massLiker.login == 'instagram'?"selected":"")+' value="instagram" name="instagram">Instagram</option>'+
+                                                    '<option '+(this.config.massLiker.login == 'google'?"selected":"")+' value="google" name="google">Google+</option>'+
+                                                    '<option '+(this.config.massLiker.login == 'facebook'?"selected":"")+' value="facebook" name="facebook">Facebook</option>'+
+                                                    '</select></div>'+
+                                                    '<div style="float:left; clear: both; margin-left: 170px; margin-top:5px;"><input '+(this.config.massLiker.alternative?'checked':'')+' type="checkbox" id="massLikerAlternative" style="clear:both;margin-right:5px;margin-top:4px;float:left;" /></div>'+
+                                                    '<div style="float:left;margin-top:5px;"><span>'+this.language.massLikerAlternative+' </span></div>'+
+                                                    '</div>'+
+                                                    '<div style="float: left; width: 290px;">'+
+                                                    '<strong style="color:#ddd;">'+this.language.ignoreUsers+'</strong>'+
+                                                    '<textarea id="ignoreUsers" style="width:100%; height: 200px;">'+this.config.massLiker.ignoreUsers.join("\n")+'</textarea>'+
+                                                    '</div>'+
+                                                    '</div>');
+            
+
+            this.elements["ignoreUsers"] = $('#ignoreUsers');
+            this.elements["ignoreUsers"].change(function(){
+                self.config.massLiker.ignoreUsers = self.elements["ignoreUsers"].val().toLowerCase().split("\n");
+                window.localStorage.setItem("config.massLiker.ignoreUsers", self.elements["ignoreUsers"].val().toLowerCase());
+            });
+
+
+            this.elements["giveGifts"] = $('#giveGifts');
+            this.elements["giveGifts"].change(function(){
+                if (self.elements["giveGifts"].is(":checked"))
+                {
+                    window.localStorage.setItem("config.massLiker.giveGifts", "true");
+                    self.config.massLiker.giveGifts = true;
+                }
+                else
+                {
+                    window.localStorage.setItem("config.massLiker.giveGifts", "false");
+                    self.config.massLiker.giveGifts = false;
+                }
+            });
+
+            this.elements["massLikerAlternative"] = $('#massLikerAlternative');
+            this.elements["massLikerAlternative"].change(function(){
+                if (self.elements["massLikerAlternative"].is(":checked"))
+                {
+                    window.localStorage.setItem("config.massLiker.alternative", "true");
+                    self.config.massLiker.alternative = true;
+                }
+                else
+                {
+                    window.localStorage.setItem("config.massLiker.alternative", "false");
+                    self.config.massLiker.alternative = false;
+                }
+            });
+
+            this.elements["massLikerLogin"] = $('#massLikerLogin');
+            this.elements["massLikerLogin"].change(function(){
+                self.config.massLiker.login = self.elements["massLikerLogin"].val();
+                window.localStorage.setItem("config.massLiker.login", self.config.massLiker.login);
+            });
+
+            this.elements["intervalLikes"] = $('#intervalLikes');
+            this.elements["intervalLikes"].change(function(){
+                self.config.massLiker.intervalLikes = parseInt(self.elements["intervalLikes"].val());
+                window.localStorage.setItem("config.massLiker.intervalLikes", self.config.massLiker.intervalLikes);
+            });
+
+            this.elements["interval"] = $('#interval');
+            this.elements["interval"].change(function(){
+                self.config.massLiker.interval = parseInt(self.elements["interval"].val());
+                window.localStorage.setItem("config.massLiker.interval", self.config.massLiker.interval);
+            });
+
+            this.elements["giftThreshold"] = $('#giftThreshold');
+            this.elements["giftThreshold"].change(function(){
+                self.config.massLiker.giftThreshold = parseInt(self.elements["giftThreshold"].val());
+                window.localStorage.setItem("config.massLiker.giftThreshold", self.config.massLiker.giftThreshold);
+            });
+
+            this.elements["keepCoins"] = $('#keepCoins');
+            this.elements["keepCoins"].change(function(){
+                self.config.massLiker.keepCoins = parseInt(self.elements["keepCoins"].val());
+                window.localStorage.setItem("config.massLiker.keepCoins", self.config.massLiker.keepCoins);
+            });
+
+            this.elements["likeThreshold"] = $('#likeThreshold');
+            this.elements["likeThreshold"].change(function(){
+                self.config.massLiker.likeThreshold = parseInt(self.elements["likeThreshold"].val());
+                window.localStorage.setItem("config.massLiker.likeThreshold", self.config.massLiker.likeThreshold);
+            });
+            this.elements["maxLikeCost"] = $('#maxLikeCost');
+            this.elements["maxLikeCost"].change(function(){
+                self.config.massLiker.maxLikeCost = parseInt(self.elements["maxLikeCost"].val());
+                window.localStorage.setItem("config.massLiker.maxLikeCost", self.config.massLiker.maxLikeCost);
+            });
+        }
+        if (key == "chatBot")
+        {
+            this.elements["chatBotTab"].addClass("active");
+            this.elements["settingsContainer"].html('<h3>'+this.language.chatBot+'</h3>'+
+                                    '<div style="float:left;clear:both;width:120px;"><span>'+this.language.chatBotInterval+':</span></div>'+
+                                    '<div style="float:left;"><input style="width:150px;" type="number" min="60" id="chatBotInterval" value="'+(this.config.chatbot.interval/1000)+'" /></div>'+
+                                    '<div style="float:left; clear: both;margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotMessage+'</h4>'+
+                                    '<textarea id="chatBotMessages" style="width:100%; height: 200px;">'+this.config.chatbot.messages.join("\n")+'</textarea></div>'+
+                                    '<div style="float:left; margin-left: 10px; margin-top:5px; width: calc(50% - 5px)"><h4>'+this.language.chatBotIgnored+'</h4>'+
+                                    '<textarea id="chatBotIgnored" style="width:100%; height: 200px;">'+this.config.chatbot.knownIdiots.join("\n")+'</textarea></div>');
+        }
+        
+    };
+    
     w.DarkMode.prototype.updatePage = function()
     {
         if (this.pusher != null)
@@ -1285,11 +1476,16 @@ function main(w)
                 this.explore(null, 0);
         }
         else if (this.path[0] == "settings") {
-            // TODO
+            this.showSettings();
+            if (this.path.length > 1)
+                this.switchSettingsTab(this.path[1]);
         }
         else 
         {
-            this.openStream(this.path[0]);
+            if (this.path.length > 1 && this.path[1] == "profile")
+                this.openProfile(this.path[0]);
+            else 
+                this.openStream(this.path[0]);
         }/*
         else 
         {
@@ -1539,7 +1735,8 @@ function main(w)
             {
                 if (json["errorCode"] > 0)
                 {
-                    self.elements["right"].html('<div class="error">'+self.language.streamerOffline.replace("%1", name)+'</div>');
+                    self.openProfile(self.currentStreamer.user.profileUrlString);
+                    //self.elements["right"].html('<div class="error">'+self.language.streamerOffline.replace("%1", name)+'</div>');
                 }
                 else 
                 {
@@ -2057,6 +2254,9 @@ function main(w)
             "fans": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Users-Group-icon.png",
             "likes": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Hands-Thumbs-Up-icon.png",
             "shares": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/Very-Basic-Electric-Megaphone-Filled-icon.png",
+            "settings": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/settings-icon.png",
+            "arrowLeft": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/arrowLeft.png",
+            "arrowRight": "https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/img/arrowRight.png",
         },
         languages: 
         {
@@ -2073,6 +2273,7 @@ function main(w)
                 "trendingTags": "Erbärmliche Tags",
                 "streamerOffline": "%1 ist offline.",
                 "in": " in ",
+                "account": "Account",
                 "minChatLevel": "Zum Chatten ist Level %1 benötigt",
                 "writeInChat": "In den Chat",
                 "writeInTrending": "In alle Chats des aktuellen Tags",
@@ -2124,7 +2325,7 @@ function main(w)
                 'dontChange': 'Nicht ändern, falls die Auswirkung nicht bekannt ist',
                 'massLikerEnabled': 'Massenliker aktivieren',
                 'likeThreshold': 'Likeschwelle',
-                'login': 'Login',
+                'loginWith': 'Login mit',
                 'relog': 'Neu einloggen',
                 'logout': 'Ausloggen...',
                 'waitForLogout':'Warten auf ausloggen...',
@@ -2160,6 +2361,8 @@ function main(w)
                 'intervalLikes': 'Max. Likes',
                 'interval': 'Pro',
                 'recreateAccount':'Neu registrieren',
+                'userList': 'Benutzer',
+                'massLiker': 'Massenliker',
             }
         },
         deviceMapping:
@@ -2489,6 +2692,12 @@ function main(w)
                 '.nav-logo {float: left; width: 110px; margin-left: 10px; margin-right: 80px !important; }'+
                 '.navbar-content {width: 100% !important;min-width:0px !important; max-width: 100000px !important;}'+
                 'select, input[type=text], input[type=number], textarea {background:#333; font-size:11px; font-family: Segoe UI; color: #ddd !important; border: 1px solid #666;}'+
+                '#darkPage #left li {width: 100%; overflow: hidden;}'+
+                '#settings .tabBar a {height: 20px; display: block; float: left; background: #333; height: 30px; padding-top:5px; padding-bottom: 5px; border-bottom: 1px solid #666; border-right: 1px solid #666; cursor: pointer; text-align: center; color: #ddd; text-decoration:none; font-weight: bold;}'+
+                '#settings .tabBar a.active, #settings .tabBar a:hover {background:#555;}'+
+                '#settingsContainer { padding: 10px;float:left; clear: both; }'+
+                '#darkPage #left li .header {width: 100%; border-bottom: 1px solid #777; padding: 10px; padding-top: 5px; padding-bottom: 5px; background:#555; height: 30px; color:#ddd; font-weight: bold; cursor: pointer; }'+
+                '#darkPage #left li .content {width: 100%; border-bottom: 1px solid #111; padding: 10px; overflow-y: auto; overflow-x: hidden; height:calc(100% - 30px); }'+
                 '#darkPage {position:absolute; top: 50px; left: 0px; z-index:100; width: 100%; height: calc(100% - 50px);}'+
                 '#darkPage #left {float: left; width: 200px; border-right: 1px solid #999; height:100%; background:#333;}'+
                 '#darkPage #right {float: left; width: calc(100% - 201px); height:100%; background:#000;}'+
@@ -2503,8 +2712,7 @@ function main(w)
                 '#darkPage h2 {color: #eee; margin-top:0px;}'+
                 '#darkPage h3 {color: #eee; margin-top:0px;}'+
                 '#darkPage h4 {color: #eee; margin-top:0px;}'+
-                '#darkPage #left strong {color: #ddd; margin-top:0px; height: 25px; line-height: 25px; }'+
-                '#darkPage #left { padding: 10px; }'+
+                '#darkPage #left strong {color: #ddd; margin-top:0px; height: 20px; line-height: 20px; }'+
                 '#darkPage #left a { color: #aaa; }'+
                 '#trendingPeople, #trendingTags, #featuredUsers, #friends { overflow: hidden; overflow-y: auto; }'+
                 '#stream { width: 100%; height: 100%; }'+
