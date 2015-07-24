@@ -1,13 +1,13 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.4.2
+// @version 0.4.5
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
 // @grant none
-// @updateURL https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/DarkMode.user.js
-// @downloadURL https://raw.githubusercontent.com/FluffyFishGames/JuhNau-Darkmode/master/DarkMode.user.js
+// @updateURL https://FluffyFishGames.github.io/JuhNau-Darkmode/master/DarkMode.user.js
+// @downloadURL https://FluffyFishGames.github.io/JuhNau-Darkmode/master/DarkMode.user.js
 // ==/UserScript==
 
 function main(w)
@@ -98,7 +98,7 @@ function main(w)
     
     w.DarkMode.prototype.openSettings = function(key)
     {
-        window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/settings/"+key);
+        window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/settings/"+key);
     };
     
     w.DarkMode.prototype.addHeader = function(header, key)
@@ -213,7 +213,7 @@ function main(w)
         var b = window.localStorage.getItem("browse");
         if (b != null && b != "")
         {
-            window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/"+b);
+            window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/"+b);
             window.localStorage.setItem("browse", "");
         }
 
@@ -255,7 +255,7 @@ function main(w)
         if (this.massLiker.users[userNum].cost <= this.config.massLiker.maxLikeCost && this.config.massLiker.ignoreUsers.indexOf(this.massLiker.users[userNum].profile.toLowerCase()) == -1)
         {
             var self = this;
-            window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/"+this.massLiker.users[userNum].profile);
+            window.history.replaceState({"html":"","pageTitle":""},"", "https://www.younow.com/"+this.massLiker.users[userNum].profile);
             $.ajax({
                 xhr: function() {
                     var xhr = jQuery.ajaxSettings.xhr();
@@ -266,7 +266,7 @@ function main(w)
                     }
                     return xhr;
                 },
-                url: 'http://www.younow.com/php/api/broadcast/like', 
+                url: 'https://www.younow.com/php/api/broadcast/like', 
                 method: "POST",
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -301,7 +301,7 @@ function main(w)
 
     w.DarkMode.prototype.massLikerGift = function(send)
     {
-        window.history.replaceState({"html":"","pageTitle":""},"", "http://www.younow.com/"+send.profile);
+        window.history.replaceState({"html":"","pageTitle":""},"", "https://www.younow.com/"+send.profile);
         var self = this;
         this.sendGift(send.id, send.giftId, send.quantity, function(){
             self.massLiker.sentGifts++;
@@ -681,14 +681,14 @@ function main(w)
                     this.massLiker.giftUsers = [];
                     this.massLiker.step = 'waiting';
                     $.ajax({
-                        url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=1000000/locale=ww', 
+                        url: 'https://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom=1000000/locale=ww', 
                         method: "GET",
                         dataType: "json",
                         success: function(json, b, c)
                         {
                             var index = json["total"] - 50;
                             $.ajax({
-                                url: 'http://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom='+index+'/locale=ww', 
+                                url: 'https://cdn2.younow.com/php/api/younow/trendingUsers/numberOfRecords=50/startFrom='+index+'/locale=ww', 
                                 method: "GET",
                                 dataType: "json",
                                 success: function(json, b, c)
@@ -867,7 +867,7 @@ function main(w)
         {
             var self = this;
             $.ajax({
-                url: 'http://www.younow.com/php/api/channel/getLocationOnlineFansOf/numberOfRecords=50/channelId='+this.youNow.session.user.userId, 
+                url: 'https://www.younow.com/php/api/channel/getLocationOnlineFansOf/numberOfRecords=50/channelId='+this.youNow.session.user.userId, 
                 jsonp: "callback",
                 method: "GET",
                 dataType: "json",
@@ -973,7 +973,7 @@ function main(w)
         {
             var self = this;
             $.ajax({
-                url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
+                url: 'https://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
                 jsonp: "callback",
                 dataType: "jsonp",
                 success: function(json, b, c)
@@ -1000,7 +1000,7 @@ function main(w)
             this.currentStreamer = {user:{profileUrlString: username}};
             var self = this;
             $.ajax({
-                url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
+                url: 'https://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
                 success: function(json, b, c)
                 {
                     self.currentStreamer.user = {profileUrlString: username};
@@ -1015,7 +1015,7 @@ function main(w)
     {
         this.elements["right"].html("");
         $.ajax({
-            url: 'http://cdn2.younow.com/php/api/channel/getInfo/channelId='+this.currentSteamer.userId, 
+            url: 'https://cdn2.younow.com/php/api/channel/getInfo/channelId='+this.currentSteamer.userId, 
             success: function(json, b, c)
             {
                 console.log(json);
@@ -1054,7 +1054,7 @@ function main(w)
     {
         var self = this;
         $.ajax({
-            url: 'http://www.younow.com/php/api/broadcast/like', 
+            url: 'https://www.younow.com/php/api/broadcast/like', 
             method: "POST",
             data: {"tsi": this.config.tsi, "tdi":this.config.tdi, "userId": this.youNow.session.user.userId, "channelId": channelId},
             success: function(json, b, c)
@@ -1098,7 +1098,7 @@ function main(w)
         {
             var self = this;
             $.ajax({
-                url: 'http://cdn2.younow.com/php/api/broadcast/audience/channelId='+this.currentStreamer.userId+'/numOfRecords=200/start=0', 
+                url: 'https://cdn2.younow.com/php/api/broadcast/audience/channelId='+this.currentStreamer.userId+'/numOfRecords=200/start=0', 
                 jsonp: "callback",
                 method: "GET",
                 dataType: "json",
@@ -1120,7 +1120,7 @@ function main(w)
     {
         var self = this;
         $.ajax({
-            url: 'http://cdn2.younow.com/php/api/younow/dashboard/locale=de/trending=50', 
+            url: 'https://cdn2.younow.com/php/api/younow/dashboard/locale=de/trending=50', 
             jsonp: "callback",
             method: "GET",
             dataType: "json",
@@ -1496,7 +1496,7 @@ function main(w)
     w.DarkMode.prototype.sendGift = function(streamId, giftId, quantity, callback)
     {
         $.ajax({
-            url: 'http://www.younow.com/php/api/broadcast/gift', 
+            url: 'https://www.younow.com/php/api/broadcast/gift', 
             method: "POST",
             dataType: "json",
             headers: {
@@ -1521,7 +1521,7 @@ function main(w)
         if (this.elements["writeInChat"].is(':checked'))
         {
             $.ajax({
-                url: 'http://www.younow.com/php/api/broadcast/chat', 
+                url: 'https://www.younow.com/php/api/broadcast/chat', 
                 jsonp: "callback",
                 method: "POST",
                 dataType: "json",
@@ -1548,7 +1548,7 @@ function main(w)
                     for (var i = 0; i < json.onBroadcastPlay.queues[0].items.length; i++)
                     {
                         $.ajax({
-                            url: 'http://www.younow.com/php/api/broadcast/chat', 
+                            url: 'https://www.younow.com/php/api/broadcast/chat', 
                             jsonp: "callback",
                             method: "POST",
                             dataType: "json",
@@ -1587,7 +1587,7 @@ function main(w)
                     for (var i = 0; i < json.hits.length; i++)
                     {
                         $.ajax({
-                            url: 'http://www.younow.com/php/api/broadcast/chat', 
+                            url: 'https://www.younow.com/php/api/broadcast/chat', 
                             jsonp: "callback",
                             method: "POST",
                             dataType: "json",
@@ -1728,7 +1728,7 @@ function main(w)
         }
 
         $.ajax({
-            url: 'http://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
+            url: 'https://www.younow.com/php/api/broadcast/info/curId=0/user='+this.currentStreamer.user.profileUrlString, 
             jsonp: "callback",
             dataType: "jsonp",
             success: function(json, b, c)
@@ -1750,7 +1750,7 @@ function main(w)
 
     w.DarkMode.prototype.switchStream = function()
     {
-        flowplayer("streamView", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
+        flowplayer("streamView", "https://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
             clip: {
                 url: this.currentStreamer.media.stream,
                 live: true,
@@ -1935,7 +1935,7 @@ function main(w)
         if (this.currentSearch.query == null)
         {
             $.ajax({
-                url: 'http://www.younow.com/php/api/younow/trendingUsers/numberOfRecords=100/startFrom='+(this.currentSearch.page * 100)+'/locale=de', 
+                url: 'https://www.younow.com/php/api/younow/trendingUsers/numberOfRecords=100/startFrom='+(this.currentSearch.page * 100)+'/locale=de', 
                 jsonp: "callback",
                 method: "GET",
                 processData: false,
@@ -2071,7 +2071,7 @@ function main(w)
             wasBottom = true;
         if (this.elements["chatMessages"].children().length > this.config.maxMessages - 1)
             this.elements["chatMessages"].children()[0].remove();
-        this.elements["chatMessages"].append('<li><img src="http://cdn2.younow.com/php/api/channel/getImage/?channelId='+message.userId+'" height="30" width="30" /><span><strong><a href="http://www.younow.com/'+message.profileUrlString+'">'+message.name+' ('+message.userLevel+')</a>: </strong>'+message.comment+'</span></li>');
+        this.elements["chatMessages"].append('<li><img src="https://cdn2.younow.com/php/api/channel/getImage/?channelId='+message.userId+'" height="30" width="30" /><span><strong><a href="http://www.younow.com/'+message.profileUrlString+'">'+message.name+' ('+message.userLevel+')</a>: </strong>'+message.comment+'</span></li>');
         if (wasBottom)
         {
             this.elements["chatMessages"].animate({ scrollTop: this.elements["chatMessages"][0].scrollHeight}, 200)
@@ -2085,7 +2085,7 @@ function main(w)
 
     w.DarkMode.prototype.getProfilePicture = function(userid)
     {
-        return 'http://cdn2.younow.com/php/api/channel/getImage/channelId='+userid;
+        return 'https://cdn2.younow.com/php/api/channel/getImage/channelId='+userid;
     };
 
     w.DarkMode.prototype.hijackAngular = function()
@@ -2226,8 +2226,8 @@ function main(w)
             }
             else 
             {
-                window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
-                window.location.href = "http://www.younow.com/explore/";
+                window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/","").replace("hidden/",""));
+                window.location.href = "https://www.younow.com/explore/";
             }
         });
 
@@ -2670,11 +2670,11 @@ function main(w)
     // rerouting if in user is in dark mode
     if (window.localStorage.getItem("inDarkMode") == "1")
     {
-        if (window.location.href != "http://www.younow.com/explore/")
+        if (window.location.href != "https://www.younow.com/explore/")
         {
-            //window.history.pushState({"html":"","pageTitle":""},"", "http://www.younow.com/explore");
-            window.location.href = "http://www.younow.com/explore/";
-            window.localStorage.setItem("browse", window.location.href.replace("http://www.younow.com/","").replace("hidden/",""));
+            //window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/explore");
+            window.location.href = "https://www.younow.com/explore/";
+            window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/","").replace("hidden/",""));
         }
     }
 
@@ -2788,22 +2788,25 @@ function main(w)
         var script1 = document.createElement("script");
         script1.setAttribute("type", "text/javascript");
         script1.addEventListener('load', function() {
+            console.log("A");
             var script = document.createElement("script");
             script.setAttribute("type", "text/javascript");
             script.addEventListener('load', function() {
+                console.log("B");
                 var script2 = document.createElement("script");
-                script2.setAttribute("src", "http://faisalman.github.io/ua-parser-js/src/ua-parser.js");
+                script2.setAttribute("src", "https://faisalman.github.io/ua-parser-js/src/ua-parser.js");
                 script2.addEventListener('load', function(){
+                    console.log("C");
                     var script = document.createElement("script");
                     script.textContent = "(" + callback.toString() + ")();";
                     document.body.appendChild(script);
                 });
                 document.body.appendChild(script2);
             }, false);
-            script.setAttribute("src", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
+            script.setAttribute("src", "https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
             document.body.appendChild(script);
         });
-        script1.setAttribute("src", "http://releases.flowplayer.org/js/flowplayer-3.2.13.min.js");
+        script1.setAttribute("src", "https://FluffyFishGames.github.io/flowplayer.min.js");
         document.body.appendChild(script1);
     }
 
