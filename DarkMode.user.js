@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5
+// @version 0.5.1
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -131,6 +131,9 @@ function main(w) {
                 "label": this.language.userList,
                 "hasSettings": false,
             },
+          /*  "leveller": {
+                "label": this.language.leveller,
+            },*/
             "massLiker": {
                 "label": this.language.massLiker,
                 "hasSettings": true,
@@ -164,7 +167,13 @@ function main(w) {
         this.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
             '<div style="float:left;margin-top:5px;"><span>' + this.language.massLikerEnabled + ' </span></div></div>' +
             '<div id="massLikerStats"></div>');
-
+/*
+        this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
+                                              '<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.leveller.desiredLevel+'" id="desiredLevel" /></div>'+
+            '<div style="float:left; clear: both;"><input type="checkbox" id="levellerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
+            '<div style="float:left;margin-top:5px;"><span>' + this.language.levellerActive + ' </span></div></div>' +
+            '<div id="levellerStats"></div>');
+*/
         this.headers["chatBot"].content.html('<div style="float:left; clear: both;"><input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
             '<div style="float:left;margin-top:5px;"><span>' + this.language.chatbotEnabled + ' </span></div></div>');
 
@@ -258,7 +267,28 @@ function main(w) {
                 self.config.massLiker.active = false;
             }
         });
-
+/*
+        this.elements["desiredLevel"] = $('#desiredLevel');
+        this.elements["desiredLevel"].change(function() {
+            self.config.leveller.desiredLevel = parseInt(self.elements["desiredLevel"].val());
+            window.localStorage.setItem("config.leveller.desiredLevel", self.config.leveller.desiredLevel);
+        });
+        
+        this.elements["levellerEnabled"] = $('#levellerEnabled');
+        this.elements["levellerEnabled"].change(function() {
+            if (self.elements["levellerEnabled"].is(":checked")) {
+                self.onSound.prop("currentTime", 0);
+                self.onSound.trigger("play");
+                self.config.leveller.active = true;
+                if (self.leveller != null) {
+                    self.leveller = null;
+                }
+            } else {
+                self.offSound.prop("currentTime", 0);
+                self.offSound.trigger("play");
+                self.config.leveller.active = false;
+            }
+        });*/
     };
 
     w.DarkMode.prototype.massLikerLike = function(userNum) {
@@ -315,6 +345,9 @@ function main(w) {
             'task': 'remove',
             'login': login,
         };
+    };
+    
+    w.DarkMode.prototype.tickLeveller = function() {
     };
 
     w.DarkMode.prototype.tickRecreater = function() {
@@ -1575,7 +1608,8 @@ function main(w) {
             var self = this;
             this.sendRequest("getViewers", {
                 count: 200,
-                start: 0
+                start: 0,
+                channelID: this.currentStreamer.userId,
             }, function(json, success) {
                 self.elements["viewerList"].html("");
                 for (var i = 0; i < json.audience.length; i++) {
@@ -1912,7 +1946,7 @@ function main(w) {
             this.currentPage = "previousBroadcast";
             var self = this;
             this.sendRequest("getVideoPath", {broadcastID: this.currentProfile.broadcasts[id].media.broadcast.broadcastId}, function(json, success) {
-                var command = 'rtmpdump -r '+json.server+' -y '+json.stream+'?sessionId='+self.youNow.session.user.session+' -p https://www.younow.com/'+self.currentProfile.profile+'/channel -o "'+self.currentProfile.broadcasts[id].media.broadcast.broadcastId+'.mp4"';
+                var command = 'rtmpdump -r '+json.server+' -y '+json.stream+'?sessionId='+self.youNow.session.user.session+' -p https://www.younow.com/'+self.currentProfile.profile+'/channel -o "'+self.currentProfile.profile+'_'+self.currentProfile.broadcasts[id].media.broadcast.dateAired.replace(new RegExp(':', 'g'),"-")+'.mp4"';
                 self.elements["right"].html('<div id="previousStream" style="width:100%; height:100%;"><div class="header"><a href="/'+self.currentProfile.profile+'/channel">'+self.language.backToProfile+'</a><span id="rtmpDump">'+self.language.rtmpDump+'</span><div id="rtmpDumpInfo">'+command+'</div></div><div id="stream"></div></div>');
                 $('#rtmpDump').click(function(){
                     if ($('#rtmpDumpInfo').css("display") == "block")
@@ -3668,6 +3702,11 @@ function main(w) {
                 'massLikerEnabled': 'Massenliker aktivieren',
                 'likeThreshold': 'Likeschwelle',
                 'loginWith': 'Login mit',
+                'level': 'Level',
+                'leveling': 'Levelt...',
+                'leveller': 'Leveller',
+                'desiredLevel': 'Gewünschtes Level',
+                'levellerActive': 'Leveller aktivieren',
                 'relog': 'Neu einloggen',
                 'logout': 'Ausloggen...',
                 'waitForLogout': 'Warten auf ausloggen...',
@@ -3700,9 +3739,11 @@ function main(w) {
                 'giftThreshold': 'Bescherung ab',
                 'ignoreUsers': 'Unartige User',
                 'giveGifts': 'Bescherung',
+                'renaming': 'Umbenennen...',
                 'massLikerAlternative': 'Alternativer Suchmodus',
                 'intervalLikes': 'Max. Likes',
                 'interval': 'Pro',
+                'finished': 'Fertig.',
                 'recreateAccount': 'Neu registrieren',
                 'userList': 'Benutzer',
                 'massLiker': 'Massenliker',
@@ -3786,6 +3827,10 @@ function main(w) {
         },
         ignoreRouting: false,
         maxMessages: 200,
+        leveller: {
+            desiredLevel: 15,
+            active: false,
+        },
         massLiker: {
             maxLikeCost: 5,
             likeThreshold: 800,
@@ -3814,6 +3859,7 @@ function main(w) {
             design: 100,
             recreater: 100,
             animation: 20,
+            leveller: 100,
         },
         chatbot: {
             timeRemaining: 2 * 60 * 1000,
