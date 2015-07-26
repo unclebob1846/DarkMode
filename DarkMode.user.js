@@ -14,7 +14,7 @@ function main(w) {
     function callback() {
         window.DarkModeInstance = new window.DarkMode();
     }
-
+ 
 
     w.DarkModeInstance = null;
     w.DarkMode = function() {
