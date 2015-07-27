@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5.8
+// @version 0.5.9
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -410,9 +410,8 @@ function main(w) {
                                      '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.language[this.leveller.task]+'</div>'+
                                      '<div style="float:left;clear:both; font-weight:bold; color:#ddd;width:180px;">'+this.language.level+'</div>'+
                                      '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.parseNumber(this.leveller.level)+'</div>');
-            if (this.leveller.task == 'leveling') {
+            if (this.leveller.task == 'leveling') {    
                 if (this.leveller.levelsLeft > 0){
-                    this.levelsLeft = (101 - Math.floor(this.youNow.session.user.level));
                     this.leveller.task = 'waiting';
                     $.ajax({
                         xhr: function() {
@@ -903,8 +902,6 @@ function main(w) {
     w.DarkMode.prototype.tick = function() {
         var d = new Date();
         var cTime = d.getTime();
-        if (this.config.leveller.desiredLevel > 5 * 3) 
-            this.config.leveller.desiredLevel = 5 * 3;
         for (var key in this.config.ticks) {
             if (this.lastTicks[key] < cTime - this.config.ticks[key]) {
                 this["tick" + key.charAt(0).toUpperCase() + key.slice(1)]();
