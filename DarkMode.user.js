@@ -176,7 +176,7 @@ function main(w) {
             '<div id="massLikerStats"></div>');
 
         this.headers["viewerBot"].content.html('<div style="float:left; clear:both;"><span>'+this.language.streamer+':</span></div>'+
-                                                  '<div style="float:left;"><input type="number" style="width:180px;" value="" id="viewerBotStreamer" /></div>'+
+                                                  '<div style="float:left;"><input type="text" style="width:180px;" value="" id="viewerBotStreamer" /></div>'+
                                                '<div style="float:right;margin-top:5px;float: right;"><button id="viewerBotButton" class="btn btn-primary">' + this.language.love + ' </button></div></div>');
 
             
