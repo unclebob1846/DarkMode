@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5.6
+// @version 0.5.7
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -177,7 +177,7 @@ function main(w) {
 
         this.headers["viewerBot"].content.html('<div style="float:left; clear:both;"><span>'+this.language.streamer+':</span></div>'+
                                                   '<div style="float:left;"><input type="number" style="width:180px;" value="" id="viewerBotStreamer" /></div>'+
-                                               '<div style="float:right;margin-top:5px;float: right;"><button id="viewerBotButton" class="btn btn-primary">' + this.language.love + ' </button></div></div>' +');
+                                               '<div style="float:right;margin-top:5px;float: right;"><button id="viewerBotButton" class="btn btn-primary">' + this.language.love + ' </button></div></div>');
 
             
         this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
