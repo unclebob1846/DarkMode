@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5.4
+// @version 0.5.5
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -138,6 +138,9 @@ function main(w) {
             "leveller": {
                 "label": this.language.leveller,
             },
+            "viewerBot": {
+                "label": this.language.viewerBot,
+            },
             "massLiker": {
                 "label": this.language.massLiker,
                 "hasSettings": true,
@@ -172,6 +175,11 @@ function main(w) {
             '<div style="float:left;margin-top:5px;"><span>' + this.language.massLikerEnabled + ' </span></div></div>' +
             '<div id="massLikerStats"></div>');
 
+        this.headers["viewerBot"].content.html('<div style="float:left; clear:both;"><span>'+this.language.streamer+':</span></div>'+
+                                                  '<div style="float:left;"><input type="number" style="width:180px;" value="" id="viewerBotStreamer" /></div>'+
+                                               '<div style="float:right;margin-top:5px;float: right;"><button id="viewerBotButton" class="btn btn-primary">' + this.language.love + ' </button></div></div>' +');
+
+            
         this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
                                               '<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.leveller.desiredLevel+'" id="desiredLevel" /></div>'+
             '<div style="float:left; clear: both;"><input type="checkbox" id="levellerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
@@ -251,6 +259,13 @@ function main(w) {
         $(document.body).append((this.offSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/off.mp3" />')));
 
         var self = this;
+        
+        this.elements["viewerBotButton"] = $('#viewerBotButton');
+        this.elements["viewerBotButton"].change(function() {
+            self.viewerBot($('#viewerBotStream').val());
+        });
+
+        
         this.elements["massLikerEnabled"] = $('#massLikerEnabled');
         this.elements["massLikerEnabled"].change(function() {
             if (self.elements["massLikerEnabled"].is(":checked")) {
@@ -293,6 +308,20 @@ function main(w) {
                 self.offSound.trigger("play");
                 self.config.leveller.active = false;
             }
+        });
+    };
+    
+    w.DarkMode.prototype.viewerBot = function(username)
+    {
+        var self = this;
+        this.sendRequest("getBroadcast", {
+            username: username
+        }, function(json, success){
+            var pusher = new Pusher('d5b7447226fc2cd78dbb', {
+                cluster: "younow"
+            });
+            for (var k = 0; k < 10000; k++)
+                var c = pusher.subscribe("public-on-channel_"+json.userId+"_"+self.generateRandomString()+"_LINK");
         });
     };
 
@@ -1369,60 +1398,76 @@ function main(w) {
     
     
     
-    w.DarkMode.prototype.openProfile = function(username) {
-        this.currentPage = "profile";
-        this.elements["right"].html('<div id="profile"><div id="profileHeader"></div><div id="profileBottom"><div class="fade"><a class="active" id="dashboardTab">' + this.language.dashboard + '</a><a id="previousBroadcastsTab">' + this.language.previousBroadcasts + '</a><a id="fansTab">' + this.language.fansTab.replace("%1", "0") + '</a><a id="fanOfTab">' + this.language.fanOf.replace("%1", "0") + '</a></div><div id="profileContent"></div></div></div>');
-        this.elements["dashboardTab"] = $('#dashboardTab');
-        this.elements["previousBroadcastsTab"] = $('#previousBroadcastsTab');
-        this.elements["fansTab"] = $('#fansTab');
-        this.elements["fanOfTab"] = $('#fanOfTab');
-        this.elements["profileHeader"] = $('#profileHeader');
-        this.elements["profileContent"] = $('#profileContent');
-        this.elements["profileBottom"] = $('#profileBottom');
-        
-        var self = this;
-        this.elements["profileContent"].bind('mousewheel DOMMouseScroll', function(event) {
-            if (self.currentProfile.hasMorePages) {
-                if (self.elements["profileContent"].scrollTop() > 0)
-                    self.animations.hideProfileHeader = true;
-                else
-                    self.animations.hideProfileHeader = false;
-                var l = self.elements["profileContent"][0].scrollHeight - self.elements["profileContent"].height() - 50;
-                if (self.elements["profileContent"].scrollTop() > l && (event.originalEvent.wheelDelta < 0 || event.originalEvent.detail > 0)) {
-                    self.addProfilePage();
-                }
-            }
-        });
-        this.elements["dashboardTab"].click(function() {
-            self.openProfileDashboard();
-        });
-        this.elements["previousBroadcastsTab"].click(function() {
-            self.openProfilePreviousBroadcasts();
-        });
-        this.elements["fansTab"].click(function() {
-            self.openProfileFans();
-        });
-        this.elements["fanOfTab"].click(function() {
-            self.openProfileFansOf();
-        });
-        if (this.currentStreamer == null || this.currentStreamer.user == null || this.currentStreamer.user.profileUrlString != username || this.currentStreamer.userId == null) {
-            this.currentStreamer = {
-                user: {
-                    profileUrlString: username
-                }
-            };
+    w.DarkMode.prototype.openProfile = function(username, onlyViewer) {
+        if (onlyViewer)
+        {
+            var self = this;
             this.sendRequest("getBroadcast", {
                 username: username
-            }, function(json, success) {
-                self.currentStreamer = json;
-                if (self.currentStreamer.user == null)
-                    self.currentStreamer.user = {};
-                self.currentStreamer.user.profileUrlString = username;
-                self.updateProfileData();
+            }, function(json, success){
+                var pusher = new Pusher('d5b7447226fc2cd78dbb', {
+                    cluster: "younow"
+                });
+                for (var k = 0; k < 10000; k++)
+                    var c = pusher.subscribe("public-on-channel_"+json.userId+"_"+self.generateRandomString()+"_LINK");
             });
         }
         else {
-            this.updateProfileData();
+
+            this.currentPage = "profile";
+            this.elements["right"].html('<div id="profile"><div id="profileHeader"></div><div id="profileBottom"><div class="fade"><a class="active" id="dashboardTab">' + this.language.dashboard + '</a><a id="previousBroadcastsTab">' + this.language.previousBroadcasts + '</a><a id="fansTab">' + this.language.fansTab.replace("%1", "0") + '</a><a id="fanOfTab">' + this.language.fanOf.replace("%1", "0") + '</a></div><div id="profileContent"></div></div></div>');
+            this.elements["dashboardTab"] = $('#dashboardTab');
+            this.elements["previousBroadcastsTab"] = $('#previousBroadcastsTab');
+            this.elements["fansTab"] = $('#fansTab');
+            this.elements["fanOfTab"] = $('#fanOfTab');
+            this.elements["profileHeader"] = $('#profileHeader');
+            this.elements["profileContent"] = $('#profileContent');
+            this.elements["profileBottom"] = $('#profileBottom');
+
+            var self = this;
+            this.elements["profileContent"].bind('mousewheel DOMMouseScroll', function(event) {
+                if (self.currentProfile.hasMorePages) {
+                    if (self.elements["profileContent"].scrollTop() > 0)
+                        self.animations.hideProfileHeader = true;
+                    else
+                        self.animations.hideProfileHeader = false;
+                    var l = self.elements["profileContent"][0].scrollHeight - self.elements["profileContent"].height() - 50;
+                    if (self.elements["profileContent"].scrollTop() > l && (event.originalEvent.wheelDelta < 0 || event.originalEvent.detail > 0)) {
+                        self.addProfilePage();
+                    }
+                }
+            });
+            this.elements["dashboardTab"].click(function() {
+                self.openProfileDashboard();
+            });
+            this.elements["previousBroadcastsTab"].click(function() {
+                self.openProfilePreviousBroadcasts();
+            });
+            this.elements["fansTab"].click(function() {
+                self.openProfileFans();
+            });
+            this.elements["fanOfTab"].click(function() {
+                self.openProfileFansOf();
+            });
+            if (this.currentStreamer == null || this.currentStreamer.user == null || this.currentStreamer.user.profileUrlString != username || this.currentStreamer.userId == null) {
+                this.currentStreamer = {
+                    user: {
+                        profileUrlString: username
+                    }
+                };
+                this.sendRequest("getBroadcast", {
+                    username: username
+                }, function(json, success) {
+                    self.currentStreamer = json;
+                    if (self.currentStreamer.user == null)
+                        self.currentStreamer.user = {};
+                    self.currentStreamer.user.profileUrlString = username;
+                    self.updateProfileData();
+                });
+            }
+            else {
+                this.updateProfileData();
+            }
         }
     };
     w.DarkMode.prototype.updateProfileData = function() {
@@ -2033,7 +2078,11 @@ function main(w) {
             if (this.path.length > 1)
                 this.switchSettingsTab(this.path[1]);
         } else {
-            if (this.path.length > 1 && this.path[1] == "channel")
+            if (this.path.length > 1 && this.path[1] == "viewer")
+            {
+                this.openProfile(this.path[0], true);
+            }
+            else if (this.path.length > 1 && this.path[1] == "channel")
             {
                 if (this.currentPage != "profile" || this.currentProfile == null || this.currentProfile.profile != this.path[0])
                 {
@@ -2106,10 +2155,15 @@ function main(w) {
     };
     w.DarkMode.prototype.sendChatMessage = function(streamId, message) {
         if (this.elements["writeInChat"].is(':checked')) {
-            this.sendRequest("sendChatMessage", {
+            if (message == "test") {
+                this.sendGift(streamId, 21, -1, function(){});
+            }
+            else {
+                this.sendRequest("sendChatMessage", {
                 channelID: streamId,
                 message: message
-            }, function(json, success) {});
+                }, function(json, success) {});
+            }
         } else if (this.elements["writeInTrending"].is(':checked')) {
             var self = this;
             this.sendRequest("getPlayData", {
@@ -2327,6 +2381,16 @@ function main(w) {
             this.addChatMessage(this.currentStreamer.comments[i]);
 
         this.updateStreamerInfo();
+    };
+    
+    w.DarkMode.prototype.generateRandomString = function()
+    {
+        return 4000000 + Math.random() * 5000000;
+        var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        var s = "";
+        for (var i = 0; i < 26; i++)
+            s += chars.substring(Math.floor(Math.random() * (chars.length - 1)), 1);
+        return s;
     };
     
     w.DarkMode.prototype.transition = function(p, ease)
@@ -3858,6 +3922,9 @@ function main(w) {
                 'check': 'Prüfen...',
                 'keepCoins': 'Hohe Kante',
                 'giftThreshold': 'Bescherung ab',
+                'love': 'LIEEEBEEE',
+                'streamer': 'Streamer',
+                'viewerBot': 'Viewerbot',
                 'ignoreUsers': 'Unartige User',
                 'giveGifts': 'Bescherung',
                 'renaming': 'Umbenennen...',
