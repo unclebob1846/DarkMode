@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.5.9
+// @version 0.6.0
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -48,6 +48,8 @@ function main(w) {
                 this.config.massLiker.intervalLikes = parseInt(window.localStorage.getItem("config.massLiker.intervalLikes").split("\n"));
             if (window.localStorage.getItem("config.massLiker.interval") != null)
                 this.config.massLiker.interval = parseInt(window.localStorage.getItem("config.massLiker.interval").split("\n"));
+            if (window.localStorage.getItem("config.playSounds") != null)
+                this.config.playSounds = window.localStorage.getItem("config.playSounds")=="true";
         }
         window.localStorage.setItem("lastVersion", lVersion);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         this.UAParser = new UAParser();
@@ -269,8 +271,11 @@ function main(w) {
         this.elements["massLikerEnabled"] = $('#massLikerEnabled');
         this.elements["massLikerEnabled"].change(function() {
             if (self.elements["massLikerEnabled"].is(":checked")) {
-                self.onSound.prop("currentTime", 0);
-                self.onSound.trigger("play");
+                if (self.config.playSounds)
+                {
+                    self.onSound.prop("currentTime", 0);
+                    self.onSound.trigger("play");
+                }
                 self.config.massLiker.active = true;
                 if (self.massLiker != null) {
                     self.massLiker = null;
@@ -281,8 +286,11 @@ function main(w) {
                         "html": "",
                         "pageTitle": ""
                     }, "", self.massLiker.previousUrl);
-                self.offSound.prop("currentTime", 0);
-                self.offSound.trigger("play");
+                if (self.config.playSounds)
+                {
+                    self.offSound.prop("currentTime", 0);
+                    self.offSound.trigger("play");
+                }
                 self.config.massLiker.active = false;
             }
         });
@@ -299,13 +307,19 @@ function main(w) {
         this.elements["levellerEnabled"] = $('#levellerEnabled');
         this.elements["levellerEnabled"].change(function() {
             if (self.elements["levellerEnabled"].is(":checked")) {
-                self.onSound.prop("currentTime", 0);
-                self.onSound.trigger("play");
+                if (self.config.playSounds)
+                {
+                    self.onSound.prop("currentTime", 0);
+                    self.onSound.trigger("play");
+                }
                 self.leveller = null;
                 self.config.leveller.active = true;
             } else {
-                self.offSound.prop("currentTime", 0);
-                self.offSound.trigger("play");
+                if (self.config.playSounds)
+                {
+                    self.offSound.prop("currentTime", 0);
+                    self.offSound.trigger("play");
+                }
                 self.config.leveller.active = false;
             }
         });
@@ -314,15 +328,57 @@ function main(w) {
     w.DarkMode.prototype.viewerBot = function(username)
     {
         var self = this;
-        this.sendRequest("getBroadcast", {
+        /*this.sendRequest("getBroadcast", {
             username: username
-        }, function(json, success){
+        }, function(json, success){*/
+            $.ajax({
+                xhr: function() {
+                    var xhr = jQuery.ajaxSettings.xhr();
+                    var setRequestHeader = xhr.setRequestHeader;
+                    xhr.setRequestHeader = function(name, value) {
+                        if (name == 'X-Requested-With') return;
+                        setRequestHeader.call(this, name, value);
+                    }
+                    return xhr;
+                },
+                url: 'https://www.younow.com/php/api/broadcast/init',
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'X-Requested-By': this.youNow.session.user.requestBy,
+                },
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: {
+                    "tsi": this.config.tsi,
+                    "tdi": this.config.tdi,
+                    userId:12826530,
+                    channelId:9240429,
+                    ver:3.780,
+                    mirror:0,
+                },
+                success: function(json, b, c) {
+                    /*self.youNow.session.authenticate[self.leveller.login]().then(function(data) {
+                        self.youNow.session.login(data, true).then(function(data) {
+                            self.leveller.levelsLeft--;
+                            self.leveller.level++;
+                            self.leveller.task = 'leveling';
+                        });
+                    });*/
+                },
+                error: function(a, b, c) {}
+            });
+            /*
             var pusher = new Pusher('d5b7447226fc2cd78dbb', {
                 cluster: "younow"
             });
-            for (var k = 0; k < 10000; k++)
-                var c = pusher.subscribe("public-on-channel_"+json.userId+"_"+self.generateRandomString()+"_QUEUE");
-        });
+
+            //for (var k = 0; k < 10; k++)
+            //{
+                var c = pusher.subscribe("public-on-channel_"+json.userId+"_d3pa83867jjtgv1ddqpgh2kcm5_LINK"); //"+self.generateRandomString()+"
+                c = pusher.subscribe("public-channel_"+json.userId);
+            //{"event":"pusher:subscribe","data":{"channel":"public-on-channel_7031652_d3pa83867jjtgv1ddqpgh2kcm5_LINK"}}
+            //}
+        });*/
     };
 
     w.DarkMode.prototype.massLikerLike = function(userNum) {
@@ -1935,7 +1991,18 @@ function main(w) {
 
         if (key == "account") {
             this.elements["accountTab"].addClass("active");
-            this.elements["settingsContainer"].html("More to come :)");
+            this.elements["settingsContainer"].html('<div style="float:left;clear:both;width:200px;"><span>'+this.language.playSounds+'</span></div>'+
+                                                    '<div style="float:left;width:200px;"><input type="checkbox" id="settingsPlaySounds" '+(this.config.playSounds?'checked':'')+' /></div>');
+            $('#settingsPlaySounds').change(function(){
+                if ($("#settingsPlaySounds").is(":checked")) {
+                    window.localStorage.setItem("config.playSounds", "true");
+                    self.config.playSounds = true;
+                } 
+                else {
+                    window.localStorage.setItem("config.playSounds", "false");
+                    self.config.playSounds = false;
+                }
+            });
         }
         if (key == "massLiker") {
             this.elements["massLikerTab"].addClass("active");
@@ -3839,6 +3906,7 @@ function main(w) {
                 "chatWarning": "Mit großer Macht kommt große Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
                 "audience": "Zuschauer",
                 "chat": "Chat",
+                "playSounds": "Sounds abspielen",
                 "infos": "Streamer-Info",
                 "remove": "Löschen",
                 'age': 'Alter',
@@ -3853,6 +3921,7 @@ function main(w) {
                 'mobileViewers': 'Mobil-Zuschauer',
                 'maxViewers': 'Höchste Zuschauerzahl',
                 'points': 'Punkte',
+                'playSounds': 'Sounds abspielen',
                 'tag': 'Tag',
                 'position': 'Position',
                 'reconnects': 'Reconnects',
@@ -4049,6 +4118,7 @@ function main(w) {
             animation: 20,
             leveller: 100,
         },
+        playSounds: false,
         chatbot: {
             timeRemaining: 2 * 60 * 1000,
             interval: 2 * 60 * 1000,
