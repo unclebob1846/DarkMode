@@ -113,4 +113,4 @@ window[window.dID][window.dID+"a"]("sendRequest", function(type, data, callback)
 	}
 
 	$.ajax(ajaxRequest);
-};
+});

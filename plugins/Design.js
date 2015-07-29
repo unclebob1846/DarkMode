@@ -138,4 +138,4 @@ window[dID][dID+"a"]("applyDesign", function()
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
 	
-};
+});
