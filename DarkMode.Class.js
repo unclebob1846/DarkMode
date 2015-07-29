@@ -1,5 +1,6 @@
 window[window.dID+"b"] = function(plugins)
 {
+	console.log("Dark modes loves you! "+window.dID);
 	this.dID = window.dID;
 	this[this.dID+"a"]("random", function()
 	{
