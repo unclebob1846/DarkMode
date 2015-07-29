@@ -1,11 +1,18 @@
-window[dID][dID+"x"]("bootTicker",
+window[dID][dID+"x"]("bootTicker", 
+	function(callback)
+	{
+		this.config.ticker = {};
+		callback();
+	}
+);
+
+window[dID][dID+"x"]("readyTicker",
     function()
 	{
 		var self = this;
-		var c = this[dID]("getConfig");
-	    setInterval(function() {
+		setInterval(function() {
 		    self[dID]("tick");
-		}, c.settings.baseTick);
+		}, this.config.settings.baseTick);
 	}
 );
 
@@ -13,25 +20,25 @@ window[dID][dID+"x"]("tick",
     function()
 	{
 		var self = this;
-		var c = this[dID]("getConfig");
 		var d = (new Date()).getTime();
-		for (var key in c.ticker)
+		if (this.lastTick == null)
+			this.lastTick = d;
+		var delta = d - this.lastTick;
+		for (var key in this.config.ticker)
 		{
-		    if (c.ticker[key].lastFired < d - c.ticker[key].interval)
+		    if (this.config.ticker[key].lastFired < d - this.config.ticker[key].interval)
 			{
-				this[dID](c.ticker[key].functionName);
-				c.ticker[key].lastFired = d - c.ticker[key].interval;
+				this[dID](this.config.ticker[key].functionName, delta);
+				this.config.ticker[key].lastFired = d - this.config.ticker[key].interval;
 			}
 		}
+		this.lastTick = d;
 	}
 );
 
 window[dID][dID+"x"]("addTick",
     function(name, interval, functionName)
 	{
-	    var c = this[dID]("getConfig");
-		if (c.ticker == null)
-			c.ticker = {};
-		c.ticker[name] = {interval: interval, functionName: functionName, lastFired: 0};
+		this.config.ticker[name] = {interval: interval, functionName: functionName, lastFired: 0};
 	}
 );

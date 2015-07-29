@@ -9,17 +9,26 @@ window[dID][dID+"a"]("bootConfig",
 			settings: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Settings.json",
 			requests: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Requests.json"
 		};
-		this[dID+"c"] = {};
+		this.config = {};
 		var loaded = 0;
 		var loading = 0;
 		var self = this;
 	    var d = function(key)
 		{
 			$.getJSON(load[key], function(data) {
-				self[dID+"c"][key] = data;
+				self.config[key] = data;
 				loaded++;
 				if (loaded == loading)
 				{
+					/* LOAD USER CONFIGURATION IN A MUCH BETTER FASHION
+					
+					var archive = [],
+					keys = Object.keys(window.localStorage),
+					i = 0;
+
+					for (; i < keys.length; i++) {
+						archive.push( localStorage.getItem(keys[i]) );
+					}*/
 					callback();
 				}
 			});
@@ -30,17 +39,9 @@ window[dID][dID+"a"]("bootConfig",
 		{
 			if (typeof this[key] == "string")
 			{
-				loadConfig(key);
+				d(key);
 				loading++;
 		    }
 	    }
-	}
-);
-
-window[dID][dID+"a"]("getConfig",
-    function()
-	{
-	    return this[dID+"c"];
-	    return 
 	}
 );

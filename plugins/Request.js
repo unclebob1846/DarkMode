@@ -1,7 +1,3 @@
-w[dID][dID+"x"]("bootRequest", function(callback){
-	callback();
-});
-
 w[dID][dID+"x"]("sendRequest", function(type, data, callback) {
 	var request = {
 		url: "",

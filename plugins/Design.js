@@ -1,4 +1,4 @@
-    w.DarkMode.prototype.selectHeader = function(key) {
+   /* w.DarkMode.prototype.selectHeader = function(key) {
         var c = 0;
         for (var k in this.headers) {
             c++;
@@ -19,9 +19,9 @@
             "html": "",
             "pageTitle": ""
         }, "", "https://www.younow.com/settings/" + key);
-    };
+    };*/
 
-w[dID][dID+"x"]("addHeader", function(header, key) {
+w[dID][dID+"x"]("addHeader", function(key, header) {
 	var self = this;
 	var li = $('<li></li>');
 
@@ -44,16 +44,27 @@ w[dID][dID+"x"]("addHeader", function(header, key) {
 	li.append(headerEl);
 	li.append(contentEl);
 	this.elements["left"].append(li);
+	this.headers[key] = header;
 });
 
 w[dID][dID+"x"]("bootDesign", function(callback) {
-    this[dID]("addButton");
+    this.headers = {};
+	this[dID]("addTick", "design", 20, "tickDesign");
 	callback();
+});
+
+w[dID][dID+"x"]("readyDesign", function() {
+	this[dID]("addButton");
+});
+
+w[dID][dID+"x"]("tickDesign", function(deltaTime) {
 });
 
 w[dID][dID+"x"]("addButton", function() {
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
+	if (button == null || button.length == 0)
+		return false;
 	var self = this;
 
 	var newButton = $("<button></button>");
@@ -85,10 +96,8 @@ w[dID][dID+"x"]("addButton", function() {
 	button.remove();
 });
 
-
-window[dID][dID+"a"]("applyDesign", function() 
+window[dID][dID+"x"]("applyDesign", function() 
 {
-	var c = this[dID]("getConfig");
 	var self = this;
 	$('#main').remove();
 	$('.newFooter').remove();
@@ -99,16 +108,9 @@ window[dID][dID+"a"]("applyDesign", function()
 	this.elements = {};
 	this.headers = {
 		"userList": {
-			"label": this[dID]("getLang", "userList"),
+			"label": this.language.userList,
 			"hasSettings": false,
-		},
-		"leveller": {
-			"label": this[dID]("getLang", "leveller"),
-		},
-		"massLiker": {
-			"label": this[dID]("getLang", "massLiker"),
-			"hasSettings": true,
-		},
+		}
 	};
 	this.elements["left"] = $('<ul id="left"></ul>');
 	for (var key in this.headers) {
@@ -131,111 +133,9 @@ window[dID][dID+"a"]("applyDesign", function()
 	this.headers["userList"].content.append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
 	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
 	
-	this.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
-		'<div style="float:left;margin-top:5px;"><span>' + this[dID]("getLang", massLikerEnabled + ' </span></div></div>' +
-		'<div id="massLikerStats"></div>');
-
-	this.headers["viewerBot"].content.html('<div style="float:left; clear:both;"><span>'+this[dID]("getLang", streamer+':</span></div>'+
-											  '<div style="float:left;"><input type="text" style="width:180px;" value="" id="viewerBotStreamer" /></div>'+
-										   '<div style="float:right;margin-top:5px;float: right;"><button id="viewerBotButton" class="btn btn-primary">' + this[dID]("getLang", love + ' </button></div></div>');
-
-		
-	this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this[dID]("getLang", desiredLevel+':</span></div>'+
-										  '<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.leveller.desiredLevel+'" id="desiredLevel" /></div>'+
-		'<div style="float:left; clear: both;"><input type="checkbox" id="levellerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
-		'<div style="float:left;margin-top:5px;"><span>' + this[dID]("getLang", levellerActive + ' </span></div></div>' +
-		'<div id="levellerStats"></div>');
-
-	this.headers["chatBot"].content.html('<div style="float:left; clear: both;"><input type="checkbox" disabled readonly id="chatBotEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
-		'<div style="float:left;margin-top:5px;"><span>' + this[dID]("getLang", chatbotEnabled + ' </span></div></div>');
-	
 	$(document.body).append(this.page);
 	$(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
 	
-	} catch(e){}
-	setInterval(function() {
-		self.tick();
-	}, 10);
-	var b = window.localStorage.getItem("browse");
-	if (b != null && b != "") {
-		window.history.pushState({
-			"html": "",
-			"pageTitle": ""
-		}, "", "https://www.younow.com/" + b);
-		window.localStorage.setItem("browse", "");
-	}
-
-	var a = $('.navbar-content');
-	//        a.append($('<div style="float: right;margin-top:-5px;margin-right: 10px;"><span id="nextMessageIn"></span></div>'));
-	var self = this;
-	//      this.elements["nextMessageIn"] = $('#nextMessageIn');
-
-	$(document.body).append((this.onSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/on.mp3" />')));
-	$(document.body).append((this.offSound = $('<audio src="https://github.com/FluffyFishGames/JuhNau-Darkmode/raw/master/off.mp3" />')));
-
-	var self = this;
-	
-	this.elements["viewerBotButton"] = $('#viewerBotButton');
-	this.elements["viewerBotButton"].click(function() {
-		self.viewerBot($('#viewerBotStreamer').val());
-	});
-
-	
-	this.elements["massLikerEnabled"] = $('#massLikerEnabled');
-	this.elements["massLikerEnabled"].change(function() {
-		if (self.elements["massLikerEnabled"].is(":checked")) {
-			if (self.config.playSounds)
-			{
-				self.onSound.prop("currentTime", 0);
-				self.onSound.trigger("play");
-			}
-			self.config.massLiker.active = true;
-			if (self.massLiker != null) {
-				self.massLiker = null;
-			}
-		} else {
-			if (self.massLiker.previousUrl != null)
-				window.history.replaceState({
-					"html": "",
-					"pageTitle": ""
-				}, "", self.massLiker.previousUrl);
-			if (self.config.playSounds)
-			{
-				self.offSound.prop("currentTime", 0);
-				self.offSound.trigger("play");
-			}
-			self.config.massLiker.active = false;
-		}
-	});
-
-	this.elements["desiredLevel"] = $('#desiredLevel');
-	this.elements["desiredLevel"].change(function() {
-		var l = parseInt(self.elements["desiredLevel"].val());
-		if (l > self.config.leveller.levelCap) l = self.config.leveller.levelCap;
-		self.config.leveller.desiredLevel = l;
-		self.elements["desiredLevel"].val(l);
-		window.localStorage.setItem("config.leveller.desiredLevel", self.config.leveller.desiredLevel);
-	});
-	
-	this.elements["levellerEnabled"] = $('#levellerEnabled');
-	this.elements["levellerEnabled"].change(function() {
-		if (self.elements["levellerEnabled"].is(":checked")) {
-			if (self.config.playSounds)
-			{
-				self.onSound.prop("currentTime", 0);
-				self.onSound.trigger("play");
-			}
-			self.leveller = null;
-			self.config.leveller.active = true;
-		} else {
-			if (self.config.playSounds)
-			{
-				self.offSound.prop("currentTime", 0);
-				self.offSound.trigger("play");
-			}
-			self.config.leveller.active = false;
-		}
-	});
 };

@@ -14,8 +14,7 @@ w[dID][dID+"x"]("bootYouNow", function() {
 	}
 
 	var r = allServices('younow');
-	var c = this[dID]("getConfig");
-	c.youNow = {
+	this.youNow = {
 		config: r.config,
 		api: r.Api,
 		session: r.session,
@@ -35,47 +34,47 @@ w[dID][dID+"x"]("bootYouNow", function() {
 	
 	if (window.localStorage.getItem("inDarkMode") == "1")
 	{
-		c.youNow.urlRouter.update = function(a) {
+		this.youNow.urlRouter.update = function(a) {
 			return true;
 		};
-		c.youNow.urlRouter.sync = function() {};
-		c.youNow.urlRouter.listen = function() {};
-		c.youNow.urlRouter.href = function(c, d, e) {                                                                                                                                                                                                                                                                               
+		this.youNow.urlRouter.sync = function() {};
+		this.youNow.urlRouter.listen = function() {};
+		this.youNow.urlRouter.href = function(c, d, e) {                                                                                                                                                                                                                                                                               
 			return "";
 		};
-		c.youNow.urlRouter.push = function(c, d, e) {};
+		this.youNow.urlRouter.push = function(c, d, e) {};
 
-		c.youNow.state.get = function(a, b) {
+		this.youNow.state.get = function(a, b) {
 			return true;
 		};
-		c.youNow.state.go = function(a, b, c) {
+		this.youNow.state.go = function(a, b, c) {
 			return true;
 		};
-		c.youNow.state.href = function(a, b, c) {
+		this.youNow.state.href = function(a, b, c) {
 			return "";
 		};
-		c.youNow.state.reload = function() {};
-		c.youNow.state.transitionTo = function(a, b, c) {};
-		c.youNow.view.load = function(c, d) {};
-		c.youNow.swf.newBroadcaster = function(a) {
+		this.youNow.state.reload = function() {};
+		this.youNow.state.transitionTo = function(a, b, c) {};
+		this.youNow.view.load = function(c, d) {};
+		this.youNow.swf.newBroadcaster = function(a) {
 			return false;
 		};
-		c.youNow.broadcasterService.addBroadcast = function(a, b, c, d, e, f) {
+		this.youNow.broadcasterService.addBroadcast = function(a, b, c, d, e, f) {
 			return false;
 		};
-		c.youNow.broadcasterService.switchBroadcaster = function(a, b, c, d) {
+		this.youNow.broadcasterService.switchBroadcaster = function(a, b, c, d) {
 			return false;
 		};
-		c.youNow.broadcasterService.showBroadcaster = function(a) {
+		this.youNow.broadcasterService.showBroadcaster = function(a) {
 			return false;
 		};
-		c.youNow.broadcasterService.switchToBroadcast = function(a) {
+		this.youNow.broadcasterService.switchToBroadcast = function(a) {
 			return false;
 		};
-		c.youNow.broadcasterService.trackBroadcaster = function() {
+		this.youNow.broadcasterService.trackBroadcaster = function() {
 			return false;
 		};
-		c.youNow.broadcasterService.updateBroadcaster = function(a, b, d) {
+		this.youNow.broadcasterService.updateBroadcaster = function(a, b, d) {
 			return false;     
 		};
 		
