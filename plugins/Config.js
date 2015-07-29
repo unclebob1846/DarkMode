@@ -2,12 +2,12 @@ window[dID][dID+"a"]("bootConfig",
     function(callback)
 	{
 		var load = {
-			images: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Images.json",
-			countries: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Countries.json",
-			languages: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Languages.json",
-			deviceMapping: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/DeviceMapping.json",
-			settings: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Settings.json",
-			requests: "https://github.com/FluffyFishGames/FluffyFishGames.github.io/raw/master/data/Requests.json"
+			images: "https://fluffyfishgames.github.io/data/Images.json",
+			countries: "https://fluffyfishgames.github.io/data/Countries.json",
+			languages: "https://fluffyfishgames.github.io/data/Languages.json",
+			deviceMapping: "https://fluffyfishgames.github.io/data/DeviceMapping.json",
+			settings: "https://fluffyfishgames.github.io/data/Settings.json",
+			requests: "https://fluffyfishgames.github.io/data/Requests.json"
 		};
 		this.config = {};
 		var loaded = 0;
