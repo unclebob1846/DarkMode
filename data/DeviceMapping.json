@@ -1,4 +1,4 @@
-{
+[{
 	'iPad1,1': 'iPad 1 Wi-Fi/3G/GPS',
 	'iPad2,1': 'iPad 2 Wi-Fi Only',
 	'iPad2,2': 'iPad 2 Wi-Fi/GSM/GPS',
@@ -60,4 +60,4 @@
 	'samsung GT-I8190': 'Samsung Galaxy S3 mini',
 	'LGE LG-D373': 'LG L80',
 	'HUAWEI G7-L01': 'Huawei Ascend G7',
-}
+}]
