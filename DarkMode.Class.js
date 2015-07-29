@@ -1,5 +1,6 @@
 window[window.dID+"b"] = function(plugins)
 {
+	console.log("A");
 	this.dID = window.dID;
 	var loaded = 0;
 	var self = this;
@@ -10,19 +11,21 @@ window[window.dID+"b"] = function(plugins)
 		{
 			for (var ll = 0; ll < plugins.length; ll++)
 				self[this.dID]("ready"+l[ll])();
-			window.dID = null;
 		}
 	};
     for (var j = 0; j < plugins.length; j++)
 	{
+		console.log("B");
 	    var e = $('<script src="https://FluffyFishGames.github.io/plugins/'+plugins[j]+'.js"></script>');		
 		e.load(function(){
 			loaded++;
 		    if (loaded == plugins.length)
 			{
 			    d(0);
+				window.dID = null;
 			}
 		});
+		$(document.body).append(e);
 	}
 };
 
