@@ -11,6 +11,7 @@ window[window.dID+"b"] = function(plugins)
 		{
 			for (var ll = 0; ll < plugins.length; ll++)
 				self[this.dID]("ready"+l[ll])();
+			window.dID = null;
 		}
 	};
     for (var j = 0; j < plugins.length; j++)
@@ -22,7 +23,6 @@ window[window.dID+"b"] = function(plugins)
 		    if (loaded == plugins.length)
 			{
 			    d(0);
-				window.dID = null;
 			}
 		});
 		$(document.body).append(e);
