@@ -33,7 +33,15 @@ window[window.dID][window.dID+"a"]("bootConfig",
 					}*/
 					callback();
 				}
-			});
+			})  .done(function() {
+    console.log( "second success" );
+  })
+  .fail(function(a, b, c) {
+    console.log( "error" + b + c);
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
 		};
 		
 		var loading = 0;
