@@ -1,4 +1,4 @@
-window[dID][dID+"a"]("bootConfig",
+window[window.dID][window.dID+"a"]("bootConfig",
     function(callback)
 	{
 		var load = {
@@ -15,7 +15,9 @@ window[dID][dID+"a"]("bootConfig",
 		var self = this;
 	    var d = function(key)
 		{
+			console.log(key);
 			$.getJSON(load[key], function(data) {
+				console.log(data);
 				self.config[key] = data;
 				loaded++;
 				if (loaded == loading)
@@ -34,11 +36,9 @@ window[dID][dID+"a"]("bootConfig",
 			});
 		};
 		
-		console.log("A");
 		var loading = 0;
 	    for (var key in load)
 		{
-			console.log("B");
 			d(key);
 			loading++;
 	    }
