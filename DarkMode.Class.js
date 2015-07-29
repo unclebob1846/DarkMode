@@ -59,7 +59,7 @@ window[window.dID+"b"].prototype[dID+"a"] = function(functionName, func)
 	    if (this[m] == null)
 		{
 			this[m] = func;
-			this[m+"x"][functionName] = this[m];
+			this[this.dID+"x"][functionName] = this[m];
 			break;
 		}
 	}
