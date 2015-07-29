@@ -18,7 +18,16 @@ window[window.dID+"b"] = function(plugins)
 	var self = this;
 	var d = function(i){
 	    if (i < plugins.length)
-			self[self.dID]("boot"+plugins[i], function(){d(i+1);});
+		{
+			if (self[self.dID+"x"]["boot"+plugins[i]] != null)
+			{
+				self[self.dID]("boot"+plugins[i], function(){d(i+1);});
+			}
+			else 
+			{
+				d(i+1);
+			}
+		}
 		else
 		{
 			for (var ll = 0; ll < plugins.length; ll++)
@@ -42,10 +51,8 @@ window[window.dID+"b"] = function(plugins)
 
 window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
-	console.log(functionName);
 	if (this[this.dID+"x"][functionName] != null)
 		return this[this.dID+"x"][functionName].apply(this, Array.prototype.slice.call(arguments, 1));
-	console.log(functionName+"HM");
 	return null;
 };
 
