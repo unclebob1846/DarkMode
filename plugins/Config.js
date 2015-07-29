@@ -17,7 +17,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		{
 			console.log(key);
 			$.getJSON(load[key], function(data) {
-				console.log(data);
+				console.log(key + " => " + data);
 				self.config[key] = data;
 				loaded++;
 				if (loaded == loading)
