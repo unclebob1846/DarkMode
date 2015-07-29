@@ -16,21 +16,22 @@ window[window.dID][window.dID+"a"]("bootConfig",
 	    var d = function(key)
 		{
 			console.log(key + " => " + load[key]);
-			$.getJSON(load[key], function(data) {
+			$.ajax(load[key], {
+				dataType: "json",
+				success: function(json, b, c)
+				{
 				console.log(key + " => " + data);
+				
+					self.config[key] = json;
+					loaded++;
+				}
+			});/*
+			$.getJSON(load[key], function(data) {
 				self.config[key] = data;
 				loaded++;
 				if (loaded == loading)
 				{
-					/* LOAD USER CONFIGURATION IN A MUCH BETTER FASHION
-					
-					var archive = [],
-					keys = Object.keys(window.localStorage),
-					i = 0;
-
-					for (; i < keys.length; i++) {
-						archive.push( localStorage.getItem(keys[i]) );
-					}*/
+				
 					callback();
 				}
 			})  .done(function() {
@@ -41,7 +42,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
   })
   .always(function() {
     console.log( "complete" );
-  });
+  });*/
 		};
 		
 		var loading = 0;
