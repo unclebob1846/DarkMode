@@ -20,7 +20,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 				dataType: "json",
 				success: function(json, b, c)
 				{
-				console.log(key + " => " + data);
+				console.log(key + " => " + json);
 				
 					self.config[key] = json;
 					loaded++;
