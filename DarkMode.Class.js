@@ -17,11 +17,11 @@ window[window.dID+"b"] = function(plugins)
 	var self = this;
 	var d = function(i){
 	    if (i < plugins.length)
-			self[this.dID]("boot"+plugins[i])(function(){d(i+1);});
+			self[this.dID]("boot"+plugins[i], function(){d(i+1);});
 		else
 		{
 			for (var ll = 0; ll < plugins.length; ll++)
-				self[this.dID]("ready"+plugins[ll])();
+				self[this.dID]("ready"+plugins[ll]);
 		}
 	};
     for (var j = 0; j < plugins.length; j++)
