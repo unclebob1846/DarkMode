@@ -1,4 +1,4 @@
-window[window.dID][window.dID+"x"]("bootTicker", 
+window[window.dID][window.dID+"a"]("bootTicker", 
 	function(callback)
 	{
 		this.config.ticker = {};
