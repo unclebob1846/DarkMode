@@ -10,6 +10,7 @@
 // @downloadURL https://FluffyFishGames.github.io/DarkMode.user.js
 // ==/UserScript==
 function main(w, dID) {
+    w.dID = dID;
     w[dID] = new w[dID+"b"]([
 		"Init",
 		"Config",
