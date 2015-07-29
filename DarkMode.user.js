@@ -259,9 +259,16 @@ function main(w, dID) {
 		}
 	}, 100);
 }
-
+var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var k = Math.floor(5 + Math.random() * 10);
+var c = "";
+for (var i = 0; i < k; i++)
+{
+	var d = Math.random() * (a.length - 1);
+	c += a.substring(d, d + 1);
+}
 // Inject our main script. Yes, this is bad. But you are trying to do bad things either.
 var script = document.createElement('script');
 script.type = "text/javascript";
-script.textContent = '(' + main.toString() + ')(window);';
+script.textContent = '(' + main.toString() + ')(window,\''+c+'\');';
 document.body.appendChild(script);
