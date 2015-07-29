@@ -40,21 +40,23 @@ window[window.dID+"b"] = function(plugins)
 	}
 };
 
-window[window.dID+"b"].prototype[dID] = function(functionName)
+window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
+	console.log(functionName);
 	if (this[this.dID+"x"][functionName] != null)
 		return this[this.dID+"x"][functionName].apply(this, Array.prototype.slice.call(arguments, 1));
+	console.log(functionName+"HM");
 	return null;
 };
 
-window[window.dID+"b"].prototype[dID+"a"] = function(functionName, func)
+window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 {
     if (this[this.dID+"x"] == null)
 		this[this.dID+"x"] = {};
 	
 	while (true)
 	{
-		var m = this[dID]("random");
+		var m = this[this.dID]("random");
 	    if (this[m] == null)
 		{
 			this[m] = func;
