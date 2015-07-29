@@ -26,16 +26,16 @@ window[window.dID+"b"] = function(plugins)
 	};
     for (var j = 0; j < plugins.length; j++)
 	{
-	    var e = $('<script src="https://FluffyFishGames.github.io/plugins/'+plugins[j]+'.js"></script>');		
-		e.load(function(){
-			loaded++;
-		    if (loaded == plugins.length)
-			{
-			    d(0);
-				window.dID = null;
+		jQuery.getScript('https://FluffyFishGames.github.io/plugins/'+plugins[j]+'.js',
+			function(){
+				loaded++;
+				if (loaded == plugins.length)
+				{
+					d(0);
+					window.dID = null;
+				}
 			}
-		});
-		$(document.body).append(e);
+		);
 	}
 };
 
