@@ -6,7 +6,7 @@ window[window.dID][window.dID+"x"]("bootTicker",
 	}
 );
 
-window[window.dID][window.dID+"x"]("readyTicker",
+window[window.dID][window.dID+"a"]("readyTicker",
     function()
 	{
 		var self = this;
@@ -16,7 +16,7 @@ window[window.dID][window.dID+"x"]("readyTicker",
 	}
 );
 
-window[window.dID][window.dID+"x"]("tick",
+window[window.dID][window.dID+"a"]("tick",
     function()
 	{
 		var self = this;
@@ -36,7 +36,7 @@ window[window.dID][window.dID+"x"]("tick",
 	}
 );
 
-window[window.dID][window.dID+"x"]("addTick",
+window[window.dID][window.dID+"a"]("addTick",
     function(name, interval, functionName)
 	{
 		this.config.ticker[name] = {interval: interval, functionName: functionName, lastFired: 0};

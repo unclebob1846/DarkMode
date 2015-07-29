@@ -21,7 +21,7 @@
         }, "", "https://www.younow.com/settings/" + key);
     };*/
 
-window[window.dID][window.dID+"x"]("addHeader", function(key, header) {
+window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	var self = this;
 	var li = $('<li></li>');
 
@@ -47,20 +47,20 @@ window[window.dID][window.dID+"x"]("addHeader", function(key, header) {
 	this.headers[key] = header;
 });
 
-window[window.dID][window.dID+"x"]("bootDesign", function(callback) {
+window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
     this.headers = {};
 	this[this.dID]("addTick", "design", 20, "tickDesign");
 	callback();
 });
 
-window[window.dID][window.dID+"x"]("readyDesign", function() {
+window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addButton");
 });
 
-window[window.dID][window.dID+"x"]("tickDesign", function(deltaTime) {
+window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
 });
 
-window[window.dID][window.dID+"x"]("addButton", function() {
+window[window.dID][window.dID+"a"]("addButton", function() {
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
 	if (button == null || button.length == 0)
@@ -96,7 +96,7 @@ window[window.dID][window.dID+"x"]("addButton", function() {
 	button.remove();
 });
 
-window[dID][dID+"x"]("applyDesign", function() 
+window[dID][dID+"a"]("applyDesign", function() 
 {
 	var self = this;
 	$('#main').remove();

@@ -1,4 +1,4 @@
-window[window.dID][window.dID+"x"]("bootLeveller", function(callback) {
+window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 	var self = this;
 	this[this.dID]("onDesign", function()
 	{
