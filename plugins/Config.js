@@ -35,13 +35,10 @@ window[dID][dID+"a"]("bootConfig",
 		};
 		
 		var loading = 0;
-	    for (var key in this)
+	    for (var key in load)
 		{
-			if (typeof this[key] == "string")
-			{
-				d(key);
-				loading++;
-		    }
+			d(key);
+			loading++;
 	    }
 	}
 );
