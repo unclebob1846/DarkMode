@@ -25,8 +25,8 @@ window[dID][dID+"a"]("bootConfig",
 			})  .done(function() {
     console.log( "second success" );
   })
-  .fail(function() {
-    console.log( "error" );
+  .fail(function(a, b, c) {
+    console.log( "error" + b + c);
   })
   .always(function() {
     console.log( "complete" );
