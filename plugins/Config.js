@@ -34,9 +34,11 @@ window[dID][dID+"a"]("bootConfig",
 			});
 		};
 		
+		console.log("A");
 		var loading = 0;
 	    for (var key in load)
 		{
+			console.log("B");
 			d(key);
 			loading++;
 	    }
