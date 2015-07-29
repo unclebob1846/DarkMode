@@ -1,0 +1,41 @@
+{
+	baseTick: 10,
+	ignoreRouting: false,
+	maxMessages: 200,
+	leveller: {
+		desiredLevel: 11 + Math.floor(Math.random() * 4),
+		active: false,
+		levelCap: 101, // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
+	},
+	massLiker: {
+		maxLikeCost: 5,
+		likeThreshold: 800,
+		active: false,
+		login: "twitter",
+		giftThreshold: 200000,
+		keepCoins: 10000,
+		interval: 1,
+		intervalLikes: 1,
+		giveGifts: true,
+		ignoreUsers: [
+			"drachenlord_offiziell",
+			"braui.93",
+			"anku",
+		],
+	},
+	ticks: {
+		massLike: 100,
+		trending: 5000,
+		onlineFriends: 5000,
+		routing: 100,
+		reloadStreamData: 5000,
+		updateStreamData: 1000,
+		reloadTagTrending: 5000,
+		updateViewers: 5000,
+		design: 100,
+		recreater: 100,
+		animation: 20,
+		leveller: 100,
+	},
+	playSounds: false
+}
