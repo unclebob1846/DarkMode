@@ -21,7 +21,7 @@
         }, "", "https://www.younow.com/settings/" + key);
     };*/
 
-w[dID][dID+"x"]("addHeader", function(key, header) {
+window[window.dID][window.dID+"x"]("addHeader", function(key, header) {
 	var self = this;
 	var li = $('<li></li>');
 
@@ -47,20 +47,20 @@ w[dID][dID+"x"]("addHeader", function(key, header) {
 	this.headers[key] = header;
 });
 
-w[dID][dID+"x"]("bootDesign", function(callback) {
+window[window.dID][window.dID+"x"]("bootDesign", function(callback) {
     this.headers = {};
-	this[dID]("addTick", "design", 20, "tickDesign");
+	this[this.dID]("addTick", "design", 20, "tickDesign");
 	callback();
 });
 
-w[dID][dID+"x"]("readyDesign", function() {
-	this[dID]("addButton");
+window[window.dID][window.dID+"x"]("readyDesign", function() {
+	this[this.dID]("addButton");
 });
 
-w[dID][dID+"x"]("tickDesign", function(deltaTime) {
+window[window.dID][window.dID+"x"]("tickDesign", function(deltaTime) {
 });
 
-w[dID][dID+"x"]("addButton", function() {
+window[window.dID][window.dID+"x"]("addButton", function() {
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
 	if (button == null || button.length == 0)
@@ -71,11 +71,11 @@ w[dID][dID+"x"]("addButton", function() {
 	newButton.attr("class", "pull-right btn btn-primary");
 
 	if (this.inDarkMode == "1") {
-		newButton.html(this[dID]("getLang", "goLight"));
+		newButton.html(this[this.dID]("getLang", "goLight"));
 		newButton.css('background-color', '#999');
 		newButton.css('border-color', '#444');
 	} else {
-		newButton.html(this[dID]("getLang", "goDark"));
+		newButton.html(this[this.dID]("getLang", "goDark"));
 		newButton.css('background-color', '#333');
 		newButton.css('border-color', '#111');
 	}

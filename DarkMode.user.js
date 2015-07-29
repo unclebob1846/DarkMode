@@ -10,19 +10,23 @@
 // @downloadURL https://FluffyFishGames.github.io/DarkMode.user.js
 // ==/UserScript==
 function main(w, dID) {
-    w.dID = dID;
-    w[dID] = new w[dID+"b"]([
-		"Init",
-		"Config",
-		"Language",
-		"Ticker",
-		"Request",
-		"YouNow",		
-		"Design", 
-		"MassLiker",
-		"Leveller"
-	]);
 
+	function callback()
+	{
+		window.dID = dID;
+		window[dID] = new window[dID+"b"]([
+			"Init",
+			"Config",
+			"Language",
+			"Ticker",
+			"Request",
+			"YouNow",		
+			"Design", 
+			"MassLiker",
+			"Leveller"
+		]);
+	}
+	
 	WebFontConfig = {
 		google: {
 			families: ['Shadows+Into+Light::latin']

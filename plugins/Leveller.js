@@ -1,8 +1,8 @@
-w[dID][dID+"x"]("bootLeveller", function(callback) {
+window[window.dID][window.dID+"x"]("bootLeveller", function(callback) {
 	var self = this;
-	this[dID]("onDesign", function()
+	this[this.dID]("onDesign", function()
 	{
-		self[dID]("addHeader", "leveller", {
+		self[self.dID]("addHeader", "leveller", {
 			"label": this.language.leveller
 		});
 		self.headers["leveller"]..content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+

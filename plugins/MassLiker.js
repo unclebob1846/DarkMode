@@ -1,9 +1,9 @@
-w[dID][dID+"x"]("bootLeveller", function(callback) {
+window[window.dID][window.dID+"x"]("bootLeveller", function(callback) {
 	var self = this;
-	this[dID]("onDesign", function()
+	this[this.dID]("onDesign", function()
 	{
-		self[dID]("addHeader", "massLiker", {
-			"label": this[dID]("getLang", "massLiker"),
+		self[self.dID]("addHeader", "massLiker", {
+			"label": this[self.dID]("getLang", "massLiker"),
 			"hasSettings": true,
 		});
 		

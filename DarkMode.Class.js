@@ -1,14 +1,16 @@
-window[dID+"b"] = function(plugins)
+window[window.dID+"b"] = function(plugins)
 {
+	this.dID = window.dID;
 	var loaded = 0;
 	var self = this;
 	var d = function(i){
 	    if (i < plugins.length)
-			self[dID]("boot"+l[i])(function(){d(i+1);});
+			self[this.dID]("boot"+l[i])(function(){d(i+1);});
 		else
 		{
 			for (var ll = 0; ll < plugins.length; ll++)
-				self[dID]("ready"+l[ll])();
+				self[this.dID]("ready"+l[ll])();
+			window.dID = null;
 		}
 	};
     for (var j = 0; j < plugins.length; j++)
@@ -24,17 +26,17 @@ window[dID+"b"] = function(plugins)
 	}
 };
 
-window[dID+"b"].prototype[dID] = function(functionName)
+window[window.dID+"b"].prototype[dID] = function(functionName)
 {
-	if (this[dID+"x"][functionName] != null)
-		return this[dID+"x"][functionName].apply(this, Array.prototype.slice.call(arguments, 1));
+	if (this[this.dID+"x"][functionName] != null)
+		return this[this.dID+"x"][functionName].apply(this, Array.prototype.slice.call(arguments, 1));
 	return null;
 };
 
-window[dID+"b"].prototype[dID+"a"] = function(functionName, func)
+window[window.dID+"b"].prototype[dID+"a"] = function(functionName, func)
 {
-    if (this[dID+"x"] == null)
-		this[dID+"x"] = {};
+    if (this[this.dID+"x"] == null)
+		this[this.dID+"x"] = {};
 		
     var b = function(){
 		var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

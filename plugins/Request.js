@@ -1,4 +1,4 @@
-w[dID][dID+"x"]("sendRequest", function(type, data, callback) {
+window[window.dID][window.dID+"x"]("sendRequest", function(type, data, callback) {
 	var request = {
 		url: "",
 		method: "GET",

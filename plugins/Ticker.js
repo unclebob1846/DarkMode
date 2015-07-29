@@ -1,4 +1,4 @@
-window[dID][dID+"x"]("bootTicker", 
+window[window.dID][window.dID+"x"]("bootTicker", 
 	function(callback)
 	{
 		this.config.ticker = {};
@@ -6,7 +6,7 @@ window[dID][dID+"x"]("bootTicker",
 	}
 );
 
-window[dID][dID+"x"]("readyTicker",
+window[window.dID][window.dID+"x"]("readyTicker",
     function()
 	{
 		var self = this;
@@ -16,7 +16,7 @@ window[dID][dID+"x"]("readyTicker",
 	}
 );
 
-window[dID][dID+"x"]("tick",
+window[window.dID][window.dID+"x"]("tick",
     function()
 	{
 		var self = this;
@@ -36,7 +36,7 @@ window[dID][dID+"x"]("tick",
 	}
 );
 
-window[dID][dID+"x"]("addTick",
+window[window.dID][window.dID+"x"]("addTick",
     function(name, interval, functionName)
 	{
 		this.config.ticker[name] = {interval: interval, functionName: functionName, lastFired: 0};

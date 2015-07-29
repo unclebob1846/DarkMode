@@ -1,4 +1,4 @@
-w[dID][dID+"x"]("bootYouNow", function() {
+window[window.dID][window.dID+"x"]("bootYouNow", function() {
 	function allServices(mod, r) {
 		var inj = angular.element(document).injector().get;
 		if (!r) r = {};
@@ -82,11 +82,11 @@ w[dID][dID+"x"]("bootYouNow", function() {
 	}
 });
 
-w[dID][dID+"x"]("getBroadcastPicture", function(broadcastId) {
+window[window.dID][window.dID+"x"]("getBroadcastPicture", function(broadcastId) {
 	var c = this[dID]("getConfig");
 	return c.youNow.config.broadcasterThumb + broadcastId;
 });
 
-w[dID][dID+"x"]("getProfilePicture", function(userid){
+window[window.dID][window.dID+"x"]("getProfilePicture", function(userid){
 	return 'https://cdn2.younow.com/php/api/channel/getImage/channelId=' + userid;
 });
