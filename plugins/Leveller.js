@@ -5,7 +5,7 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 		self[self.dID]("addHeader", "leveller", {
 			"label": this.language.leveller
 		});
-		self.headers["leveller"]..content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
+		self.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language.desiredLevel+':</span></div>'+
 												'<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.settings.leveller.desiredLevel+'" id="desiredLevel" /></div>'+
 												'<div style="float:left; clear: both;"><input type="checkbox" id="levellerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
 												'<div style="float:left;margin-top:5px;"><span>' + this.language.levellerActive + ' </span></div></div>' +
