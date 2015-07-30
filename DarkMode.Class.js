@@ -1,7 +1,7 @@
-window[window.dID+"b"] = function(plugins)
+window[window.dID+"b"] = function(dID, plugins)
 {
-	console.log("Dark modes loves you! "+window.dID);
-	this.dID = window.dID;
+	console.log("Dark modes loves you! "+dID);
+	this.dID = dID;
 	this[this.dID+"a"]("random", function()
 	{
 		var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -16,7 +16,7 @@ window[window.dID+"b"] = function(plugins)
 	});
 	var loaded = 0;
 	var self = this;
-	var d = function(i){
+	var d = function(i) {
 	    if (i < plugins.length)
 		{
 			if (self[self.dID+"x"]["boot"+plugins[i]] != null)
@@ -34,10 +34,14 @@ window[window.dID+"b"] = function(plugins)
 				self[self.dID]("ready"+plugins[ll]);
 		}
 	};
-    for (var j = 0; j < plugins.length; j++)
+    for (var j = 0; j < plugins.length; j++) 
 	{
-		jQuery.getScript('https://FluffyFishGames.github.io/plugins/'+plugins[j]+'.js',
-			function(){
+	    $.ajax('https://fluffyfishgames.github.io/plugins/'+plugins[j]+'.js',
+		{
+			dataType: "text",
+			success: function(text, b, c)
+			{
+				var element = $('<script>'+text.replace(/window\.dID/g, self.dID)+'</script>');
 				loaded++;
 				if (loaded == plugins.length)
 				{
@@ -45,7 +49,7 @@ window[window.dID+"b"] = function(plugins)
 					window.dID = null;
 				}
 			}
-		);
+		});
 	}
 };
 
