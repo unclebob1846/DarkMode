@@ -14,13 +14,11 @@ function main(w, dID)
 	// rerouting if in user is in dark mode
 	if (window.localStorage.getItem("inDarkMode") == "1" && window.location.href != "https://www.younow.com/explore/") 
 	{
-		console.log("X");
 		window.location.href = "https://www.younow.com/explore/";
 		window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/", ""));
 	}
 	else 
 	{
-		console.log("A");
 		function boot(dID)
 		{
 			console.log("A");
@@ -82,12 +80,12 @@ function main(w, dID)
 			}
 
 			var script = document.createElement("script");
-			script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.min.js");
-			script.addEventListener('load', function() {				
+			script.addEventListener('load', function() {
 				var launch = document.createElement("script");
 				launch.textContent = "(" + boot.toString() + ")('"+dID+"');";
 				document.body.appendChild(launch);
 			});
+			script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.js");
 			document.body.appendChild(script);
 		}
 
