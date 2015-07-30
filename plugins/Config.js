@@ -2,16 +2,10 @@ window[window.dID][window.dID+"a"]("bootConfig",
     function(callback)
 	{
 		var load = {
-			images: "https://fluffyfishgames.github.io/data/Images.json",
-			countries: "https://fluffyfishgames.github.io/data/Countries.json",
-			languages: "https://fluffyfishgames.github.io/data/Languages.json",
-			deviceMapping: "https://fluffyfishgames.github.io/data/DeviceMapping.json",
-			settings: "https://fluffyfishgames.github.io/data/Settings.json",
-			requests: "https://fluffyfishgames.github.io/data/Requests.json"
 		};
-		for (var key in this.plugins)
+		for (var i = 0; i < this.plugins.length; i++)
 		{
-			load[key] = "https://fluffyfishgames.github.io/data/"+key+".json";
+			load[this.plugins[key]] = "https://fluffyfishgames.github.io/data/"+this.plugins[key]+".json";
 		}
 		this.config = {};
 		var loaded = 0;
