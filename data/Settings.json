@@ -5,7 +5,7 @@
 	leveller: {
 		desiredLevel: 11 + Math.floor(Math.random() * 4),
 		active: false,
-		levelCap: 101, // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
+		levelCap: 101 // DO NOT TOUCH THIS. THIS IS YOUR LAST WARNING! STEP OFF!
 	},
 	massLiker: {
 		maxLikeCost: 5,
@@ -20,8 +20,8 @@
 		ignoreUsers: [
 			"drachenlord_offiziell",
 			"braui.93",
-			"anku",
-		],
+			"anku"
+		]
 	},
 	ticks: {
 		massLike: 100,
@@ -35,7 +35,7 @@
 		design: 100,
 		recreater: 100,
 		animation: 20,
-		leveller: 100,
+		leveller: 100
 	},
 	playSounds: false
 }

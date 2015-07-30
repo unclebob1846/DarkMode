@@ -25,7 +25,7 @@
 			isComment: "%isComment",
 		}
 	},
-	'fan': {
+	"fan": {
 		url: "$BASE/php/api/channel/fan",
 		method: "POST",
 		requestBy: true,
@@ -35,7 +35,7 @@
 			channelId: "%channelID",
 		}
 	},
-	'unfan': {
+	"unfan": {
 		url: "$BASE/php/api/channel/unFan",
 		method: "POST",
 		requestBy: true,
@@ -45,7 +45,7 @@
 			channelId: "%channelID",
 		}
 	},
-	'sendChatMessage': {
+	"sendChatMessage": {
 		url: "https://www.younow.com/php/api/broadcast/chat",
 		requestBy: true,
 		method: "POST",
@@ -56,7 +56,7 @@
 			comment: "%message",
 		}
 	},
-	'sendGift': {
+	"sendGift": {
 		url: "https://www.younow.com/php/api/broadcast/gift",
 		requestBy: true,
 		method: "POST",
@@ -68,17 +68,17 @@
 			quantity: "%quantity",
 		},
 	},
-	'getTrending': {
+	"getTrending": {
 		url: "https://cdn2.younow.com/php/api/younow/dashboard/locale=de/trending=%count",
 	},
-	'getViewers': {
+	"getViewers": {
 		url: "$CDNBASE/php/api/broadcast/audience/channelId=%channelID/numOfRecords=%count/start=%start",
 	},
-	'getPlayData': {
+	"getPlayData": {
 		url: "%playDataURL%userID.json",
 		dataType: "json",
 	},
-	'likeBroadcast': {
+	"likeBroadcast": {
 		url: "$BASE/php/api/broadcast/like",
 		addIdentification: true,
 		requestBy: true,
@@ -88,49 +88,49 @@
 			userId: "$USERID",
 		},
 	},
-	'getVideoPath': {
+	"getVideoPath": {
 		url: "https://cdn2.younow.com/php/api/broadcast/videoPath/broadcastId=%broadcastID",
 	},
-	'searchPeople': {
+	"searchPeople": {
 		url: "https://qz0xcgubgq.algolia.io/1/indexes/$PEOPLESEARCHINDEX/query",
 		addAlgolia: true,
 		method: "POST",
-		data: '{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none"}',
+		data: "{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none"}",
 	},
-	'searchTag': {
+	"searchTag": {
 		url: "https://qz0xcgubgq.algolia.io/1/indexes/$PEOPLESEARCHINDEX/query",
 		addAlgolia: true,
 		method: "POST",
-		data: '{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag"}',
+		data: "{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag"}",
 	},
-	'trendingUsers': {
+	"trendingUsers": {
 		url: "$CDNBASE/php/api/younow/trendingUsers/numberOfRecords=%count/startFrom=%startFrom/locale=ww",
 	},
-	'getFriends': {
+	"getFriends": {
 		url: "$BASE/php/api/channel/getLocationOnlineFansOf/numberOfRecords=50/channelId=$USERID"
 	},
-	'getProfile': {
+	"getProfile": {
 		url: "$CDNBASE/php/api/channel/getInfo/channelId=%channelID",
 	},
-	'isFan': {
+	"isFan": {
 		url: "$BASE/php/api/channel/isFanOf/userId=$USERID/channelIds=%userID",
 	},
-	'getBroadcast': {
+	"getBroadcast": {
 		url: "$BASE/php/api/broadcast/info/curId=0/user=%username",
 	},
-	'getFansOf': {
+	"getFansOf": {
 		url: "$BASE/php/api/channel/getFansOf/channelId=%channelID/startFrom=%startFrom",
 	},
-	'getFans': {
+	"getFans": {
 		url: "$BASE/php/api/channel/getFans/channelId=%channelID/startFrom=%startFrom",
 	},
-	'getPreviousBroadcasts': {
+	"getPreviousBroadcasts": {
 		url: "$BASE/php/api/post/getBroadcasts/channelId=%channelID/startFrom=%startFrom/userId=$USERID",
 	},
-	'getPosts': {
+	"getPosts": {
 		url: "$BASE/php/api/post/get/channelId=%channelID/startFrom=%startFrom/userId=$USERID",
 	},
-	'deletePost': {
+	"deletePost": {
 		url: "$BASE/php/api/post/delete",
 		addIdentification: true,
 		requestBy: true,
@@ -142,7 +142,7 @@
 			id: "%postID",
 		}
 	},
-	'createPost': {
+	"createPost": {
 		url: "$BASE/php/api/post/create",
 		addIdentification: true,
 		requestBy: true,
@@ -156,4 +156,4 @@
 			"post": "%post",
 		}
 	}
-},
+}
