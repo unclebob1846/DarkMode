@@ -78,12 +78,12 @@ window[window.dID][window.dID+"a"]("bootYouNow", function() {
 			return false;     
 		};
 		
-		this[dID]("applyDesign");
+		this[this.dID]("applyDesign");
 	}
 });
 
 window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) {
-	var c = this[dID]("getConfig");
+	var c = this[this.dID]("getConfig");
 	return c.youNow.config.broadcasterThumb + broadcastId;
 });
 

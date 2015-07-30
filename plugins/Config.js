@@ -15,34 +15,14 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		var self = this;
 	    var d = function(key)
 		{
-			console.log(key + " => " + load[key]);
 			$.ajax(load[key], {
 				dataType: "json",
 				success: function(json, b, c)
 				{
-				console.log(key + " => " + json);
-				
 					self.config[key] = json;
 					loaded++;
 				}
-			});/*
-			$.getJSON(load[key], function(data) {
-				self.config[key] = data;
-				loaded++;
-				if (loaded == loading)
-				{
-				
-					callback();
-				}
-			})  .done(function() {
-    console.log( "second success" );
-  })
-  .fail(function(a, b, c) {
-    console.log( "error" + b + c);
-  })
-  .always(function() {
-    console.log( "complete" );
-  });*/
+			});
 		};
 		
 		var loading = 0;

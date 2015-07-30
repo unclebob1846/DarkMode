@@ -11,7 +11,7 @@ window[window.dID][window.dID+"a"]("readyTicker",
 	{
 		var self = this;
 		setInterval(function() {
-		    self[dID]("tick");
+		    self[self.dID]("tick");
 		}, this.config.settings.baseTick);
 	}
 );
@@ -28,7 +28,7 @@ window[window.dID][window.dID+"a"]("tick",
 		{
 		    if (this.config.ticker[key].lastFired < d - this.config.ticker[key].interval)
 			{
-				this[dID](this.config.ticker[key].functionName, delta);
+				this[this.dID](this.config.ticker[key].functionName, delta);
 				this.config.ticker[key].lastFired = d - this.config.ticker[key].interval;
 			}
 		}
