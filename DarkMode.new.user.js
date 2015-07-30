@@ -27,7 +27,7 @@ function main(w, dID)
 				success: function(text, b, c)
 				{
 					$(document.body).append($('<script>'+text.replace(/window\.dID/g, dID)+'</script>'));
-					
+					 
 				    window[dID] = new window[dID+"b"](dID, [
 						"Init",
 						"Config",
