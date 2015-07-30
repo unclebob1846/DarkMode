@@ -21,17 +21,26 @@ function main(w, dID)
 	{
 		function boot(dID)
 		{
-			window[dID] = new window[dID+"b"](dID, [
-				"Init",
-				"Config",
-				"Language",
-				"Ticker",
-				"Request",
-				"YouNow",		
-				"Design", 
-				"MassLiker",
-				"Leveller"
-			]);
+			$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
+			{
+				dataType: "text",
+				success: function(text, b, c)
+				{
+					$(document.body).append($('<script>'+text.replace(/window\.dID/g, dID)+'</script>'));
+					
+				    window[dID] = new window[dID+"b"](dID, [
+						"Init",
+						"Config",
+						"Language",
+						"Ticker",
+						"Request",
+						"YouNow",		
+						"Design", 
+						"MassLiker",
+						"Leveller"
+					]);
+				}
+			});
 		}
 		
 		WebFontConfig = {
@@ -70,7 +79,7 @@ function main(w, dID)
 
 			var script = document.createElement("script");
 			script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.min.js");
-			script.addEventListener('load', function() {
+			script.addEventListener('load', function() {				
 				var launch = document.createElement("script");
 				launch.textContent = "(" + boot.toString() + ")('"+dID+"');";
 				document.body.appendChild(launch);
