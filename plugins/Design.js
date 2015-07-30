@@ -96,7 +96,7 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	button.remove();
 });
 
-window[dID][dID+"a"]("applyDesign", function() 
+window[window.dID][window.dID+"a"]("applyDesign", function() 
 {
 	var self = this;
 	$('#main').remove();
