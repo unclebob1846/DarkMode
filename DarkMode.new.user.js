@@ -14,19 +14,23 @@ function main(w, dID)
 	// rerouting if in user is in dark mode
 	if (window.localStorage.getItem("inDarkMode") == "1" && window.location.href != "https://www.younow.com/explore/") 
 	{
+		console.log("X");
 		window.location.href = "https://www.younow.com/explore/";
 		window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/", ""));
 	}
 	else 
 	{
+		console.log("A");
 		function boot(dID)
 		{
+			console.log("A");
 			$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 			{
 				dataType: "text",
 				success: function(text, b, c)
 				{
-					$(document.body).append($('<script>'+text.replace(/window\.dID/g, dID)+'</script>'));
+					console.log("B");
+					$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID)+'"')+'</script>'));
 					 
 				    window[dID] = new window[dID+"b"](dID, [
 						"Init",
