@@ -21,7 +21,7 @@ function main(w, dID)
 	{
 		function boot(dID)
 		{
-			window[dID] = new window[dID+"b"]([
+			window[dID] = new window[dID+"b"](dID, [
 				"Init",
 				"Config",
 				"Language",
@@ -53,10 +53,6 @@ function main(w, dID)
 		})();
 		
 		function startDarkMode(dID) {
-			var css = '.btn-primary { width: auto !important; } ' +
-				'#darkModeLoader {  }' +
-				'#darkModeLoader span {}';
-			
 			var darkModeLoader = null;
 			if (window.localStorage.getItem("inDarkMode") == "1") 
 			{
@@ -66,7 +62,7 @@ function main(w, dID)
 				var span = document.createElement("span");
 				span.style.opacity = 0;
 				span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
-				span.setAttribute("id", dID+"LoaderLabel");
+				span.setAttribute("id", dID+"_LoaderLabel");
 				span.innerHTML = "Loading...";
 				darkModeLoader.appendChild(span);
 				document.body.appendChild(darkModeLoader);
@@ -81,7 +77,7 @@ function main(w, dID)
 			});
 			document.body.appendChild(script);
 		}
-	
+
 		var waitForYouNow = setInterval(function() {
 			if (document.body.getElementsByClassName("nav-logo").length > 0) {
 				startDarkMode(dID);
