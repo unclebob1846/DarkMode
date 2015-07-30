@@ -21,15 +21,12 @@ function main(w, dID)
 	{
 		function boot(dID)
 		{
-			console.log("A");
 			$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 			{
 				dataType: "text",
 				success: function(text, b, c)
 				{
-					console.log("B");
-					$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID)+'"')+'</script>');
-					 
+					$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID+'"')+'</script>'));
 				    window[dID] = new window[dID+"b"](dID, [
 						"Init",
 						"Config",
