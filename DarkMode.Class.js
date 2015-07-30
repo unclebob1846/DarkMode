@@ -42,6 +42,7 @@ window[window.dID+"b"] = function(dID, plugins)
 			success: function(text, b, c)
 			{
 				var element = $('<scr'+'ipt>'+text.replace(/window\.dID/g, self.dID)+'</scr'+'ipt>');
+				$(document.body).append(element);
 				loaded++;
 				if (loaded == plugins.length)
 				{
