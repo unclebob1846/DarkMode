@@ -46,7 +46,6 @@ window[window.dID+"b"] = function(dID, plugins)
 				if (loaded == plugins.length)
 				{
 					d(0);
-					window.dID = null;
 				}
 			}
 		});
