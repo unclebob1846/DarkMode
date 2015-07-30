@@ -9,6 +9,10 @@ window[window.dID][window.dID+"a"]("bootConfig",
 			settings: "https://fluffyfishgames.github.io/data/Settings.json",
 			requests: "https://fluffyfishgames.github.io/data/Requests.json"
 		};
+		for (var key in this.plugins)
+		{
+			load[key] = "https://fluffyfishgames.github.io/data/"+key+".json";
+		}
 		this.config = {};
 		var loaded = 0;
 		var loading = 0;
@@ -20,6 +24,10 @@ window[window.dID][window.dID+"a"]("bootConfig",
 				success: function(json, b, c)
 				{
 					self.config[key] = json;
+					loaded++;
+				},
+				error: function(a, b, c)
+				{
 					loaded++;
 				}
 			});

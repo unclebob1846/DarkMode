@@ -1,25 +1,28 @@
-   /* w.DarkMode.prototype.selectHeader = function(key) {
-        var c = 0;
-        for (var k in this.headers) {
-            c++;
-        }
-        for (var k in this.headers) {
-            if (k == key) {
-                this.headers[k].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px)");
-            } else {
-                this.headers[k].li.css("height", 30);
-            }
-        }
+window[window.dID][window.dID+"a"]("selectHeader", function(key) {
+	var c = 0;
+	for (var k in this.headers) {
+		c++;
+	}
+	for (var k in this.headers) {
+		if (k == key) {
+			this.headers[k].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px)");
+		} else {
+			this.headers[k].li.css("height", 30);
+		}
+	}
+});
 
-    };
+window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
+	$('head').append('<link rel="stylesheet" href="'+file+'" type="text/css" />');
+});
 
-    w.DarkMode.prototype.openSettings = function(key) {
-        this.currentPage = "settings";
-        window.history.pushState({
-            "html": "",
-            "pageTitle": ""
-        }, "", "https://www.younow.com/settings/" + key);
-    };*/
+window[window.dID][window.dID+"a"]("openSettings", function(key) {
+	this.currentPage = "settings";
+	window.history.pushState({
+		"html": "",
+		"pageTitle": ""
+	}, "", "https://www.younow.com/settings/" + key);
+});
 
 window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	var self = this;
@@ -48,8 +51,9 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-    this.headers = {};
+    this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
 	this[this.dID]("addTick", "design", 20, "tickDesign");
+	this.headers = {};
 	callback();
 });
 
