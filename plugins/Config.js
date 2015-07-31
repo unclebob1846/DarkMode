@@ -4,15 +4,15 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		var load = {};
 		for (var i = 0; i < this.plugins.length; i++)
 		{
-			load[this.plugins[key]] = "https://fluffyfishgames.github.io/data/"+this.plugins[key]+".json";
+			load[this.plugins[key]] = "https://fluffyfishgames.github.io/data/"+this.plugins[i]+".json";
 		}
 		this.config = {};
 		var loaded = 0;
 		var loading = 0;
 		var self = this;
-	    var d = function(key)
+	    var d = function(key, url)
 		{
-			$.ajax(load[key], {
+			$.ajax(url, {
 				dataType: "json",
 				success: function(json, b, c)
 				{
@@ -33,7 +33,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		var loading = 0;
 	    for (var key in load)
 		{
-			d(key);
+			d(key, load[key]);
 			loading++;
 	    }
 	}
