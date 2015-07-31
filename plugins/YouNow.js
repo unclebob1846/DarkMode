@@ -13,26 +13,9 @@ window[window.dID][window.dID+"a"]("bootYouNow", function() {
 		return r;
 	}
 
-	var r = allServices('younow');
-	this.youNow = {
-		config: r.config,
-		api: r.Api,
-		session: r.session,
-		pusher: r.pusher,
-		search: r.searchService,
-		urlRouter: r["$urlRouter"],
-		state: r["$state"],
-		view: r["$view"],
-		swf: r.swf,
-		modal: r["$modal"],
-		broadcasterService: r["broadcasterService"],
-		facebook: r["Facebook"],
-		instagram: r["instagram"],
-		twitter: r["twitter"],
-		googleplus: r["google"],
-	};
+	this.youNow = r;
 	
-	if (window.localStorage.getItem("inDarkMode") == "1")
+	if (window.localStorage.getItem(this.clientID+".inDarkMode") == "1")
 	{
 		this.youNow.urlRouter.update = function(a) {
 			return true;

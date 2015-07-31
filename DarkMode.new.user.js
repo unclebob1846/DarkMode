@@ -12,88 +12,79 @@
 // ==/UserScript==
 function main(w, dID, clientID) 
 {
-	// rerouting if in user is in dark mode
-	if (window.localStorage.getItem(clientID+".inDarkMode") == "1" && window.location.href != "https://www.younow.com/explore/") 
+	function boot(dID, clientID)
 	{
-		window.location.href = "https://www.younow.com/explore/";
-		window.localStorage.setItem(clientID+".browse", window.location.href.replace("https://www.younow.com/", ""));
-	}
-	else 
-	{
-		function boot(dID, clientID)
+		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 		{
-			$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
+			dataType: "text",
+			success: function(text, b, c)
 			{
-				dataType: "text",
-				success: function(text, b, c)
-				{
-					$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID+'"')+'</script>'));
-				    window[dID] = new window[dID+"b"](dID, clientID, [
-						"Init",
-						"Config",
-						"Language",
-						"Ticker",
-						"Request",
-						"YouNow",		
-						"Design", 
-						"MassLiker",
-						"Leveller"
-					]);
-				}
-			});
-		}
-		
-		WebFontConfig = {
-			google: {
-				families: ['Shadows+Into+Light::latin']
-			},
-			active: function() {
+				$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID+'"')+'</script>'));
+				window[dID] = new window[dID+"b"](dID, clientID, [
+					"Init",
+					"Config",
+					"Language",
+					"Ticker",
+					"Request",
+					"YouNow",		
+					"Design", 
+					"MassLiker",
+					"Leveller"
+				]);
 			}
-		};
-		
-		(function() {
-			var wf = document.createElement('script');
-			wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-				'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-			wf.type = 'text/javascript';
-			wf.async = 'true';
-			var s = document.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(wf, s);
-		})();
-		
-		function startDarkMode(dID, clientID) {
-			var darkModeLoader = null;
-			if (window.localStorage.getItem("inDarkMode") == "1") 
-			{
-				darkModeLoader = document.createElement("div");
-				darkModeLoader.setAttribute("id", dID+"_Loader");
-				darkModeLoader.setAttribute("style", "background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000;");
-				var span = document.createElement("span");
-				span.style.opacity = 0;
-				span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
-				span.setAttribute("id", dID+"_LoaderLabel");
-				span.innerHTML = "Loading...";
-				darkModeLoader.appendChild(span);
-				document.body.appendChild(darkModeLoader);
-			}
-
-			var script = document.createElement("script");
-			script.addEventListener('load', function() {
-				var launch = document.createElement("script");
-				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
-				document.body.appendChild(launch);
-			});
-			script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.js");
-			document.body.appendChild(script);
-		}
-
-		var waitForYouNow = setInterval(function() {
-			if (document.body.getElementsByClassName("nav-logo").length > 0) {
-				startDarkMode(dID, clientID);
-				clearInterval(waitForYouNow);
-			}
-		}, 100);
+		});
 	}
+	
+	WebFontConfig = {
+		google: {
+			families: ['Shadows+Into+Light::latin']
+		},
+		active: function() {
+		}
+	};
+	
+	(function() {
+		var wf = document.createElement('script');
+		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+			'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+		wf.type = 'text/javascript';
+		wf.async = 'true';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(wf, s);
+	})();
+	
+	function startDarkMode(dID, clientID) {
+		var darkModeLoader = null;
+		if (window.localStorage.getItem("inDarkMode") == "1") 
+		{
+			darkModeLoader = document.createElement("div");
+			darkModeLoader.setAttribute("id", dID+"_Loader");
+			darkModeLoader.setAttribute("style", "background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000;");
+			var span = document.createElement("span");
+			span.style.opacity = 0;
+			span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
+			span.setAttribute("id", dID+"_LoaderLabel");
+			span.innerHTML = "Loading...";
+			darkModeLoader.appendChild(span);
+			document.body.appendChild(darkModeLoader);
+		}
+
+		var script = document.createElement("script");
+		script.addEventListener('load', function() {
+			var launch = document.createElement("script");
+			launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
+			document.body.appendChild(launch);
+		});
+		script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.js");
+		document.body.appendChild(script);
+	}
+
+	var waitForYouNow = setInterval(function() {
+		if (document.body.getElementsByClassName("nav-logo").length > 0) {
+			startDarkMode(dID, clientID);
+			clearInterval(waitForYouNow);
+		}
+	}, 100);
 }
 
 function generateRandom()
