@@ -13,7 +13,17 @@ window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 });
 
 window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
-	$('head').append('<link rel="stylesheet" href="'+file+'" type="text/css" />');
+	var self = this;
+	$.ajax(file, {
+		dataType: "text",
+		success: function(text, b, c)
+		{
+			$('head').append($('<style>'+text+'</style>'));
+		},
+		error: function(a, b, c)
+		{
+		}
+	});
 });
 
 window[window.dID][window.dID+"a"]("openSettings", function(key) {
@@ -67,6 +77,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 });
 
 window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
+
 });
 
 window[window.dID][window.dID+"a"]("addButton", function() {
