@@ -61,7 +61,7 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-    if (window.localStorage.getItem(this.clientID+".inDarkMode") == "1")
+    if (window.localStorage.getItem(this[this.dID]("name", this.clientID+".inDarkMode")) == "1")
 	{
 		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
 		this[this.dID]("addTick", "design", 20, "tickDesign");
