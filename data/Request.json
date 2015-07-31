@@ -75,7 +75,7 @@
 		"url": "$CDNBASE/php/api/broadcast/audience/channelId=%channelID/numOfRecords=%count/start=%start"
 	},
 	"getPlayData": {
-		"url": "%play"data":URL%userID.json",
+		"url": "%playDataURL%userID.json",
 		"dataType": "json"
 	},
 	"likeBroadcast": {
@@ -95,13 +95,13 @@
 		"url": "https://qz0xcgubgq.algolia.io/1/indexes/$PEOPLESEARCHINDEX/query",
 		"addAlgolia": true,
 		"method": "POST",
-		"data": "{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none"}"
+		"data": "{\"params\":\"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none\"}"
 	},
 	"searchTag": {
 		"url": "https://qz0xcgubgq.algolia.io/1/indexes/$PEOPLESEARCHINDEX/query",
 		"addAlgolia": true,
 		"method": "POST",
-		"data": "{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag"}"
+		"data": "{\"params\":\"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag\"}"
 	},
 	"trendingUsers": {
 		"url": "$CDNBASE/php/api/younow/trendingUsers/numberOfRecords=%count/startFrom=%startFrom/locale=ww"
