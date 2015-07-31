@@ -44,8 +44,8 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 		else
 		{
-			for (var ll = 0; ll < plugins.length; ll++)
-				self[self.dID]("ready"+plugins[ll]);
+			/*for (var ll = 0; ll < plugins.length; ll++)
+				self[self.dID]("ready"+plugins[ll]);*/
 		}
 	};
     for (var j = 0; j < plugins.length; j++) 
