@@ -35,7 +35,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			if (self[$.md5(self.dID+".methods")][$.md5(this.dID+".boot"+self.plugins[i])] != null)
 			{
 				console.log("boot"+self.plugins[i]);
-				self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
+				//self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
 			}
 			else 
 			{
