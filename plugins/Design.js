@@ -71,11 +71,10 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
-	console.log("A");
 	this[this.dID]("addButton");
 	if (window.localStorage.getItem(this.clientID+".inDarkMode") == "1")
 	{
-		$('#'+this.dID+'_Loader').animate({opacity: 0}, 300);
+		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300);
 	}
 });
 
