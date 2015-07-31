@@ -59,6 +59,10 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addButton");
+	if (window.localStorage.getItem(this.clientID+".inDarkMode") == "1")
+	{
+		$('#'+this.dID+'_Loader').animate({opacity: 0}, 300);
+	}
 });
 
 window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
@@ -88,8 +92,8 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	newButton.insertAfter(container);
 
 	newButton.click(function() {
-		window.localStorage.setItem("inDarkMode", window.localStorage.getItem("inDarkMode") == "1" ? "0" : "1");
-		if (window.localStorage.getItem("inDarkMode") == "1") {
+		window.localStorage.setItem(self.clientID+".inDarkMode", window.localStorage.getItem(self.clientID+".inDarkMode") == "1" ? "0" : "1");
+		if (window.localStorage.getItem(self.clientID+".inDarkMode") == "1") {
 			window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/", "").replace("hidden/", ""));
 			window.location.href = "https://www.younow.com/explore/";
 		} 

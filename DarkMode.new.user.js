@@ -9,13 +9,13 @@
 // @updateURL https://FluffyFishGames.github.io/DarkMode.user.js
 // @downloadURL https://FluffyFishGames.github.io/DarkMode.user.js
 // ==/UserScript==
-function main(w, dID) 
+function main(w, dID, clientID) 
 {
 	// rerouting if in user is in dark mode
-	if (window.localStorage.getItem("inDarkMode") == "1" && window.location.href != "https://www.younow.com/explore/") 
+	if (window.localStorage.getItem(clientID+".inDarkMode") == "1" && window.location.href != "https://www.younow.com/explore/") 
 	{
 		window.location.href = "https://www.younow.com/explore/";
-		window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/", ""));
+		window.localStorage.setItem(clientID+".browse", window.location.href.replace("https://www.younow.com/", ""));
 	}
 	else 
 	{
@@ -27,7 +27,7 @@ function main(w, dID)
 				success: function(text, b, c)
 				{
 					$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID+'"')+'</script>'));
-				    window[dID] = new window[dID+"b"](dID, [
+				    window[dID] = new window[dID+"b"](dID, clientID, [
 						"Init",
 						"Config",
 						"Language",
@@ -95,16 +95,27 @@ function main(w, dID)
 	}
 }
 
-var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var k = Math.floor(5 + Math.random() * 10);
-var c = "";
-for (var i = 0; i < k; i++)
+function generateRandom()
 {
-	var d = Math.random() * (a.length - 1);
-	c += a.substring(d, d + 1);
+	var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	var k = Math.floor(10 + Math.random() * 10);
+	var c = "";
+	for (var i = 0; i < k; i++)
+	{
+		var d = Math.random() * (a.length - 1);
+		c += a.substring(d, d + 1);
+	}
+	return c;
+}
+var sessionID = generateRandom();
+var clientID = GM_getValue("client");
+if (clientID == null || clientID == "")
+{
+    clientID = generateRandom();
+	GM_setValue("client", clientID);
 }
 // Inject our main script. Yes, this is bad. But you are trying to do bad things either.
 var script = document.createElement('script');
 script.type = "text/javascript";
-script.textContent = '(' + main.toString() + ')(window,\''+c+'\');';
+script.textContent = '(' + main.toString() + ')(window,\''+sessionID+'\',\''+clientID+'\');';
 document.body.appendChild(script);

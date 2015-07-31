@@ -1,12 +1,13 @@
-window[window.dID+"b"] = function(dID, plugins)
+window[window.dID+"b"] = function(dID, clientID, plugins)
 {
 	console.log("Dark modes loves you! "+dID);
 	this.plugins = plugins;
 	this.dID = dID;
+	this.clientID = clientID;
 	this[this.dID+"a"]("random", function()
 	{
 		var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		var k = Math.floor(5 + Math.random() * 10);
+		var k = Math.floor(10 + Math.random() * 10);
 		var c = "";
 		for (var i = 0; i < k; i++)
 		{
