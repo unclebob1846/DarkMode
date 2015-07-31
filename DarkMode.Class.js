@@ -96,16 +96,21 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 {
 	var mm = $.md5(this.dID+".methods")
+	var nm = $.md5(this.dID+"."+functionName);
     if (this[mm] == null)
 		this[mm] = {};
 	
 	while (true)
 	{
-		var m = this[this.dID]("random");
+		var m = "";
+		if (functioName == "random")
+			m = func();
+		else 
+			m = this[this.dID]("random");
 	    if (this[m] == null)
 		{
 			this[m] = func;
-			this[mm][$.md5(this.dID+"."+functionName)] = m;
+			this[mm][nm] = m;
 			break;
 		}
 	}
