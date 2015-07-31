@@ -26,10 +26,10 @@ window[window.dID][window.dID+"a"]("tick",
 		var delta = d - this.lastTick;
 		for (var key in this.config.Ticker.ticks)
 		{
-		    if (this.config.Ticker.ticks[key].lastFired < d - this.config.Ticker[key].ticks.interval)
+		    if (this.config.Ticker.ticks[key].lastFired < d - this.config.Ticker.ticks[key].interval)
 			{
 				this[this.dID](this.config.Ticker.ticks[key].functionName, delta);
-				this.config.Ticker.ticks[key].lastFired = d - this.config.Ticker[key].ticks.interval;
+				this.config.Ticker.ticks[key].lastFired = d - this.config.Ticker.ticks[key].interval;
 			}
 		}
 		this.lastTick = d;
