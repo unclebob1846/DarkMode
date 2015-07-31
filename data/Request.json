@@ -74,9 +74,9 @@
 	"getViewers": {
 		"url": "$CDNBASE/php/api/broadcast/audience/channelId=%channelID/numOfRecords=%count/start=%start"
 	},
-	"getPlay"data":": {
+	"getPlayData": {
 		"url": "%play"data":URL%userID.json",
-		"data":Type: "json"
+		"dataType": "json"
 	},
 	"likeBroadcast": {
 		"url": "$BASE/php/api/broadcast/like",
@@ -99,7 +99,7 @@
 	},
 	"searchTag": {
 		"url": "https://qz0xcgubgq.algolia.io/1/indexes/$PEOPLESEARCHINDEX/query",
-		addAlgolia: true,
+		"addAlgolia": true,
 		"method": "POST",
 		"data": "{"params":"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag"}"
 	},
