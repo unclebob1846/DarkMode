@@ -1,7 +1,7 @@
 {
 	"maxMessages": 200,
 	"playSounds": false,
-	"images:" {
+	"images": {
 		"logo": "https://fluffyfishgames.github.io/img/whore.png",
 		"star": "https://fluffyfishgames.github.io/img/star_black_16.png",
 		"live": "https://fluffyfishgames.github.io/img/webcam-icon.png",
