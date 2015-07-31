@@ -36,21 +36,6 @@ function main(w, dID, clientID)
 	}
 
 	function startDarkMode(dID, clientID) {
-		var darkModeLoader = null;
-		if (window.localStorage.getItem($.md5(clientID+".inDarkMode")) == "1") 
-		{
-			darkModeLoader = document.createElement("div");
-			darkModeLoader.setAttribute("id", dID+"_Loader");
-			darkModeLoader.setAttribute("style", "background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000;");
-			var span = document.createElement("span");
-			span.style.opacity = 0;
-			span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
-			span.setAttribute("id", dID+"_LoaderLabel");
-			span.innerHTML = "Loading...";
-			darkModeLoader.appendChild(span);
-			document.body.appendChild(darkModeLoader);
-		}
-
 		var xhr;
          
         if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
@@ -86,6 +71,22 @@ function main(w, dID, clientID)
 				var script = document.createElement("script");
 				script.innerHTML = xhr.responseText;
 				document.body.appendChild(script);
+				
+				var darkModeLoader = null;
+				if (window.localStorage.getItem($.md5(clientID+".inDarkMode")) == "1") 
+				{
+					darkModeLoader = document.createElement("div");
+					darkModeLoader.setAttribute("id", dID+"_Loader");
+					darkModeLoader.setAttribute("style", "background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000;");
+					var span = document.createElement("span");
+					span.style.opacity = 0;
+					span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
+					span.setAttribute("id", dID+"_LoaderLabel");
+					span.innerHTML = "Loading...";
+					darkModeLoader.appendChild(span);
+					document.body.appendChild(darkModeLoader);
+				}
+				
 				var launch = document.createElement("script");
 				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
 				document.body.appendChild(launch);
