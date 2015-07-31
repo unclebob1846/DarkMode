@@ -39,7 +39,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			}
 			else 
 			{
-				d(i+1);
+				//d(i+1);
 			}
 		}
 		else
@@ -60,7 +60,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 				loaded++;
 				if (loaded == plugins.length)
 				{
-					d(0);
+					//d(0);
 				}
 			}
 		});
