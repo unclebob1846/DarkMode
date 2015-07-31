@@ -230,14 +230,6 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		function hex_hmac_md5(k, d) {
 			return rstr2hex(raw_hmac_md5(k, d));
 		}
-
-		if (typeof define === 'function' && define.amd) {
-			define(function () {
-				return md5;
-			});
-		} else {
-			$.md5 = md5;
-		}
 		
 		return hex_md5(str);
 	});
