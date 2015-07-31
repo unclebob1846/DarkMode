@@ -74,7 +74,9 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addButton");
 	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
 	{
-		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300);
+		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, "swing", function(){
+			$('#'+$.md5(this.dID+'_Loader')).remove();
+		});
 	}
 });
 
