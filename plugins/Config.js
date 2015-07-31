@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		}
 		this.config = {};
 		var loaded = 0;
-		var loading = 0;
+		var loading = plugins.length;
 		var self = this;
 	    var d = function(key, url)
 		{
@@ -30,11 +30,10 @@ window[window.dID][window.dID+"a"]("bootConfig",
 			});
 		};
 		
-		var loading = 0;
+		
 	    for (var key in load)
 		{
 			d(key, load[key]);
-			loading++;
 	    }
 	}
 );
