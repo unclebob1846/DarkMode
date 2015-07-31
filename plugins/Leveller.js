@@ -32,5 +32,5 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 			}
 		});
 	});
-    //callback();
+    callback();
 });
