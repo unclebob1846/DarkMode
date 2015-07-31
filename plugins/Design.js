@@ -140,7 +140,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 		"hasSettings": false,
 	});
 
-	this.selectHeader("userList");
+	this[this.dID]("selectHeader", "userList");
 
 	this.elements["right"] = $('<div id="right"></div>');
 	this.headers["userList"].content.append((this.elements["trendingPeopleHeader"] = $('<strong>' + this.language["trendingPeople"] + '</strong>')));
