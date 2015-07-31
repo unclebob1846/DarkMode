@@ -103,7 +103,7 @@ window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 	while (true)
 	{
 		var m = "";
-		if (functioName == "random")
+		if (functionName == "random")
 			m = func();
 		else 
 			m = this[this.dID]("random");
