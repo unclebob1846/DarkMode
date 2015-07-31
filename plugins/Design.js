@@ -52,12 +52,15 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	header.content = contentEl;
 	header.li = li;
 	header.header.click(function() {
-		self.selectHeader(key);
+		self[self.dID]("selectHeader", key);
 	});
 	li.append(headerEl);
 	li.append(contentEl);
 	this.elements["left"].append(li);
 	this.headers[key] = header;
+	if (this.config.Design.SelectedHeader == null)
+		this.config.Design.SelectedHeader = key;
+	this[this.dID]("selectHeader", this.config.Design.SelectedHeader);
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
