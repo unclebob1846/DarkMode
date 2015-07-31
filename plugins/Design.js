@@ -41,7 +41,7 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	var headerEl = $('<div class="header">' + header.label + '</div>');
 	var contentEl = $('<div class="content"></div>');
 	if (header.hasSettings == true) {
-		var icon = $('<div style="cursor:pointer;float:right;margin-top:-3px;"><img src="' + this.config.images.settings + '" /></div>');
+		var icon = $('<div style="cursor:pointer;float:right;margin-top:-3px;"><img src="' + this.config.Design.images.settings + '" /></div>');
 		icon.click(function(e) {
 			self.openSettings(key);
 			e.stopPropagation();
