@@ -75,7 +75,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
 	{
 		var self = this;
-		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, "swing", function(){
+		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, function(){
 			$('#'+$.md5(self.dID+'_Loader')).remove();
 		});
 	}
