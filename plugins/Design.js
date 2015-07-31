@@ -130,7 +130,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('.newFooter').remove();
 	$('.nav-logo').children()[0].remove();
 	$('.nav-logo').append($('<img src="' + this.config.images.logo + '" style="width:auto;" height="40" />'));
-	$('[ng-model=searchBox]').attr("placeholder", "Search AttentionWhore");
+	$('[placeholder="Search YouNow"]').attr("placeholder", "Search AttentionWhore");
 	this.page = $('<div id="darkPage"></div>');
 	this.elements = {};
 	this.headers = {
