@@ -133,12 +133,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('.search-field').attr("placeholder", "Search AttentionWhore");
 	this.page = $('<div id="darkPage"></div>');
 	this.elements = {};
-	this.headers = {
-		"userList": {
-			"label": this.language.userList,
-			"hasSettings": false,
-		}
-	};
+
 	this.elements["left"] = $('<ul id="left"></ul>');
 	this[this.dID]("addHeader", "userList", {
 		"label": this.language.userList,
