@@ -3,7 +3,7 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 	this[this.dID]("onDesign", function()
 	{
 		self[self.dID]("addHeader", "massLiker", {
-			"label": self.language.massLiker),
+			"label": self.language.massLiker,
 			"hasSettings": true,
 		});
 		
