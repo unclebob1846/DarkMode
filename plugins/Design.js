@@ -129,7 +129,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('#main').remove();
 	$('.newFooter').remove();
 	$('.nav-logo').children()[0].remove();
-	$('.nav-logo').append($('<img src="' + c.images.logo + '" style="width:auto;" height="40" />'));
+	$('.nav-logo').append($('<img src="' + this.config.images.logo + '" style="width:auto;" height="40" />'));
 	$('[ng-model=searchBox]').attr("placeholder", "Search AttentionWhore");
 	this.page = $('<div id="darkPage"></div>');
 	this.elements = {};
