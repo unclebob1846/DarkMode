@@ -1,32 +1,32 @@
-{
+Ôªø{
 	"de-DE": {
 		"langCode": "de-DE",
 		"goDark": "In den Schatten!",
 		"post": "Abschicken",
 		"writeComment": "Kommentar schreiben...",
 		"goLight": "Ins Licht!",
-		"backToProfile": "Zur¸ck zum Profil",
+		"backToProfile": "Zur√ºck zum Profil",
 		"rtmpURL": "RTMP URL",
 		"fans": "Sklaven",
 		"usersFound": "Benutzer gefunden",
 		"numberSeperator": ".",
-		"trendingPeople": "Besonders bed¸rftig",
-		"editorsPick": "Auserw‰hlte",
+		"trendingPeople": "Besonders bed√ºrftig",
+		"editorsPick": "Auserw√§hlte",
 		"friends": "Verfolgte",
-		"trendingTags": "Erb‰rmliche Tags",
+		"trendingTags": "Erb√§rmliche Tags",
 		"streamerOffline": "%1 ist offline.",
 		"in": " in ",
 		"account": "Account",
-		"minChatLevel": "Zum Chatten ist Level %1 benˆtigt",
+		"minChatLevel": "Zum Chatten ist Level %1 ben√∂tigt",
 		"writeInChat": "In den Chat",
 		"writeInTrending": "In alle Chats des aktuellen Tags",
 		"writeInTag": "In alle Chats des Tags:",
-		"chatWarning": "Mit groﬂer Macht kommt groﬂe Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
+		"chatWarning": "Mit gro√üer Macht kommt gro√üe Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
 		"audience": "Zuschauer",
 		"chat": "Chat",
 		"playSounds": "Sounds abspielen",
 		"infos": "Streamer-Info",
-		"remove": "Lˆschen",
+		"remove": "L√∂schen",
 		"age": "Alter",
 		"barsEarned": "Bars verdient",
 		"coins": "Coins",
@@ -34,10 +34,10 @@
 		"country": "Land",
 		"partner": "Partnerstatus",
 		"level": "Level",
-		"device": "Ger‰t",
+		"device": "Ger√§t",
 		"displayViewers": "Desktop-Zuschauer",
 		"mobileViewers": "Mobil-Zuschauer",
-		"maxViewers": "Hˆchste Zuschauerzahl",
+		"maxViewers": "H√∂chste Zuschauerzahl",
 		"points": "Punkte",
 		"playSounds": "Sounds abspielen",
 		"tag": "Tag",
@@ -53,7 +53,7 @@
 		"fps": "FPS",
 		"levelNeeded": "%1 bis Level %2",
 		"streamURL": "Stream URL",
-		"partnerStatus": ["Kein Partner", "Partner", "Anw‰rter"],
+		"partnerStatus": ["Kein Partner", "Partner", "Anw√§rter"],
 		"osVersion": "Betriebssystem",
 		"connection": "Verbindung",
 		"provider": "Serviceprovider",
@@ -62,21 +62,21 @@
 		"nobodyLikesDragon": "Niemand mag Drache",
 		"commandCentral": "Kommando-Zentrale",
 		"chatbotEnabled": "Chatbot aktivieren.",
-		"nextMessageIn": "N‰chste Nachricht in:",
+		"nextMessageIn": "N√§chste Nachricht in:",
 		"chatBotMessage": "Nachrichten",
 		"chatBotIgnored": "Ignorierte Nutzer",
 		"chatBotInterval": "Interval",
 		"chatBot": "Chatbot",
 		"waitForMassLike": "Bitte warte %1",
 		"likesGiven": "%1 Likes gegeben.",
-		"dontChange": "Nicht ‰ndern, falls die Auswirkung nicht bekannt ist",
+		"dontChange": "Nicht √§ndern, falls die Auswirkung nicht bekannt ist",
 		"massLikerEnabled": "Massenliker aktivieren",
 		"likeThreshold": "Likeschwelle",
 		"loginWith": "Login mit",
 		"level": "Level",
 		"leveling": "Levelt...",
 		"leveller": "Leveller",
-		"desiredLevel": "Gew¸nschtes Level",
+		"desiredLevel": "Gew√ºnschtes Level",
 		"levellerActive": "Leveller aktivieren",
 		"relog": "Neu einloggen",
 		"logout": "Ausloggen...",
@@ -105,7 +105,7 @@
 		"love": "Lieeebeee",
 		"sending": "Verschicken",
 		"gifting": "Bescherung",
-		"check": "Pr¸fen...",
+		"check": "Pr√ºfen...",
 		"keepCoins": "Hohe Kante",
 		"giftThreshold": "Bescherung ab",
 		"love": "LIEEEBEEE",
@@ -131,15 +131,15 @@
 		"fanOf": "Von %1 Sklave",
 		"fansTab": "%1 Sklaven",
 		"previousBroadcasts": "Streams",
-		"unlike": "Gef‰llt mir nicht mehr!",
-		"like": "Gef‰llt mir!",
-		"otherLikes": " - %1 Andere(n) gef‰llt das!",
+		"unlike": "Gef√§llt mir nicht mehr!",
+		"like": "Gef√§llt mir!",
+		"otherLikes": " - %1 Andere(n) gef√§llt das!",
 		"countries": [{
 			"name": "Afghanistan",
 			"alpha-2": "AF",
 			"country-code": "004"
 		}, {
-			"name": "≈land Islands",
+			"name": "√Öland Islands",
 			"alpha-2": "AX",
 			"country-code": "248"
 		}, {
@@ -351,7 +351,7 @@
 			"alpha-2": "CR",
 			"country-code": "188"
 		}, {
-			"name": "CÙte d'Ivoire",
+			"name": "C√¥te d'Ivoire",
 			"alpha-2": "CI",
 			"country-code": "384"
 		}, {
@@ -363,7 +363,7 @@
 			"alpha-2": "CU",
 			"country-code": "192"
 		}, {
-			"name": "CuraÁao",
+			"name": "Cura√ßao",
 			"alpha-2": "CW",
 			"country-code": "531"
 		}, {
@@ -855,7 +855,7 @@
 			"alpha-2": "QA",
 			"country-code": "634"
 		}, {
-			"name": "RÈunion",
+			"name": "R√©union",
 			"alpha-2": "RE",
 			"country-code": "638"
 		}, {
@@ -871,7 +871,7 @@
 			"alpha-2": "RW",
 			"country-code": "646"
 		}, {
-			"name": "Saint BarthÈlemy",
+			"name": "Saint Barth√©lemy",
 			"alpha-2": "BL",
 			"country-code": "652"
 		}, {
