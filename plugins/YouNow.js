@@ -14,7 +14,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 	}
 
 	this.youNow = r;
-	
+	/*
 	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
 	{
 		this.youNow.urlRouter.update = function(a) {
@@ -63,7 +63,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 		
 		this[this.dID]("applyDesign");
 	}
-	callback();
+	callback();*/
 });
 
 window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) {
