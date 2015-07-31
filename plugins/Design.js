@@ -160,5 +160,5 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
-	
+	this[this.dID]("fireDesign");
 });
