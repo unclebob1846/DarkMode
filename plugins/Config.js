@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		}
 		this.config = {};
 		var loaded = 0;
-		var loading = plugins.length;
+		var loading = this.plugins.length;
 		var self = this;
 	    var d = function(key, url)
 		{
