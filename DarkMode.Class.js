@@ -30,12 +30,12 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	var loaded = 0;
 	var self = this;
 	var d = function(i) {
-	    if (i < plugins.length)
+	    if (i < self.plugins.length)
 		{
-			if (self[self.dID+"x"]["boot"+plugins[i]] != null)
+			if (self[$.md5(self.dID+".methods")][$.md5(this.dID+".boot"+self.plugins[i])] != null)
 			{
-				console.log("boot"+plugins[i]);
-				self[self.dID]("boot"+plugins[i], function(){d(i+1);});
+				console.log("boot"+self.plugins[i]);
+				self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
 			}
 			else 
 			{
@@ -69,15 +69,33 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 
 window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
-	if (this[this.dID+"x"][functionName] != null)
-		return this[this.dID+"x"][functionName].apply(this, Array.prototype.slice.call(arguments, 1));
+	var m = $.md5(this.dID+".methods");
+	var f = $.md5(this.dID+"."+functionName);
+	if (functioName.substring(0,4) == "fire")
+	{
+		var n = $.md5(this.dID+".events."+functionName.substring(4));
+		if (this[n] == null)
+			this[n] = [];
+		for (var i = 0; i < this[n].length; i++)
+			this[n][i].apply(this, Array.prototype.slice.call(arguments, 1));
+	}
+    else if (functioName.substring(0,2) == "on")
+	{
+		var n = $.md5(this.dID+".events."+functionName.substring(2));
+		if (this[n] == null)
+			this[n] = [];
+		this[n].push(arguments[1]);
+	}
+	else if (this[m][f] != null)
+		return this[this[m][f]].apply(this, Array.prototype.slice.call(arguments, 1));
 	return null;
 };
 
 window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 {
-    if (this[this.dID+"x"] == null)
-		this[this.dID+"x"] = {};
+	var mm = $.md5(this.dID+".methods")
+    if (this[mm] == null)
+		this[mm] = {};
 	
 	while (true)
 	{
@@ -85,7 +103,7 @@ window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 	    if (this[m] == null)
 		{
 			this[m] = func;
-			this[this.dID+"x"][functionName] = this[m];
+			this[mm][$.md5(this.dID+"."+functionName)] = m;
 			break;
 		}
 	}
