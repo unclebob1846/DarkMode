@@ -23,6 +23,10 @@ window[window.dID][window.dID+"a"]("bootConfig",
 				},
 				error: function(a, b, c)
 				{
+					console.log(key);
+					console.log(a);
+					console.log(b);
+					console.log(c);
 					loaded++;
 					if (loaded == loading)
 						callback();
