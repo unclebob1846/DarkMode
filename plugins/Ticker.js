@@ -1,7 +1,7 @@
 window[window.dID][window.dID+"a"]("bootTicker", 
 	function(callback)
 	{
-		this.config.ticker = {};
+		this.config.Ticker.ticks = {};
 		callback();
 	}
 );
@@ -12,7 +12,7 @@ window[window.dID][window.dID+"a"]("readyTicker",
 		var self = this;
 		setInterval(function() {
 		    self[self.dID]("tick");
-		}, this.config.settings.baseTick);
+		}, this.config.Ticker.baseTick);
 	}
 );
 
@@ -24,12 +24,12 @@ window[window.dID][window.dID+"a"]("tick",
 		if (this.lastTick == null)
 			this.lastTick = d;
 		var delta = d - this.lastTick;
-		for (var key in this.config.ticker)
+		for (var key in this.config.Ticker.ticks)
 		{
-		    if (this.config.ticker[key].lastFired < d - this.config.ticker[key].interval)
+		    if (this.config.Ticker.ticks[key].lastFired < d - this.config.Ticker[key].ticks.interval)
 			{
-				this[this.dID](this.config.ticker[key].functionName, delta);
-				this.config.ticker[key].lastFired = d - this.config.ticker[key].interval;
+				this[this.dID](this.config.Ticker.ticks[key].functionName, delta);
+				this.config.Ticker.ticks[key].lastFired = d - this.config.Ticker[key].ticks.interval;
 			}
 		}
 		this.lastTick = d;
@@ -39,6 +39,6 @@ window[window.dID][window.dID+"a"]("tick",
 window[window.dID][window.dID+"a"]("addTick",
     function(name, interval, functionName)
 	{
-		this.config.ticker[name] = {interval: interval, functionName: functionName, lastFired: 0};
+		this.config.Ticker.ticks[name] = {interval: interval, functionName: functionName, lastFired: 0};
 	}
 );
