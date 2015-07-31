@@ -71,8 +71,10 @@ window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
 window[window.dID][window.dID+"a"]("addButton", function() {
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
-	if (button == null || button.length == 0)
-		return false;
+	if (button != null && button.length > 0)
+	{
+		button.remove();
+	}
 	var self = this;
 
 	var newButton = $("<button></button>");
@@ -101,7 +103,6 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 			window.location.reload();
 		}
 	});
-	button.remove();
 });
 
 window[window.dID][window.dID+"a"]("applyDesign", function() 
