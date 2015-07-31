@@ -71,7 +71,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
 	var m = $.md5(this.dID+".methods");
 	var f = $.md5(this.dID+"."+functionName);
-	if (functioName.substring(0,4) == "fire")
+	if (functionName.substring(0,4) == "fire")
 	{
 		var n = $.md5(this.dID+".events."+functionName.substring(4));
 		if (this[n] == null)
@@ -79,7 +79,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		for (var i = 0; i < this[n].length; i++)
 			this[n][i].apply(this, Array.prototype.slice.call(arguments, 1));
 	}
-    else if (functioName.substring(0,2) == "on")
+    else if (functionName.substring(0,2) == "on")
 	{
 		var n = $.md5(this.dID+".events."+functionName.substring(2));
 		if (this[n] == null)
