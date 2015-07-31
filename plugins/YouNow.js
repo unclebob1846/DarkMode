@@ -13,7 +13,8 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 		return r;
 	}
 
-	this.youNow = r;
+	this.youNow = allServices('younow');
+	callback();
 	/*
 	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
 	{
