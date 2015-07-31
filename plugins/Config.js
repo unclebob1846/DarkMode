@@ -4,7 +4,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		var load = {};
 		for (var i = 0; i < this.plugins.length; i++)
 		{
-			load[this.plugins[key]] = "https://fluffyfishgames.github.io/data/"+this.plugins[i]+".json";
+			load[this.plugins[i]] = "https://fluffyfishgames.github.io/data/"+this.plugins[i]+".json";
 		}
 		this.config = {};
 		var loaded = 0;
