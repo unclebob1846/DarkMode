@@ -80,7 +80,7 @@ function main(w, dID, clientID)
 					darkModeLoader.setAttribute("style", "background: #000 url(https://absolutehacks.com/forum/uploads/profile/photo-1.gif) center center no-repeat; width: 100%; height: 100%; top: 0px; left: 0px; position: absolute; z-index:100000;");
 					var span = document.createElement("span");
 					span.style.opacity = 0;
-					span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: 'Shadows Into Light', cursive;");
+					span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: Verdana;");
 					span.setAttribute("id", $.md5(dID+"_LoaderLabel"));
 					span.innerHTML = "Loading...";
 					darkModeLoader.appendChild(span);
