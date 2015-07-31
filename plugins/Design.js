@@ -140,9 +140,10 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 		}
 	};
 	this.elements["left"] = $('<ul id="left"></ul>');
-	for (var key in this.headers) {
-		this.addHeader(this.headers[key], key);
-	}
+	this[this.dID]("addHeader", "userList", {
+		"label": this.language.userList,
+		"hasSettings": false,
+	});
 
 	this.selectHeader("userList");
 
