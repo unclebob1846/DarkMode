@@ -69,6 +69,7 @@ window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
 });
 
 window[window.dID][window.dID+"a"]("addButton", function() {
+	console.log("A");
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
 	if (button != null && button.length > 0)

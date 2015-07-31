@@ -1,8 +1,7 @@
 window[window.dID][window.dID+"a"]("bootConfig",
     function(callback)
 	{
-		var load = {
-		};
+		var load = {};
 		for (var i = 0; i < this.plugins.length; i++)
 		{
 			load[this.plugins[key]] = "https://fluffyfishgames.github.io/data/"+this.plugins[key]+".json";
@@ -19,10 +18,14 @@ window[window.dID][window.dID+"a"]("bootConfig",
 				{
 					self.config[key] = json;
 					loaded++;
+					if (loaded == loading)
+						callback();
 				},
 				error: function(a, b, c)
 				{
 					loaded++;
+					if (loaded == loading)
+						callback();
 				}
 			});
 		};
