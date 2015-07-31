@@ -23,6 +23,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		{
 			if (self[self.dID+"x"]["boot"+plugins[i]] != null)
 			{
+				console.log("boot"+plugins[i]);
 				self[self.dID]("boot"+plugins[i], function(){d(i+1);});
 			}
 			else 
