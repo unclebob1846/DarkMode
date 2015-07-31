@@ -1,4 +1,4 @@
-window[window.dID][window.dID+"a"]("bootYouNow", function() {
+window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 	function allServices(mod, r) {
 		var inj = angular.element(document).injector().get;
 		if (!r) r = {};
@@ -15,7 +15,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function() {
 
 	this.youNow = r;
 	
-	if (window.localStorage.getItem(this.clientID+".inDarkMode") == "1")
+	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
 	{
 		this.youNow.urlRouter.update = function(a) {
 			return true;
@@ -63,6 +63,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function() {
 		
 		this[this.dID]("applyDesign");
 	}
+	callback();
 });
 
 window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) {

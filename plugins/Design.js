@@ -81,7 +81,7 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	var newButton = $("<button></button>");
 	newButton.attr("class", "pull-right btn btn-primary");
 
-	if (this.inDarkMode == "1") {
+	if (window.localStorage.getItem(this[this.dID]("name","inDarkMode")) == "1") {
 		newButton.html(this[this.dID]("getLang", "goLight"));
 		newButton.css('background-color', '#999');
 		newButton.css('border-color', '#444');
@@ -95,9 +95,9 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	newButton.insertAfter(container);
 
 	newButton.click(function() {
-		window.localStorage.setItem(self.clientID+".inDarkMode", window.localStorage.getItem(self.clientID+".inDarkMode") == "1" ? "0" : "1");
-		if (window.localStorage.getItem(self.clientID+".inDarkMode") == "1") {
-			window.localStorage.setItem("browse", window.location.href.replace("https://www.younow.com/", "").replace("hidden/", ""));
+		window.localStorage.setItem(this[this.dID]("name","inDarkMode"), window.localStorage.getItem(this[this.dID]("name","inDarkMode")) == "1" ? "0" : "1");
+		if (window.localStorage.getItem(this[this.dID]("name","inDarkMode")) == "1") {
+			window.localStorage.setItem(this[this.dID]("name","browse"), window.location.href.replace("https://www.younow.com/", "").replace("hidden/", ""));
 			window.location.href = "https://www.younow.com/explore/";
 		} 
 		else {
