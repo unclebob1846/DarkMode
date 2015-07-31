@@ -3,15 +3,16 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 	this[this.dID]("onDesign", function()
 	{
 		self[self.dID]("addHeader", "massLiker", {
-			"label": this[self.dID]("getLang", "massLiker"),
+			"label": self.language.massLiker),
 			"hasSettings": true,
 		});
 		
-		self.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="massLikerEnabled" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
-												'<div style="float:left;margin-top:5px;"><span>' + this.language.massLikerEnabled + ' </span></div></div>' +
+		var massLikerEnabledID = self[self.dID]("random") + "_ml0";
+		self.headers["massLiker"].content.html('<div style="float:left; clear: both;"><input type="checkbox" id="' + massLikerEnabledID + '" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
+												'<div style="float:left;margin-top:5px;"><span>' + self.language.massLikerEnabled + ' </span></div></div>' +
 												'<div id="massLikerStats"></div>');
 
-		var massLikerEnabled = $('#massLikerEnabled');
+		var massLikerEnabled = $('#'+massLikerEnabledID);
 		massLikerEnabled.change(function() {
 			if (massLikerEnabled.is(":checked")) {
 				self.config.massLiker.active = true;
