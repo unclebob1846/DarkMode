@@ -4,16 +4,6 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	this.plugins = plugins;
 	this.dID = dID;
 	this.clientID = clientID;
-	this[this.dID+"a"]("name", function(str)
-	{
-	    return $.md5(this.clientID + "." + str);
-	});
-	
-	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1" && window.location.href != "https://www.younow.com/explore/") 
-	{
-		window.location.href = "https://www.younow.com/explore/";
-		window.localStorage.setItem(this[this.dID]("name", "browse"), window.location.href.replace("https://www.younow.com/", ""));
-	}
 	
 	this[this.dID+"a"]("random", function()
 	{
@@ -27,6 +17,18 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 		return c;
 	});
+	
+	this[this.dID+"a"]("name", function(str)
+	{
+	    return $.md5(this.clientID + "." + str);
+	});
+	
+	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1" && window.location.href != "https://www.younow.com/explore/") 
+	{
+		window.location.href = "https://www.younow.com/explore/";
+		window.localStorage.setItem(this[this.dID]("name", "browse"), window.location.href.replace("https://www.younow.com/", ""));
+	}
+	
 	var loaded = 0;
 	var self = this;
 	var d = function(i) {
@@ -35,17 +37,17 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			if (self[$.md5(self.dID+".methods")][$.md5(this.dID+".boot"+self.plugins[i])] != null)
 			{
 				console.log("boot"+self.plugins[i]);
-				//self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
+				self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
 			}
 			else 
 			{
-				//d(i+1);
+				d(i+1);
 			}
 		}
 		else
 		{
-			/*for (var ll = 0; ll < plugins.length; ll++)
-				self[self.dID]("ready"+plugins[ll]);*/
+			for (var ll = 0; ll < plugins.length; ll++)
+				self[self.dID]("ready"+plugins[ll]);
 		}
 	};
     for (var j = 0; j < plugins.length; j++) 
@@ -60,7 +62,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 				loaded++;
 				if (loaded == plugins.length)
 				{
-					//d(0);
+					d(0);
 				}
 			}
 		});
