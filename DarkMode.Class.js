@@ -38,7 +38,6 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			var f = $.md5(self.dID+".boot"+self.plugins[i]);
 			if (self[m][f] != null)
 			{
-				console.log("boot"+self.plugins[i]);
 				self[self.dID]("boot"+self.plugins[i], function(){d(i+1);});
 			}
 			else 
@@ -48,8 +47,8 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 		else
 		{
-			for (var ll = 0; ll < plugins.length; ll++)
-				self[self.dID]("ready"+plugins[ll]);
+			for (var ll = 0; ll < self.plugins.length; ll++)
+				self[self.dID]("ready"+self.plugins[ll]);
 		}
 	};
     for (var j = 0; j < plugins.length; j++) 
