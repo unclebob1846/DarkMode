@@ -26,8 +26,8 @@ function main(w, dID, clientID)
 					"Language",
 					"Ticker",
 					"Request",
-					"YouNow",		
-					"Design", 
+					"YouNow",
+					"Design",
 					"MassLiker",
 					"Leveller"
 				]);
@@ -37,7 +37,7 @@ function main(w, dID, clientID)
 
 	function startDarkMode(dID, clientID) {
 		var darkModeLoader = null;
-		if (window.localStorage.getItem("inDarkMode") == "1") 
+		if (window.localStorage.getItem($.md5(clientID+".inDarkMode")) == "1") 
 		{
 			darkModeLoader = document.createElement("div");
 			darkModeLoader.setAttribute("id", dID+"_Loader");
@@ -89,7 +89,7 @@ function main(w, dID, clientID)
 				var launch = document.createElement("script");
 				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
 				document.body.appendChild(launch);
-            }           
+            } 
         }
          
         xhr.open('GET', "https://fluffyfishgames.github.io/libs/jquery.js", true);
