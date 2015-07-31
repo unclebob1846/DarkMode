@@ -20,7 +20,7 @@ function main(w, dID, clientID)
 	}
 	else 
 	{
-		function boot(dID)
+		function boot(dID, clientID)
 		{
 			$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 			{
@@ -61,7 +61,7 @@ function main(w, dID, clientID)
 			s.parentNode.insertBefore(wf, s);
 		})();
 		
-		function startDarkMode(dID) {
+		function startDarkMode(dID, clientID) {
 			var darkModeLoader = null;
 			if (window.localStorage.getItem("inDarkMode") == "1") 
 			{
@@ -80,7 +80,7 @@ function main(w, dID, clientID)
 			var script = document.createElement("script");
 			script.addEventListener('load', function() {
 				var launch = document.createElement("script");
-				launch.textContent = "(" + boot.toString() + ")('"+dID+"');";
+				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
 				document.body.appendChild(launch);
 			});
 			script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.js");
@@ -89,7 +89,7 @@ function main(w, dID, clientID)
 
 		var waitForYouNow = setInterval(function() {
 			if (document.body.getElementsByClassName("nav-logo").length > 0) {
-				startDarkMode(dID);
+				startDarkMode(dID, clientID);
 				clearInterval(waitForYouNow);
 			}
 		}, 100);
