@@ -69,14 +69,49 @@ function main(w, dID, clientID)
 			document.body.appendChild(darkModeLoader);
 		}
 
-		var script = document.createElement("script");
-		script.addEventListener('load', function() {
-			var launch = document.createElement("script");
-			launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
-			document.body.appendChild(launch);
-		});
-		script.setAttribute("src", "https://fluffyfishgames.github.io/libs/jquery.js");
-		document.body.appendChild(script);
+		var xhr;
+         
+        if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
+        else {
+            var versions = ["MSXML2.XmlHttp.5.0", 
+                            "MSXML2.XmlHttp.4.0",
+                            "MSXML2.XmlHttp.3.0", 
+                            "MSXML2.XmlHttp.2.0",
+                            "Microsoft.XmlHttp"]
+ 
+             for(var i = 0, len = versions.length; i < len; i++) {
+                try {
+                    xhr = new ActiveXObject(versions[i]);
+                    break;
+                }
+                catch(e){}
+             } // end for
+        }
+         
+        xhr.onreadystatechange = ensureReadiness;
+         
+        function ensureReadiness() {
+            if(xhr.readyState < 4) {
+                return;
+            }
+             
+            if(xhr.status !== 200) {
+                return;
+            }
+ 
+            // all is well  
+            if(xhr.readyState === 4) {
+				var script = document.createElement("script");
+				script.innerHTML = xhr.responseText;
+				document.body.appendChild(script);
+				var launch = document.createElement("script");
+				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
+				document.body.appendChild(launch);
+            }           
+        }
+         
+        xhr.open('GET', "https://fluffyfishgames.github.io/libs/jquery.js", true);
+        xhr.send('');
 	}
 
 	var waitForYouNow = setInterval(function() {
