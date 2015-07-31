@@ -129,8 +129,8 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('#main').remove();
 	$('.newFooter').remove();
 	$('.nav-logo').children()[0].remove();
-	$('.nav-logo').append($('<img src="' + this.config.images.logo + '" style="width:auto;" height="40" />'));
-	$('[placeholder="Search YouNow"]').attr("placeholder", "Search AttentionWhore");
+	$('.nav-logo').append($('<img src="' + this.config.Design.images.logo + '" style="width:auto;" height="40" />'));
+	$('.search-field').attr("placeholder", "Search AttentionWhore");
 	this.page = $('<div id="darkPage"></div>');
 	this.elements = {};
 	this.headers = {
