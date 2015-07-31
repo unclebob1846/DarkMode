@@ -10,7 +10,7 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 		var desiredLevelID = self[self.dID]("random")+"_lv1";
 		var levellerEnabledID = self[self.dID]("random")+"_lv2";
 		self.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+self.language.desiredLevel+':</span></div>'+
-												'<div style="float:left;"><input type="number" style="width:180px;" value="'+self.config.settings.leveller.desiredLevel+'" id="'+desiredLevelID+'" /></div>'+
+												'<div style="float:left;"><input type="number" style="width:180px;" value="'+self.config.Leveller.desiredLevel+'" id="'+desiredLevelID+'" /></div>'+
 												'<div style="float:left; clear: both;"><input type="checkbox" id="'+levellerEnabledID+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
 												'<div style="float:left;margin-top:5px;"><span>' + self.language.levellerActive + ' </span></div></div>' +
 												'<div id="'+levellerStatsID+'"></div>');
