@@ -134,7 +134,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 							'<div id="'+this.config.Design.ids['infoList']+'"></div>'+
 							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
 							'<ul id="'+this.config.Design.ids['chat']+'"></ul>'+
-							'<div id="'+this.config.Design.ids['chatOptions']+">'+
+							'<div id="'+this.config.Design.ids['chatOptions']+'">'+
 								'<div class="option">'+
 									'<input type="radio" name="writeTo" checked id="'+this.config.Design.ids['writeInChat']+'" />' + this.language.writeInChat + 
 								'</div>'+
