@@ -187,10 +187,10 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('.nav-logo').children()[0].remove();
 	$('.nav-logo').append($('<img src="' + this.config.Design.images.logo + '" style="width:auto;" height="40" />'));
 	$('.search-field').attr("placeholder", "Search AttentionWhore");
-	this.page = $('<div id="'+this.config.Design.darkPage+'"></div>');
+	this.page = $('<div id="'+this.config.Design.ids.darkPage+'"></div>');
 	this.elements = {};
 
-	this.elements["left"] = $('<ul id="'+this.config.Design.left+'"></ul>');
+	this.elements["left"] = $('<ul id="'+this.config.Design.ids.left+'"></ul>');
 	this[this.dID]("addHeader", "userList", {
 		"label": this.language.userList,
 		"hasSettings": false,
