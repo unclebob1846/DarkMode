@@ -30,7 +30,35 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	}
 	
 	var loaded = 0;
+	var loadedLibraries = 0;
 	var self = this;
+	var dl = function(i) {
+		if (self.libraries != null && i < self.libraries.length)
+		{		
+			$.ajax(self.libraries[i],
+			{
+				dataType: "text",
+				success: function(text, b, c)
+				{
+					var element = $('<scr'+'ipt>'+text+'</scr'+'ipt>');
+					$(document.body).append(element);
+					loadedLibraries++;
+					if (loadedLibraries == self.libraries.length)
+					{
+						//boot the system :)
+						for (var ll = 0; ll < self.plugins.length; ll++)
+						{
+							self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
+						}
+					}
+					else 
+					{
+						dl(i+1);
+					}
+				}
+			});
+		}
+	}
 	var d = function(i) {
 	    if (i < self.plugins.length)
 		{
@@ -47,6 +75,8 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 		else
 		{
+			//before we are ready, we need to load all necessary libraries for plugins to work
+			dl(0);
 			for (var ll = 0; ll < self.plugins.length; ll++)
 			{
 				self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
@@ -55,7 +85,10 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	};
     for (var j = 0; j < plugins.length; j++) 
 	{
-	    $.ajax('https://fluffyfishgames.github.io/plugins/'+plugins[j]+'.js',
+		var url = plugins[j];
+		if (!url.startsWith("https://"))
+			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
+	    $.ajax(url,
 		{
 			dataType: "text",
 			success: function(text, b, c)
@@ -76,7 +109,19 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
 	var m = $.md5(this.dID+".methods");
 	var f = $.md5(this.dID+"."+functionName);
-	if (functionName.substring(0,4) == "fire")
+	if (functionName == "log")
+	{
+		if (this.log == null)
+			this.log = [];
+		this.log.push(arguments[1]);
+	}
+	else if (functionName == "addLibrary")
+	{
+		if (this.libraries == null)
+			this.libraries = [];
+		this.libraries.push(arguments[1]);
+	}
+	else if (functionName.substring(0,4) == "fire")
 	{
 		var n = $.md5(this.dID+".events."+functionName.substring(4));
 		if (this[n] == null)
