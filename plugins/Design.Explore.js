@@ -77,8 +77,8 @@ window[window.dID][window.dID+"a"]("parseSearchResults", function(json) {
 			this.currentSearch.element.append(this[this.dID]("addSearchResult", json["trending_users"][i]));
 		}
 	} else {
-		if (json.nbHits == 100)
-			this.currentSearch.hasMore = false;
+		if (json.nbPages > json.page)
+			this.currentSearch.hasMore = true;
 		if (this.currentSearch.titleEl.html() == "")
 			this.currentSearch.titleEl.html(this[this.dID]("parseNumber", json.nbHits) + " " + this.language["usersFound"]);
 		this.currentSearch.loading = false;
