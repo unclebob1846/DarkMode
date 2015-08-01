@@ -19,7 +19,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 		if (self.config.Router.currentPage == "stream")
 		{
 			self[self.dID]("addTick", "updateStream", 5000, "updateStream");
-			self[self.dID]("addTick", "updateStreamInfo", 1000, "updateStreamInfo");
+			self[self.dID]("addTick", "updateStreamInfo", 500, "updateStreamInfo");
 		}
 		else 
 		{
@@ -60,8 +60,8 @@ window[window.dID][window.dID+"a"]("sendChatMessage", function(streamId, message
 	} else if (this.elements["writeInTrending"].is(':checked')) {
 		var self = this;
 		this[this.dID]("sendRequest", "getPlayData", {
-			playDataURL: this.currentStreamer.PlayDataBaseUrl,
-			userID: this.currentStreamer.userID
+			playDataURL: this.config.Design.Stream.data.PlayDataBaseUrl,
+			userID: this.config.Design.Stream.data.userID
 		}, function(json, success) {
 			for (var i = 0; i < json.onBroadcastPlay.queues[0].items.length; i++) {
 				self[self.dID]("sendRequest", "sendChatMessage", {
@@ -248,7 +248,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			});
 			this.elements["chatMessage"].keydown(function(e) {
 				if (e.keyCode == 13) {
-					self[self.dID]("sendChatMessage", self.currentStreamer.userId, self.elements["chatMessage"].val());
+					self[self.dID]("sendChatMessage", self.config.Design.Stream.data.userId, self.elements["chatMessage"].val());
 					self.elements["chatMessage"].val("");
 				}
 			})
