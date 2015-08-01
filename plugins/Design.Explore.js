@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
-    this[this.dID]("addRoute", /explore\/(.+)?(\/.+)?(\/.+)?/, "explore");
+    this[this.dID]("addRoute", "explore", /explore\/(.+)?(\/.+)?(\/.+)?/, "explore", 5);
 	callback();
 });
 

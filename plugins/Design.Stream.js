@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
-    this[this.dID]("addRoute", /(.+)\//, "openStream");
+    this[this.dID]("addRoute", "stream", /(.+)\//, "openStream", 1);
 	this.config.Design.Stream = {};
 });
 
