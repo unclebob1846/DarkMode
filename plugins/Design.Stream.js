@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
-    this[this.dID]("addIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList", "chat"]);
+    this[this.dID]("addIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -201,7 +201,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 			});
 		}
 
-		flowplayer("streamView", "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
+		flowplayer(this.config.Design.ids.streamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
 			clip: {
 				url: this.config.Design.Stream.data.media.stream,
 				live: true,
