@@ -30,8 +30,9 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	callback();
 });
 
-window[window.dID][window.dID+"a"]("updateStream", function() {
+window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 	var self = this;
+	this.config.Design.Stream.data.length += deltaTime / 1000;
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
@@ -354,7 +355,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	this.elements["likeCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.likes));
 	this.elements["shareCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.shares));
 	this.elements["viewerCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.viewers));
-	this.elements["time"].html(this[this.dID]("parseTime", this.duration));
+	this.elements["time"].html(this[this.dID]("parseTime", this.config.Design.Stream.data.length));
 
 	//regular updates
 	this.elements["streamInfoCoins"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.coins));
