@@ -19,8 +19,8 @@ window[window.dID][window.dID+"a"]("sendRequest", function(type, data, callback)
 		"$PEOPLESEARCHINDEX": this.youNow.config.settings.PeopleSearchIndex,
 	};
 
-	if (this.config.Request.requestSettings[type] != null) {
-		var r = JSON.parse(JSON.stringify(this.config.Request.requestSettings[type]));
+	if (this.config.Request[type] != null) {
+		var r = JSON.parse(JSON.stringify(this.config.Request[type]));
 		for (var key in r) {
 			request[key] = r[key];
 		}
