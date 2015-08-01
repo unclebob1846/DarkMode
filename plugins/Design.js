@@ -24,8 +24,11 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
 			var style = $('<style type="text/css"></style>');
-			var textNode = document.createTextNode(text);
-			style.append(textNode);
+			for (var i = 0; i < text.length; i+=4096)
+			{
+				var textNode = document.createTextNode(text.substring(i, i + 4096));
+				style.append(textNode);
+			}
 			$('head').append(style);
 			
 		},
