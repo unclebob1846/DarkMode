@@ -114,7 +114,7 @@ window[window.dID][window.dID+"a"]("addIDs", function(elements) {
 	for (var i = 0; i < elements.length; i++)
 	{
 		if (this.config.Design.ids[elements[i]] == null)
-			this.config.Design.ids[elements[i]] = $.md5(this.clientID + elements[i]) + this[this.dID]("random");
+			this.config.Design.ids[elements[i]] = this[this.dID]("random") + $.md5(this.clientID + elements[i]);
 	}
 });
 
