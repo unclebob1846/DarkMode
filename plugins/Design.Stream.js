@@ -8,13 +8,13 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
-	this.config.Design.Stream.Name = parts[0];
+	this.config.Design.Stream.name = parts[0];
 	var self = this;
 	
 	this[this.dID]("sendRequest", "getBroadcast", {
-		username: this.config.Design.Stream.Name
+		username: this.config.Design.Stream.name
 	}, function(json, success) {
-		self.config.Design.Stream.Data = json;
+		self.config.Design.Stream.data = json;
 		if (json["errorCode"] > 0) {
 			window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/"+self.config.Design.Stream.Name+"/channel");
 		} else {
@@ -97,7 +97,7 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 
 window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	var self = this;
-	if (this.config.Design.Stream.LastName != this.config.Design.Stream.Name)
+	if (this.config.Design.Stream.lastName != this.config.Design.Stream.name)
 	{
 		if (this.elements["stream"] == null) 
 		{
@@ -246,7 +246,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 		for (var i = 0; i < this.config.Design.Stream.data.comments.length; i++)
 			this[this.dID]("addChatMessage", this.config.Design.Stream.data.comments[i]);
 		
-		this.config.Design.Stream.LastName = this.config.Design.Stream.Name;
+		this.config.Design.Stream.lastName = this.config.Design.Stream.name;
 	}
 	
 	var extraRight = "";
