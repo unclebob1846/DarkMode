@@ -34,6 +34,10 @@ window[window.dID][window.dID+"a"]("openSettings", function(key) {
 	}, "", "https://www.younow.com/settings/" + key);
 });
 
+window[window.dID][window.dID+"a"]("parseNumber", function(n){
+
+});
+
 window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	var self = this;
 	var li = $('<li></li>');

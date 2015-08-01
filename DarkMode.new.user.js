@@ -28,6 +28,10 @@ function main(w, dID, clientID)
 					"Request",
 					"YouNow",
 					"Design",
+					"Design.Explore",
+					"Design.Stream",
+					"Design.Profile",
+					"Design.Settings",
 					"MassLiker",
 					"Leveller"
 				]);
