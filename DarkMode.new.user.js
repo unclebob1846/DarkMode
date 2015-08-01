@@ -25,6 +25,7 @@ function main(w, dID, clientID)
 					"Config",
 					"Language",
 					"Ticker",
+					"Router",
 					"Request",
 					"YouNow",
 					"Design",
