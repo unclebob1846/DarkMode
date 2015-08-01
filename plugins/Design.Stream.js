@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
-    this[this.dID]("addIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"]);
+    this[this.dID]("addIDs", ["stream", "streamBar", "streamView", "streamBar", "streamInfo", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -103,7 +103,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 		{ 
 			this.elements["right"].html(
 				'<div id="'+this.config.Design.ids['stream']+'">'+
-					'<div id="'+this.config.Design.ids['streamBar']+'"></div>'+
+					'<div id="'+this.config.Design.ids['streamInfo']+'"></div>'+
 					'<div class="outer">'+
 						'<div class="stream">'+
 							'<div id="'+this.config.Design.ids['streamView']+'">'+
