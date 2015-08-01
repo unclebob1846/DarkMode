@@ -291,10 +291,9 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 		var osVersion = "";
 		var provider = "";
 		var browser = "";
-		var numCommas = (device.match(/,/g) || []).length;
 		if (device.length < 40) //PHONE!
 		{
-			for (var k in this.config.deviceMapping) {
+			for (var k in this.config.Design.deviceMapping) {
 				device = device.replace(k, this.config.Design.deviceMapping[k]);
 			}
 			var parts = device.split(",");
