@@ -21,7 +21,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 			for (var key in self.config.Design.ids)
 			{
 				var r = new RegExp("#"+key, "");
-				text = text.replace(r, self.config.Design.ids[key]);
+				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
 			$('head').append($('<style>'+text+'</style>'));
 		},
