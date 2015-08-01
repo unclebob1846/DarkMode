@@ -60,8 +60,6 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 		this.youNow["broadcasterService"].updateBroadcaster = function(a, b, d) {
 			return false;     
 		};
-		
-		this[this.dID]("applyDesign");
 	}
 	callback();
 });
