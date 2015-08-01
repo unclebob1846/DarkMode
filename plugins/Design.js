@@ -24,7 +24,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
 			var style = $('<style></style>');
-			style.text(text);
+			style[0].innerHTML = text;
 			$('head').append(style);
 		},
 		error: function(a, b, c)
