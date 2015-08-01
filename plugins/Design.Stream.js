@@ -7,6 +7,9 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
+	console.log("openStream");
+	console.log(parts[0]);
+	
 	this.config.Design.Stream.Name = parts[0];
 	var self = this;
 	
