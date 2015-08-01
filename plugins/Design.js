@@ -20,7 +20,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 		{
 			for (var key in self.config.Design.ids)
 			{
-				var r = new RegExp("#"+key+"\s", "g");
+				var r = new RegExp("#"+key+"\\s", "g");
 				text = text.replace(r, "#"+self.config.Design.ids[key]+" ");
 			}
 			var style = $('<style type="text/css"></style>');
@@ -30,7 +30,6 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				style.append(textNode);
 			}
 			$('head').append(style);
-			
 		},
 		error: function(a, b, c)
 		{
