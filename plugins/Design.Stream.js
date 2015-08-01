@@ -1,5 +1,15 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
-    this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", "shareCount", "time", "chatMessages", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList", "chat"]);
+    this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", 
+							  "shareCount", "time", "chatMessages", "viewerCount", "chatTab", "audienceTab", "infoTab", 
+							  "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", 
+							  "intoTag", "chatMessage", "trendingList", "chat", "streamInfoAge", "streamInfoBarsEarned", 
+							  "streamInfoCoins", "streamInfoMaxLikes", "streamInfoCountry", "streamInfoFans", 
+							  "streamInfoPartner", "streamInfoLevel", "streamInfoPoints", "streamInfoDevice", 
+							  "streamInfoBrowser", "streamInfoConnection", "streamInfoOSVersion", "streamInfoProvider", 
+							  "streamInfoStreamURL", "streamInfoDisplayViewers", "streamInfoMobileViewers", 
+							  "streamInfoMaxViewers", "streamInfoTag", "streamInfoPosition", "streamInfoReconnects", 
+							  "streamInfoFeaturedTime", "streamInfoGiftsValue", "streamInfoNewFans", "streamInfoBitrate", 
+							  "streamInfoFPS"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -131,7 +141,36 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'">' + this.language.chat + '</a>'+
 							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'">' + this.language.audience + '</a>'+
 							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'">' + this.language.infos + '</a>'+
-							'<div id="'+this.config.Design.ids['infoList']+'"></div>'+
+							'<div id="'+this.config.Design.ids['infoList']+'">'+
+								'<h2>'+this.language.streamer+'</h2>' +
+								'<div class="label">' + this.language.age + ':</div>             <div id="'+this.config.Design.ids["streamInfoAge"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.barsEarned + ':</div>      <div id="'+this.config.Design.ids["streamBarsEarned"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.coins + ':</div>           <div id="'+this.config.Design.ids["streamInfoCoins"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.maxLikes + ':</div>        <div id="'+this.config.Design.ids["streamInfoMaxLikes"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.country + ':</div>         <div id="'+this.config.Design.ids["streamInfoCountry"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.fans + ':</div>            <div id="'+this.config.Design.ids["streamInfoFans"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.partner + ':</div>         <div id="'+this.config.Design.ids["streamInfoPartner"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.level + ':</div>           <div id="'+this.config.Design.ids["streamInfoLevel"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.points + ':</div>          <div id="'+this.config.Design.ids["streamInfoPoints"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.device + ':</div>          <div id="'+this.config.Design.ids["streamInfoDevice"]+'" class="value"></div>'+
+								'<div class="label">' + this.language.browser + ':</div>         <div id="'+this.config.Design.ids["streamInfoBrowser"]+'" class="value"></div>'+
+								'<div class="label">' + this.language.connection + ':</div>      <div id="'+this.config.Design.ids["streamInfoConnection"]+'" class="value"></div>'+
+								'<div class="label">' + this.language.osVersion + ':</div>       <div id="'+this.config.Design.ids["streamInfoOSVersion"]+'" class="value"></div>'+
+								'<div class="label">' + this.language.provider + ':</div>        <div id="'+this.config.Design.ids["streamInfoProvider"]+'" class="value"></div>'+
+								'<h2>'+this.language.stream+'</h2>' +
+								'<div class="label">' + this.language.streamURL + ':</div>       <div id="'+this.config.Design.ids["streamInfoStreamURL"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.displayViewers + ':</div>  <div id="'+this.config.Design.ids["streamInfoDisplayViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.mobileViewers + ':</div>   <div id="'+this.config.Design.ids["streamInfoMobileViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.maxViewers + ':</div>      <div id="'+this.config.Design.ids["streamInfoMaxViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.tag + ':</div>             <div id="'+this.config.Design.ids["streamInfoTag"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.position + ':</div>        <div id="'+this.config.Design.ids["streamInfoPosition"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.reconnects + ':</div>      <div id="'+this.config.Design.ids["streamInfoReconnects"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.featuredTime + ':</div>    <div id="'+this.config.Design.ids["streamInfoFeaturedTime"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.giftsValue + ':</div>      <div id="'+this.config.Design.ids["streamInfoGiftsValue"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.newFans + ':</div>         <div id="'+this.config.Design.ids["streamInfoNewFans"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.bitrate + ':</div>         <div id="'+this.config.Design.ids["streamInfoBitrate"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.fps + ':</div>             <div id="'+this.config.Design.ids["streamInfoFPS"]+'" class="value"></div>'
+							'</div>'+
 							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
 							'<ul id="'+this.config.Design.ids['chatMessages']+'"></ul>'+
 							'<div id="'+this.config.Design.ids['chatOptions']+'">'+
@@ -246,6 +285,48 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 		for (var i = 0; i < this.config.Design.Stream.data.comments.length; i++)
 			this[this.dID]("addChatMessage", this.config.Design.Stream.data.comments[i]);
 		
+		//one time update
+		var device = this.config.Design.Stream.data.broadcasterInfo.substring(0, this.config.Design.Stream.data.broadcasterInfo.indexOf('{'));
+		var connection = "";
+		var osVersion = "";
+		var provider = "";
+		var browser = "";
+		var numCommas = (device.match(/,/g) || []).length;
+		if (device.length < 40) //PHONE!
+		{
+			for (var k in this.config.deviceMapping) {
+				device = device.replace(k, this.config.Design.deviceMapping[k]);
+			}
+			var parts = device.split(",");
+			device = parts[0];
+			connection = parts[1];
+			provider = parts[2];
+			osVersion = parts[3];
+		} else {
+			var UAParser = new UAParser();
+			var UAParser.setUA(device);
+			browser = UAParser.getBrowser().name + " " + UAParser.getBrowser().version;
+			osVersion = UAParser.getOS().name + " " + UAParser.getOS().version;
+			device = UAParser.getDevice().vendor + " " + UAParser.getDevice().model;
+			device = device.replace("undefined", "").replace("undefined", "").trim();
+		}
+
+		this.elements["streamInfoAge"].html(this.config.Design.Stream.data.age);
+		this.elements["streamInfoCountry"].html(this.config.Design.Stream.data.country);
+		this.elements["streamInfoPartner"].html(this.language.partnerStatus[this.config.Design.Stream.data.partner]);
+		this.elements["streamInfoDevice"].css("display", device == "" ? "none" : "block");
+		this.elements["streamInfoDevice"].html(device);
+		this.elements["streamInfoBrowser"].css("display", browser == "" ? "none" : "block");
+		this.elements["streamInfoBrowser"].html(browser);
+		this.elements["streamInfoConnection"].css("display", connection == "" ? "none" : "block");
+		this.elements["streamInfoConnection"].html(connection);
+		this.elements["streamInfoOSVersion"].css("display", osVersion == "" ? "none" : "block");
+		this.elements["streamInfoOSVersion"].html(osVersion);
+		this.elements["streamInfoProvider"].css("display", provider == "" ? "none" : "block");
+		this.elements["streamInfoProvider"].html(provider);
+		this.elements["streamInfoStreamURL"].html('rtmp://' + this.config.Design.Stream.data.media.host + this.config.Design.Stream.data.media.app + '/' + this.config.Design.Stream.data.media.stream);
+		this.elements["streamInfoTag"].html('#'+this.config.Design.Stream.data.tags[0]);
+		
 		this.config.Design.Stream.lastName = this.config.Design.Stream.name;
 	}
 	
@@ -259,69 +340,33 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	this.elements["viewerCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.viewers));
 	this.elements["time"].html(this[this.dID]("parseTime", this.duration));
 
-	var device = this.config.Design.Stream.data.broadcasterInfo.substring(0, this.config.Design.Stream.data.broadcasterInfo.indexOf('{'));
-	var connection = "";
-	var osVersion = "";
-	var provider = "";
-	var browser = "";
-	var numCommas = (device.match(/,/g) || []).length;
-	if (device.length < 40) //PHONE!
-	{
-		for (var k in this.config.deviceMapping) {
-			device = device.replace(k, this.config.Design.deviceMapping[k]);
-		}
-		var parts = device.split(",");
-		device = parts[0];
-		connection = parts[1];
-		provider = parts[2];
-		osVersion = parts[3];
-	} else {
-		/*this.UAParser.setUA(device);
-		browser = this.UAParser.getBrowser().name + " " + this.UAParser.getBrowser().version;
-		osVersion = this.UAParser.getOS().name + " " + this.UAParser.getOS().version;
-		device = this.UAParser.getDevice().vendor + " " + this.UAParser.getDevice().model;
-		device = device.replace("undefined", "").replace("undefined", "").trim();*/
-	}
+	//regular updates
+	this.elements["streamInfoCoins"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.coins));
+	this.elements["streamInfoMaxLikes"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.maxLikesInBroadcast));
+	this.elements["streamInfoFans"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.totalFans));
+	this.elements["streamInfoLevel"].html(Math.floor(this.config.Design.Stream.data.userlevel) + ' (' + this.language.levelNeeded.replace("%1", Math.floor((this.config.Design.Stream.data.userlevel - Math.floor(this.config.Design.Stream.data.userlevel)) * 100) + '%').replace("%2", Math.ceil(this.config.Design.Stream.data.userlevel)));
+	this.elements["streamInfoPoints"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.points));
+	this.elements["streamInfoDisplayViewers"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.display_viewers));
+	this.elements["streamInfoMobileViewers"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.mviewers));
+	this.elements["streamInfoMaxViewers"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.maxConcurrentViewers));
+	this.elements["streamInfoPosition"].html(this.config.Design.Stream.data.position);
+	this.elements["streamInfoReconnects"].html(this.config.Design.Stream.data.reconnects);
+	this.elements["streamInfoFeaturedTime"].html(this[this.dID]("parseTime", this.config.Design.Stream.data.featuredTime));
+	this.elements["streamInfoGiftsValue"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.giftsValue));
+	this.elements["streamInfoNewFans"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.fans));
+	this.elements["streamInfoBitrate"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.lastQuality.bitrate));
+	this.elements["streamInfoFPS"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.lastQuality.fps));
+	this.elements["streamInfoBarsEarned"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.barsEarned));
+		
+	/*this.streamerUpdated = false;
+	$('#copyStreamURL').click(function(e) {
+		$('#streamURL').css("display", "block");
+		$('#streamURL').select();
 
-	if (this.streamerUpdated) {
-		this.elements["infoList"].html('<h2>Streamer</h2>' +
-			'<div class="label">' + this.language.age + ':</div><div class="value">' + this.config.Design.Stream.data.age + '</div>' +
-			'<div class="label">' + this.language.barsEarned + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.barsEarned) + '</div>' +
-			'<div class="label">' + this.language.coins + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.coins) + '</div>' +
-			'<div class="label">' + this.language.maxLikes + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.maxLikesInBroadcast) + '</div>' +
-			'<div class="label">' + this.language.country + ':</div><div class="value">' + this.config.Design.Stream.data.country + '</div>' +
-			'<div class="label">' + this.language.fans + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.totalFans) + '</div>' +
-			'<div class="label">' + this.language.partner + ':</div><div class="value">' + this.language.partnerStatus[this.config.Design.Stream.data.partner] + '</div>' +
-			'<div class="label">' + this.language.level + ':</div><div class="value">' + Math.floor(this.config.Design.Stream.data.userlevel) + ' (' + this.language.levelNeeded.replace("%1", Math.floor((this.config.Design.Stream.data.userlevel - Math.floor(this.config.Design.Stream.data.userlevel)) * 100) + '%').replace("%2", Math.ceil(this.config.Design.Stream.data.userlevel)) + ')</div>' +
-			'<div class="label">' + this.language.points + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.points) + '</div>' +
-			(device != "" ? '<div class="label">' + this.language.device + ':</div><div class="value">' + device + '</div>' : '') +
-			(browser != "" ? '<div class="label">' + this.language.browser + ':</div><div class="value">' + browser + '</div>' : '') +
-			(connection != "" ? '<div class="label">' + this.language.connection + ':</div><div class="value">' + connection + '</div>' : '') +
-			(osVersion != "" ? '<div class="label">' + this.language.osVersion + ':</div><div class="value">' + osVersion + '</div>' : '') +
-			(provider != "" ? '<div class="label">' + this.language.provider + ':</div><div class="value">' + provider + '</div>' : '') +
-			'<h2>Stream</h2>' +
-			'<div class="label">' + this.language.streamURL + ':</div><div class="value">rtmp://' + this.config.Design.Stream.data.media.host + this.config.Design.Stream.data.media.app + '/' + this.config.Design.Stream.data.media.stream + '<br /><a id="copyStreamURL">' + this.language.copy + '</a><textarea id="streamURL" style="display:none;">rtmp://' + this.config.Design.Stream.data.media.host + this.config.Design.Stream.data.media.app + '/' + this.config.Design.Stream.data.media.stream + '</textarea></div>' +
-			'<div class="label">' + this.language.displayViewers + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.display_viewers) + '</div>' +
-			'<div class="label">' + this.language.mobileViewers + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.mviewers) + '</div>' +
-			'<div class="label">' + this.language.maxViewers + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.maxConcurrentViewers) + '</div>' +
-			'<div class="label">' + this.language.tag + ':</div><div class="value">#' + this.config.Design.Stream.data.tags[0] + '</div>' +
-			'<div class="label">' + this.language.position + ':</div><div class="value">' + this.config.Design.Stream.data.position + '</div>' +
-			'<div class="label">' + this.language.reconnects + ':</div><div class="value">' + this.config.Design.Stream.data.reconnects + '</div>' +
-			'<div class="label">' + this.language.featuredTime + ':</div><div class="value">' + this[this.dID]("parseTime", this.config.Design.Stream.data.featuredTime) + '</div>' +
-			'<div class="label">' + this.language.giftsValue + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.giftsValue) + '</div>' +
-			'<div class="label">' + this.language.newFans + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.fans) + '</div>' +
-			'<div class="label">' + this.language.bitrate + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.lastQuality.bitrate) + '</div>' +
-			'<div class="label">' + this.language.fps + ':</div><div class="value">' + this[this.dID]("parseNumber", this.config.Design.Stream.data.lastQuality.fps) + '</div>'
-		);
-		this.streamerUpdated = false;
-		$('#copyStreamURL').click(function(e) {
-			$('#streamURL').css("display", "block");
-			$('#streamURL').select();
-
-			try {
-				document.execCommand('copy');
-			} catch (err) {}
-			$('#streamURL').css("display", "none");
-		});
-    };
+		try {
+			document.execCommand('copy');
+		} catch (err) {}
+		$('#streamURL').css("display", "none");
+	});
+    };*/
 });
