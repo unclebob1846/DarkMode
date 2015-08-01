@@ -169,7 +169,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 								'<div class="label">' + this.language.giftsValue + ':</div>      <div id="'+this.config.Design.ids["streamInfoGiftsValue"]+'" class="value"></div>' +
 								'<div class="label">' + this.language.newFans + ':</div>         <div id="'+this.config.Design.ids["streamInfoNewFans"]+'" class="value"></div>' +
 								'<div class="label">' + this.language.bitrate + ':</div>         <div id="'+this.config.Design.ids["streamInfoBitrate"]+'" class="value"></div>' +
-								'<div class="label">' + this.language.fps + ':</div>             <div id="'+this.config.Design.ids["streamInfoFPS"]+'" class="value"></div>'
+								'<div class="label">' + this.language.fps + ':</div>             <div id="'+this.config.Design.ids["streamInfoFPS"]+'" class="value"></div>'+
 							'</div>'+
 							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
 							'<ul id="'+this.config.Design.ids['chatMessages']+'"></ul>'+
