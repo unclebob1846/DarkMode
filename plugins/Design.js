@@ -44,6 +44,19 @@ window[window.dID][window.dID+"a"]("parseNumber", function(n){
 	});
 });
 
+window[window.dID][window.dID+"a"]("parseTime", function(d) {
+	var hours = Math.floor(d / (60 * 60));
+	var minutes = Math.floor(d / (60)) % 60;
+	var seconds = Math.floor(d % 60);
+	var time = "";
+	if (hours > 0) time += hours + ":";
+	if (minutes > 9) time += minutes + ":";
+	else time += "0" + minutes + ":";
+	if (seconds > 9) time += seconds;
+	else time += "0" + seconds;
+	return time;
+});
+
 window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	var self = this;
 	var li = $('<li></li>');
