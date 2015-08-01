@@ -32,7 +32,6 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 
 window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 	var self = this;
-	this.config.Design.Stream.data.length += deltaTime / 1000;
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
@@ -123,7 +122,9 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 	this.elements["infoTab"].addClass("active");
 });
 
-window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
+window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
+	if (deltaTime != null)
+		this.config.Design.Stream.data.length += deltaTime / 1000;
 	var self = this;
 	if (this.config.Design.Stream.lastName != this.config.Design.Stream.name)
 	{
