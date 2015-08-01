@@ -16,12 +16,14 @@ window[window.dID][window.dID+"a"]("addRoute", function(regex, functionName) {
 window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
 	if (this.config.Router.lastURL == null || this.config.Router.lastURL != window.location.href)
 	{
+		console.log(window.location.href);
 		var url = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
 		var parts = url.split("/");
 		for (var i = 0; i < this.config.Router.routes.length; i++)
 		{
 		    if (url.match(this.config.Router.routes[i].regex))
 			{
+				console.log("MATCH"+window.location.href);
 				this[this.dID](this.config.Router.routes[i].functionName, parts);
 			}
 			break;
