@@ -23,6 +23,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				var r = new RegExp("#"+key, "");
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
+			console.log(text);
 			var style = $('<style type="text/css"></style>');
 			for (var i = 0; i < text.length; i+=4096)
 			{
