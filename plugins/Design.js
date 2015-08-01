@@ -23,8 +23,8 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				var r = new RegExp("#"+key, "");
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
-			var style = $('<style></style>');
-			style[0].innerHTML = text;
+			var style = $('<style type="text/css"></style>');
+			style[0].styleSheet.cssText = text;
 			$('head').append(style);
 		},
 		error: function(a, b, c)
