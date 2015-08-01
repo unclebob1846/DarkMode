@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
-    this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList", "chat"]);
+    this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", "shareCount", "time", "chatMessages", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList", "chat"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -133,7 +133,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'">' + this.language.infos + '</a>'+
 							'<div id="'+this.config.Design.ids['infoList']+'"></div>'+
 							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
-							'<ul id="'+this.config.Design.ids['chat']+'"></ul>'+
+							'<ul id="'+this.config.Design.ids['chatMessages']+'"></ul>'+
 							'<div id="'+this.config.Design.ids['chatOptions']+'">'+
 								'<div class="option">'+
 									'<input type="radio" name="writeTo" checked id="'+this.config.Design.ids['writeInChat']+'" />' + this.language.writeInChat + 
