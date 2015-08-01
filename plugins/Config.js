@@ -6,7 +6,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 		{
 			load[this.plugins[i]] = "https://fluffyfishgames.github.io/data/"+this.plugins[i]+".json";
 		}
-		this.config = {};
+		this.config = {inDarkMode: window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1"};
 		var loaded = 0;
 		var loading = this.plugins.length;
 		var self = this;

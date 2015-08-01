@@ -98,7 +98,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addButton");
-	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
+	if (this.config.inDarkMode)
 	{
 		var self = this;
 		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, function(){

@@ -19,25 +19,28 @@ window[window.dID][window.dID+"a"]("addRoute", function(name, regex, functionNam
 });
 
 window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
-	if (this.config.Router.lastURL == null || this.config.Router.lastURL != window.location.href)
+	if (this.config.inDarkMode == true)
 	{
-		var url = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
-		var parts = url.split("/");
-		var route = null;
-		for (var i = 0; i < this.config.Router.routes.length; i++)
+		if (this.config.Router.lastURL == null || this.config.Router.lastURL != window.location.href)
 		{
-		    if (url.match(this.config.Router.routes[i].regex))
+			var url = window.location.href.replace("http://","").replace("https://", "").replace("www.younow.com/", "").replace("younow.com/", "");
+			var parts = url.split("/");
+			var route = null;
+			for (var i = 0; i < this.config.Router.routes.length; i++)
 			{
-				if (route == null || route.greedFactor < this.config.Router.routes[i].greedFactor)
-					route = this.config.Router.routes[i];
+				if (url.match(this.config.Router.routes[i].regex))
+				{
+					if (route == null || route.greedFactor < this.config.Router.routes[i].greedFactor)
+						route = this.config.Router.routes[i];
+				}
+				break;
 			}
-			break;
+			if (route != null)
+			{
+				this.config.Router.currentPage = route.name;
+				this[this.dID](route.functionName, parts);
+			}
+			this.config.Router.lastURL = window.location.href;
 		}
-		if (route != null)
-		{
-			this.config.Router.currentPage = route.name;
-			this[this.dID](route.functionName, parts);
-		}
-		this.config.Router.lastURL = window.location.href;
 	}
 });
