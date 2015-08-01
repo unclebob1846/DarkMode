@@ -1,4 +1,4 @@
-window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
+window[window.dID][window.dID+"a"]("bootRouter", function(callback) {
 	this[this.dID]("addTick", "router", 20, "tickRouter");
 	this.config.Router = {};
     callback();
