@@ -113,7 +113,6 @@ window[window.dID][window.dID+"a"]("addIDs", function(elements) {
 		this.config.Design.ids = {};
 	for (var i = 0; i < elements.length; i++)
 		this.config.Design.ids[elements[i]] = $.md5(this.clientID + elements[i]) + this[this.dID]("random");
-	return ids;
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
