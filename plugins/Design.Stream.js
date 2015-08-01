@@ -144,7 +144,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 							'<div id="'+this.config.Design.ids['infoList']+'">'+
 								'<h2>'+this.language.streamer+'</h2>' +
 								'<div class="label">' + this.language.age + ':</div>             <div id="'+this.config.Design.ids["streamInfoAge"]+'" class="value"></div>' +
-								'<div class="label">' + this.language.barsEarned + ':</div>      <div id="'+this.config.Design.ids["streamBarsEarned"]+'" class="value"></div>' +
+								'<div class="label">' + this.language.barsEarned + ':</div>      <div id="'+this.config.Design.ids["streamInfoBarsEarned"]+'" class="value"></div>' +
 								'<div class="label">' + this.language.coins + ':</div>           <div id="'+this.config.Design.ids["streamInfoCoins"]+'" class="value"></div>' +
 								'<div class="label">' + this.language.maxLikes + ':</div>        <div id="'+this.config.Design.ids["streamInfoMaxLikes"]+'" class="value"></div>' +
 								'<div class="label">' + this.language.country + ':</div>         <div id="'+this.config.Design.ids["streamInfoCountry"]+'" class="value"></div>' +
