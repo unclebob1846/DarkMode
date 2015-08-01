@@ -30,11 +30,10 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	}
 	
 	var loaded = 0;
-	var loadedLibraries = 0;
 	var self = this;
 	var dl = function(i) {
 		if (self.libraries != null && i < self.libraries.length)
-		{		
+		{
 			$.ajax(self.libraries[i],
 			{
 				dataType: "text",
@@ -42,21 +41,22 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 				{
 					var element = $('<scr'+'ipt>'+text+'</scr'+'ipt>');
 					$(document.body).append(element);
-					loadedLibraries++;
-					if (loadedLibraries == self.libraries.length)
-					{
-						//boot the system :)
-						for (var ll = 0; ll < self.plugins.length; ll++)
-						{
-							self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
-						}
-					}
-					else 
-					{
-						dl(i+1);
-					}
+					dl(i+1);
+				},
+				error: function(a, b, c) 
+				{
+					dl(i+1);
 				}
 			});
+		}
+		else 
+		{
+			console.log("BOOT");
+			//boot the system :)
+			for (var ll = 0; ll < self.plugins.length; ll++)
+			{
+				self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
+			}
 		}
 	}
 	var d = function(i) {
@@ -77,10 +77,6 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		{
 			//before we are ready, we need to load all necessary libraries for plugins to work
 			dl(0);
-			for (var ll = 0; ll < self.plugins.length; ll++)
-			{
-				self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
-			}
 		}
 	};
     for (var j = 0; j < plugins.length; j++) 
