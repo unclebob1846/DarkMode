@@ -1,5 +1,6 @@
-window[window.dID][window.dID+"a"]("bootDesignExplore", function(query) {
+window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
     this[this.dID]("addRoute", /explore\/(.+)?(\/.+)?(\/.+)?/, "explore");
+	callback();
 });
 
 window[window.dID][window.dID+"a"]("explore", function(parts) {
