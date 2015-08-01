@@ -100,7 +100,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	if (this.config.Design.Stream.lastName != this.config.Design.Stream.name)
 	{
 		if (this.elements["stream"] == null) 
-		{
+		{ 
 			this.elements["right"].html(
 				'<div id="'+this.config.Design.ids['stream']+'">'+
 					'<div id="'+this.config.Design.ids['streamBar']+'"></div>'+
