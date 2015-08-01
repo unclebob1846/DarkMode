@@ -66,6 +66,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			var f = $.md5(self.dID+".boot"+self.plugins[i].replace(".", ""));
 			if (self[m][f] != null)
 			{
+				console.log("boot" + self.plugins[i]);
 				self[self.dID]("boot"+self.plugins[i].replace(".", ""), function(){d(i+1);});
 			}
 			else 
