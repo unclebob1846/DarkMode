@@ -21,6 +21,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 			for (var key in self.config.Design.ids)
 			{
 				var r = new RegExp("#"+key, "");
+				console.log("REPLACING " + key);
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
 			console.log(text);
