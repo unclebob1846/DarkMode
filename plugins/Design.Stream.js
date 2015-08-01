@@ -99,10 +99,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	{
 		if (this.elements["stream"] == null) 
 		{
-			var list = ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"];
-			var ids = {};
-			for (var i = 0; i < list.length; i++)
-				ids[list[i]] = this[this.dID]("random")+"_stream"+i;
+			var ids = this[this.dID]("getIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"]);
+			
 			this.elements["right"].html(
 				'<div id="'+ids['stream']+'">'+
 					'<div id="'+ids['streamBar']+'"></div>'+
@@ -153,8 +151,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 					'<div id="'+ids['trendingList']+'"></div>'+
 				'</div>');
 
-			for (var i = 0; i < list.length; i++)
-				this.elements[list[i]] = $('#'+ids[list[i]]);
+			for (var key in ids)
+				this.elements[key] = $('#'+ids[key]);
 
 			this.elements["likeImage"].click(function() {
 				if (self.config.Design.Stream.Data.username.toLowerCase() != "drachenlord_offiziell")
