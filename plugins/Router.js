@@ -5,6 +5,9 @@ window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("addRoute", function(regex, functionName) {
+	console.log(regex);
+	console.log(functionName);
+	
 	if (this.config.Router.routes == null)
 		this.config.Router.routes = [];
 	this.config.Router.routes.push({
