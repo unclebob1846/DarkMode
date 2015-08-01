@@ -32,7 +32,7 @@ window[window.dID][window.dID+"a"]("explore", function(parts) {
 		element: el,
 		hasMore: true,
 	};
-	this.addSearchResults();
+	this[this.dID]("addSearchResults");
 });
 
 window[window.dID][window.dID+"a"]("addSearchResults", function() {
