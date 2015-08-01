@@ -18,6 +18,11 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 		dataType: "text",
 		success: function(text, b, c)
 		{
+			for (var key in self.config.Design.ids)
+			{
+				var r = new RegExp("#"+key, "");
+				text = text.replace(r, self.config.Design.ids[key]);
+			}
 			$('head').append($('<style>'+text+'</style>'));
 		},
 		error: function(a, b, c)
@@ -28,6 +33,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 
 window[window.dID][window.dID+"a"]("openSettings", function(key) {
 	this.currentPage = "settings";
+	
 	window.history.pushState({
 		"html": "",
 		"pageTitle": ""
@@ -86,17 +92,42 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	this[this.dID]("selectHeader", this.config.Design.SelectedHeader);
 });
 
-window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-    if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1")
+window[window.dID][window.dID+"a"]("updateElements", function(elements) {
+	for (var key in this.config.Design.ids)
 	{
-		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
-		this[this.dID]("addTick", "design", 20, "tickDesign");
+		if (this.elements[key] != null)
+		{
+			if (!jQuery.contains(document.documentElement, this.elements[key]))
+			{
+				this.elements[key] = null;
+			}
+		}
+		var el = $('#'+this.config.Design.ids[key])
+		if (el != null && el.length > 0)
+			this.elements[key] = $('#'+this.config.Design.ids[key]);
 	}
+});
+
+window[window.dID][window.dID+"a"]("addIDs", function(elements) {
+	if (this.config.Design.ids == null)
+		this.config.Design.ids = {};
+	for (var i = 0; i < elements.length; i++)
+		this.config.Design.ids[elements[i]] = $.md5(this.clientID + elements[i]) + this[this.dID]("random");
+	return ids;
+});
+
+window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
+	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip"]);
 	this.headers = {};
 	callback();
 });
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
+	if (this.config.inDarkMode)
+	{
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
+		this[this.dID]("addTick", "design", 20, "tickDesign");
+	}
 	this[this.dID]("addButton");
 	if (this.config.inDarkMode)
 	{
@@ -124,7 +155,7 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	var newButton = $("<button></button>");
 	newButton.attr("class", "pull-right btn btn-primary");
 
-	if (window.localStorage.getItem(this[this.dID]("name","inDarkMode")) == "1") {
+	if (this.config.inDarkMode) {
 		newButton.html(this.language["goLight"]);
 		newButton.css('background-color', '#999');
 		newButton.css('border-color', '#444');
@@ -157,10 +188,10 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('.nav-logo').children()[0].remove();
 	$('.nav-logo').append($('<img src="' + this.config.Design.images.logo + '" style="width:auto;" height="40" />'));
 	$('.search-field').attr("placeholder", "Search AttentionWhore");
-	this.page = $('<div id="darkPage"></div>');
+	this.page = $('<div id="'+this.config.Design.darkPage+'"></div>');
 	this.elements = {};
 
-	this.elements["left"] = $('<ul id="left"></ul>');
+	this.elements["left"] = $('<ul id="'+this.config.Design.left+'"></ul>');
 	this[this.dID]("addHeader", "userList", {
 		"label": this.language.userList,
 		"hasSettings": false,
@@ -168,22 +199,22 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 
 	this[this.dID]("selectHeader", "userList");
 
-	this.elements["right"] = $('<div id="right"></div>');
+	this.elements["right"] = $('<div id="'+this.config.Design.ids.right+'"></div>');
 	this.headers["userList"].content.append((this.elements["trendingPeopleHeader"] = $('<strong>' + this.language["trendingPeople"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["trendingPeopleArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul id="trendingPeople"></ul>')));
+	this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul></ul>')));
 	this.headers["userList"].content.append((this.elements["editorsPickHeader"] = $('<strong>' + this.language["editorsPick"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["editorsPickArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["editorsPickContent"] = $('<ul id="editorsPick"></ul>')));
+	this.headers["userList"].content.append((this.elements["editorsPickContent"] = $('<ul></ul>')));
 	this.headers["userList"].content.append((this.elements["friendsHeader"] = $('<strong>' + this.language["friends"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["friendsArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["friendsContent"] = $('<ul id="friends"></ul>')));
+	this.headers["userList"].content.append((this.elements["friendsContent"] = $('<ul></ul>')));
 	this.headers["userList"].content.append((this.elements["trendingTagsHeader"] = $('<strong>' + this.language["trendingTags"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul id="trendingTags"></ul>')));
+	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul></ul>')));
 	
 	$(document.body).append(this.page);
-	$(document.body).append((this.elements["tooltip"] = $('<div id="tooltip"></div>')));
+	$(document.body).append((this.elements["tooltip"] = $('<div id="'+this.config.Design.tooltip+'"></div>')));
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
 	this[this.dID]("fireDesign");

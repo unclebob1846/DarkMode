@@ -1,4 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
+    this[this.dID]("addIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList", "chat"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -7,9 +8,6 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
-	console.log("openStream");
-	console.log(parts[0]);
-	
 	this.config.Design.Stream.Name = parts[0];
 	var self = this;
 	
@@ -103,61 +101,58 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 	{
 		if (this.elements["stream"] == null) 
 		{
-			var ids = this[this.dID]("getIDs", ["stream", "streamBar", "streamView", "streamBar", "likeImage", "likeCount", "shareCount", "time", "viewerCount", "chatTab", "audienceTab", "infoTab", "infoList", "viewerList", "chat", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", "intoTag", "chatMessage", "trendingList"]);
-			
 			this.elements["right"].html(
-				'<div id="'+ids['stream']+'">'+
-					'<div id="'+ids['streamBar']+'"></div>'+
+				'<div id="'+this.config.Design.ids['stream']+'">'+
+					'<div id="'+this.config.Design.ids['streamBar']+'"></div>'+
 					'<div class="outer">'+
 						'<div class="stream">'+
-							'<div id="'+ids['streamView']+'">'+
+							'<div id="'+this.config.Design.ids['streamView']+'">'+
 							'</div>'+
-							'<div id="'+ids['streamBar']+'">' +
+							'<div id="'+this.config.Design.ids['streamBar']+'">' +
 								'<div class="item">'+
-									'<img id="'+ids['likeImage']+'" src="' + this.config.Design.images.likes + '" />'+
-									'<span id="'+ids['likeCount']+'"></span>'+
+									'<img id="'+this.config.Design.ids['likeImage']+'" src="' + this.config.Design.images.likes + '" />'+
+									'<span id="'+this.config.Design.ids['likeCount']+'"></span>'+
 								'</div>'+
 								'<div class="item">'+
 									'<img src="' + this.config.Design.images.shares + '" />'+
-									'<span id="'+ids['shareCount']+'"></span>'+
+									'<span id="'+this.config.Design.ids['shareCount']+'"></span>'+
 								'</div>'+
 								'<div style="float:right;" class="item">'+
 									'<img src="' + this.config.Design.images.time + '" />'+
-									'<span id="'+ids['time']+'"></span>'+
+									'<span id="'+this.config.Design.ids['time']+'"></span>'+
 								'</div>'+
 								'<div style="float:right;" class="item">'+
 									'<img src="' + this.config.Design.images.views + '" />'+
-									'<span id="'+ids['viewerCount']+'"></span>'+
+									'<span id="'+this.config.Design.ids['viewerCount']+'"></span>'+
 								'</div>' +
 							'</div>'+
 						'</div>'+
-						'<div>'+
-							'<a class="tab active" id="'+ids['chatTab']+'">' + this.language.chat + '</a>'+
-							'<a class="tab" id="'+ids['audienceTab']+'">' + this.language.audience + '</a>'+
-							'<a class="tab last" id="'+ids['infoTab']+'">' + this.language.infos + '</a>'+
-							'<div id="'+ids['infoList']+'"></div>'+
-							'<ul id="'+ids['viewerList']+'"></ul>'+
-							'<ul id="'+ids['chat']+'"></ul>'+
-							'<div id="chatOptions">'+
+						'<div id="'+this.config.Design.ids['chat']+'">'+
+							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'">' + this.language.chat + '</a>'+
+							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'">' + this.language.audience + '</a>'+
+							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'">' + this.language.infos + '</a>'+
+							'<div id="'+this.config.Design.ids['infoList']+'"></div>'+
+							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
+							'<ul id="'+this.config.Design.ids['chat']+'"></ul>'+
+							'<div id="'+this.config.Design.ids['chatOptions']+">'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" checked id="'+ids['writeInChat']+'" />' + this.language.writeInChat + 
+									'<input type="radio" name="writeTo" checked id="'+this.config.Design.ids['writeInChat']+'" />' + this.language.writeInChat + 
 								'</div>'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" id="'+ids['writeInTrending']+'" />' + this.language.writeInTrending + 
+									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTrending']+'" />' + this.language.writeInTrending + 
 								'</div>'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" id="'+ids['writeInTag']+'" />' + this.language.writeInTag + '<input type="text" id="intoTag" />'+
+									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTag']+'" />' + this.language.writeInTag + '<input type="text" id="intoTag" />'+
 								'</div>'+
 							'</div>'+
-							'<textarea id="'+ids['chatMessage']+'" maxlength="150"></textarea>'+
+							'<textarea id="'+this.config.Design.ids['chatMessage']+'" maxlength="150"></textarea>'+
 						'</div>'+
 					'</div>'+
-					'<div id="'+ids['trendingList']+'"></div>'+
+					'<div id="'+this.config.Design.ids['trendingList']+'"></div>'+
 				'</div>');
 
-			for (var key in ids)
-				this.elements[key] = $('#'+ids[key]);
-
+			this[this.dID]("updateElements");
+			
 			this.elements["likeImage"].click(function() {
 				if (self.config.Design.Stream.Data.username.toLowerCase() != "drachenlord_offiziell")
 					self[self.dID]("like", self.currentStreamer.userId);

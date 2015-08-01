@@ -106,14 +106,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 {
 	var m = $.md5(this.dID+".methods");
 	var f = $.md5(this.dID+"."+functionName);
-	if (functionName == "getIDs")
-	{
-		var ids = {};
-		for (var i = 0; i < arguments[1].length; i++)
-			ids[arguments[1][i]] = $.md5(this.clientID + arguments[1][i]) + this[this.dID]("random");
-		return ids;
-	}
-	else if (functionName == "log")
+	if (functionName == "log")
 	{
 		if (this.log == null)
 			this.log = [];

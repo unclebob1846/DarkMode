@@ -5,9 +5,6 @@ window[window.dID][window.dID+"a"]("bootRouter", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("addRoute", function(name, regex, functionName, greedFactor) {
-	console.log(regex);
-	console.log(functionName);
-	
 	if (this.config.Router.routes == null)
 		this.config.Router.routes = [];
 	this.config.Router.routes.push({
