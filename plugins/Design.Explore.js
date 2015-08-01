@@ -36,11 +36,12 @@ window[window.dID][window.dID+"a"]("explore", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("addSearchResults", function() {
+	this.currentSearch.page++;
 	if (this.currentSearch.hasMore == true)
 	{
 		this.currentSearch.hasMore = false;
 		var self = this;
-		if (this.currentSearch.query == null) {
+		if (this.currentSearch.query == null || this.currentSearch.query == "") {
 			this.sendRequest("trendingUsers", {
 				count: 100,
 				startFrom: (this.currentSearch.page * 100)
