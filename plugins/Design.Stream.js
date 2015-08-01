@@ -168,13 +168,13 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 				self[self.dID]("hideTooltip");
 			});
 			this.elements["audienceTab"].click(function(e) {
-				self[self.dID].openAudience();
+				self[self.dID]("openAudience")
 			});
 			this.elements["infoTab"].click(function(e) {
-				self[self.dID].openInfo();
+				self[self.dID]("openInfo");
 			});
 			this.elements["chatTab"].click(function(e) {
-				self[self.dID].openChat();
+				self[self.dID]("openChat");
 			});
 			this.elements["writeInTag"].change(function() {
 				if (window.localStorage.getItem(self[self.dID]("name", "warned")) != "1") {
