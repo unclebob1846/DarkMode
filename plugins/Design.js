@@ -18,14 +18,14 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 		dataType: "text",
 		success: function(text, b, c)
 		{
-			console.log(text);
 			for (var key in self.config.Design.ids)
 			{
 				var r = new RegExp("#"+key, "");
 				text = text.replace(r, "#"+self.config.Design.ids[key]);
 			}
-			console.log(text);
-			$('head').append($('<style>'+text+'</style>'));
+			var style = $('<style></style>');
+			style.innerText(text);
+			$('head').append(style);
 		},
 		error: function(a, b, c)
 		{
