@@ -304,7 +304,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 			osVersion = parts[3];
 		} else {
 			var UAParser = new UAParser();
-			var UAParser.setUA(device);
+			UAParser.setUA(device);
 			browser = UAParser.getBrowser().name + " " + UAParser.getBrowser().version;
 			osVersion = UAParser.getOS().name + " " + UAParser.getOS().version;
 			device = UAParser.getDevice().vendor + " " + UAParser.getDevice().model;
