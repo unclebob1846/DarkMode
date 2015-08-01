@@ -42,14 +42,14 @@ window[window.dID][window.dID+"a"]("addSearchResults", function() {
 		this.currentSearch.hasMore = false;
 		var self = this;
 		if (this.currentSearch.query == null || this.currentSearch.query == "") {
-			this.sendRequest("trendingUsers", {
+			this[this.dID]("sendRequest", "trendingUsers", {
 				count: 100,
 				startFrom: (this.currentSearch.page * 100)
 			}, function(json, success) {
 				self[self.dID]("parseSearchResults", json);
 			});
 		} else if (this.currentSearch.query.charAt(0) == "#") {
-			this.sendRequest("searchTag", {
+			this[this.dID]("sendRequest", "searchTag", {
 				query: this.currentSearch.query.substring(1),
 				perPage: 100,
 				page: this.currentSearch.page
@@ -57,7 +57,7 @@ window[window.dID][window.dID+"a"]("addSearchResults", function() {
 				self[self.dID]("parseSearchResults", json);
 			});
 		} else {
-			this.sendRequest("searchPeople", {
+			this[this.dID]("sendRequest", "searchPeople", {
 				query: this.currentSearch.query,
 				perPage: 100,
 				page: this.currentSearch.page
