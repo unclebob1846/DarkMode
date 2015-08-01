@@ -35,7 +35,11 @@ window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
 			}
 			if (route != null)
 			{
-				this.config.Router.currentPage = route.name;
+				if (this.config.Router.currentPage != route.name)
+				{
+					this.config.Router.currentPage = route.name;
+					this[this.dID]("firePageChange");
+				}
 				this[this.dID](route.functionName, parts);
 			}
 			this.config.Router.lastURL = window.location.href;

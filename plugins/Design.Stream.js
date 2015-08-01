@@ -1,4 +1,5 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
+	var self = this;
     this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", 
 							  "shareCount", "time", "chatMessages", "viewerCount", "chatTab", "audienceTab", "infoTab", 
 							  "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", 
@@ -14,7 +15,28 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
 	this.config.Design.Stream = {};
+	this[this.dID]("onPageChange", function(){
+		if (self.config.Router.currentPage == "stream")
+		{
+			self[self.dID]("addTick", "updateStream", 5000, "updateStream");
+			self[self.dID]("addTick", "updateStreamInfo", 1000, "updateStreamInfo");
+		}
+		else 
+		{
+			self[self.dID]("removeTick", "updateStream");
+			self[self.dID]("removeTick", "updateStreamInfo");
+		}
+	});
 	callback();
+});
+
+window[window.dID][window.dID+"a"]("updateStream", function() {
+	var self = this;
+	this[this.dID]("sendRequest", "getBroadcast", {
+		username: this.config.Design.Stream.name
+	}, function(json, success) {
+		self.config.Design.Stream.data = json;
+	});
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
@@ -25,12 +47,7 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
 		self.config.Design.Stream.data = json;
-		if (json["errorCode"] > 0) {
-			window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/"+self.config.Design.Stream.Name+"/channel");
-		} else {
-			self.streamerUpdated = true;
-			self[self.dID]("updateStreamInfo");
-		}
+		self[self.dID]("updateStreamInfo");
 	});
 });
 
@@ -368,4 +385,18 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function() {
 		$('#streamURL').css("display", "none");
 	});
     };*/
+});
+
+window[window.dID][window.dID+"a"]("addChatMessage", function(message) {
+	var wasBottom = false;
+	if (this.elements["chatMessages"].scrollTop() > this.elements["chatMessages"][0].scrollHeight - this.elements["chatMessages"].height() - 20)
+		wasBottom = true;
+	if (this.elements["chatMessages"].children().length > this.config.maxMessages - 1)
+		this.elements["chatMessages"].children()[0].remove();
+	this.elements["chatMessages"].append('<li><img src="https://cdn2.younow.com/php/api/channel/getImage/?channelId=' + message.userId + '" height="30" width="30" /><span><strong><a href="http://www.younow.com/' + message.profileUrlString + '">' + message.name + ' (' + message.userLevel + ')</a>: </strong>' + message.comment + '</span></li>');
+	if (wasBottom) {
+		this.elements["chatMessages"].animate({
+			scrollTop: this.elements["chatMessages"][0].scrollHeight
+		}, 200)
+	}
 });

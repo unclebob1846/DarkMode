@@ -42,3 +42,10 @@ window[window.dID][window.dID+"a"]("addTick",
 		this.config.Ticker.ticks[name] = {interval: interval, functionName: functionName, lastFired: 0};
 	}
 );
+
+window[window.dID][window.dID+"a"]("removeTick",
+    function(name)
+	{
+		this.config.Ticker.ticks[name] = null;
+	}
+);

@@ -148,7 +148,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 });
 
 window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
-
+	this[this.dID]("design"+this.config.Router.currentPage.charAt(0).toUpperCase() + this.config.Router.currentPage.substring(1), deltaTime);
 });
 
 window[window.dID][window.dID+"a"]("addButton", function() {
