@@ -3,6 +3,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
 	this.config.Design.Stream = {};
+	callback();
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
