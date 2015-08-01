@@ -28,17 +28,13 @@ window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
 			var route = null;
 			for (var i = 0; i < this.config.Router.routes.length; i++)
 			{
-				console.log("CHECK "+this.config.Router.routes[i].regex);
 				if (url.match(this.config.Router.routes[i].regex))
 				{
-					console.log("MATCH");
 					if (route == null || route.greedFactor < this.config.Router.routes[i].greedFactor)
 					{
-						console.log("NEW ROUTE "+this.config.Router.routes[i].name);
 						route = this.config.Router.routes[i];
 					}
 				}
-				break;
 			}
 			if (route != null)
 			{
