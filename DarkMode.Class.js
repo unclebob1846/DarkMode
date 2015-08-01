@@ -35,10 +35,10 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	    if (i < self.plugins.length)
 		{
 			var m = $.md5(self.dID+".methods");
-			var f = $.md5(self.dID+".boot"+self.plugins[i]);
+			var f = $.md5(self.dID+".boot"+self.plugins[i].replace(".", ""));
 			if (self[m][f] != null)
 			{
-				self[self.dID](("boot"+self.plugins[i], function(){d(i+1);}).replace(".", ""));
+				self[self.dID](("boot"+self.plugins[i].replace(".", ""), function(){d(i+1);}));
 			}
 			else 
 			{
