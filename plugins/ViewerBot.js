@@ -8,10 +8,12 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			"label": self.language.viewerBot
 		});
 		
-		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;">'+self.language.streamer+':</div>' +
-												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" style="width:140px;" /><input type="number" style="width:30px;margin-left: 5px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
+		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;"><span>'+self.language.streamer+':</span></div>' +
+												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" style="width:170px;" /></div>'+
+												'<div style="float:left; clear: both;"><span>'+self.language.count+':</span></div>' +
+												'<div style="float:left; clear:both;"><input type="number" value="20" style="margin-bottom:5px;width:170px;margin-left: 5px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
 												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'">'+self.language.addViewers+'</button></div>'+
-												'<div style="float:left; clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
+												'<div style="float:left; clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="margin-top:5px;margin-left:10px;font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
 												'<ul style="float:left; clear:both;" id="'+self.config.Design.ids.viewerBotList+'"></ul>');
 
 		self[self.dID]("updateElements");
@@ -36,7 +38,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			self[self.dID]("sendRequest", "getBroadcast", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
 			{
 				var id = self[self.dID]("random");
-				var li = $('<li class="normal" style="width:100%; height:30px;"><span>'+json.user.profileUrlString+'</span></li>');
+				var li = $('<li class="normal" style="width:190px; margin-left:-10px; height:30px;"><span style="margin-top:5px;margin-left:10px;">'+json.user.profileUrlString+'</span></li>');
 				var removeImg = $('<img style="float:right;" src="'+self.config.Design.images.trash+'" />');
 				removeImg.click(function(){
 					removeViewers(id);
