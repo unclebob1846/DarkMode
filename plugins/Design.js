@@ -340,16 +340,16 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.elements["right"] = $('<div id="'+this.config.Design.ids.right+'"></div>');
 	this.headers["userList"].content.append((this.elements["trendingPeopleHeader"] = $('<strong>' + this.language["trendingPeople"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["trendingPeopleArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul></ul>')));
+	this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul style="overflow:auto;"></ul>')));
 	this.headers["userList"].content.append((this.elements["editorsPickHeader"] = $('<strong>' + this.language["editorsPick"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["editorsPickArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["editorsPickContent"] = $('<ul></ul>')));
+	this.headers["userList"].content.append((this.elements["editorsPickContent"] = $('<ul style="overflow:auto;"></ul>')));
 	this.headers["userList"].content.append((this.elements["friendsHeader"] = $('<strong>' + this.language["friends"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["friendsArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["friendsContent"] = $('<ul></ul>')));
+	this.headers["userList"].content.append((this.elements["friendsContent"] = $('<ul style="overflow:auto;"></ul>')));
 	this.headers["userList"].content.append((this.elements["trendingTagsHeader"] = $('<strong>' + this.language["trendingTags"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["trendingTagsArrow"] = $('<div class="arrow"></div>')));
-	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul></ul>')));
+	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul style="overflow:auto;"></ul>')));
 	
 	$(document.body).append(this.page);
 	$(document.body).append((this.elements["tooltip"] = $('<div id="'+this.config.Design.ids.tooltip+'"></div>')));
