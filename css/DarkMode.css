@@ -474,7 +474,7 @@ textarea {
 #settings .tabBar li:hover {
     background: #555;
 }
-#settingsContainer {
+#settingsContent {
     padding: 10px;
     float: left;
     clear: both;

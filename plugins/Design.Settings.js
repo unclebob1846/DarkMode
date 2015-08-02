@@ -19,6 +19,7 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	var c = 0;
 	for (var key in this.config.Design.Settings.tabs)
 		c++;
+	var self = this;
 	
 	var addTab = function(key, func)
 	{
