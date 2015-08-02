@@ -486,7 +486,7 @@ textarea {
     cursor: pointer;
 }
 #darkPage #left li .content {
-    width: 100%;
+    width: 190px;
     border-bottom: 1px solid #111;
     padding: 10px;
     overflow-y: auto;
