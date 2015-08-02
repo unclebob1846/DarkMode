@@ -504,7 +504,7 @@ textarea {
 #darkPage #left {
     float: left;
     width: 200px;
-    border-right: 1px solid #999;
+    border-right: 1px solid #777;
     height: 100%;
     background: #333;
 }
@@ -897,7 +897,7 @@ textarea {
 	width: 10px !important;
 	height: 100% !important;
 	background: #555;
-	border-left: 1px solid #999;
+	border-left: 1px solid #777;
 }
 
 .arrowExpand {
