@@ -41,7 +41,7 @@ window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
-		if (json.user != null && json.user.profileUrlString == self.config.Design.Stream.name)
+		if (json.user != null && json.user.profileUrlString.toLowerCase() == self.config.Design.Stream.name.toLowerCase())
 			self.config.Design.Stream.data = json;
 	});
 	this[this.dID]("updateStreamTrending");
@@ -57,7 +57,7 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
-		if (json.user != null && json.user.profileUrlString == self.config.Design.Stream.name)
+		if (json.user != null && json.user.profileUrlString.toLowerCase() == self.config.Design.Stream.name.toLowerCase())
 		{
 			self.config.Design.Stream.data = json;
 			self[self.dID]("updateStreamInfo");
