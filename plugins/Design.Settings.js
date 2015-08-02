@@ -28,8 +28,8 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 		li.click(function(){
 			self.elements.settingsContent.html("");
 			self.elements.settingsContent.append(func());
-			for (var key in self.config.Design.Settings.tabsElements)
-				self.config.Design.Settings.tabsElements[key].removeClass("active");
+			for (var k in self.config.Design.Settings.tabsElements)
+				self.config.Design.Settings.tabsElements[k].removeClass("active");
 			self.config.Design.Settings.tabsElements[key].addClass("active");
 		});
 		tabs.append(li);
@@ -39,11 +39,12 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	for (var key in this.config.Design.Settings.tabs)
 	{ 
 		this.config.Design.Settings.tabsElements[key] = addTab(key, this.config.Design.Settings.tabs[key]);
-		if (page == key || first)
+		if (page == key || (page == null && first))
 		{
 			this.elements.settingsContent.html("");
 			this.elements.settingsContent.append(this.config.Design.Settings.tabs[key]());
 			this.config.Design.Settings.tabsElements[key].addClass("active");
 		}
+		first = false;
 	}
 });
