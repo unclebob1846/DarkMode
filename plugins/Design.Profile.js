@@ -311,8 +311,10 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 });
 
 
-window[window.dID][window.dID+"a"]("openProfile", function(username, onlyViewer) 
+window[window.dID][window.dID+"a"]("openProfile", function(parts) 
 {
+	var username = parts[0];
+	this[this.dID]("updateElements");
 	this.elements["right"].html('<div id="'+this.config.Design.ids['profile']+'">'+
 	'<div id="'+this.config.Design.ids['profileHeader']+'"></div>'+
 	'<div id="'+this.config.Design.ids['profileBottom']+'">'+
