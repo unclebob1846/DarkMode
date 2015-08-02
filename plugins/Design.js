@@ -363,16 +363,28 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 
 window[window.dID][window.dID+"a"]("changeSidebar", function() 
 {
-	if (window.localStorage.getItem(this[this.dID]("name", "sideBarOpened")) == "1")
+	var self = this;
+	if (window.localStorage.getItem(this[this.dID]("name", "sideBarClosed")) == "0")
 	{
-		window.localStorage.setItem(this[this.dID]("name", "sideBarOpened"), "0");
+		window.localStorage.setItem(this[this.dID]("name", "sideBarClosed"), "1");
 		this.elements["left"].animate({width: 10}, 200);
+		var w = $(document.body).width();
+		this.elements["right"].css("width", w - 200);
+		this.elements["right"].animate({"width": w - 10}, 200, function(){
+			self.elements["right"].css("width", "calc(100% - 10px)");
+		});
+	
 		this.elements["expandArrow"].addClass("arrowExpand");
 		this.elements["expandArrow"].removeClass("arrowDeflate");
 	}
 	else 
 	{
-		window.localStorage.setItem(this[this.dID]("name", "sideBarOpened"), "1");
+		window.localStorage.setItem(this[this.dID]("name", "sideBarClosed"), "0");
+		var w = $(document.body).width();
+		this.elements["right"].css("width", w - 10);
+		this.elements["right"].animate({"width": w - 200}, 200, function(){
+			self.elements["right"].css("width", "calc(100% - 200px)");
+		});
 		this.elements["left"].animate({width: 200}, 200);
 		this.elements["expandArrow"].removeClass("arrowExpand");
 		this.elements["expandArrow"].addClass("arrowDeflate");
@@ -390,7 +402,20 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.page = $('<div id="'+this.config.Design.ids.darkPage+'"></div>');
 	this.elements = {};
 
-	this.elements["left"] = $('<ul id="'+this.config.Design.ids.left+'"><li id="'+this.config.Design.ids.expandArrow+'"></li></ul>');
+	var sideBarClass = "";
+	var width = 200;
+	if (window.localStorage.getItem(this[this.dID]("name", "sideBarClosed")) == "1")
+	{
+		sideBarClass = "arrowExpand";
+		width = 10;
+	}
+	else
+	{
+		sideBarClass = "arrowDeflate";
+	}
+		
+	this.elements["left"] = $('<ul style="width:'+width+'px;" id="'+this.config.Design.ids.left+'"><li class="'+sideBarClass+'" id="'+this.config.Design.ids.expandArrow+'"></li></ul>');
+	
 	this[this.dID]("addHeader", "userList", {
 		"label": this.language.userList,
 		"hasSettings": false,
@@ -399,6 +424,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this[this.dID]("selectHeader", "userList");
 
 	this.elements["right"] = $('<div id="'+this.config.Design.ids.right+'"></div>');
+	this.elements["right"].css("width", "calc(100% - "+width+"px)");
 	this.headers["userList"].content.append((this.elements["trendingPeopleHeader"] = $('<strong>' + this.language["trendingPeople"] + '</strong>')));
 	this.headers["userList"].content.append((this.elements["trendingPeopleArrow"] = $('<div class="arrow"></div>')));
 	this.headers["userList"].content.append((this.elements["trendingPeopleContent"] = $('<ul style="overflow:auto;"></ul>')));
