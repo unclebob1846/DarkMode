@@ -196,6 +196,10 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 });
 
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
+	if (this.config.Design.Stream.data.user == null || this.config.Design.Stream.data.user.profileUrlString != this.config.Design.Stream.name)
+	{
+		return;
+	}
 	this[this.dID]("updateElements");
 	if (deltaTime != null)
 		this.config.Design.Stream.data.length += deltaTime / 1000;
@@ -333,7 +337,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			});
 		}
 
-		flowplayer(this.config.Design.ids.streamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
+		var fl = flowplayer(this.config.Design.ids.streamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
 			clip: {
 				url: this.config.Design.Stream.data.media.stream,
 				live: true,
@@ -353,6 +357,10 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 					volume: true,
 					fullscreen: true,
 				}
+			},
+			onPause: function()
+			{
+				fl.play();
 			},
 			canvas: {
 				backgroundGradient: 'none'
