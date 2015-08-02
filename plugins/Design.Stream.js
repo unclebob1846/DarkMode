@@ -43,6 +43,7 @@ window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
+	this.config.Design.Stream.data = null;
 	this[this.dID]("removeTick", "updateStream");
 	this[this.dID]("removeTick", "updateStreamInfo");
 	this[this.dID]("removeTick", "updateStreamViewer");
@@ -62,7 +63,7 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
-	if (this.config.Router.currentPage == 'stream') 
+	if (this.config.Router.currentPage == 'stream' && this.config.Design.Stream.data != null) 
 	{
 		var self = this;
 		this[this.dID]("sendRequest", "getPlayData", {
@@ -78,7 +79,7 @@ window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("updateStreamViewer", function(parts) {
-	if (this.config.Router.currentPage == 'stream')
+	if (this.config.Router.currentPage == 'stream' && this.config.Design.Stream.data != null)
 	{
 		var self = this;
 		this[this.dID]("sendRequest", "getViewers", {
