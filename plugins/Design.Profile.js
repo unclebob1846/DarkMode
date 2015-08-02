@@ -295,17 +295,17 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 			
 		if (post.replies != null) {
 			for (var j = 0; j < post.replies.length; j++) {
-				el.find(".like").after(this[this.dID]("parseProfilePost", post.replies[j], true));
+				el.find(".comment").first().before(this[this.dID]("parseProfilePost", post.replies[j], true));
 			}
 		}
-		el.find(".options").click(function(){
+		el.find(".options").first().click(function(){
 			self[self.dID]("showPostOptions", post.id, sub);
 		});
-		el.find(".like").click(function(){
+		el.find(".like").first().click(function(){
 			self[self.dID]("changePostLike", post.id, post.isComment);
 		});
 		if (post.isReplyable)
-			el.find(".comment").find("input").keyup(function(e) {self[self.dID]("checkComment", e, post.id);});
+			el.find(".comment").first().find("input").keyup(function(e) {self[self.dID]("checkComment", e, post.id);});
 		this.config.Design.Profile.posts[post.id].element = el;
 		return el;
 	}
