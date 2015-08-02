@@ -323,6 +323,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 					self.elements["chatMessage"].val("");
 				}
 			});
+			this.elements["chatMessages"].html("");
 		}
 
 		flowplayer(this.config.Design.ids.streamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
