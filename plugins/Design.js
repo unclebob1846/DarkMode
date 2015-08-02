@@ -5,9 +5,9 @@ window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 	}
 	for (var k in this.headers) {
 		if (k == key) {
-			this.headers[k].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px)");
+			this.headers[k].li.animate({"height": "calc(100% - " + ((c - 1) * 30) + "px)"});
 		} else {
-			this.headers[k].li.css("height", 30);
+			this.headers[k].li.animate({"height": 30});
 		}
 	}
 });
