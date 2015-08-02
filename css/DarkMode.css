@@ -835,8 +835,6 @@ textarea {
     width: 100%;
 	float: left;
 	clear: both;
-    position: absolute;
-    bottom: 0px;
     padding: 10px;
     overflow-x: auto;
     white-space: nowrap;
