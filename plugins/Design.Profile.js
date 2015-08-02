@@ -60,6 +60,14 @@ window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("updateProfileStream", function(message, objectId, type) {
+	this.config.Design.Profile.username
+	var self = this;
+	this[this.dID]("sendRequest", "getBroadcast", {
+		username: username
+	}, function(json, success) {
+		self.config.Design.Profile.streamData = json;
+		self[self.dID]("updateProfilePage");
+	});
 });
 
 window[window.dID][window.dID+"a"]("writePost", function(message, objectId, type) {
@@ -371,8 +379,10 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 
 
 window[window.dID][window.dID+"a"]("openProfile", function(parts) 
-{
+{    
+	this[this.dID]("addTick", "updateProfileStream", 5000, "updateProfileStream");
 	var username = parts[0];
+	this.config.Design.Profile.username = username;
 	this[this.dID]("updateElements");
 	this.elements["right"].html('<div id="'+this.config.Design.ids['profile']+'">'+
 	'<div id="'+this.config.Design.ids['profileHeader']+'"></div>'+
@@ -413,7 +423,6 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 	this.elements["fanOfTab"].click(function() {
 		self[self.dID]("openProfileTab", "fanOf");
 	});
-	this.config.Design.Profile.username = username;
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: username
 	}, function(json, success) {
@@ -535,12 +544,16 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 			self[self.dID]("updateProfilePage");
 		});
 	}
-	if (this.config.Design.Profile.lookForBroadcast != null)
+	if (this.config.Design.Profile.username != this.config.Design.Profile.lastUsername)
 	{
-		this[this.dID]("openProfileTab", "previousBroadcasts");
+		if (this.config.Design.Profile.lookForBroadcast != null)
+		{
+			this[this.dID]("openProfileTab", "previousBroadcasts");
+		}
+		else 
+		{
+			this[this.dID]("openProfileTab", "dashboard");
+		}
 	}
-	else 
-	{
-		this[this.dID]("openProfileTab", "dashboard");
-	}
+	this.config.Design.Profile.lastUsername = username;
 });
