@@ -456,13 +456,13 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		'</div>' +
 		'</div>'
 	);
+	this[this.dID]("updateElements");
 	var self = this;
-	$('#toLive').click(function(){
+	this.elements["toLive"].click(function(){
 		window.history.pushState({"html":"","pageTitle":""},"", "https://www.younow.com/"+self.config.Design.Profile.data.profile);
 	});
 	var self = this;
 	if (fanButton != "") {
-		this.elements["fanButton"] = $('#fanButton');
 		this.elements["fanButton"].click(function() {
 			if (self.config.Design.Profile.data.isFan) {
 				this[this.dID]("sendRequest", "unfan", {
