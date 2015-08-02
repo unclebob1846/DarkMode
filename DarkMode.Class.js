@@ -81,7 +81,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 	};
     for (var j = 0; j < plugins.length; j++) 
-	{
+	{ 
 		var url = plugins[j];
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
