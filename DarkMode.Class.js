@@ -85,7 +85,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		var url = plugins[j];
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
-	    $.ajax(url+'?v='+(Math.random()*1000000)',
+	    $.ajax(url+'?v='+(Math.random()*1000000),
 		{
 			dataType: "text",
 			success: function(text, b, c)
