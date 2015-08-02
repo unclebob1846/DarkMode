@@ -16,8 +16,10 @@ window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
 	var h = this.elements["left"].height();
 	var self = this;
 	this.headers[key].li.css("height", 30);
+	this.headers[key].content.css("overflow", "hidden");
 	this.headers[key].li.animate({"height": (h - (c - 1) * 30)}, 200, function(){
 		self.headers[key].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px");
+		self.headers[key].content.css("overflow", "auto");
 	});
 });
 
@@ -25,6 +27,7 @@ window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
 	var h = this.elements["left"].height();
 	var self = this;
 	this.headers[key].li.css("height", this.headers[key].li.height());
+	this.headers[key].content.css("overflow", "hidden");
 	this.headers[key].li.animate({"height": 30}, 200, function(){
 	});
 });
