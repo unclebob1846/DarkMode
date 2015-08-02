@@ -2,7 +2,7 @@ window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 {
 	this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 2);
 	this.config.Design.Profile = {};
-	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fansOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent' 'profilePage', 'toLive', 'fanButton']);
+	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fansOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent', 'profilePage', 'toLive', 'fanButton']);
 	callback();
 });
 
