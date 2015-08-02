@@ -288,9 +288,9 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 		}
 		var el = null;
 		if (sub == true)
-			el = $('<div class="reply"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this.translateTime(post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like);
+			el = $('<div class="reply"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.Design.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this.translateTime(post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like);
 		else
-			el = $('<div class="entry"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this.translateTime(post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like + comment + '</div>');
+			el = $('<div class="entry"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.Design.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this.translateTime(post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like + comment + '</div>');
 			
 		if (post.replies != null) {
 			for (var j = 0; j < post.replies.length; j++) {
