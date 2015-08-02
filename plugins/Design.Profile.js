@@ -294,7 +294,7 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 			
 		if (post.replies != null) {
 			for (var j = 0; j < post.replies.length; j++) {
-				el.find(".like").append(this[this.dID]("parseProfilePost", post.replies[j], true));
+				el.find(".like").insertAfter(this[this.dID]("parseProfilePost", post.replies[j], true));
 			}
 		}
 		el.find(".options").click(function(){
