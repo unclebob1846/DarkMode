@@ -372,6 +372,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			for (var i = 0; i < data.message.comments.length; i++)
 				self[self.dID]("addChatMessage", data.message.comments[i]);
 		});
+		
+		this.elements["chatMessages"].html("");
 		for (var i = 0; i < this.config.Design.Stream.data.comments.length; i++)
 			this[this.dID]("addChatMessage", this.config.Design.Stream.data.comments[i]);
 		
@@ -415,9 +417,6 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 		this.elements["streamInfoProvider"].html(provider);
 		this.elements["streamInfoStreamURL"].html('rtmp://' + this.config.Design.Stream.data.media.host + this.config.Design.Stream.data.media.app + '/' + this.config.Design.Stream.data.media.stream);
 		this.elements["streamInfoTag"].html('#'+this.config.Design.Stream.data.tags[0]);
-		
-		this.elements["chatMessages"].html("");
-
 		this.config.Design.Stream.lastName = this.config.Design.Stream.name;
 	}
 	
