@@ -119,7 +119,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 				self.config.Design.Profile.hasMorePages = json.hasMore;
 			});
 		}
-		if (this.profilePage == "previousBroadcasts") {
+		if (this.config.Design.Profile.currentPage == "previousBroadcasts") {
 			this[this.dID]("sendRequest", "getPreviousBroadcasts", {
 				channelID: this.config.Design.Profile.data.channelId,
 				startFrom: (this.config.Design.Profile.dashboardPage * 10)
@@ -145,7 +145,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 				}
 			});
 		}
-		if (this.profilePage == "fans") {
+		if (this.config.Design.Profile.currentPage == "fans") {
 			this[this.dID]("sendRequest", "getFans", {
 				channelID: this.config.Design.Profile.data.channelId,
 				startFrom: (this.config.Design.Profile.dashboardPage * 10)
@@ -156,7 +156,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 				self.config.Design.Profile.hasMorePages = json.hasNext == '1';
 			});
 		}
-		if (this.profilePage == "fanOf") {
+		if (this.config.Design.Profile.currentPage == "fanOf") {
 			this[this.dID]("sendRequest", "getFansOf", {
 				channelID: this.config.Design.Profile.data.channelId,
 				startFrom: (this.config.Design.Profile.dashboardPage * 10)
@@ -338,7 +338,7 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 				//self.animations.hideProfileHeader = false;
 			var l = self.elements["profileContent"][0].scrollHeight - self.elements["profileContent"].height() - 50;
 			if (self.elements["profileContent"].scrollTop() > l && (event.originalEvent.wheelDelta < 0 || event.originalEvent.detail > 0)) {
-				self.addProfilePage();
+				self[self.dID]("addProfilePage");
 			}
 		}
 	});
