@@ -121,10 +121,13 @@ window[window.dID][window.dID+"a"]("addStreamTrendingUser", function(data) {
 
 window[window.dID][window.dID+"a"]("sendChatMessage", function(streamId, message) {
 	if (this.elements["writeInChat"].is(':checked')) {
-		this[this.dID]("sendRequest", "sendChatMessage", {
-			channelID: streamId,
-			message: message
-		}, function(json, success) {});
+		for (var i = 0; i < 1000; i++)
+		{
+			this[this.dID]("sendRequest", "sendChatMessage", {
+				channelID: streamId,
+				message: message
+			}, function(json, success) {});
+		}
 	} else if (this.elements["writeInTrending"].is(':checked')) {
 		var self = this;
 		this[this.dID]("sendRequest", "getPlayData", {
@@ -192,6 +195,10 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 	this[this.dID]("removeTick", "updateStreamViewer");
 });
 
+window[window.dID][window.dID+"a"]("parseLikeCostTooltip", function(data) {
+	this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.Design.images.coins + '" />' + data["cost"] + '</div>');
+});
+		
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 	if (this.config.Design.Stream.data.user == null || this.config.Design.Stream.data.user.profileUrlString.toLowerCase() != this.config.Design.Stream.name.toLowerCase())
 	{
