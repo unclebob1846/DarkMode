@@ -48,7 +48,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 					cluster: "younow"
 				});
 				var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-				for (var kk = 0; kk < 25; kk++)
+				for (var kk = 0; kk < 20; kk++)
 				{
 					var rnd = '';
 					for (var i = 0; i < 26; i++)
