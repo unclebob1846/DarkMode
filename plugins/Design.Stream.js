@@ -196,6 +196,7 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 });
 
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
+	this[this.dID]("updateElements");
 	if (deltaTime != null)
 		this.config.Design.Stream.data.length += deltaTime / 1000;
 	var self = this;
