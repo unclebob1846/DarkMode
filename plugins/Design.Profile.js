@@ -21,7 +21,7 @@ window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
 		'<div class="header"><a href="/'+this.config.Design.Profile.data.profile+'/channel">'+this.language.backToProfile+'</a>'+
 		'</div><div id="'+this.config.Design.ids.previousStreamView+'"></div></div>');
         var self = this;
-        this[this.dID]("sendRequest", "getVideoPath", {broadcastID: this.config.Design.Profile.broadcasts[id].media.broadcast.broadcastId}, function(json, success) {
+        this[this.dID]("sendRequest", "getVideoPath", {broadcastID: this.config.Design.Profile.broadcasts[parts[2]].media.broadcast.broadcastId}, function(json, success) {
 			var command = 'rtmpdump -r '+json.server+' -y '+json.stream+'?sessionId='+self.youNow.session.user.session+' -p https://www.younow.com/'+self.config.Design.Profile.data.profile+'/channel -o "'+self.config.Design.Profile.data.profile+'_'+self.config.Design.Profile.data.broadcasts[id].media.broadcast.dateAired.replace(new RegExp(':', 'g'),"-")+'.mp4"';
 			self.elements["right"].html('<div id="'+self.config.Design.ids.previousStream+'" style="width:100%; height:100%;"><div class="header"><a href="/'+self.config.Design.Profile.data.profile+'/channel">'+self.language.backToProfile+'</a><span id="'+self.config.Design.ids.rtmpDump+'">'+self.language.rtmpDump+'</span><div id="'+self.config.Design.ids.rtmpDumpInfo+'">'+command+'</div></div><div id="'+self.config.Design.ids.previousStreamView+'"></div></div>');
 			self[self.dID]("updateElements");
