@@ -1,9 +1,65 @@
 window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 {
-	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 5);
+	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 4);
+	this[this.dID]("addRoute", "previousBroadcast", /[a-zA-Z0-9_\.]+\/channel\/[0-9]+/, "openPreviousBroadcast", 5);
 	this.config.Design.Profile = {};
-	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fanOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent', 'profilePage', 'toLive', 'fanButton']);
+	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fanOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent', 'profilePage', 'toLive', 'fanButton', 'previousStream', 'previousStreamView', 'rtmpDumpInfo', 'rtmpDump']);
+	this[this.dID]("onPageChange", function(){
+		if (self.config.Router.currentPage != "profile")
+		{
+			self[self.dID]("removeTick", "updateProfileStream");
+		}
+	});
 	callback();
+});
+
+window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
+	if (this.config.Design.Profile.broadcasts[parts[2]] != null)
+	{
+		this.config.Design.Profile.lookForBroadcast = null;
+        this.elements["right"].html('<div id="'+this.config.Design.ids.previousStream+'" style="width:100%; height:100%;">'+
+		'<div class="header"><a href="/'+this.config.Design.Profile.data.profile+'/channel">'+this.language.backToProfile+'</a>'+
+		'</div><div id="'+this.config.Design.ids.previousStreamView+'"></div></div>');
+        var self = this;
+        this[this.dID]("sendRequest", "getVideoPath", {broadcastID: this.config.Design.Profile.broadcasts[id].media.broadcast.broadcastId}, function(json, success) {
+			var command = 'rtmpdump -r '+json.server+' -y '+json.stream+'?sessionId='+self.youNow.session.user.session+' -p https://www.younow.com/'+self.config.Design.Profile.data.profile+'/channel -o "'+self.config.Design.Profile.data.profile+'_'+self.config.Design.Profile.data.broadcasts[id].media.broadcast.dateAired.replace(new RegExp(':', 'g'),"-")+'.mp4"';
+			self.elements["right"].html('<div id="'+self.config.Design.ids.previousStream+'" style="width:100%; height:100%;"><div class="header"><a href="/'+self.config.Design.Profile.data.profile+'/channel">'+self.language.backToProfile+'</a><span id="'+self.config.Design.ids.rtmpDump+'">'+self.language.rtmpDump+'</span><div id="'+self.config.Design.ids.rtmpDumpInfo+'">'+command+'</div></div><div id="'+self.config.Design.ids.previousStreamView+'"></div></div>');
+			self[self.dID]("updateElements");
+            this.elements['rtmpDump'].click(function(){
+				if (self.elements['rtmpDumpInfo'].css("display") == "block")
+					self.elements['rtmpDumpInfo'].css("display", "none");
+				else
+					self.elements['rtmpDumpInfo'].css("display", "block");
+			});
+			flowplayer(self.config.Design.ids.previousStreamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
+				clip: {
+					url: json.stream+"?sessionId="+self.youNow.session.user.session,
+					scaling: 'fit',
+					provider: 'rtmp'
+				},
+				plugins: {
+					rtmp: {
+						url: "flowplayer.rtmp-3.2.13.swf",
+						netConnectionUrl: json.server,
+					},
+					controls: {
+						all: true,
+					}
+				},
+				canvas: {
+					backgroundGradient: 'none'
+				}
+			});
+        });
+	}
+	else 
+	{
+		this.config.Design.Profile.lookForBroadcast = parts[2];
+		this[this.dID]("openProfile", parts);
+	}
+});
+
+window[window.dID][window.dID+"a"]("updateProfileStream", function(message, objectId, type) {
 });
 
 window[window.dID][window.dID+"a"]("writePost", function(message, objectId, type) {
@@ -481,11 +537,10 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	}
 	if (this.config.Design.Profile.lookForBroadcast != null)
 	{
-		this[this.dID]("openProfilePage", "previousBroadcasts");
+		this[this.dID]("openProfileTab", "previousBroadcasts");
 	}
 	else 
 	{
-		this[this.dID]("openProfilePage", "dashboard");
-		
+		this[this.dID]("openProfileTab", "dashboard");
 	}
 });
