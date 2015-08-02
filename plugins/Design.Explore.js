@@ -113,5 +113,5 @@ window[window.dID][window.dID+"a"]("addSearchResult", function(data) {
 	var tagSpan = "";
 	if (tag != "")
 		tagSpan = '<span>#' + tag + '</span>';
-	return $('<a href="/' + username + '" class="userProfile"><div><img src="' + this[this.dID]("getProfilePicture", userid) + '" />' + tagSpan + '</div><strong><img src="' + this.config.Design.images.star + '" />' + level + ' ' + username + '</strong><small>' + this[this.dID]("addCommas", fans) + ' ' + this.language.fans + '</small></a>');
+	return $('<a href="/' + username + '" class="userProfile"><div><img src="' + this[this.dID]("getProfilePicture", userid) + '" />' + tagSpan + '</div><strong><img src="' + this.config.Design.images.star + '" />' + level + ' ' + username + '</strong><small>' + this[this.dID]("parseNumbers", fans) + ' ' + this.language.fans + '</small></a>');
 });

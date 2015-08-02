@@ -23,6 +23,11 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 		}
 		else 
 		{
+			if (self.config.Design.Stream.pusherChannel != null)
+			{
+				self.config.Design.Stream.pusherChannel.disconnect();
+				self.config.Design.Stream.pusherChannel = null;
+			}
 			self[self.dID]("removeTick", "updateStream");
 			self[self.dID]("removeTick", "updateStreamInfo");
 			self[self.dID]("removeTick", "updateStreamViewer");
@@ -346,9 +351,15 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			}
 		});
 		
-		this.config.Design.Stream.pusher = new Pusher('d5b7447226fc2cd78dbb', {
-			cluster: "younow"
-		});
+		if (this.config.Design.Stream.pusherChannel != null)
+		{
+			this.config.Design.Stream.pusherChannel.disconnect();
+			this.config.Design.Stream.pusherChannel = null;
+		}
+		if (this.config.Design.Stream.pusher == null)
+			this.config.Design.Stream.pusher = new Pusher('d5b7447226fc2cd78dbb', {
+				cluster: "younow"
+			});
 		this.config.Design.Stream.pusherChannel = this.config.Design.Stream.pusher.subscribe("public-channel_" + this.config.Design.Stream.data.userId);
 		this.config.Design.Stream.pusherChannel.bind('onLikes', function(data) {
 			self.config.Design.Stream.data.likes = data.message.likes;
