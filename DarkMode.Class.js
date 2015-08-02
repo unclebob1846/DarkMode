@@ -34,7 +34,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	var dl = function(i) {
 		if (self.libraries != null && i < self.libraries.length)
 		{
-			$.ajax(self.libraries[i],
+			$.ajax(self.libraries[i]+'?v='+(Math.random()*1000000),
 			{
 				dataType: "text",
 				success: function(text, b, c)
@@ -85,7 +85,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		var url = plugins[j];
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
-	    $.ajax(url,
+	    $.ajax(url+'?v='+(Math.random()*1000000)',
 		{
 			dataType: "text",
 			success: function(text, b, c)
