@@ -124,8 +124,8 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 				channelID: this.config.Design.Profile.data.channelId,
 				startFrom: (this.config.Design.Profile.dashboardPage * 10)
 			}, function(json, sucess) {
-				if (self.currentProfile.broadcasts == null)
-					self.currentProfile.broadcasts = {};
+				if (self.config.Design.Profile.broadcasts == null)
+					self.config.Design.Profile.broadcasts = {};
 				for (var i = 0; i < json.posts.length; i++) {
 					self.config.Design.Profile.broadcasts[json.posts[i].media.broadcast.broadcastId] = json.posts[i];
 					self.elements["dashboardComments"].append(self[self.dID]("parseProfilePost", json.posts[i]));
