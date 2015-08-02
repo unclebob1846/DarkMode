@@ -168,11 +168,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 			});
 		}
 	}
-};
-
-    w.DarkMode.prototype.translateTime = function(d) {
-        return d;
-    };
+});
 
 window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment) 
 {
