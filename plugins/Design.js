@@ -163,7 +163,7 @@ window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
         }
     };*/
 	
-window[window.dID][window.dID+"a"]("getStreamTooltip", function(data) {
+window[window.dID][window.dID+"a"]("parseStreamTooltip", function(data) {
 	var extra = "";
 	if (data["viewers"] != null)
 		extra += '<div class="value"><img style="margin-top:3px;" width="16" src="' + this.config.Design.images.views + '" /><span>' + this[this.dID]("parseNumber", data["viewers"]) + '</span></div>';
