@@ -39,6 +39,13 @@ window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 	}, function(json, success) {
 		if (json.user != null && json.user.profileUrlString.toLowerCase() == self.config.Design.Stream.name.toLowerCase())
 			self.config.Design.Stream.data = json;
+		else 
+		{
+			window.history.pushState({ 
+				"html": "",
+				"pageTitle": ""
+			}, "", "https://www.younow.com/" + self.config.Design.Stream.name + "/channel");
+		}
 	});
 	this[this.dID]("updateStreamTrending");
 });
@@ -59,6 +66,13 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 			self.config.Design.Stream.data = json;
 			self[self.dID]("updateStreamInfo");
 			self[self.dID]("updateStreamTrending");
+		}
+		else 
+		{
+			window.history.pushState({ 
+				"html": "",
+				"pageTitle": ""
+			}, "", "https://www.younow.com/" + self.config.Design.Stream.name + "/channel");
 		}
 	});
 });
