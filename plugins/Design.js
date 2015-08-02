@@ -1,18 +1,22 @@
 window[window.dID][window.dID+"a"]("selectHeader", function(key) {
-	var c = 0;
-	for (var k in this.headers) {
-		c++;
-	}
-	for (var k in this.headers) {
-		if (k == key) {
-			this[this.dID]("expandHeader", c, k);
-		} else {
-			this[this.dID]("decreaseHeader", c, k);
+	if (this.headers[key].selected != true || !this.config.Design.ready)
+	{
+		var c = 0;
+		for (var k in this.headers) {
+			c++;
+		}
+		for (var k in this.headers) {
+			if (k == key) {
+				this[this.dID]("expandHeader", c, k);
+			} else {
+				this[this.dID]("decreaseHeader", c, k);
+			}
 		}
 	}
 });
 
 window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
+	this.headers[key].selected = true;
 	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
