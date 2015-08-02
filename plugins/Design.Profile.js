@@ -304,7 +304,7 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 			self[self.dID]("changePostLike", post.id, post.isComment);
 		});
 		if (post.isReplyable)
-			el.find(".comment").find("input").onKeyUp(function(e) {self[self.dID]("checkComment", e, post.id);});
+			el.find(".comment").find("input").keyUp(function(e) {self[self.dID]("checkComment", e, post.id);});
 		this.config.Design.Profile.posts[post.id].element = el;
 		return el;
 	}
