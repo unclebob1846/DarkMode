@@ -151,6 +151,60 @@ window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
 	this[this.dID]("design"+this.config.Router.currentPage.charAt(0).toUpperCase() + this.config.Router.currentPage.substring(1), deltaTime);
 });
 
+
+        /*if (data["type"] == "count") {
+            this.elements["tooltip"].html('<div style="padding:5px;">x' + data.count + '</div>');
+        } else if (data["type"] == "streamer" || data["type"] == "friend") {
+        } else if (data["type"] == "likeCost") {
+            if (this.currentStreamer.username.toLowerCase() == "drachenlord_offiziell")
+                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.images.coins + '" />' + this.language.nobodyLikesDragon + '</div>');
+            else
+                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.images.coins + '" />' + data["cost"] + '</div>');
+        }
+    };*/
+	
+window[window.dID][window.dID+"a"]("getStreamTooltip", function(data) {
+	var extra = "";
+	if (data["viewers"] != null)
+		extra += '<div class="value"><img style="margin-top:3px;" width="16" src="' + this.config.Design.images.views + '" /><span>' + this[this.dID]("parseNumber", data["viewers"]) + '</span></div>';
+	if (data["likes"] != null)
+		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.likes + '" /><span>' + this[this.dID]("parseNumber", data["likes"]) + '</span></div>';
+	if (data["shares"] != null)
+		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.shares + '" /><span>' + this[this.dID]("parseNumber", data["shares"]) + '</span></div>';
+	if (data["fans"] != null)
+		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.fans + '" /><span>' + this[this.dID]("parseNumber", data["fans"]) + '</span></div>';
+	if (data["isWatching"] != null)
+		extra += '<div class="value"><img style="margin-top:3px;" width="16" src="' + this.config.Design.images.views + '" /><span>' + data["isWatching"] + '</span></div>';
+	var pic = this[this.dID]("getProfilePicture", data.userid);
+	var c = "";
+	if (data.broadcastId != null) {
+		pic = this[this.dID]("getBroadcastPicture", data.broadcastId)
+		var c = "wide";
+	}
+	this.elements["tooltip"].html('<div class="img ' + c + '"><img height="128" src="' + pic + '" /></div><div class="content"><div class="title"><img src="' + this.config.Design.images.star + '" style="float:left;margin-right: 5px;"/>' + data["level"] + ' ' + data["username"] + '</div>' + extra + '</div>');
+});
+
+window[window.dID][window.dID+"a"]("showTooltip", function(e, data) {	
+	this.elements["tooltip"].css("left", e.pageX + 5);
+	this.elements["tooltip"].css("display", "block");
+
+	if (this.config.Design.lastTooltipObject != data) 
+	{
+		this[this.dID]("parse"+data.type.charAt(0).toUpperCase()+data.type.substring(1)+"Tooltip", data);
+	}
+	this.config.Design.lastTooltipObject = data;
+	if (e.pageX + this.elements["tooltip"].width() > $(window).width() - 20)
+		this.elements["tooltip"].css("left", e.pageX - 320 - 5);
+	if (e.pageY - this.elements["tooltip"].height() < 5)
+		this.elements["tooltip"].css("top", e.pageY + 5);
+	else
+		this.elements["tooltip"].css("top", e.pageY - 5 - this.elements["tooltip"].height());
+});
+
+window[window.dID][window.dID+"a"]("hideTooltip", function() {
+	this.elements["tooltip"].css("display", "none");
+});
+	
 window[window.dID][window.dID+"a"]("addButton", function() {
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");

@@ -37,6 +37,7 @@ window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 	}, function(json, success) {
 		self.config.Design.Stream.data = json;
 	});
+	this[this.dID]("updateStreamTrending");
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
@@ -49,6 +50,46 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 		self.config.Design.Stream.data = json;
 		self[self.dID]("updateStreamInfo");
 	});
+	this[this.dID]("updateStreamTrending");
+});
+
+window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
+	if (this.config.Router.currentPage == 'stream') 
+	{
+		var self = this;
+		this.sendRequest("getPlayData", {
+			playDataURL: this.config.Design.Stream.data.PlayDataBaseUrl,
+			userID: this.config.Design.Stream.data.userId
+		}, function(json, success) {
+			self.elements["trendingList"].html("");
+			for (var i = 0; i < json.onBroadcastPlay.queues[0].items.length; i++) {
+				self[self.dID]("addStreamTrendingUser", json.onBroadcastPlay.queues[0].items[i]);
+			}
+		});
+	}
+});
+
+window[window.dID][window.dID+"a"]("addStreamTrendingUser", function(data) {
+	var el = $('<a href="/' + data.profile + '"><img src="' + this[this.dID]("getBroadcastPicture", data.broadcastId) + '" /></a>');
+	var obj = {
+		type: "stream",
+		username: data["username"],
+		level: data["userlevel"],
+		userid: data["userId"],
+		fans: data["totalFans"],
+		viewers: data["viewers"],
+		shares: data["shares"],
+		likes: data["likes"],
+		tag: data["tags"][0]
+	};
+	var self = this;
+	el.mousemove(function(e) {
+		self[self.dID]("showTooltip", e, obj);
+	});
+	el.mouseout(function(e) {
+		self[self.dID]("hideTooltip");
+	});
+	this.elements["trendingList"].append(el);
 });
 
 window[window.dID][window.dID+"a"]("sendChatMessage", function(streamId, message) {
