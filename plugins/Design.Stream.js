@@ -54,8 +54,10 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 	this[this.dID]("sendRequest", "getBroadcast", {
 		username: this.config.Design.Stream.name
 	}, function(json, success) {
+		console.log(json);
 		if (json.user != null && json.user.profileUrlString.toLowerCase() == self.config.Design.Stream.name.toLowerCase())
 		{
+			console.log("IN1");
 			self.config.Design.Stream.data = json;
 			self[self.dID]("updateStreamInfo");
 			self[self.dID]("updateStreamTrending");
