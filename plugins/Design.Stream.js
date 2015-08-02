@@ -18,6 +18,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	this[this.dID]("onPageChange", function(){
 		if (self.config.Router.currentPage != "stream")
 		{
+			self.config.Design.Stream.lastName = null;
 			if (self.config.Design.Stream.pusher != null)
 			{
 				self.config.Design.Stream.pusher.disconnect();
