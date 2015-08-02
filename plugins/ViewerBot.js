@@ -22,7 +22,8 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 		{
 			if (self.config.ViewerBot.list[name] != null)
 			{
-				self.config.ViewerBot.list[name].pusher.disconnect();
+				for (var kn = 0; kn < self.config.ViewerBot.list[name].pusher.length; kn++)
+					self.config.ViewerBot.list[name].pusher[kn].disconnect();
 				self.config.ViewerBot.list[name].element.remove();
 				self.config.ViewerBot.list[name] = null;
 			}
@@ -38,7 +39,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			self[self.dID]("sendRequest", "getBroadcast", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
 			{
 				var id = self[self.dID]("random");
-				var li = $('<li class="normal" style="width:190px; margin-left:-10px; height:30px;"><span style="margin-top:5px;margin-left:10px;">'+json.user.profileUrlString+'</span></li>');
+				var li = $('<li class="normal" style="width:190px; margin-left:-10px; height:30px;"><span style="margin-top:5px;margin-left:10px;">('+self.elements["viewerBotCount"].val()+') <strong>'+json.user.profileUrlString+'</strong></span></li>');
 				var removeImg = $('<img style="float:right;" src="'+self.config.Design.images.trash+'" />');
 				removeImg.click(function(){
 					removeViewers(id);
@@ -46,12 +47,21 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 				li.append(removeImg);
 				self.elements["viewerBotList"].append(li);
 				
-				var pusher = new Pusher('d5b7447226fc2cd78dbb', {
-					cluster: "younow"
-				});
 				var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-				for (var kk = 0; kk < 20; kk++)
+				var pusherList = [];
+				var conns = 0;
+				var pusher = null;
+				for (var kk = 0; kk < self.elements["viewerBotCount"].val(); kk++)
 				{
+					if (pusher == null || conns == 20)
+					{
+						pusher = new Pusher('d5b7447226fc2cd78dbb', {
+							cluster: "younow"
+						});
+						pusherList.push(pusher);
+						conns = 0;
+					}
+				
 					var rnd = '';
 					for (var i = 0; i < 26; i++)
 					{
@@ -59,8 +69,9 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 						rnd += chars.substring(k, k+1);
 					}
 					pusher.subscribe("public-on-channel_"+json.userId+"_"+rnd+"_LINK");
+					conns++;
 				}
-				self.config.ViewerBot.list[id] = {element: li, pusher: pusher};
+				self.config.ViewerBot.list[id] = {element: li, pusher: pusherList};
 			});
 			
 		});
