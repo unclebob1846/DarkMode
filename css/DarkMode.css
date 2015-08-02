@@ -81,7 +81,7 @@ textarea {
     top: 30px;
     padding: 10px;
 }
-#previousStream #stream {
+#previousStream #previousStreamView {
     width: 100%;
     height: calc(100% - 30px);
 }
