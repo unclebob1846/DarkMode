@@ -31,7 +31,7 @@ window[window.dID][window.dID+"a"]("tick",
 				if (this.config.Ticker.ticks[key].lastFired < d - this.config.Ticker.ticks[key].interval)
 				{
 					this[this.dID](this.config.Ticker.ticks[key].functionName, delta);
-					this.config.Ticker.ticks[key].lastFired = d - this.config.Ticker.ticks[key].interval;
+					this.config.Ticker.ticks[key].lastFired = d;
 				}
 			}
 		}
