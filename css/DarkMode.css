@@ -673,9 +673,9 @@ textarea {
 }
 #stream #streamBar .item {
     float: left;
-    margin-top: 0px;
+    margin-top: 5px;
     margin-right: 5px;
-    margin-left: 0px;
+    margin-left: 5px;
 }
 #stream #streamBar .item img {
     float: left;
