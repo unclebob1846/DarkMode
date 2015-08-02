@@ -323,7 +323,6 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 					self.elements["chatMessage"].val("");
 				}
 			});
-			this.elements["chatMessages"].html("");
 		}
 
 		flowplayer(this.config.Design.ids.streamView, "https://FluffyFishGames.github.io/swf/flowplayer-3.2.18.swf", {
@@ -394,11 +393,11 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			provider = parts[2];
 			osVersion = parts[3];
 		} else {
-			var UAParser = new UAParser();
-			UAParser.setUA(device);
-			browser = UAParser.getBrowser().name + " " + UAParser.getBrowser().version;
-			osVersion = UAParser.getOS().name + " " + UAParser.getOS().version;
-			device = UAParser.getDevice().vendor + " " + UAParser.getDevice().model;
+			var userAgentParser = new UAParser();
+			userAgentParser.setUA(device);
+			browser = userAgentParser.getBrowser().name + " " + userAgentParser.getBrowser().version;
+			osVersion = userAgentParser.getOS().name + " " + userAgentParser.getOS().version;
+			device = userAgentParser.getDevice().vendor + " " + userAgentParser.getDevice().model;
 			device = device.replace("undefined", "").replace("undefined", "").trim();
 		}
 
@@ -418,6 +417,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 		this.elements["streamInfoStreamURL"].html('rtmp://' + this.config.Design.Stream.data.media.host + this.config.Design.Stream.data.media.app + '/' + this.config.Design.Stream.data.media.stream);
 		this.elements["streamInfoTag"].html('#'+this.config.Design.Stream.data.tags[0]);
 		
+		this.elements["chatMessages"].html("");
+
 		this.config.Design.Stream.lastName = this.config.Design.Stream.name;
 	}
 	
