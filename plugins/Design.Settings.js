@@ -20,7 +20,7 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	for (var key in this.config.Design.Settings.tabs)
 		c++;
 	
-	var addTab = function(key, func)
+	var addTab = function(tabs, key, func)
 	{
 		var li = $('<li style="width:'+(100/c)+'%">'+key+'</li>');
 		li.click(function(){
@@ -31,8 +31,8 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	};
 	var first = true;
 	for (var key in this.config.Design.Settings.tabs)
-	{
-		addTab(key, this.config.Design.Settings.tabs[key]);
+	{ 
+		addTab(tabs, key, this.config.Design.Settings.tabs[key]);
 		if (page == key || first)
 		{
 			this.elements.settingsContent.html("");
