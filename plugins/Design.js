@@ -126,6 +126,7 @@ window[window.dID][window.dID+"a"]("addIDs", function(elements) {
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip"]);
+	this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
 	this.headers = {};
 	callback();
 });
