@@ -16,12 +16,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
 	this.config.Design.Stream = {};
 	this[this.dID]("onPageChange", function(){
-		if (self.config.Router.currentPage == "stream")
-		{
-			self[self.dID]("addTick", "updateStream", 5000, "updateStream");
-			self[self.dID]("addTick", "updateStreamInfo", 500, "updateStreamInfo");
-		}
-		else 
+		if (self.config.Router.currentPage != "stream")
 		{
 			if (self.config.Design.Stream.pusher != null)
 			{
@@ -206,6 +201,9 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 	var self = this;
 	if (this.config.Design.Stream.lastName != this.config.Design.Stream.name)
 	{
+		self[self.dID]("addTick", "updateStream", 5000, "updateStream");
+		self[self.dID]("addTick", "updateStreamInfo", 500, "updateStreamInfo");
+		
 		if (this.elements["stream"] == null) 
 		{ 
 			this.elements["right"].html(
