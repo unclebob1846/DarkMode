@@ -36,18 +36,19 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			self[self.dID]("sendRequest", "getStream", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
 			{
 				var id = self[self.dID]("random");
-				var li = $('<li>'+json.username+'</li>');
+				var li = $('<li><span>'+json.user.profileUrlString+'</span></li>');
 				var removeImg = $('<img style="float:right;" src="'+self.config.Design.images.trash+'" />');
 				removeImg.click(function(){
 					removeViewers(id);
 				});
+				li.append(removeImg);
 				self.elements["viewerBotList"].append(li);
 				
 				var pusher = new Pusher('d5b7447226fc2cd78dbb', {
 					cluster: "younow"
 				});
 				var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-				for (var kk = 0; kk < 40; kk++)
+				for (var kk = 0; kk < 20; kk++)
 				{
 					var rnd = '';
 					for (var i = 0; i < 26; i++)
@@ -57,7 +58,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 					}
 					pusher.subscribe("public-on-channel_"+json.userId+"_"+rnd+"_LINK");
 				}
-				self.config.ViewerBot.list.push({element: li, pusher: pusher});
+				self.config.ViewerBot.list[id] = {element: li, pusher: pusher};
 			});
 			
 		});
