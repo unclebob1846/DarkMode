@@ -5,14 +5,14 @@ window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 	}
 	for (var k in this.headers) {
 		if (k == key) {
-			this[this.dID]("expandHeader", k);
+			this[this.dID]("expandHeader", c, k);
 		} else {
-			this[this.dID]("decreaseHeader", k);
+			this[this.dID]("decreaseHeader", c, k);
 		}
 	}
 });
 
-window[window.dID][window.dID+"a"]("expandHeader", function(key) {
+window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
 	var h = this.elements["left"].height();
 	var self = this;
 	this.headers[key].li.animate({"height": (h - (c - 1) * 30)}, 200, function(){
@@ -20,7 +20,7 @@ window[window.dID][window.dID+"a"]("expandHeader", function(key) {
 	});
 });
 
-window[window.dID][window.dID+"a"]("decreaseHeader", function(key) {
+window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
 	var h = this.elements["left"].height();
 	var self = this;
 	this.headers[key].li.css("height", (h - (c - 1) * 30));
