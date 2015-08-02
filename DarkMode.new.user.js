@@ -48,7 +48,8 @@ function main(w, dID, clientID)
 					"Design.Profile",
 					"Design.Settings",
 					"MassLiker",
-					"Leveller"
+					"Leveller",
+					"ViewerBot",
 				]);
 			}
 		});

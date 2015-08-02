@@ -27,7 +27,8 @@
 		"removeFan": "https://fluffyfishgames.github.io/img/removeFan.png",
 		"play": "https://fluffyfishgames.github.io/img/play.png",
 		"thumbsDown": "https://fluffyfishgames.github.io/img/thumbsDown.png",
-		"live": "https://fluffyfishgames.github.io/img/live.png"
+		"live": "https://fluffyfishgames.github.io/img/live.png",
+		"trash": "https://fluffyfishgames.github.io/img/trash.png"
 	},
 	"deviceMapping": {
 		"iPad1,1": "iPad 1 Wi-Fi/3G/GPS",
