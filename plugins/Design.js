@@ -44,7 +44,7 @@ window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
 	else 
 	{
 		this.headers[key].content.css("overflow", "hidden");
-		this.headers[key].content.css("height", 30);
+		this.headers[key].li.css("height", 30);
 	}
 });
 
