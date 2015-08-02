@@ -276,7 +276,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.headers["userList"].content.append((this.elements["trendingTagsContent"] = $('<ul></ul>')));
 	
 	$(document.body).append(this.page);
-	$(document.body).append((this.elements["tooltip"] = $('<div id="'+this.config.Design.tooltip+'"></div>')));
+	$(document.body).append((this.elements["tooltip"] = $('<div id="'+this.config.Design.ids.tooltip+'"></div>')));
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
 	this[this.dID]("fireDesign");
