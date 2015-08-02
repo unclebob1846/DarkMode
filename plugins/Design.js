@@ -1,27 +1,23 @@
 window[window.dID][window.dID+"a"]("selectHeader", function(key) {
-	if (this.headers[key].selected != true || !this.config.Design.ready)
-	{
-		var c = 0;
-		for (var k in this.headers) {
-			c++;
-		}
-		for (var k in this.headers) {
-			if (k == key) {
-				this[this.dID]("expandHeader", c, k);
-			} else {
-				this[this.dID]("decreaseHeader", c, k);
-			}
+	var c = 0;
+	for (var k in this.headers) {
+		c++;
+	}
+	for (var k in this.headers) {
+		if (k == key) {
+			this[this.dID]("expandHeader", c, k);
+		} else {
+			this[this.dID]("decreaseHeader", c, k);
 		}
 	}
 });
 
 window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
-	this.headers[key].selected = true;
 	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
 		var self = this;
-		this.headers[key].li.css("height", 30);
+		this.headers[key].li.css("height", this.headers[key].height());
 		this.headers[key].content.css("overflow", "hidden");
 		this.headers[key].li.animate({"height": (h - (c - 1) * 30)}, 200, function(){
 			self.headers[key].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px");
@@ -36,7 +32,6 @@ window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
 });
 
 window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
-	this.headers[key].selected = false;
 	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
