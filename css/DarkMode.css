@@ -833,6 +833,8 @@ textarea {
 #stream #trendingList {
     height: 140px;
     width: 100%;
+	float: left;
+	clear: both;
     position: absolute;
     bottom: 0px;
     padding: 10px;
