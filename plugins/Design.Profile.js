@@ -426,7 +426,7 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	if (this.config.Design.Profile.data.youTubeUserName != null && this.config.Design.Profile.data.youTubeUserName != "")
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.youtube.com/' + this.config.Design.Profile.data.youTubeUserName + '"><img src="' + this.config.Design.images.youtube + '" /></a>';
 	if (this.youNow.session.user.userId > 0) {
-		if (this.config.Design.Profile.data.isFan)
+		if (this.config.Design.Profile.isFan)
 			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float: left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-confirm"><img src="' + this.config.Design.images.removeFan + '" />' + this.language.unfan + '</button>';
 		else
 			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float:left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-primary"><img src="' + this.config.Design.images.addFan + '" />' + this.language.fan + '</button>';
