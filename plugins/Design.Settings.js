@@ -16,6 +16,7 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	this.elements["right"].html('<div id="'+this.config.Design.ids.settings+'"><ul class="tabBar"></ul><div id="'+this.config.Design.ids.settingsContent+'"></div></div>');
 	var tabs = this.elements["right"].find(".tabBar").first();
 	this[this.dID]("updateElements");
+	this.config.Design.Settings.tabsElements = {};
 	var c = 0;
 	for (var key in this.config.Design.Settings.tabs)
 		c++;
@@ -27,17 +28,22 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 		li.click(function(){
 			self.elements.settingsContent.html("");
 			self.elements.settingsContent.append(func());
+			for (var key in self.config.Design.Settings.tabsElements)
+				self.config.Design.Settings.tabsElements[key].removeClass("active");
+			self.config.Design.Settings.tabsElements[key].addClass("active");
 		});
 		tabs.append(li);
+		return li;
 	};
 	var first = true;
 	for (var key in this.config.Design.Settings.tabs)
 	{ 
-		addTab(key, this.config.Design.Settings.tabs[key]);
+		this.config.Design.Settings.tabsElements[key] = addTab(key, this.config.Design.Settings.tabs[key]);
 		if (page == key || first)
 		{
 			this.elements.settingsContent.html("");
 			this.elements.settingsContent.append(this.config.Design.Settings.tabs[key]());
+			this.config.Design.Settings.tabsElements[key].addClass("active");
 		}
 	}
 });
