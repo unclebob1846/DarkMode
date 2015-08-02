@@ -13,7 +13,7 @@ window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 });
 
 window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
-	if (this.config.ready)
+	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
 		var self = this;
@@ -32,7 +32,7 @@ window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
 });
 
 window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
-	if (this.config.ready)
+	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
 		var self = this;
@@ -164,6 +164,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
 	this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
 	this.headers = {};
+	this.config.Design.ready = false;
 	callback();
 });
 
@@ -476,4 +477,5 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.elements["expandArrow"].click(function(){
 		self[self.dID]("changeSidebar");
 	});
+	this.config.Design.ready = true;
 });
