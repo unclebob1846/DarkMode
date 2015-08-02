@@ -65,8 +65,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) {
-	var c = this[this.dID]("getConfig");
-	return c.youNow.config.broadcasterThumb + broadcastId;
+	return this.youNow.config.broadcasterThumb + broadcastId;
 });
 
 window[window.dID][window.dID+"a"]("getProfilePicture", function(userid){
