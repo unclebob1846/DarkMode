@@ -465,11 +465,11 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	if (fanButton != "") {
 		this.elements["fanButton"].click(function() {
 			if (self.config.Design.Profile.data.isFan) {
-				this[this.dID]("sendRequest", "unfan", {
+				self[self.dID]("sendRequest", "unfan", {
 					channelID: self.config.Design.Profile.data.channelId
 				}, function(json, success) {});
 			} else {
-				this[this.dID]("sendRequest", "fan", {
+				self[self.dID]("sendRequest", "fan", {
 					channelID: self.config.Design.Profile.data.channelId
 				}, function(json, success) {});
 			}
