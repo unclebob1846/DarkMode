@@ -15,19 +15,19 @@ function main(w, dID, clientID)
 	function boot(dID, clientID)
 	{
 		// remove old stuff :)
-		window.localStorage.setItem("config.massLiker.likeThreshold", null);
-		window.localStorage.setItem("config.massLiker.maxLikeCost", null);
-		window.localStorage.setItem("config.massLiker.giftThreshold", null);
-		window.localStorage.setItem("config.massLiker.keepCoins", null);
-		window.localStorage.setItem("config.massLiker.login", null);
-		window.localStorage.setItem("config.massLiker.giveGifts", null);
-		window.localStorage.setItem("config.massLiker.alternative", null);
-		window.localStorage.setItem("config.massLiker.ignoreUsers", null);
-		window.localStorage.setItem("config.massLiker.intervalLikes", null);
-		window.localStorage.setItem("config.massLiker.interval", null);
-		window.localStorage.setItem("config.playSounds", null);
-		window.localStorage.setItem("inDarkMode", null);
-		window.localStorage.setItem("browse", null);
+		window.localStorage.removeItem("config.massLiker.likeThreshold");
+		window.localStorage.removeItem("config.massLiker.maxLikeCost");
+		window.localStorage.removeItem("config.massLiker.giftThreshold");
+		window.localStorage.removeItem("config.massLiker.keepCoins");
+		window.localStorage.removeItem("config.massLiker.login");
+		window.localStorage.removeItem("config.massLiker.giveGifts");
+		window.localStorage.removeItem("config.massLiker.alternative");
+		window.localStorage.removeItem("config.massLiker.ignoreUsers");
+		window.localStorage.removeItem("config.massLiker.intervalLikes");
+		window.localStorage.removeItem("config.massLiker.interval");
+		window.localStorage.removeItem("config.playSounds");
+		window.localStorage.removeItem("inDarkMode");
+		window.localStorage.removeItem("browse");
 		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 		{
 			dataType: "text",
