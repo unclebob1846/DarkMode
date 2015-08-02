@@ -900,6 +900,15 @@ textarea {
 	border-left: 1px solid #999;
 }
 
+.expandArrow {
+	background: #555 url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat;
+}
+
+.deflateArrow {
+	background: #555 url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat;
+}
+
+
 .dropdown-menu {
     background: #555 !important;
 }

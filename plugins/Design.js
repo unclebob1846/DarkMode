@@ -366,7 +366,7 @@ window[window.dID][window.dID+"a"]("changeSidebar", function()
 	if (window.localStorage.getItem(this[this.dID]("name", "sideBarOpened")) == "1")
 	{
 		window.localStorage.setItem(this[this.dID]("name", "sideBarOpened"), "0");
-		this.elements["left"].animate({width: 0}, 200);
+		this.elements["left"].animate({width: 10}, 200);
 		this.elements["expandArrow"].addClass("arrowExpand");
 		this.elements["expandArrow"].removeClass("arrowDeflate");
 	}
