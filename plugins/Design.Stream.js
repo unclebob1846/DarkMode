@@ -57,7 +57,7 @@ window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
 	if (this.config.Router.currentPage == 'stream') 
 	{
 		var self = this;
-		this.sendRequest("getPlayData", {
+		this[this.dID]("sendRequest", "getPlayData", {
 			playDataURL: this.config.Design.Stream.data.PlayDataBaseUrl,
 			userID: this.config.Design.Stream.data.userId
 		}, function(json, success) {
