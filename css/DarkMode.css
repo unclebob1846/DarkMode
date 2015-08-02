@@ -898,6 +898,7 @@ textarea {
 	height: 100% !important;
 	background: #555;
 	border-left: 1px solid #777;
+	cursor: pointer;
 }
 
 .arrowExpand {
