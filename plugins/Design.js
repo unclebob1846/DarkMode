@@ -376,14 +376,27 @@ window[window.dID][window.dID+"a"]("changeSidebar", function()
 	
 		this.elements["expandArrow"].addClass("arrowExpand");
 		this.elements["expandArrow"].removeClass("arrowDeflate");
+		
+		for (var i = 0; i < this.headers.length; i++)
+		{
+			this.headers[i].content.css("overflow", "hidden");
+		}
 	}
 	else 
 	{
+		for (var i = 0; i < this.headers.length; i++)
+		{
+			this.headers[i].content.css("overflow", "hidden");
+		}
 		window.localStorage.setItem(this[this.dID]("name", "sideBarClosed"), "0");
 		var w = $(document.body).width();
 		this.elements["right"].css("width", w - 10);
 		this.elements["right"].animate({"width": w - 200}, 200, function(){
 			self.elements["right"].css("width", "calc(100% - 200px)");
+			for (var i = 0; i < self.headers.length; i++)
+			{
+				self.headers[i].content.css("overflow", "auto");
+			}
 		});
 		this.elements["left"].animate({width: 200}, 200);
 		this.elements["expandArrow"].removeClass("arrowExpand");
