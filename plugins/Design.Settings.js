@@ -14,13 +14,13 @@ window[window.dID][window.dID+"a"]("addSettingsTab", function(label, func)
 window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 {
 	this.elements["right"].html('<div id="'+this.config.Design.ids.settings+'"><ul class="tabBar"></ul><div id="'+this.config.Design.ids.settingsContent+'"></div></div>');
-	var tabs = this.elements["right"].find(".tabs").first();
+	var tabs = this.elements["right"].find(".tabBar").first();
 	this[this.dID]("updateElements");
 	var c = 0;
 	for (var key in this.config.Design.Settings.tabs)
 		c++;
 	
-	var addTab = function(tabs, key, func)
+	var addTab = function(key, func)
 	{
 		var li = $('<li style="width:'+(100/c)+'%">'+key+'</li>');
 		li.click(function(){
@@ -32,7 +32,7 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 	var first = true;
 	for (var key in this.config.Design.Settings.tabs)
 	{ 
-		addTab(tabs, key, this.config.Design.Settings.tabs[key]);
+		addTab(key, this.config.Design.Settings.tabs[key]);
 		if (page == key || first)
 		{
 			this.elements.settingsContent.html("");
