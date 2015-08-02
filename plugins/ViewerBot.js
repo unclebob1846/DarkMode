@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			"label": self.language.viewerBot
 		});
 		
-		self.headers["massLiker"].content.html('<div style="float:left; clear: both;">'+this.language.streamer+':</div>' +
+		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;">'+this.language.streamer+':</div>' +
 												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" /></div>'+
 												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'"></button></div>'+
 												'<div style="float:left: clear:both;width: 190px;margin-left:-10px;">'+self.language.viewers+'<img src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
@@ -47,20 +47,20 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 					cluster: "younow"
 				});
 				var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-				var rnd = '';
-				for (var i = 0; i < 26; i++)
+				for (var kk = 0; kk < 40; kk++)
 				{
-					var k = Math.random() * chars.length;
-					rnd += chars.substring(k, k+1);
+					var rnd = '';
+					for (var i = 0; i < 26; i++)
+					{
+						var k = Math.random() * chars.length;
+						rnd += chars.substring(k, k+1);
+					}
+					pusher.subscribe("public-on-channel_"+json.userId+"_"+rnd+"_LINK");
 				}
-				pusher.subscribe("public-on-channel_"+json.userId+"_"+rnd+"_LINK");
 				self.config.ViewerBot.list.push({element: li, pusher: pusher});
 			});
 			
 		});
-	});
-	this[this.dID]("addSettingsTab", this.language.massLiker, function(){
-		return $('<span>test</span>');
 	});
     callback();
 });
