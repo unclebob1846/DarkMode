@@ -230,7 +230,7 @@ window[window.dID][window.dID+"a"]("tickSidebar", function(deltaTime) {
 			self.elements["friendsContent"].html("");
 			if (json["users"] != null && json["users"].length > 0) {
 				for (i = 0; i < json["users"].length; i++)
-					self.addSideEntry(json["users"][i], self.elements["friendsContent"]);
+					self[self.dID]("addSideEntry", json["users"][i], self.elements["friendsContent"]);
 				self.elements["friendsHeader"].css("display", "block")
 				self.elements["friendsArrow"].css("display", "block")
 				self.elements["friendsContent"].css("display", "block")
