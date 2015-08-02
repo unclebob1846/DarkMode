@@ -893,9 +893,9 @@ textarea {
     margin-left: 5px;
 }
 #expandArrow {
-	float: right;
-	width: 10px;
-	height: 100%;
+	float: right !important;
+	width: 10px !important;
+	height: 100% !important;
 	background: #555;
 	border-left: 1px solid #999;
 }
