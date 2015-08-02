@@ -149,19 +149,94 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 
 window[window.dID][window.dID+"a"]("tickDesign", function(deltaTime) {
 	this[this.dID]("design"+this.config.Router.currentPage.charAt(0).toUpperCase() + this.config.Router.currentPage.substring(1), deltaTime);
+	var boxes = 4;
+	if (this.elements["editorsPickContent"].css("display") == "none")
+		boxes--;
+	if (this.elements["friendsContent"].css("display") == "none")
+		boxes--;
+	this.elements["editorsPickContent"].css("height", "calc(" + (1 / boxes * 100) + "% - 20px)");
+	this.elements["friendsContent"].css("height", "calc(" + (1 / boxes * 100) + "% - 20px)");
+	this.elements["trendingPeopleContent"].css("height", "calc(" + (1 / boxes * 100) + "% - 20px)");
+	this.elements["trendingTagsContent"].css("height", "calc(" + (1 / boxes * 100) + "% - 20px)");
 });
 
+window[window.dID][window.dID+"a"]("tickSidebar", function(deltaTime) {
+	var self = this;
+    this[this.dID]("sendRequest", "getTrending", {
+		count: 50
+	}, function(json, success) {
+		var i = 0;
+		self.elements["editorsPickContent"].html("");
+		if (json["featured_users"] != null && json["featured_users"].length > 0) {
+			for (i = 0; i < json["featured_users"].length; i++)
+				self[self.dID]("addSideEntry", json["featured_users"][i], self.elements["editorsPickContent"]);
+			self.elements["editorsPickHeader"].css("display", "block")
+			self.elements["editorsPickArrow"].css("display", "block")
+			self.elements["editorsPickContent"].css("display", "block")
+		} else {
+			self.elements["editorsPickHeader"].css("display", "none")
+			self.elements["editorsPickArrow"].css("display", "none")
+			self.elements["editorsPickContent"].css("display", "none")
+		}
+		self.elements["trendingPeopleContent"].html("");
+		for (i = 0; i < json["trending_users"].length; i++)
+			self[self.dID]("addSideEntry", json["trending_users"][i], self.elements["trendingPeopleContent"]);
+		self.elements["trendingTagsContent"].html("");
+		for (i = 0; i < json["trending_tags"].length; i++)
+			self[self.dID]("addSideEntry", json["trending_tags"][i], self.elements["trendingTagsContent"]);
+	});
+});
 
-        /*if (data["type"] == "count") {
-            this.elements["tooltip"].html('<div style="padding:5px;">x' + data.count + '</div>');
-        } else if (data["type"] == "streamer" || data["type"] == "friend") {
-        } else if (data["type"] == "likeCost") {
-            if (this.currentStreamer.username.toLowerCase() == "drachenlord_offiziell")
-                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.images.coins + '" />' + this.language.nobodyLikesDragon + '</div>');
-            else
-                this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.images.coins + '" />' + data["cost"] + '</div>');
-        }
-    };*/
+window[window.dID][window.dID+"a"]("addSideEntry", function(data, container) {
+	if (data["tag"] != null) {
+		// it's a tag!
+		container.append($('<li><a href="/explore/tag/' + data["tag"] + '">#' + data["tag"] + '</a></li>'));
+	} else {
+		var username = "";
+		var level = "";
+		if (data["username"] != null)
+			username = data["username"];
+		else
+			username = data["name"];
+		if (data["level"] != null)
+			level = data["level"];
+		else
+			level = Math.floor(data["userlevel"]);
+		// seems like a user.
+		var el = $('<li><a href="/' + data["profile"] + '">' + username + '</a></li>');
+		container.append(el);
+		var self = this;
+		var obj = {
+			type: "stream",
+			username: username,
+			level: level,
+			userid: data["userId"]
+		};
+		if (data["locale"] != null)
+			obj["locale"] = data["locale"];
+		if (data["shares"] != null)
+			obj["shares"] = data["shares"];
+		if (data["likes"] != null)
+			obj["likes"] = data["likes"];
+		if (data["viewers"] != null)
+			obj["viewers"] = data["viewers"];
+		if (data["tags"] != null)
+			obj["tag"] = data["tags"][0];
+		if (data["fans"] != null)
+			obj["fans"] = data["fans"];
+		obj["broadcastId"] = data["broadcastId"];
+		if (data["channelName"] != null && data["channelName"] != data["profile"]) {
+			obj["type"] = "friend";
+			obj["isWatching"] = data["channelName"];
+		}
+		el.mousemove(function(e) {
+			self[self.dID]("showTooltip", e, obj);
+		});
+		el.mouseout(function(e) {
+			self[self.dID]("hideTooltip");
+		});
+	}
+});
 	
 window[window.dID][window.dID+"a"]("parseStreamTooltip", function(data) {
 	var extra = "";
