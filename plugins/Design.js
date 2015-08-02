@@ -114,7 +114,7 @@ window[window.dID][window.dID+"a"]("addHeader", function(key, header) {
 	if (header.hasSettings == true) {
 		var icon = $('<div style="cursor:pointer;float:right;margin-top:-3px;"><img src="' + this.config.Design.images.settings + '" /></div>');
 		icon.click(function(e) {
-			self.openSettings(key);
+			self[self.dID]("openSettings", key);
 			e.stopPropagation();
 		});
 		headerEl.append(icon);
