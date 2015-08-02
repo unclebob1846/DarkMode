@@ -11,7 +11,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;">'+self.language.streamer+':</div>' +
 												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" style="width:140px;" /><input type="number" style="width:30px;margin-left: 5px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
 												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'">'+self.language.addViewers+'</button></div>'+
-												'<div style="float:left: clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
+												'<div style="float:left; clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
 												'<ul style="float:left; clear:both;" id="'+self.config.Design.ids.viewerBotList+'"></ul>');
 
 		self[self.dID]("updateElements");
