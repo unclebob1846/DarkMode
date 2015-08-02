@@ -298,9 +298,11 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 				el.find(".comment").first().before(this[this.dID]("parseProfilePost", post.replies[j], true));
 			}
 		}
-		el.find(".options").first().click(function(){
-			self[self.dID]("showPostOptions", post.id, sub);
-		});
+		if (post.user.userId == this.youNow.session.user.userId || this.config.Design.Profile.data.userId == this.youNow.session.user.userId)
+			el.find(".options").first().click(function(){
+				self[self.dID]("showPostOptions", post.id, sub);
+			});
+		
 		el.find(".like").first().click(function(){
 			self[self.dID]("changePostLike", post.id, post.isComment);
 		});
