@@ -186,7 +186,7 @@ window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment
 		}
 	};
 	$(document.body).click(c);
-	$(elx.find("li")[0]).click(function() {
+	elx.find("li").first().click(function() {
 		$(self.config.Design.Profile.posts[postId]).remove();
 		self[self.dID]("deletePost", {
 			isComment: isComment ? '1' : '0',
