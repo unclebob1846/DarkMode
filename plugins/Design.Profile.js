@@ -188,7 +188,7 @@ window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment
 	$(document.body).click(c);
 	elx.find("li").first().click(function() {
 		self.config.Design.Profile.posts[postId].element.remove();
-		self[self.dID]("deletePost", {
+		self[self.dID]("sendRequest", "deletePost", {
 			isComment: isComment ? '1' : '0',
 			channelID: self.config.Design.Profile.data.channelId,
 			postID: postId
