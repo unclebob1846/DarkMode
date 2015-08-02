@@ -71,7 +71,7 @@ window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("updateStreamViewer", function(parts) {
-	if (this.config.Router.currentPage == "streamer")
+	if (this.config.Router.currentPage == 'stream')
 	{
 		var self = this;
 		this[this.dID]("sendRequest", "getViewers", {
