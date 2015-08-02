@@ -57,9 +57,9 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 		{
 			self.config.Design.Stream.data = json;
 			self[self.dID]("updateStreamInfo");
+			self[self.dID]("updateStreamTrending");
 		}
 	});
-	this[this.dID]("updateStreamTrending");
 });
 
 window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
@@ -202,8 +202,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 	var self = this;
 	if (this.config.Design.Stream.lastName != this.config.Design.Stream.name)
 	{
-		self[self.dID]("addTick", "updateStream", 5000, "updateStream");
-		self[self.dID]("addTick", "updateStreamInfo", 500, "updateStreamInfo");
+		this[this.dID]("addTick", "updateStream", 5000, "updateStream");
+		this[this.dID]("addTick", "updateStreamInfo", 500, "updateStreamInfo");
 		
 		if (this.elements["stream"] == null) 
 		{ 
