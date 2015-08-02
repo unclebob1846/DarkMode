@@ -1,6 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 {
-	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 2);
+	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 5);
 	this.config.Design.Profile = {};
 	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fansOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent', 'profilePage', 'toLive', 'fanButton']);
 	callback();
@@ -10,7 +10,7 @@ window[window.dID][window.dID+"a"]("writePost", function(message, objectId, type
 	if (objectId == null)
 		objectId = 0;
 	var self = this;
-	this.sendRequest("createPost", {
+	this[this.dID]("sendRequest", "createPost", {
 		channelID: this.config.Design.Profile.data.channelId,
 		parentID: objectId,
 		post: message
@@ -87,7 +87,7 @@ window[window.dID][window.dID+"a"]("openProfileTab", function(page)
         this.config.Design.Profile.hasMorePages = true;
 		this[this.dID]("addProfilePage");
     }
-	else if (this.config.Design.Profile.currentPage == "fansOf")
+	else if (this.config.Design.Profile.currentPage == "fanOf")
 	{
         this.profilePage = "fanOf";
         this.elements["fanOfTab"].addClass("active");
@@ -314,7 +314,6 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 window[window.dID][window.dID+"a"]("openProfile", function(parts) 
 {
 	var username = parts[0];
-	console.log(username);
 	this[this.dID]("updateElements");
 	this.elements["right"].html('<div id="'+this.config.Design.ids['profile']+'">'+
 	'<div id="'+this.config.Design.ids['profileHeader']+'"></div>'+
