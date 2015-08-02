@@ -14,6 +14,20 @@ function main(w, dID, clientID)
 {
 	function boot(dID, clientID)
 	{
+		// remove old stuff :)
+		window.localStorage.setItem("config.massLiker.likeThreshold", null);
+		window.localStorage.setItem("config.massLiker.maxLikeCost", null);
+		window.localStorage.setItem("config.massLiker.giftThreshold", null);
+		window.localStorage.setItem("config.massLiker.keepCoins", null);
+		window.localStorage.setItem("config.massLiker.login", null);
+		window.localStorage.setItem("config.massLiker.giveGifts", null);
+		window.localStorage.setItem("config.massLiker.alternative", null);
+		window.localStorage.setItem("config.massLiker.ignoreUsers", null);
+		window.localStorage.setItem("config.massLiker.intervalLikes", null);
+		window.localStorage.setItem("config.massLiker.interval", null);
+		window.localStorage.setItem("config.playSounds", null);
+		window.localStorage.setItem("inDarkMode", null);
+		window.localStorage.setItem("browse", null);
 		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
 		{
 			dataType: "text",
