@@ -220,7 +220,7 @@ window[window.dID][window.dID+"a"]("changePostLike", function(postId, isComment)
 		{
 			this.config.Design.Profile.posts[postId].liked = true;
 			this.config.Design.Profile.posts[postId].likes++;
-			this.config.Design.Profile.posts[postId].element.find(".like").html('<img src="'+this.config.Design.images.thumbsDown+'" />'+this.language.unlike+''+(this.postLikesCount[postId] > 1 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").html('<img src="'+this.config.Design.images.thumbsDown+'" />'+this.language.unlike+''+(this.config.Design.Profile.posts[postId] > 1 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
 			this[this.dID]("sendRequest", "likeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 	}
