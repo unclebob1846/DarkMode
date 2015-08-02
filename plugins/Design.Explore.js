@@ -5,11 +5,11 @@ window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
 
 window[window.dID][window.dID+"a"]("explore", function(parts) {
 	var query = "";
-	if (parts.length > 0)
-		if (parts.length > 1 && parts[0] == "tag")
-			query = "#"+parts[1];
+	if (parts.length > 1)
+		if (parts.length > 2 && parts[0] == "tag")
+			query = "#"+parts[2];
 		else 
-			query = parts[0];
+			query = parts[1];
 	var el = $('<div id="userList"></div>');
 	var titleEl = $('<h2></h2>');
 	el.append(titleEl);
