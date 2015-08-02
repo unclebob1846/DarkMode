@@ -408,8 +408,8 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	var createdString = created.toLocaleDateString(this.language.langCode) + ' ' + created.toLocaleTimeString(this.language.langCode);
 	var fanButton = "";
 	var socialButtons = "";
-	this.elements["fansTab"].html(this.language.fansTab.replace("%1", this.addCommas(this.config.Design.Profile.data.totalFans)));
-	this.elements["fanOfTab"].html(this.language.fanOf.replace("%1", this.addCommas(this.config.Design.Profile.data.totalFansOf)));
+	this.elements["fansTab"].html(this.language.fansTab.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFans)));
+	this.elements["fanOfTab"].html(this.language.fanOf.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFansOf)));
 	if (this.config.Design.Profile.data.facebookId != null && this.config.Design.Profile.data.facebookId > 0)
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.facebook.com/' + this.config.Design.Profile.data.facebookId + '"><img src="' + this.config.Design.images.facebook + '" /></a>';
 	if (this.config.Design.Profile.data.fbfn != null && this.config.Design.Profile.data.fbfn != "")
