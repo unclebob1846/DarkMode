@@ -448,7 +448,7 @@ textarea {
     clear: both;
     overflow: auto;
 }
-#settings .tabBar a {
+#settings .tabBar li {
     height: 20px;
     display: block;
     float: left;
@@ -464,8 +464,8 @@ textarea {
     text-decoration: none;
     font-weight: bold;
 }
-#settings .tabBar a.active,
-#settings .tabBar a:hover {
+#settings .tabBar li.active,
+#settings .tabBar li:hover {
     background: #555;
 }
 #settingsContainer {

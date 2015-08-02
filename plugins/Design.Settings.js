@@ -13,7 +13,7 @@ window[window.dID][window.dID+"a"]("addSettingsTab", function(label, func)
 
 window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 {
-	this.elements["right"].html('<div id="'+this.config.Design.ids.settings+'"><ul class="tabs"></ul><div id="'+this.config.Design.ids.settingsContent+'"></div></div>');
+	this.elements["right"].html('<div id="'+this.config.Design.ids.settings+'"><ul class="tabsBar"></ul><div id="'+this.config.Design.ids.settingsContent+'"></div></div>');
 	var tabs = this.elements["right"].find(".tabs").first();
 	this[this.dID]("updateElements");
 	var c = 0;
