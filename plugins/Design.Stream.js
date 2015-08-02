@@ -342,7 +342,19 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 				url: this.config.Design.Stream.data.media.stream,
 				live: true,
 				scaling: 'fit',
-				provider: 'rtmp'
+				provider: 'rtmp',
+				onPause: function()
+				{
+					fl.play();
+				},
+				onFinish: function()
+				{
+					fl.play();
+				},
+				onStop: function()
+				{
+					fl.play();
+				},
 			},
 			plugins: {
 				rtmp: {
@@ -357,10 +369,6 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 					volume: true,
 					fullscreen: true,
 				}
-			},
-			onPause: function()
-			{
-				fl.play();
 			},
 			canvas: {
 				backgroundGradient: 'none'
