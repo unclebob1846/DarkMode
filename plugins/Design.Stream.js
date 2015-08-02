@@ -47,6 +47,9 @@ window[window.dID][window.dID+"a"]("updateStream", function(deltaTime) {
 });
 
 window[window.dID][window.dID+"a"]("openStream", function(parts) {
+	this[this.dID]("removeTick", "updateStream");
+	this[this.dID]("removeTick", "updateStreamInfo");
+	this[this.dID]("removeTick", "updateStreamViewer");
 	this.config.Design.Stream.name = parts[0];
 	var self = this;
 	
