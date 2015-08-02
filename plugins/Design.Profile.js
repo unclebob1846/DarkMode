@@ -173,7 +173,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment) 
 {
 	var elx = $('<ul class="optionsMenu"><li>' + this.language.remove + '</li></ul>');
-	$(this.config.Design.Profile.posts[postId].find(".options")).append(elx);
+	this.config.Design.Profile.posts[postId].find(".options").first().append(elx);
 	var self = this;
 	
 	var ignoreFirst = true;
