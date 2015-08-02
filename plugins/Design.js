@@ -36,6 +36,7 @@ window[window.dID][window.dID+"a"]("expandHeader", function(c, key) {
 });
 
 window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
+	this.headers[key].selected = false;
 	if (this.config.Design.ready)
 	{
 		var h = this.elements["left"].height();
