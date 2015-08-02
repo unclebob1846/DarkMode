@@ -145,7 +145,7 @@ window[window.dID][window.dID+"a"]("addIDs", function(elements) {
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip"]);
+	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
 	this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
 	this.headers = {};
 	callback();
@@ -361,6 +361,24 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	});
 });
 
+window[window.dID][window.dID+"a"]("changeSidebar", function() 
+{
+	if (window.localStorage.getItem(this[this.dID]("name", "sideBarOpened")) == "1")
+	{
+		window.localStorage.setItem(this[this.dID]("name", "sideBarOpened"), "0");
+		this.elements["left"].animate({width: 0}, 200);
+		this.elements["expandArrow"].addClass("arrowExpand");
+		this.elements["expandArrow"].removeClass("arrowDeflate");
+	}
+	else 
+	{
+		window.localStorage.setItem(this[this.dID]("name", "sideBarOpened"), "1");
+		this.elements["left"].animate({width: 200}, 200);
+		this.elements["expandArrow"].removeClass("arrowExpand");
+		this.elements["expandArrow"].addClass("arrowDeflate");
+	}
+});
+
 window[window.dID][window.dID+"a"]("applyDesign", function() 
 {
 	var self = this;
@@ -372,7 +390,7 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.page = $('<div id="'+this.config.Design.ids.darkPage+'"></div>');
 	this.elements = {};
 
-	this.elements["left"] = $('<ul id="'+this.config.Design.ids.left+'"></ul>');
+	this.elements["left"] = $('<ul id="'+this.config.Design.ids.left+'"><li id="'+this.config.Design.ids.expandArrow+'"></li></ul>');
 	this[this.dID]("addHeader", "userList", {
 		"label": this.language.userList,
 		"hasSettings": false,
@@ -399,4 +417,8 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	this.page.append(this.elements["left"]);
 	this.page.append(this.elements["right"]);
 	this[this.dID]("fireDesign");
+	this[this.dID]("updateElements");
+	this.elements["expandArrow"].click(function(){
+		self[self.dID]("changeSidebar");
+	});
 });
