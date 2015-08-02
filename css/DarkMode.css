@@ -448,6 +448,12 @@ textarea {
     clear: both;
     overflow: auto;
 }
+#settings .tabBar {
+	width: 100%;
+	height: 30px;
+	float: left;
+	clear: both;
+}
 #settings .tabBar li {
     height: 20px;
     display: block;

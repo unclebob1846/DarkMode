@@ -27,6 +27,7 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 			self.elements.settingsContent.html("");
 			self.elements.settingsContent.append(func());
 		});
+		tabs.append(li);
 	};
 	var first = true;
 	for (var key in this.config.Design.Settings.tabs)
