@@ -644,7 +644,7 @@ textarea {
 }
 #stream .outer {
     width: 100%;
-    height: calc(100% - 180px);
+    height: calc(100% - 170px);
     float: left;
     clear: both;
     border-bottom: 1px solid #555;
