@@ -25,6 +25,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 		{
 			self[self.dID]("removeTick", "updateStream");
 			self[self.dID]("removeTick", "updateStreamInfo");
+			self[self.dID]("removeTick", "updateStreamViewer");
 		}
 	});
 	callback();
@@ -64,6 +65,23 @@ window[window.dID][window.dID+"a"]("updateStreamTrending", function(parts) {
 			self.elements["trendingList"].html("");
 			for (var i = 0; i < json.onBroadcastPlay.queues[0].items.length; i++) {
 				self[self.dID]("addStreamTrendingUser", json.onBroadcastPlay.queues[0].items[i]);
+			}
+		});
+	}
+});
+
+window[window.dID][window.dID+"a"]("updateStreamViewer", function(parts) {
+	if (this.config.Router.currentPage == "streamer")
+	{
+		var self = this;
+		this[this.dID]("sendRequest", "getViewers", {
+			count: 200,
+			start: 0,
+			channelID: this.config.Design.Stream.data.userId,
+		}, function(json, success) {
+			self.elements["viewerList"].html("");
+			for (var i = 0; i < json.audience.length; i++) {
+				self.elements["viewerList"].append($('<li><a href="/' + json.audience[i].name + '"><img width="34" height="34" src="' + self[self.dID]("getProfilePicture", json.audience[i].userId) + '" /><span><img src="' + self.config.Design.images.star + '" />' + json.audience[i].level + ' ' + json.audience[i].name + '<small>' + json.audience[i].location.country + ' (' + json.audience[i].fans + ' ' + self.language.fans + ')</small></span></a></li>'));
 			}
 		});
 	}
@@ -137,7 +155,7 @@ window[window.dID][window.dID+"a"]("openAudience", function() {
 	this.elements["chatTab"].removeClass("active");
 	this.elements["infoTab"].removeClass("active");
 	this.elements["audienceTab"].addClass("active");
-	this[this.dID]("addTick", "updateViewers", 5000, "tickUpdateViewers");
+	this[this.dID]("addTick", "updateStreamViewer", 5000, "updateStreamViewer");
 });
 
 window[window.dID][window.dID+"a"]("openChat", function() {
@@ -150,6 +168,7 @@ window[window.dID][window.dID+"a"]("openChat", function() {
 	this.elements["audienceTab"].removeClass("active");
 	this.elements["infoTab"].removeClass("active");
 	this.elements["chatTab"].addClass("active");
+	this[this.dID]("removeTick", "updateStreamViewer");
 });
 
 window[window.dID][window.dID+"a"]("openInfo", function() {
@@ -161,6 +180,7 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 	this.elements["chatTab"].removeClass("active");
 	this.elements["audienceTab"].removeClass("active");
 	this.elements["infoTab"].addClass("active");
+	this[this.dID]("removeTick", "updateStreamViewer");
 });
 
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
