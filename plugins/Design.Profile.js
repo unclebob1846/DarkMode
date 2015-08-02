@@ -92,7 +92,7 @@ window[window.dID][window.dID+"a"]("openProfileTab", function(page)
         this.profilePage = "fanOf";
         this.elements["fanOfTab"].addClass("active");
         this.config.Design.Profile.dashboardPage = -1;
-        this.elements["profileContent"].html('<div id="dashboardComments" style="clear:both;float:left;margin-top:10px;"></div>');
+        this.elements["profileContent"].html('<div id="'+this.config.Design.ids.dashboardComments+'" style="clear:both;float:left;margin-top:10px;"></div>');
 		this[this.dID]("updateElements");
 		
         this.config.Design.Profile.hasMorePages = true;
@@ -229,7 +229,7 @@ window[window.dID][window.dID+"a"]("changePostLike", function(postId, isComment)
 window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub) 
 {
 	if (post.userId != null) {
-		return $('<div class="userEntry entry"><a href="/' + post.profileUrlString + '" class="header"><img src="' + this.getProfilePicture(post.userId) + '"><div><strong>' + post.firstName + ' ' + post.lastName + '</strong><small>' + post.description + '</small></div></a></div>');
+		return $('<div class="userEntry entry"><a href="/' + post.profileUrlString + '" class="header"><img src="' + this[this.dID]("getProfilePicture", post.userId) + '"><div><strong>' + post.firstName + ' ' + post.lastName + '</strong><small>' + post.description + '</small></div></a></div>');
 	} else {
 		var content = "";
 		var replies = "";
