@@ -231,6 +231,7 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 	if (post.userId != null) {
 		return $('<div class="userEntry entry"><a href="/' + post.profileUrlString + '" class="header"><img src="' + this[this.dID]("getProfilePicture", post.userId) + '"><div><strong>' + post.firstName + ' ' + post.lastName + '</strong><small>' + post.description + '</small></div></a></div>');
 	} else {
+		var self = this;
 		var content = "";
 		var replies = "";
 		if (post.post != null && post.post != "")
