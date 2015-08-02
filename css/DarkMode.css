@@ -470,6 +470,19 @@ textarea {
     text-decoration: none;
     font-weight: bold;
 }
+
+.highlight
+{
+	background: #666;
+	border-bottom: 1px solid #777;
+}
+
+.normal
+{
+	background: #333;
+	border-bottom: 1px solid #666;
+}
+
 #settings .tabBar li.active,
 #settings .tabBar li:hover {
     background: #555;

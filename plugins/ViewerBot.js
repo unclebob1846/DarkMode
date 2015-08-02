@@ -1,5 +1,5 @@
 window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
-	this[this.dID]("addIDs", ["viewerBotStreamer", "viewerBotSubmit", "viewerBotList", "viewerBotRemoveAll"]);
+	this[this.dID]("addIDs", ["viewerBotStreamer", "viewerBotSubmit", "viewerBotList", "viewerBotRemoveAll", "viewerBotCount"]);
 	this.config.ViewerBot = {list: {}};
 	var self = this;
 	this[this.dID]("onDesign", function()
@@ -8,10 +8,10 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			"label": self.language.viewerBot
 		});
 		
-		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;">'+this.language.streamer+':</div>' +
-												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" /></div>'+
-												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'"></button></div>'+
-												'<div style="float:left: clear:both;width: 190px;margin-left:-10px;">'+self.language.viewers+'<img src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
+		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;">'+self.language.streamer+':</div>' +
+												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" style="width:140px;" /><input type="number" style="width:30px;margin-left: 5px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
+												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'">'+self.language.addViewers+'</button></div>'+
+												'<div style="float:left: clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight">'+self.language.viewers+'<img src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
 												'<ul id="'+self.config.Design.ids.viewerBotList+'"></ul>');
 
 		self[self.dID]("updateElements");
@@ -26,17 +26,17 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 			}
 		};
 		
-		self.elements["viewerBotRemoveAll"] = function()
+		self.elements["viewerBotRemoveAll"].click(function()
 		{
 			for (var key in self.config.ViewerBot.list)
 				removeViewers(key);
-		};
+		});
 		
 		self.elements["viewerBotSubmit"].click(function(){
 			self[self.dID]("sendRequest", "getBroadcast", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
 			{
 				var id = self[self.dID]("random");
-				var li = $('<li><span>'+json.user.profileUrlString+'</span></li>');
+				var li = $('<li class="normal" style="width:100%; height:30px;"><span>'+json.user.profileUrlString+'</span></li>');
 				var removeImg = $('<img style="float:right;" src="'+self.config.Design.images.trash+'" />');
 				removeImg.click(function(){
 					removeViewers(id);
