@@ -71,7 +71,7 @@ window[window.dID][window.dID+"a"]("addSearchResults", function() {
 window[window.dID][window.dID+"a"]("parseSearchResults", function(json) {
 	if (json["trending_users"] != null) {
 		if (this.currentSearch.titleEl.html() == "")
-			this.currentSearch.titleEl.html(this.addCommas(json.total) + " " + this.language["usersFound"]);
+			this.currentSearch.titleEl.html(this[this.dID]("parseNumber", json.total) + " " + this.language["usersFound"]);
 		this.currentSearch.loading = false;
 		for (var i = 0; i < json["trending_users"].length; i++) {
 			this.currentSearch.element.append(this[this.dID]("addSearchResult", json["trending_users"][i]));
