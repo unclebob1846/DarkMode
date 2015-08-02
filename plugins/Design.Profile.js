@@ -14,7 +14,7 @@ window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 });
 
 window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
-	if (this.config.Design.Profile.broadcasts[parts[2]] != null)
+	if (this.config.Design.Profile.broadcasts != null && this.config.Design.Profile.broadcasts[parts[2]] != null)
 	{
 		this.config.Design.Profile.lookForBroadcast = null;
         this.elements["right"].html('<div id="'+this.config.Design.ids.previousStream+'" style="width:100%; height:100%;">'+
