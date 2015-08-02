@@ -198,7 +198,7 @@ window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment
 
 window[window.dID][window.dID+"a"]("checkComment", function(event, postId) 
 {
-	var element = this.config.Design.Profile.posts[postId].find(".comment").find("input")[0];
+	var element = this.config.Design.Profile.posts[postId].element.find(".comment").first().find("input")[0];
     if (event.which == 13) {
         this[this.dID]("writePost", element.val(), postId, "post");
         element.val("");
