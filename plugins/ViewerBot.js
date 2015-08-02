@@ -33,7 +33,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 		};
 		
 		self.elements["viewerBotSubmit"].click(function(){
-			self[self.dID]("sendRequest", "getStream", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
+			self[self.dID]("sendRequest", "getBroadcast", {username: self.elements["viewerBotStreamer"].val()}, function(json, success)
 			{
 				var id = self[self.dID]("random");
 				var li = $('<li><span>'+json.user.profileUrlString+'</span></li>');
