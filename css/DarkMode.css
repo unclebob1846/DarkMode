@@ -901,11 +901,11 @@ textarea {
 }
 
 .arrowExpand {
-	background: #555 url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat;
+	background: #555 url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat !important;
 }
 
 .arrowDeflate {
-	background: #555 url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat;
+	background: #555 url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat !important;
 }
 
 
