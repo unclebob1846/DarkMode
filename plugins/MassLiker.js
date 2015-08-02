@@ -29,5 +29,8 @@ window[window.dID][window.dID+"a"]("bootMassLiker", function(callback) {
 			}
 		});
 	});
+	this[this.dID]("addSettingsTab", this.language.massLiker, function(){
+		return $('<span>test</span>');
+	});
     callback();
 });

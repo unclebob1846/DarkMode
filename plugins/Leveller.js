@@ -35,5 +35,8 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 			}
 		});
 	});
+	this[this.dID]("addSettingsTab", this.language.leveller, function(){
+		return $('<span>test2</span>');
+	});
     callback();
 });
