@@ -5,11 +5,27 @@ window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 	}
 	for (var k in this.headers) {
 		if (k == key) {
-			this.headers[k].li.animate({"height": "calc(100% - " + ((c - 1) * 30) + "px)"});
+			this[this.dID]("expandHeader", k);
 		} else {
-			this.headers[k].li.animate({"height": 30});
+			this[this.dID]("decreaseHeader", k);
 		}
 	}
+});
+
+window[window.dID][window.dID+"a"]("expandHeader", function(key) {
+	var h = this.elements["left"].height();
+	var self = this;
+	this.headers[key].li.animate({"height": (h - (c - 1) * 30)}, 200, function(){
+		self.headers[key].li.css("height", "calc(100% - " + ((c - 1) * 30) + "px");
+	});
+});
+
+window[window.dID][window.dID+"a"]("decreaseHeader", function(key) {
+	var h = this.elements["left"].height();
+	var self = this;
+	this.headers[key].li.css("height", (h - (c - 1) * 30));
+	this.headers[key].li.animate({"height": 30}, 200, function(){
+	});
 });
 
 window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
