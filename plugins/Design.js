@@ -298,6 +298,10 @@ window[window.dID][window.dID+"a"]("addSideEntry", function(data, container) {
 		});
 	}
 });
+
+window[window.dID][window.dID+"a"]("translateTime", function(d) {
+	return d;
+});
 	
 window[window.dID][window.dID+"a"]("parseStreamTooltip", function(data) {
 	var extra = "";
