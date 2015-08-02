@@ -25,7 +25,7 @@ window[window.dID][window.dID+"a"]("writePost", function(message, objectId, type
 			};
 			post.user.profileUrlString = post.user.profile;
 			if (objectId > 0) {
-				self.config.Design.Profile.posts[objectId].find(".comment").before(self[self.dID]("parseProfilePost", post, true));
+				self.config.Design.Profile.posts[objectId].element.find(".comment").before(self[self.dID]("parseProfilePost", post, true));
 			} else {
 				self.elements["dashboardComments"].prepend(self[self.dID]("parseProfilePost", post, false));
 			}
