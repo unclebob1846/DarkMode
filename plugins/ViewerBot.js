@@ -11,9 +11,9 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 		self.headers["viewerBot"].content.html('<div style="float:left; clear: both;"><span>'+self.language.streamer+':</span></div>' +
 												'<div style="float:left; clear:both;"><input type="text" id="'+self.config.Design.ids.viewerBotStreamer+'" style="width:170px;" /></div>'+
 												'<div style="float:left; clear: both;"><span>'+self.language.count+':</span></div>' +
-												'<div style="float:left; clear:both;"><input type="number" value="20" style="margin-bottom:5px;width:170px;margin-left: 5px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
-												'<div style="float:right; clear:both;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'">'+self.language.addViewers+'</button></div>'+
-												'<div style="float:left; clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="margin-top:5px;margin-left:10px;font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
+												'<div style="float:left; clear:both;"><input type="number" value="20" style="margin-bottom:5px;width:170px;" id="'+self.config.Design.ids.viewerBotCount+'" /></div>'+
+												'<div style="float:right; clear:both;margin-bottom:5px;"><button class="btn btn-confirm" id="'+self.config.Design.ids.viewerBotSubmit+'">'+self.language.addViewers+'</button></div>'+
+												'<div style="float:left; clear:both;width: 190px;margin-left:-10px;height: 30px;" class="highlight"><span style="margin-top:9px;margin-left:10px;font-weight:bold;">'+self.language.viewers+'</span><img style="float:right;margin-right: 5px;" src="'+self.config.Design.images.trash+'" id="'+self.config.Design.ids.viewerBotRemoveAll+'" /></div>'+
 												'<ul style="float:left; clear:both;" id="'+self.config.Design.ids.viewerBotList+'"></ul>');
 
 		self[self.dID]("updateElements");
