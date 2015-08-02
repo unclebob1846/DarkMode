@@ -6,7 +6,7 @@ window[window.dID][window.dID+"a"]("bootDesignExplore", function(callback) {
 window[window.dID][window.dID+"a"]("explore", function(parts) {
 	var query = "";
 	if (parts.length > 1)
-		if (parts.length > 2 && parts[0] == "tag")
+		if (parts.length > 2 && parts[1] == "tag")
 			query = "#"+parts[2];
 		else 
 			query = parts[1];
