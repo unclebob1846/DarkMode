@@ -186,6 +186,29 @@ window[window.dID][window.dID+"a"]("tickSidebar", function(deltaTime) {
 		for (i = 0; i < json["trending_tags"].length; i++)
 			self[self.dID]("addSideEntry", json["trending_tags"][i], self.elements["trendingTagsContent"]);
 	});
+	if (this.youNow.session.user != null && this.youNow.session.user.userId > 0) 
+	{
+		var self = this;
+		this[this.dID]("sendRequest", "getFriends", {}, function(json, success) {
+			self.elements["friendsContent"].html("");
+			if (json["users"] != null && json["users"].length > 0) {
+				for (i = 0; i < json["users"].length; i++)
+					self.addSideEntry(json["users"][i], self.elements["friendsContent"]);
+				self.elements["friendsHeader"].css("display", "block")
+				self.elements["friendsArrow"].css("display", "block")
+				self.elements["friendsContent"].css("display", "block")
+			} else {
+				self.elements["friendsHeader"].css("display", "none")
+				self.elements["friendsArrow"].css("display", "none")
+				self.elements["friendsContent"].css("display", "none")
+			}
+		});
+	}
+	else {
+		this.elements["friendsHeader"].css("display", "none")
+		this.elements["friendsArrow"].css("display", "none")
+		this.elements["friendsContent"].css("display", "none")
+	}
 });
 
 window[window.dID][window.dID+"a"]("addSideEntry", function(data, container) {
