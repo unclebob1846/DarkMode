@@ -196,7 +196,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 					}
 					else 
 					{
-						self[self.dID]("openPreviousStream", self.config.Design.Profile.lookForBroadcast);
+						self[self.dID]("openPreviousBroadcast", ["","",self.config.Design.Profile.lookForBroadcast]);
 					}
 				}
 			});
