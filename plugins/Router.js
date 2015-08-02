@@ -40,12 +40,7 @@ window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
 					this.config.Router.currentPage = route.name;
 					this[this.dID]("firePageChange");
 				}
-				try {
-					this[this.dID](route.functionName, parts);
-				} catch (e) 
-				{
-					console.log(e);
-				}
+				this[this.dID](route.functionName, parts);
 			}
 			console.log(this.config.Router.lastURL);
 			console.log(window.location.href);
