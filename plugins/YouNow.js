@@ -86,7 +86,7 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 		var loginWindow = window.open(url, 'Twitter Login', 'location=0, status=0, width=800, height=400, scrollbars=1');
 		window.twitterPopup = loginWindow;
 
-		window.twitterSuccessCallback = function(userInfo) {
+		loginWindow.twitterSuccessCallback = function(userInfo) {
 			var relevant = {};
 			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
 
