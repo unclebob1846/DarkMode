@@ -76,7 +76,7 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 	var twitter = {};
 	if (this.youNow.twitterData != null)
 	{
-		self.youNow.session.login(this.youNow.twitterData).then(function(data) {
+		self.youNow.session.login(this.youNow.twitterData, false).then(function(data) {
 			callback();
 		});
 	}
@@ -102,9 +102,8 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 			relevant.oauthToken = userInfo.oauth_token;
 			relevant.oauthTokenSecret = userInfo.oauth_token_secret;
 			relevant.location = userInfo.location;
-			console.log("A");
 			self.youNow.twitterData = relevant;
-			self.youNow.session.login(self.youNow.twitterData).then(function(data) {
+			self.youNow.session.login(self.youNow.twitterData, false).then(function(data) {
 				callback();
 			});
 		};

@@ -91,6 +91,7 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 					self[self.dID]("loginTwitter", function() {
 						self.leveller.levelsLeft--;
 						self.leveller.level++;
+						console.log("READY");
 						self.leveller.task = 'leveling';
 					});
 				},
