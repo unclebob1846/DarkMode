@@ -74,6 +74,7 @@ window[window.dID][window.dID+"a"]("getProfilePicture", function(userid){
 
 window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 	var twitter = {};
+	var self = this;
 	if (this.youNow.twitterData != null)
 	{
 		self.youNow.session.login(this.youNow.twitterData, false).then(function(data) {
@@ -87,25 +88,40 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 		window.twitterPopup = loginWindow;
 
 		window.twitterSuccessCallback = function(userInfo) {
+			console.log("A");
 			var relevant = {};
+			console.log("A");
 			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
-			loginWindow.close();
-			
+			console.log("A");
 			relevant.twitterId = userInfo.id;
+			console.log("A");
 			relevant.firstName = nameTokens[0] || '';
+			console.log("A");
 			relevant.lastName = nameTokens[1] || '';
+			console.log("A");
 			relevant.nickname = userInfo.screen_name || '';
+			console.log("A");
 			relevant.thumb = userInfo.profile_image_url || '';
+			console.log("A");
 			relevant.description = userInfo.description || '';
+			console.log("A");
 			relevant.url = userInfo.screen_name ? 'http://www.twitter.com/' + userInfo.screen_name : '';
+			console.log("A");
 			relevant.connections = userInfo.followers_count;
+			console.log("A");
 			relevant.oauthToken = userInfo.oauth_token;
+			console.log("A");
 			relevant.oauthTokenSecret = userInfo.oauth_token_secret;
+			console.log("A");
 			relevant.location = userInfo.location;
+			console.log("A");
 			self.youNow.twitterData = relevant;
-			self.youNow.session.login(self.youNow.twitterData, false).then(function(data) {
+			console.log(relevant);
+			self.youNow.session.login(self.youNow.twitterData).then(function(data) {
 				callback();
 			});
+			console.log("A");
+			loginWindow.close();
 		};
 	}
 });
