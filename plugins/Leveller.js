@@ -60,79 +60,78 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 							 '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this.language[this.leveller.task]+'</div>'+
 							 '<div style="float:left;clear:both; font-weight:bold; color:#ddd;width:180px;">'+this.language.level+'</div>'+
 							 '<div style="float:left;clear:both; font-size:10px;color:#ddd; width:180px;">'+this[this.dID]("parseNumber", this.leveller.level)+'</div>');
-		if (this.leveller.task == 'leveling') {
-			if (this.leveller.levelsLeft > 0){
-				this.leveller.task = 'waiting';
-				$.ajax({
-					xhr: function() {
-						var xhr = jQuery.ajaxSettings.xhr();
-						var setRequestHeader = xhr.setRequestHeader;
-						xhr.setRequestHeader = function(name, value) {
-							if (name == 'X-Requested-With') return;
-							setRequestHeader.call(this, name, value);
-						}
-						return xhr;
-					},
-					url: 'https://www.younow.com/php/api/channel/updateSettings',
-					method: "POST",
-					headers: {
-						'Accept': 'application/json, text/plain, */*',
-						'X-Requested-By': this.youNow.session.user.requestBy,
-					},
-					contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-					data: {
-						"tsi": this.config.tsi,
-						"tdi": this.config.tdi,
-						"userId": this.youNow.session.user.userId,
-						"channelId": this.youNow.session.user.userId,
-						"deactivation": 1
-					},
-					success: function(json, b, c) {
-						self.youNow.session.authenticate[self.leveller.login]().then(function(data) {
-							self.youNow.session.login(data, true).then(function(data) {
-								self.leveller.levelsLeft--;
-								self.leveller.level++;
-								self.leveller.task = 'leveling';
-							});
+	if (this.leveller.task == 'leveling') {
+		if (this.leveller.levelsLeft > 0){
+			this.leveller.task = 'waiting';
+			$.ajax({
+				xhr: function() {
+					var xhr = jQuery.ajaxSettings.xhr();
+					var setRequestHeader = xhr.setRequestHeader;
+					xhr.setRequestHeader = function(name, value) {
+						if (name == 'X-Requested-With') return;
+						setRequestHeader.call(this, name, value);
+					}
+					return xhr;
+				},
+				url: 'https://www.younow.com/php/api/channel/updateSettings',
+				method: "POST",
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'X-Requested-By': this.youNow.session.user.requestBy,
+				},
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: {
+					"tsi": this.config.tsi,
+					"tdi": this.config.tdi,
+					"userId": this.youNow.session.user.userId,
+					"channelId": this.youNow.session.user.userId,
+					"deactivation": 1
+				},
+				success: function(json, b, c) {
+					self.youNow.session.authenticate[self.leveller.login]().then(function(data) {
+						self.youNow.session.login(data, true).then(function(data) {
+							self.leveller.levelsLeft--;
+							self.leveller.level++;
+							self.leveller.task = 'leveling';
 						});
-					},
-					error: function(a, b, c) {}
-				});
-				this.leveller.task = 'waiting';
-			}
-			else {
-				this.leveller.task = 'renaming';
-				$.ajax({
-					xhr: function() {
-						var xhr = jQuery.ajaxSettings.xhr();
-						var setRequestHeader = xhr.setRequestHeader;
-						xhr.setRequestHeader = function(name, value) {
-							if (name == 'X-Requested-With') return;
-							setRequestHeader.call(this, name, value);
-						}
-						return xhr;
-					},
-					url: 'https://www.younow.com/php/api/channel/updateSettings',
-					method: "POST",
-					headers: {
-						'Accept': 'application/json, text/plain, */*',
-						'X-Requested-By': this.youNow.session.user.requestBy,
-					},
-					contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-					data: {
-						"tsi": this.config.tsi,
-						"tdi": this.config.tdi,
-						"userId": this.youNow.session.user.userId,
-						"channelId": this.youNow.session.user.userId,
-						"profileUrlString": this.leveller.username,
-					},
-					success: function(json, b, c) {
-						self.youNow.session.getSession();
-						self.leveller.task = 'finished';
-					},
-					error: function(a, b, c) {}
-				});
-			}
+					});
+				},
+				error: function(a, b, c) {}
+			});
+			this.leveller.task = 'waiting';
+		}
+		else {
+			this.leveller.task = 'renaming';
+			$.ajax({
+				xhr: function() {
+					var xhr = jQuery.ajaxSettings.xhr();
+					var setRequestHeader = xhr.setRequestHeader;
+					xhr.setRequestHeader = function(name, value) {
+						if (name == 'X-Requested-With') return;
+						setRequestHeader.call(this, name, value);
+					}
+					return xhr;
+				},
+				url: 'https://www.younow.com/php/api/channel/updateSettings',
+				method: "POST",
+				headers: {
+					'Accept': 'application/json, text/plain, */*',
+					'X-Requested-By': this.youNow.session.user.requestBy,
+				},
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: {
+					"tsi": this.config.tsi,
+					"tdi": this.config.tdi,
+					"userId": this.youNow.session.user.userId,
+					"channelId": this.youNow.session.user.userId,
+					"profileUrlString": this.leveller.username,
+				},
+				success: function(json, b, c) {
+					self.youNow.session.getSession();
+					self.leveller.task = 'finished';
+				},
+				error: function(a, b, c) {}
+			});
 		}
 	}
 });
