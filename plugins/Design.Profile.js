@@ -60,10 +60,10 @@ window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
 });
 
 window[window.dID][window.dID+"a"]("updateProfileStream", function(message, objectId, type) {
-	this.config.Design.Profile.username
+	
 	var self = this;
 	this[this.dID]("sendRequest", "getBroadcast", {
-		username: username
+		username: this.config.Design.Profile.username
 	}, function(json, success) {
 		self.config.Design.Profile.streamData = json;
 		self[self.dID]("updateProfilePage");
