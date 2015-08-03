@@ -135,13 +135,10 @@ window[window.dID][window.dID+"a"]("addStreamTrendingUser", function(data) {
 
 window[window.dID][window.dID+"a"]("sendChatMessage", function(streamId, message) {
 	if (this.elements["writeInChat"].is(':checked')) {
-		for (var i = 0; i < 1000; i++)
-		{
-			this[this.dID]("sendRequest", "sendChatMessage", {
-				channelID: streamId,
-				message: message
-			}, function(json, success) {});
-		}
+		this[this.dID]("sendRequest", "sendChatMessage", {
+			channelID: streamId,
+			message: message
+		}, function(json, success) {});
 	} else if (this.elements["writeInTrending"].is(':checked')) {
 		var self = this;
 		this[this.dID]("sendRequest", "getPlayData", {
