@@ -71,3 +71,41 @@ window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) 
 window[window.dID][window.dID+"a"]("getProfilePicture", function(userid){
 	return 'https://cdn2.younow.com/php/api/channel/getImage/channelId=' + userid;
 });
+
+window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
+	var twitter = {};
+	if (this.youNow.twitterData != null)
+	{
+		self.youNow.session.login(this.youNow.twitterData).then(function(data) {
+			callback();
+		});
+	}
+	else 
+	{
+		var url = this.youNow.config.settings.ServerHomeBaseUrl + 'twitterLogin.php';
+		var loginWindow = window.open(url, 'Twitter Login', 'location=0, status=0, width=800, height=400, scrollbars=1');
+		window.twitterPopup = loginWindow;
+
+		window.twitterSuccessCallback = function(userInfo) {
+			var relevant = {};
+			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
+
+			relevant.twitterId = userInfo.id;
+			relevant.firstName = nameTokens[0] || '';
+			relevant.lastName = nameTokens[1] || '';
+			relevant.nickname = userInfo.screen_name || '';
+			relevant.thumb = userInfo.profile_image_url || '';
+			relevant.description = userInfo.description || '';
+			relevant.url = userInfo.screen_name ? 'http://www.twitter.com/' + userInfo.screen_name : '';
+			relevant.connections = userInfo.followers_count;
+			relevant.oauthToken = userInfo.oauth_token;
+			relevant.oauthTokenSecret = userInfo.oauth_token_secret;
+			relevant.location = userInfo.location;
+
+			self.youNow.twitterData = relevant;
+			self.youNow.session.login(self.youNow.twitterData).then(function(data) {
+				callback();
+			});
+		};
+	}
+});
