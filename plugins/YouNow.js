@@ -89,7 +89,8 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 		window.twitterSuccessCallback = function(userInfo) {
 			var relevant = {};
 			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
-
+			loginWindow.close();
+			
 			relevant.twitterId = userInfo.id;
 			relevant.firstName = nameTokens[0] || '';
 			relevant.lastName = nameTokens[1] || '';
