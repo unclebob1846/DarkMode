@@ -51,7 +51,7 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 			'login': login,
 			'username': this.youNow.session.user.profile,
 			'level': this.youNow.session.user.level,
-			'levelsLeft': (this.config.leveller.desiredLevel - Math.floor(this.youNow.session.user.level))
+			'levelsLeft': (this.config.Leveller.desiredLevel - Math.floor(this.youNow.session.user.level))
 		};
 	}
 
