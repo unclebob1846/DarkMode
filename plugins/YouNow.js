@@ -96,7 +96,7 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 			relevant.twitterId = userInfo.id;
 			console.log("A");
 			relevant.firstName = nameTokens[0] || '';
-			console.log("A");
+			console.log("A"); 
 			relevant.lastName = nameTokens[1] || '';
 			console.log("A");
 			relevant.nickname = userInfo.screen_name || '';
