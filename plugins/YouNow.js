@@ -86,7 +86,7 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 		var loginWindow = window.open(url, 'Twitter Login', 'location=0, status=0, width=800, height=400, scrollbars=1');
 		window.twitterPopup = loginWindow;
 
-		loginWindow.twitterSuccessCallback = function(userInfo) {
+		window.twitterSuccessCallback = function(userInfo) {
 			var relevant = {};
 			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
 
@@ -101,7 +101,7 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 			relevant.oauthToken = userInfo.oauth_token;
 			relevant.oauthTokenSecret = userInfo.oauth_token_secret;
 			relevant.location = userInfo.location;
-
+			console.log("A");
 			self.youNow.twitterData = relevant;
 			self.youNow.session.login(self.youNow.twitterData).then(function(data) {
 				callback();
