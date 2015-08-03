@@ -555,5 +555,5 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 			this[this.dID]("openProfileTab", "dashboard");
 		}
 	}
-	this.config.Design.Profile.lastUsername = username;
+	this.config.Design.Profile.lastUsername = this.config.Design.Profile.username;
 });

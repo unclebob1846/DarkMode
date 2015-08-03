@@ -22,12 +22,12 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 			self.elements.desiredLevel.val(l);
 		});
 		
-		self.elements.levellerEnabled.change(function() {
-			if (self.elements.levellerEnabled.is(":checked")) {
+		self.elements.levellerActive.change(function() {
+			if (self.elements.levellerActive.is(":checked")) {
 				self.leveller = null;
-				this[this.dID]("addTick", "leveller", 100, "leveller");
+				self[self.dID]("addTick", "leveller", 100, "leveller");
 			} else {
-				this[this.dID]("removeTick", "leveller");
+				self[self.dID]("removeTick", "leveller");
 			}
 		});
 	});
