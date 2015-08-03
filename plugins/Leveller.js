@@ -9,7 +9,7 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 		
 		self.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+self.language.desiredLevel+':</span></div>'+
 												'<div style="float:left;"><input type="number" style="width:180px;" value="'+self.config.Leveller.desiredLevel+'" id="'+self.config.Design.ids.desiredLevel+'" /></div>'+
-												'<div style="float:left; clear: both;"><input type="checkbox" id="'+self.config.Design.ids.levellerEnabled+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
+												'<div style="float:left; clear: both;"><input type="checkbox" id="'+self.config.Design.ids.levellerActive+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
 												'<div style="float:left;margin-top:5px;"><span>' + self.language.levellerActive + ' </span></div></div>' +
 												'<div id="'+self.config.Design.ids.levellerStats+'"></div>');
 		
