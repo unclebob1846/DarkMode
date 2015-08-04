@@ -88,19 +88,19 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 					"deactivation": 1
 				},
 				success: function(json, b, c) {
-					self.youNow.session.authenticate["google"]().then(function(data) {
+					/*self.youNow.session.authenticate["google"]().then(function(data) {
 						self.youNow.session.login(data, true).then(function(data) {
 							self.leveller.levelsLeft--;
 							self.leveller.level++;
 							self.leveller.task = 'leveling';
 						});
-					});
-					/*self[self.dID]("loginGoogle", function() {
+					});*/
+					self[self.dID]("loginInstagram", function() {
 						self.leveller.levelsLeft--;
 						self.leveller.level++;
 						console.log("READY");
 						self.leveller.task = 'leveling';
-					}, true);*/
+					}, true);
 				},
 				error: function(a, b, c) {}
 			});
