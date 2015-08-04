@@ -199,15 +199,7 @@ window[window.dID][window.dID+"a"]("loginGoogle", function(callback, connect){
 	}
 	else 
 	{
-		window.gapi.auth.signIn({
-			clientid: this.youNow.config.settings.GOOGLE_PLUS_CLIENT_ID,
-			immediate: true,
-			cookiepolicy: 'single_host_origin',
-			scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
-			callback: 'googleLogin'
-		});
-		console.log("LOGIN");
-		window.googleLogin = function(authResponse) {
+		window.googleLoginFirst = function(authResponse) {
 			console.log("RESPONSE");
 			if (authResponse.status.signed_in) {
 				console.log("OK");
@@ -252,5 +244,13 @@ window[window.dID][window.dID+"a"]("loginGoogle", function(callback, connect){
 				});
 			}
 		};
+		
+		window.gapi.auth.signIn({
+			clientid: this.youNow.config.settings.GOOGLE_PLUS_CLIENT_ID,
+			immediate: true,
+			cookiepolicy: 'single_host_origin',
+			scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
+			callback: 'googleLoginFirst'
+		});
 	}
 });
