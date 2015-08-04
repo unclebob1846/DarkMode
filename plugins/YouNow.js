@@ -72,12 +72,11 @@ window[window.dID][window.dID+"a"]("getProfilePicture", function(userid){
 	return 'https://cdn2.younow.com/php/api/channel/getImage/channelId=' + userid;
 });
 
-window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
-	var twitter = {};
+window[window.dID][window.dID+"a"]("loginTwitter", function(callback, connect){
 	var self = this;
 	if (this.youNow.twitterData != null)
 	{
-		self.youNow.session.login(this.youNow.twitterData, false).then(function(data) {
+		self.youNow.session.login(this.youNow.twitterData, connect).then(function(data) {
 			callback();
 		});
 	}
@@ -88,40 +87,163 @@ window[window.dID][window.dID+"a"]("loginTwitter", function(callback){
 		window.twitterPopup = loginWindow;
 
 		window.twitterSuccessCallback = function(userInfo) {
-			console.log("A");
 			var relevant = {};
-			console.log("A");
 			var nameTokens = userInfo.name ? userInfo.name.split(' ') : [];
-			console.log("A");
 			relevant.twitterId = userInfo.id;
-			console.log("A");
 			relevant.firstName = nameTokens[0] || '';
-			console.log("A"); 
 			relevant.lastName = nameTokens[1] || '';
-			console.log("A");
 			relevant.nickname = userInfo.screen_name || '';
-			console.log("A");
 			relevant.thumb = userInfo.profile_image_url || '';
-			console.log("A");
 			relevant.description = userInfo.description || '';
-			console.log("A");
 			relevant.url = userInfo.screen_name ? 'http://www.twitter.com/' + userInfo.screen_name : '';
-			console.log("A");
 			relevant.connections = userInfo.followers_count;
-			console.log("A");
 			relevant.oauthToken = userInfo.oauth_token;
-			console.log("A");
 			relevant.oauthTokenSecret = userInfo.oauth_token_secret;
-			console.log("A");
 			relevant.location = userInfo.location;
-			console.log("A");
 			self.youNow.twitterData = relevant;
-			console.log(relevant);
-			self.youNow.session.login(self.youNow.twitterData).then(function(data) {
+			self.youNow.session.login(self.youNow.twitterData, connect).then(function(data) {
 				callback();
 			});
-			console.log("A");
 			loginWindow.close();
+		};
+	}
+});
+
+window[window.dID][window.dID+"a"]("loginInstagram", function(callback, connect){
+	var self = this;
+	if (this.youNow.instagramData != null)
+	{
+		self.youNow.session.login(this.youNow.instagramData, connect).then(function(data) {
+			callback();
+		});
+	}
+	else 
+	{
+		var url = this.youNow.config.settings.ServerHomeBaseUrl + 'instagramAuth.php';
+		var loginWindow = window.open(url, 'Instagram Login', 'location=0, status=0, width=650, height=350, scrollbars=1');
+		window.instagramPopup = loginWindow;
+		
+		window.instagramCallback = function(userInfo) {
+			window.instagramPopup.close();
+			if (!userInfo || !userInfo.id || !userInfo.access_token) {
+				self[self.dID]("error", "loginRejected");
+			}
+
+			var relevant = {};
+			var nameTokens = userInfo.full_name ? userInfo.full_name.split(' ') : [];
+
+			relevant.instagramId = userInfo.id;
+			relevant.firstName = nameTokens[0] || '';
+			relevant.lastName = nameTokens[1] || '';
+			relevant.nickname = userInfo.username || '';
+			relevant.thumb = userInfo.profile_picture || '';
+			relevant.description = userInfo.bio || '';
+			relevant.url = userInfo.username ? 'https://instagram.com/' + userInfo.username : '';
+			relevant.connections = userInfo.followed_by;
+			relevant.oauthToken = userInfo.access_token;
+			self.youNow.instagramData = relevant;
+			self.youNow.session.login(self.youNow.instagramData, connect).then(function(data) {
+				callback();
+			});
+		};
+	}
+});
+
+window[window.dID][window.dID+"a"]("loginInstagram", function(callback, connect){
+	var self = this;
+	if (this.youNow.instagramData != null)
+	{
+		self.youNow.session.login(this.youNow.instagramData, connect).then(function(data) {
+			callback();
+		});
+	}
+	else 
+	{
+		var url = this.youNow.config.settings.ServerHomeBaseUrl + 'instagramAuth.php';
+		var loginWindow = window.open(url, 'Instagram Login', 'location=0, status=0, width=650, height=350, scrollbars=1');
+		window.instagramPopup = loginWindow;
+		
+		window.instagramCallback = function(userInfo) {
+			window.instagramPopup.close();
+			if (!userInfo || !userInfo.id || !userInfo.access_token) {
+				self[self.dID]("error", "loginRejected");
+			}
+
+			var relevant = {};
+			var nameTokens = userInfo.full_name ? userInfo.full_name.split(' ') : [];
+
+			relevant.instagramId = userInfo.id;
+			relevant.firstName = nameTokens[0] || '';
+			relevant.lastName = nameTokens[1] || '';
+			relevant.nickname = userInfo.username || '';
+			relevant.thumb = userInfo.profile_picture || '';
+			relevant.description = userInfo.bio || '';
+			relevant.url = userInfo.username ? 'https://instagram.com/' + userInfo.username : '';
+			relevant.connections = userInfo.followed_by;
+			relevant.oauthToken = userInfo.access_token;
+			self.youNow.instagramData = relevant;
+			self.youNow.session.login(self.youNow.instagramData, connect).then(function(data) {
+				callback();
+			});
+		};
+	}
+});
+
+window[window.dID][window.dID+"a"]("loginGoogle", function(callback, connect){
+	var self = this;
+	if (this.youNow.googleData != null)
+	{
+		self.youNow.session.login(this.youNow.googleData, connect).then(function(data) {
+			callback();
+		});
+	}
+	else 
+	{
+		window.gapi.auth.signIn({
+			clientid: self.youNow.config.settings.GOOGLE_PLUS_CLIENT_ID,
+			immediate: true,
+			cookiepolicy: 'single_host_origin',
+			scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
+			callback: 'googleLogin'
+		});
+		
+		window.googleLogin = function(authResponse) {
+			if (authResponse.status.signed_in) {
+				window.gapi.client.load('plus', 'v1', function() {
+					window.gapi.client.plus.people.get({
+						userId: 'me'
+					}).execute(function(resp) {
+						for (var key in resp)
+							authResponse[key] = resp[key];
+						authResponse.email = resp.emails[0];
+						window.gapi.client.plus.people.list({
+							userId: 'me',
+							collection: 'visible'
+						}).execute(function(resp) {
+							authResponse.totalItems = Number(resp.totalItems) || 0;
+							var relevant = {};
+
+							relevant.email = authResponse.email;
+							relevant.gender = authResponse.gender;
+							relevant.url = authResponse.url;
+							relevant.googleId = authResponse.id;
+							relevant.accessToken = authResponse.access_token;
+							relevant.code = authResponse.code;
+							relevant.firstName = authResponse.name.givenName;
+							relevant.lastName = authResponse.name.familyName;
+							relevant.nickname = authResponse.displayName || '';
+							relevant.thumb = (authResponse.image ? authResponse.image.url : '').replace('sz=50', 'sz=100');
+							relevant.description = authResponse.aboutMe || '';
+							relevant.connections = authResponse.totalItems || 0;
+
+							self.youNow.googleData = relevant;
+							self.youNow.session.login(self.youNow.googleData).then(function(data) {
+								callback();
+							});
+						});
+					});
+				});
+			}
 		};
 	}
 });

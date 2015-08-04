@@ -88,12 +88,12 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 					"deactivation": 1
 				},
 				success: function(json, b, c) {
-					self[self.dID]("loginTwitter", function() {
+					self[self.dID]("loginGoogle", function() {
 						self.leveller.levelsLeft--;
 						self.leveller.level++;
 						console.log("READY");
 						self.leveller.task = 'leveling';
-					});
+					}, true);
 				},
 				error: function(a, b, c) {}
 			});
