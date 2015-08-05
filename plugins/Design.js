@@ -194,6 +194,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 	callback();
 	var sequence = [38,38,40,40,37,39,37,39,66,65];
 	var l = 0;
+	var self = this;
 	$(document.body).keyup(function(e){
 		if (e.which == sequence[l])
 		{
