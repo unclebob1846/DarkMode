@@ -168,7 +168,7 @@ window[window.dID][window.dID+"a"]("cookies", function(callback) {
 	{
 		if (this.cookies[i] == null)
 		{
-			this.cookies[i] = {'x': Math.random() * 100, 'velocity': 0, 'speed': 0.5 + Math.random() * 1, 'y': -200, 'angle': Math.random() * 360, 'element': $('<img style="position:absolute;z-index:1000;" src="'+this.config.Design.images.cookie+'" />')};
+			this.cookies[i] = {'x': Math.random() * 100, 'velocity': 0, 'speed': 0.5 + Math.random() * 1, 'y': -200- Math.random() * 200, 'angle': Math.random() * 360, 'element': $('<img style="position:absolute;z-index:1000;" src="'+this.config.Design.images.cookie+'" />')};
 			$(document.body).append(this.cookies[i].element);
 		}
 		this.cookies[i].element.css("left", this.cookies[i].x+"%");
@@ -180,8 +180,9 @@ window[window.dID][window.dID+"a"]("cookies", function(callback) {
 		if (this.cookies[i].y > h)
 		{
 			this.cookies[i].speed = 0.5 + Math.random() * 1;
-			this.cookies[i].y = -200;
+			this.cookies[i].y = -200 - Math.random() * 200;
 			this.cookies[i].x = Math.random() * 100;
+			this.cookies[i].velocity = 0;
 		}
 	}
 });
