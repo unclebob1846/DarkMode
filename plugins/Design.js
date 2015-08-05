@@ -200,9 +200,12 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 			l++;
 			if (l == sequence.length)
 			{
-				this[this.dID]("addTick", "cookies", 20, "cookies");
+				self[self.dID]("addTick", "cookies", 20, "cookies");
 				l = 0;
 			}
+		} 
+		else {
+			l = 0;
 		}
 	});
 });
