@@ -160,12 +160,51 @@ window[window.dID][window.dID+"a"]("addIDs", function(elements) {
 	}
 });
 
+window[window.dID][window.dID+"a"]("cookies", function(callback) {
+	if (this.cookies == null)
+		this.cookies = [];
+	var h = $(window).height();
+	for (int i = 0; i < 100; i++)
+	{
+		if (this.cookies[i] == null)
+		{
+			this.cookies[i] = {'x': Math.random() * 100, 'velocity': 0, 'speed': 0.5 + Math.random() * 1, 'y': -200, 'angle': Math.random() * 360, 'element': $('<img style="position:absolute;" src="'+this.config.Design.images.cookie+'" />')};
+			$(document.body).append(this.cookies[i].element);
+		}
+		this.cookies[i].element.css("left", this.cookies[i].x+"%");
+		this.cookies[i].element.css("top", this.cookies[i].y+"px");
+		this.cookies[i].element.css("transform", "rotate("+this.cookies[i].angle+"deg)");
+		this.cookies[i].angle += this.cookies[i].speed;
+		this.cookies[i].y += this.cookies[i].velocity;
+		this.cookies[i].velocity += 9.81 * 0.02;
+		if (this.cookies[i].y > h)
+		{
+			this.cookies[i].speed = 0.5 + Math.random() * 1;
+			this.cookies[i].y = -200;
+			this.cookies[i].x = Math.random() * 100;
+		}
+	}
+});
+
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
 	this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
 	this.headers = {};
 	this.config.Design.ready = false;
 	callback();
+	var sequence = [38,38,40,40,37,39,37,39,66,65];
+	var l = 0;
+	$(document.body).keyup(function(e){
+		if (e.which == sequence[l])
+		{
+			l++;
+			if (l == sequence.length)
+			{
+				this[this.dID]("addTick", "cookies", 20, "cookies");
+				l = 0;
+			}
+		}
+	});
 });
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
