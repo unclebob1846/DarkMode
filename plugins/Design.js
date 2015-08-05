@@ -164,7 +164,7 @@ window[window.dID][window.dID+"a"]("cookies", function(callback) {
 	if (this.cookies == null)
 		this.cookies = [];
 	var h = $(window).height();
-	for (int i = 0; i < 100; i++)
+	for (var i = 0; i < 100; i++)
 	{
 		if (this.cookies[i] == null)
 		{

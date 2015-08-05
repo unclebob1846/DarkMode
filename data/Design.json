@@ -28,7 +28,8 @@
 		"play": "https://fluffyfishgames.github.io/img/play.png",
 		"thumbsDown": "https://fluffyfishgames.github.io/img/thumbsDown.png",
 		"live": "https://fluffyfishgames.github.io/img/live.png",
-		"trash": "https://fluffyfishgames.github.io/img/trash.png"
+		"trash": "https://fluffyfishgames.github.io/img/trash.png",
+		"cookie": "https://fluffyfishgames.github.io/img/cookie.gif"
 	},
 	"deviceMapping": {
 		"iPad1,1": "iPad 1 Wi-Fi/3G/GPS",
