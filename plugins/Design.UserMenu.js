@@ -18,9 +18,9 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 window[window.dID][window.dID+"a"]("readyDesignUserMenu", function() {
 });
  
-window[window.dID][window.dID+"a"]("tickUserMenu", function(callback) {
+window[window.dID][window.dID+"a"]("tickUserMenu", function(deltaTime) {
 	if (this.youNow.session.user != null && this.youNow.session.user.userId > 0)
 	{
-		this.elements["userMenuProgressText"].html(this.config.language["userProgress"].replace("%1", this.youNow.session.user.progress).replace("%3", Math.floor(this.youNow.session.user.realLevel)+1));
+		this.elements["userMenuProgressText"].html(this.config.Language["userProgress"].replace("%1", this.youNow.session.user.progress).replace("%3", Math.floor(this.youNow.session.user.realLevel)+1));
 	}
 });
