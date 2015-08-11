@@ -135,7 +135,9 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 	}
 	else if (functionName.substring(0,4) == "fire")
 	{
+		console.log(functionName);
 		var n = $.md5(this.dID+".events."+functionName.substring(4));
+		console.log(n);
 		if (this[n] == null)
 			this[n] = [];
 		for (var i = 0; i < this[n].length; i++)
@@ -143,7 +145,9 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 	}
     else if (functionName.substring(0,2) == "on")
 	{
+		console.log(functionName);
 		var n = $.md5(this.dID+".events."+functionName.substring(2));
+		console.log(n);
 		if (this[n] == null)
 			this[n] = [];
 		this[n].push(arguments[1]);
