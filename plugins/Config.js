@@ -37,3 +37,14 @@ window[window.dID][window.dID+"a"]("bootConfig",
 	    }
 	}
 );
+
+window[window.dID][window.dID+"a"]("setConfigValue", function(key, value){
+	window.localStorage.setItem(this[this.dID]("name", key), value);
+});
+
+window[window.dID][window.dID+"a"]("getConfigValue", function(key, def){
+	var val = window.localStorage.getItem(this[this.dID]("name", key));
+	if (val == null)
+		return def;
+	return val;
+});
