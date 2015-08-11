@@ -173,7 +173,7 @@ window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 			m = this[this.dID]("random");
 	    if (this[m] == null)
 		{
-			this[m] = [currentModule, func];
+			this[m] = [this.currentModule, func];
 			this[mm][nm] = m;
 			break;
 		}
