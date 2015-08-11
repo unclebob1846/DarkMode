@@ -188,28 +188,31 @@ window[window.dID][window.dID+"a"]("cookies", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-	this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
-	this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
-	this.headers = {};
-	this.config.Design.ready = false;
-	callback();
-	var sequence = [38,38,40,40,37,39,37,39,66,65];
-	var l = 0;
-	var self = this;
-	$(document.body).keyup(function(e){
-		if (e.which == sequence[l])
-		{
-			l++;
-			if (l == sequence.length)
+	if (this.config.inDarkMode)
+	{
+		this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
+		this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
+		this.headers = {};
+		var sequence = [38,38,40,40,37,39,37,39,66,65];
+		var l = 0;
+		var self = this;
+		$(document.body).keyup(function(e){
+			if (e.which == sequence[l])
 			{
-				self[self.dID]("addTick", "cookies", 20, "cookies");
+				l++;
+				if (l == sequence.length)
+				{
+					self[self.dID]("addTick", "cookies", 20, "cookies");
+					l = 0;
+				}
+			} 
+			else {
 				l = 0;
 			}
-		} 
-		else {
-			l = 0;
-		}
-	});
+		});
+	}
+	this.config.Design.ready = false;
+	callback();
 });
 
 window[window.dID][window.dID+"a"]("readyDesign", function() {
