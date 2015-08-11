@@ -2,7 +2,7 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 	var self = this;
 	this[this.dID]("onLogin", function(){
 		console.log("LOGIN");
-		self.elements["userMenu"] = $(".user-menu") 
+		self.elements["userMenu"] = $(".user-menu");
 		self.elements["userMenuList"] = self.elements["userMenu"].find("ul");
 		self.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
 		self.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
