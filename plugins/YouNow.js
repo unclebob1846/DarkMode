@@ -66,10 +66,10 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 	callback();
 });
 
-window[window.dID][window.dID+"a"]("readyYouNow", function(callback) {
+window[window.dID][window.dID+"a"]("readyYouNow", function() {
 	if (this.config.inDarkMode)
 	{
-		this[this.dID]("addTick", "checkUser", 200, "checkUser");	
+		this[this.dID]("addTick", "checkUser", 100, "checkUser");	
 		if (this.config.loggedIn)
 			this[this.dID]("fireLogin");
 		else 
