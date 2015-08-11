@@ -30,7 +30,7 @@ function main(w, dID, clientID)
 		window.localStorage.removeItem("browse");
 		window.localStorage.removeItem("darkModeDetected");
 		
-		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js',
+		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js?v='+(Math.random() * 1000000),
 		{
 			dataType: "text",
 			success: function(text, b, c)
