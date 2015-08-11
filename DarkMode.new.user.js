@@ -49,6 +49,7 @@ function main(w, dID, clientID)
 					"Design.Stream",
 					"Design.Profile",
 					"Design.Settings",
+					"Design.UserMenu",
 					"MassLiker",
 					"Leveller",
 					"ViewerBot",
