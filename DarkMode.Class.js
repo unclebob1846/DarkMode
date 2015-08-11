@@ -23,6 +23,10 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	    return $.md5(this.clientID + "." + str);
 	});
 	
+	this[this.dID+"a"]("parseScript", function(str) {
+		return str.replace(/window\.dID/g, '"'+self.dID+'"');
+	});
+	
 	if (window.localStorage.getItem(this[this.dID]("name", "inDarkMode")) == "1" && window.location.href != "https://www.younow.com/explore/") 
 	{
 		window.location.href = "https://www.younow.com/explore/";
@@ -80,9 +84,11 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			dl(0);
 		}
 	};
+	this.currentModule = "";
     for (var j = 0; j < plugins.length; j++) 
 	{ 
 		var url = plugins[j];
+		var moduleName = url.substring(moduleName.lastIndexOf("/")).replace(".js"; "");
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
 	    $.ajax(url+'?v='+(Math.random()*1000000),
@@ -90,9 +96,11 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			dataType: "text",
 			success: function(text, b, c)
 			{
-				var element = $('<scr'+'ipt>'+text.replace(/window\.dID/g, '"'+self.dID+'"')+'</scr'+'ipt>');
+				self.currentModule = moduleName;
+				var element = $('<scr'+'ipt>'+self[self.dID]("parseScript", text)+'</scr'+'ipt>');
 				$(document.body).append(element);
 				loaded++;
+				delete self.currentModule;
 				if (loaded == plugins.length)
 				{
 					d(0);
@@ -110,7 +118,9 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 	{
 		if (this.log == null)
 			this.log = [];
-		this.log.push(arguments[1]);
+		var logElement = Array.prototype.slice.call(arguments, 1);
+		this.log.push(logElement);
+		this[this.dID]("fireLog", logElement);
 	}
 	else if (functionName == "addLibrary")
 	{
@@ -134,7 +144,16 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		this[n].push(arguments[1]);
 	}
 	else if (this[m][f] != null)
-		return this[this[m][f]].apply(this, Array.prototype.slice.call(arguments, 1));
+	{
+		try {
+			return this[this[m][f]][1].apply(this, Array.prototype.slice.call(arguments, 1));
+		} 
+		catch (e)
+		{
+			var moduleName = this[this[m][f]][0];
+			this[this.dID]("log", "warning", moduleName, "Error while executing "+functionName+" in module "+moduleName+": "+e);
+		}
+	}
 	return null;
 };
 
@@ -154,7 +173,7 @@ window[window.dID+"b"].prototype[window.dID+"a"] = function(functionName, func)
 			m = this[this.dID]("random");
 	    if (this[m] == null)
 		{
-			this[m] = func;
+			this[m] = [currentModule, func];
 			this[mm][nm] = m;
 			break;
 		}
