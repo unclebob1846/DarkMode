@@ -55,13 +55,38 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 			return false;
 		};
 		this.youNow["broadcasterService"].trackBroadcaster = function() {
-			return false;
+			return false; 
 		};
 		this.youNow["broadcasterService"].updateBroadcaster = function(a, b, d) {
 			return false;     
 		};
 	}
+	
+	this.config.loggedIn = this.youNow.session.user != null && this.youNow.session.user.userId > 0;
 	callback();
+});
+
+window[window.dID][window.dID+"a"]("readyYouNow", function(callback) {
+	if (this.config.inDarkMode)
+	{
+		this[this.dID]("addTick", "checkUser", 200, "checkUser");	
+		if (this.config.loggedIn)
+			this[this.dID]("fireLogin");
+		else 
+			this[this.dID]("fireLogout");
+	}
+});
+
+window[window.dID][window.dID+"a"]("checkUser", function(callback) {
+	var newStatus = this.youNow.session.user != null && this.youNow.session.user.userId > 0;
+	if (newStatus != this.config.loggedIn)
+	{
+		this.config.loggedIn = newStatus;
+		if (this.config.loggedIn)
+			this[this.dID]("fireLogin");
+		else 
+			this[this.dID]("fireLogout");
+	}
 });
 
 window[window.dID][window.dID+"a"]("getBroadcastPicture", function(broadcastId) {
