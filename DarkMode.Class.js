@@ -78,7 +78,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 				d(i+1);
 			}
 		}
-		else
+		else 
 		{
 			//before we are ready, we need to load all necessary libraries for plugins to work
 			dl(0);
@@ -88,7 +88,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
     for (var j = 0; j < plugins.length; j++) 
 	{ 
 		var url = plugins[j];
-		var moduleName = url.substring(moduleName.lastIndexOf("/")).replace(".js", "");
+		var moduleName = url.substring(url.lastIndexOf("/")).replace(".js", "");
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
 	    $.ajax(url+'?v='+(Math.random()*1000000),
