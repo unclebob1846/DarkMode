@@ -68,7 +68,7 @@ window[window.dID][window.dID+"a"]("bootViewerBot", function(callback) {
 						var k = Math.random() * chars.length;
 						rnd += chars.substring(k, k+1);
 					}
-					pusher.subscribe("public-on-channel_"+json.userId+"_"+rnd+"_LINK");
+					pusher.subscribe("public-on-channel_"+json.userId+"_"+self.youNow.session.user.userId+"_LINK");
 					conns++;
 				}
 				self.config.ViewerBot.list[id] = {element: li, pusher: pusherList};
