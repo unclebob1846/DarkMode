@@ -132,6 +132,8 @@ window[window.dID][window.dID+"a"]("leveller", function(callback) {
 									}
 								});
 							})
+						} else {
+							self.leveller.task = 'leveling';
 						}
 					}, true);
 				},
