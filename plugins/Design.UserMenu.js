@@ -25,6 +25,7 @@ window[window.dID][window.dID+"a"]("readyDesignUserMenu", function() {
 
 window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
 	this.config.Design.UserMenu.buttons[name] = callback;
+	console.log("ADD "+name);
 	
 	if (this.config.loggedIn)
 	{
