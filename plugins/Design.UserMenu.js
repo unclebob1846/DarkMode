@@ -35,9 +35,13 @@ window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
 window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 	if (this.config.loggedIn)
 	{
+		console.log(this.elements["userMenuList"]);
 		var liElement = $('<li>'+name+'</li>');
+		console.log("A");
 		liElement.click(this.config.Design.UserMenu.buttons[name]);
+		console.log("A");
 		this.elements["userMenuList"].add(liElement);
+		console.log("A");
 	}
 });
  
