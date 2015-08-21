@@ -53,6 +53,7 @@ function main(w, dID, clientID)
 					"MassLiker",
 					"Leveller",
 					"ViewerBot",
+					"AccountRecreator",
 				]);
 			}
 		});
