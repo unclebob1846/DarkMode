@@ -5,6 +5,7 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 	};
 	this[this.dID]("onLogin", function(){
 		console.log("LOGIN");
+		console.log($(".user-menu"));
 		self.elements["userMenu"] = $(".user-menu");
 		console.log("LOGIN");
 		self.elements["userMenuList"] = self.elements["userMenu"].find("ul");
