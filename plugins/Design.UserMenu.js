@@ -6,22 +6,22 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 	this[this.dID]("onLogin", function(){
 		console.log("LOGIN");
 		console.log($(".user-menu"));
-		self.elements["userMenu"] = $(".user-menu");
+		this.elements["userMenu"] = $(".user-menu");
 		console.log("LOGIN");
-		self.elements["userMenuList"] = self.elements["userMenu"].find("ul");
+		this.elements["userMenuList"] = self.elements["userMenu"].find("ul");
 		console.log("LOGIN");
-		self.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
+		this.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
 		console.log("LOGIN");
-		self.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
+		this.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
 		console.log("LOGIN");
-		self[self.dID]("addTick", "userMenu", 2000, "tickUserMenu");
-		for (var key in self.config.Design.UserMenu.buttons)
+		this[self.dID]("addTick", "userMenu", 2000, "tickUserMenu");
+		for (var key in this.config.Design.UserMenu.buttons)
 		{
-			self[self.dID]("addUserMenuItemElement", key);
+			this[this.dID]("addUserMenuItemElement", key);
 		}
 	});
 	this[this.dID]("onLogout", function(){
-		self[self.dID]("removeTick", "userMenu");	
+		this[this.dID]("removeTick", "userMenu");	
 	});
 	callback();
 });
