@@ -123,6 +123,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 	{
 		if (this.log == null)
 			this.log = [];
+		console.log(arguments);
 		var logElement = Array.prototype.slice.call(arguments, 1);
 		this.log.push(logElement);
 		this[this.dID]("fireLog", logElement);
