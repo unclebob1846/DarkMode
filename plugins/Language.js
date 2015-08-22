@@ -1,6 +1,7 @@
 window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 	var loading = 0;
 	var loaded = 0;
+	var self = this;
     var d = function(key, url)
 	{
 		$.ajax(url, {
