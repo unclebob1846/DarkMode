@@ -14,6 +14,8 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 			{
 				for (var k in json)
 				{
+					console.log(k + " _ " + dkey + " = ");
+					console.log(json[k]);
 					self.config.Language[k][dkey] = json[k];
 				}
 				loaded++;
