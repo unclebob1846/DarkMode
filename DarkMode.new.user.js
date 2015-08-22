@@ -39,7 +39,6 @@ function main(w, dID, clientID)
 				window[dID] = new window[dID+"b"](dID, clientID, [
 					"Init",
 					"Config",
-					"Language",
 					"Ticker",
 					"Router",
 					"Request",
@@ -54,6 +53,7 @@ function main(w, dID, clientID)
 					"Leveller",
 					"ViewerBot",
 					"AccountRecreator",
+					"Language",
 				]);
 			}
 		});

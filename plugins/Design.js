@@ -219,6 +219,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	if (this.config.inDarkMode)
 	{
 		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/FontAwesome.css");
 		this[this.dID]("addTick", "design", 20, "tickDesign");
 	}
 	this[this.dID]("addButton");
@@ -405,11 +406,11 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	newButton.attr("class", "pull-right btn btn-primary");
 
 	if (this.config.inDarkMode) {
-		newButton.html(this.language["goLight"]);
+		newButton.html(this.language["intoLight"]);
 		newButton.css('background-color', '#999');
 		newButton.css('border-color', '#444');
 	} else {
-		newButton.html(this.language["goDark"]);
+		newButton.html(this.language["intoDark"]);
 		newButton.css('background-color', '#333');
 		newButton.css('border-color', '#111');
 	}

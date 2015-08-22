@@ -1,5 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 	var self = this;
+	this[this.dID]("addLanguageTable", "Design.UserMenu", "https://fluffyfishgames.github.io/language/Design.UserMenu.json");
 	this.config.Design.UserMenu = {
 		buttons: {},
 	};
@@ -8,10 +9,10 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 		this.elements["userMenuList"] = self.elements["userMenu"].find("ul");
 		this.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
 		this.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
-		this.elements["userMenu"].find("[translate=header_profile]").html(this.language.userMenuProfile);
-		this.elements["userMenu"].find("[translate=header_settings]").html(this.language.userMenuSettings);
-		this.elements["userMenu"].find("[translate=header_invite_friends]").html(this.language.userMenuInviteFriends);
-		this.elements["userMenu"].find("[translate=header_logout]").html(this.language.userMenuLogout);
+		this.elements["userMenu"].find("[translate=header_profile]").html(this.language["Design.UserMenu"].profile);
+		this.elements["userMenu"].find("[translate=header_settings]").html(this.language["Design.UserMenu"].settings);
+		this.elements["userMenu"].find("[translate=header_invite_friends]").html(this.language["Design.UserMenu"].inviteFriends);
+		this.elements["userMenu"].find("[translate=header_logout]").html(this.language["Design.UserMenu"].logout);
 		this[self.dID]("addTick", "userMenu", 2000, "tickUserMenu");
 		for (var key in this.config.Design.UserMenu.buttons)
 		{
@@ -45,10 +46,10 @@ window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 		this.elements["userMenuList"].append(liElement);
 	}
 });
- 
+
 window[window.dID][window.dID+"a"]("tickUserMenu", function(deltaTime) {
 	if (this.youNow.session.user != null && this.youNow.session.user.userId > 0)
 	{
-		this.elements["userMenuProgressText"].html(this.language["userProgress"].replace("%1", this.youNow.session.user.progress).replace("%2", Math.floor(this.youNow.session.user.realLevel)+1));
+		this.elements["userMenuProgressText"].html(this.language["Design.UserMenu"].userProgress.replace("%1", this.youNow.session.user.progress).replace("%2", Math.floor(this.youNow.session.user.realLevel)+1));
 	}
 });

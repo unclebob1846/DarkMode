@@ -1,5 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 {
+	this[this.dID]("addLanguageTable", "Design.Profile", "https://fluffyfishgames.github.io/language/Design.Profile.json");
 	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 4);
 	this[this.dID]("addRoute", "previousBroadcast", /[a-zA-Z0-9_\.]+\/channel\/[0-9]+/, "openPreviousBroadcast", 5);
 	this.config.Design.Profile = {};
@@ -18,12 +19,12 @@ window[window.dID][window.dID+"a"]("openPreviousBroadcast", function(parts) {
 	{
 		this.config.Design.Profile.lookForBroadcast = null;
         this.elements["right"].html('<div id="'+this.config.Design.ids.previousStream+'" style="width:100%; height:100%;">'+
-		'<div class="header"><a href="/'+this.config.Design.Profile.data.profile+'/channel">'+this.language.backToProfile+'</a>'+
+		'<div class="header"><a href="/'+this.config.Design.Profile.data.profile+'/channel">'+this.language["Design.Profile"].previousBroadcast.backToProfile+'</a>'+
 		'</div><div id="'+this.config.Design.ids.previousStreamView+'"></div></div>');
         var self = this;
         this[this.dID]("sendRequest", "getVideoPath", {broadcastID: this.config.Design.Profile.broadcasts[parts[2]].media.broadcast.broadcastId}, function(json, success) {
 			var command = 'rtmpdump -r '+json.server+' -y '+json.stream+'?sessionId='+self.youNow.session.user.session+' -p https://www.younow.com/'+self.config.Design.Profile.data.profile+'/channel -o "'+self.config.Design.Profile.data.profile+'_'+self.config.Design.Profile.broadcasts[parts[2]].media.broadcast.dateAired.replace(new RegExp(':', 'g'),"-")+'.mp4"';
-			self.elements["right"].html('<div id="'+self.config.Design.ids.previousStream+'" style="width:100%; height:100%;"><div class="header"><a href="/'+self.config.Design.Profile.data.profile+'/channel">'+self.language.backToProfile+'</a><span id="'+self.config.Design.ids.rtmpDump+'">'+self.language.rtmpDump+'</span><div id="'+self.config.Design.ids.rtmpDumpInfo+'">'+command+'</div></div><div id="'+self.config.Design.ids.previousStreamView+'"></div></div>');
+			self.elements["right"].html('<div id="'+self.config.Design.ids.previousStream+'" style="width:100%; height:100%;"><div class="header"><a href="/'+self.config.Design.Profile.data.profile+'/channel">'+self.language["Design.Profile"].previousBroadcast.backToProfile+'</a><span id="'+self.config.Design.ids.rtmpDump+'">'+self.language["Design.Profile"].previousBroadcast.rtmpDump+'</span><div id="'+self.config.Design.ids.rtmpDumpInfo+'">'+command+'</div></div><div id="'+self.config.Design.ids.previousStreamView+'"></div></div>');
 			self[self.dID]("updateElements");
             self.elements['rtmpDump'].click(function(){
 				if (self.elements['rtmpDumpInfo'].css("display") == "block")
@@ -112,7 +113,7 @@ window[window.dID][window.dID+"a"]("openProfileTab", function(page)
 	{
 		this.elements["dashboardTab"].addClass("active");
 		this.config.Design.Profile.dashboardPage = -1;
-		this.elements["profileContent"].html('<textarea style="width:100%;height:60px;clear:both;float:left;" id="'+this.config.Design.ids["writeComment"]+'"></textarea><button style="display: block; clear:both;float:right;margin-top:5px;" id="'+this.config.Design.ids['postComment']+'" class="btn btn-confirm">' + this.language.post + '</button><div id="'+this.config.Design.ids['dashboardComments']+'" style="clear:both;float:left;margin-top:10px;"></div>');
+		this.elements["profileContent"].html('<textarea style="width:100%;height:60px;clear:both;float:left;" id="'+this.config.Design.ids["writeComment"]+'"></textarea><button style="display: block; clear:both;float:right;margin-top:5px;" id="'+this.config.Design.ids['postComment']+'" class="btn btn-confirm">' + this.language["Design.Profile"].dashboard.post + '</button><div id="'+this.config.Design.ids['dashboardComments']+'" style="clear:both;float:left;margin-top:10px;"></div>');
 		this[this.dID]("updateElements");
 		
 		var self = this;
@@ -236,7 +237,7 @@ window[window.dID][window.dID+"a"]("addProfilePage", function()
 
 window[window.dID][window.dID+"a"]("showPostOptions", function(postId, isComment) 
 {
-	var elx = $('<ul class="optionsMenu"><li>' + this.language.remove + '</li></ul>');
+	var elx = $('<ul class="optionsMenu"><li>' + this.language["Design.Profile"].dashboard.remove + '</li></ul>');
 	this.config.Design.Profile.posts[postId].element.find(".options").first().append(elx);
 	var self = this;
 	
@@ -277,14 +278,14 @@ window[window.dID][window.dID+"a"]("changePostLike", function(postId, isComment)
 		{
 			this.config.Design.Profile.posts[postId].liked = false;
 			this.config.Design.Profile.posts[postId].likes--;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.likes+'" />'+this.language.like+''+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.likes+'" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
 			this[this.dID]("sendRequest", "unlikeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 		else 
 		{
 			this.config.Design.Profile.posts[postId].liked = true;
 			this.config.Design.Profile.posts[postId].likes++;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.thumbsDown+'" />'+this.language.unlike+''+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.thumbsDown+'" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
 			this[this.dID]("sendRequest", "likeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 	}
@@ -343,12 +344,12 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 		this.config.Design.Profile.posts[post.id].likes = parseInt(post.likesCount);
 		if (post.like != null && post.like.user.userId == this.youNow.session.user.userId)
 		{
-			like = '<div class="like"><img src="'+this.config.Design.images.thumbsDown+'" />'+this.language.unlike+''+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
+			like = '<div class="like"><img src="'+this.config.Design.images.thumbsDown+'" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = true;
 		}
 		else 
 		{
-			like = '<div class="like"><img src="'+this.config.Design.images.likes+'" />'+this.language.like+''+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
+			like = '<div class="like"><img src="'+this.config.Design.images.likes+'" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = false;
 		}
 		var el = null;
@@ -388,10 +389,10 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 	'<div id="'+this.config.Design.ids['profileHeader']+'"></div>'+
 	'<div id="'+this.config.Design.ids['profileBottom']+'">'+
 	'<div class="fade">'+
-	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'">' + this.language.dashboard + '</a>'+
-	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'">' + this.language.previousBroadcasts + '</a>'+
-	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language.fansTab.replace("%1", "0") + '</a>'+
-	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language.fanOf.replace("%1", "0") + '</a>'+
+	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'">' + this.language["Design.Profile"].tabs.dashboard + '</a>'+
+	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'">' + this.language["Design.Profile"].tabs.previousBroadcasts + '</a>'+
+	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language["Design.Profile"].tabs.fansTab.replace("%1", "0") + '</a>'+
+	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language["Design.Profile"].tabs.fanOf.replace("%1", "0") + '</a>'+
 	'</div>'+
 	'<div id="'+this.config.Design.ids['profileContent']+'"></div>'+
 	'</div>'+
@@ -476,8 +477,8 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	var createdString = created.toLocaleDateString(this.language.langCode) + ' ' + created.toLocaleTimeString(this.language.langCode);
 	var fanButton = "";
 	var socialButtons = "";
-	this.elements["fansTab"].html(this.language.fansTab.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFans)));
-	this.elements["fanOfTab"].html(this.language.fanOf.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFansOf)));
+	this.elements["fansTab"].html(this.language["Design.Profile"].tabs.fans.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFans)));
+	this.elements["fanOfTab"].html(this.language["Design.Profile"].tabs.fanOf.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFansOf)));
 	if (this.config.Design.Profile.data.facebookId != null && this.config.Design.Profile.data.facebookId > 0)
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.facebook.com/' + this.config.Design.Profile.data.facebookId + '"><img src="' + this.config.Design.images.facebook + '" /></a>';
 	if (this.config.Design.Profile.data.fbfn != null && this.config.Design.Profile.data.fbfn != "")
@@ -492,9 +493,9 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.youtube.com/' + this.config.Design.Profile.data.youTubeUserName + '"><img src="' + this.config.Design.images.youtube + '" /></a>';
 	if (this.youNow.session.user.userId > 0) {
 		if (this.config.Design.Profile.isFan)
-			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float: left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-confirm"><img src="' + this.config.Design.images.removeFan + '" />' + this.language.unfan + '</button>';
+			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float: left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-confirm"><img src="' + this.config.Design.images.removeFan + '" />' + this.language["Design.Profile"].unfan + '</button>';
 		else
-			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float:left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-primary"><img src="' + this.config.Design.images.addFan + '" />' + this.language.fan + '</button>';
+			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float:left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-primary"><img src="' + this.config.Design.images.addFan + '" />' + this.language["Design.Profile"].fan + '</button>';
 	}
 	this.elements["profileHeader"].html('<div class="header">' +
 		'<img src="https://cdn2.younow.com/php/api/channel/getCover/channelId=' + this.config.Design.Profile.data.userId + '" />' +
@@ -508,18 +509,18 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		'<strong><img style="float: left; margin-right: 5px; margin-top: 2px;" src="' + this.config.Design.images.star + '" /><span>' + this.config.Design.Profile.data.level + '</span> ' + this.config.Design.Profile.data.profile + '</strong><br />' +
 		this.config.Design.Profile.data.description + '<br />' +
 		'<div style="float:left; clear: both; margin-top:5px;">' +
-		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language.location + ':</div>' +
+		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language["Design.Profile"].location + ':</div>' +
 		'<div style="float:left; width:150px;">' + location + '</div>' +
-		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language.broadcastsCount + ':</div>' +
+		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language["Design.Profile"].broadcastsCount + ':</div>' +
 		'<div style="float:left; width:150px;">' + this[this.dID]("parseNumber", this.config.Design.Profile.data.broadcastsCount) + '</div>' +
-		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language.dateCreated + ':</div>' +
+		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language["Design.Profile"].dateCreated + ':</div>' +
 		'<div style="float:left; width:150px;">' + createdString + '</div>' +
 		'</div>' +
 		'</div>' +
 		'</div>' +
 		'</div>' +
 		'<div class="buttons">' +
-		socialButtons + fanButton + '<button id="'+this.config.Design.ids.toLive+'" style="float:left;height:32px;line-height:12px;font-weight:bold;margin-left:5px;'+(this.config.Design.Profile.streamData.state == 'onBroadcastPlay'?'display:block;':'display:none;')+'" class="btn btn-primary">'+this.language.toLive+'</button>'+
+		socialButtons + fanButton + '<button id="'+this.config.Design.ids.toLive+'" style="float:left;height:32px;line-height:12px;font-weight:bold;margin-left:5px;'+(this.config.Design.Profile.streamData.state == 'onBroadcastPlay'?'display:block;':'display:none;')+'" class="btn btn-primary">'+this.language["Design.Profile"].toLive+'</button>'+
 		'</div>' +
 		'</div>'
 	);
