@@ -392,7 +392,7 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'">' + this.language["Design.Profile"].tabs.dashboard + '</a>'+
 	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'">' + this.language["Design.Profile"].tabs.previousBroadcasts + '</a>'+
 	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language["Design.Profile"].tabs.fansTab.replace("%1", "0") + '</a>'+
-	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language["Design.Profile"].tabs.fanOf.replace("%1", "0") + '</a>'+
+	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language["Design.Profile"].tabs.fansOf.replace("%1", "0") + '</a>'+
 	'</div>'+
 	'<div id="'+this.config.Design.ids['profileContent']+'"></div>'+
 	'</div>'+
@@ -478,7 +478,7 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 	var fanButton = "";
 	var socialButtons = "";
 	this.elements["fansTab"].html(this.language["Design.Profile"].tabs.fans.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFans)));
-	this.elements["fanOfTab"].html(this.language["Design.Profile"].tabs.fanOf.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFansOf)));
+	this.elements["fanOfTab"].html(this.language["Design.Profile"].tabs.fansOf.replace("%1", this[this.dID]("parseNumber", this.config.Design.Profile.data.totalFansOf)));
 	if (this.config.Design.Profile.data.facebookId != null && this.config.Design.Profile.data.facebookId > 0)
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.facebook.com/' + this.config.Design.Profile.data.facebookId + '"><img src="' + this.config.Design.images.facebook + '" /></a>';
 	if (this.config.Design.Profile.data.fbfn != null && this.config.Design.Profile.data.fbfn != "")
