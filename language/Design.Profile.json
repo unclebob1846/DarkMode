@@ -3,16 +3,16 @@
 	{
 		"previousBroadcast": 
 		{
-			"backToProfile": "Zurück zum Profil",
+			"backToProfile": "ZurÃ¼ck zum Profil",
 			"rtmpDump": "RTMPDump Befehl anzeigen"
 		},
 		"dashboard":
 		{
 			"post": "Absenden",
-			"remove": "Löschen",
-			"like": "Gefällt mir!",
-			"unlike": "Gefällt mir nicht mehr!",
-			"otherLikes": "Gefällt %1 anderen Personen."
+			"remove": "LÃ¶schen",
+			"like": "GefÃ¤llt mir!",
+			"unlike": "GefÃ¤llt mir nicht mehr!",
+			"otherLikes": "GefÃ¤llt %1 anderen Personen."
 		},
 		"tabs":
 		{

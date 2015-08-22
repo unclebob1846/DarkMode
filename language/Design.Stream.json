@@ -1,9 +1,9 @@
 {
 	"de-DE": 
 	{
-		"minChatLevel": "Level %1 zum Chatten benˆtigt.",
+		"minChatLevel": "Level %1 zum Chatten ben√∂tigt.",
 		"in": "in",
-		"chatWarning": "Mit groﬂer Macht kommt groﬂe Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
+		"chatWarning": "Mit gro√üer Macht kommt gro√üe Verantwortung, junger Padawan. \nNutze die Macht weise. \nACHTUNG!: Banngefahr.",
 		"tabs": 
 		{
 			"chat": "Chat",
@@ -26,10 +26,10 @@
 			"maxLikes": "Max. erreichte Likes",
 			"country": "Land",
 			"partner": "Partner",
-			"partnerStatus": ["Kein Partner", "Partner", "Anw‰rter", "Unbekannt"],
+			"partnerStatus": ["Kein Partner", "Partner", "Anw√§rter", "Unbekannt"],
 			"level": "Level",
 			"points": "Punkte",
-			"device": "Ger‰t",
+			"device": "Ger√§t",
 			"browser": "Browser",
 			"connection": "Verbindung",
 			"osVersion": "Betriebssystem",
