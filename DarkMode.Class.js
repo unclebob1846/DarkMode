@@ -4,7 +4,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 	this.plugins = plugins;
 	this.dID = dID;
 	this.clientID = clientID;
-	
+	this.elements = {};
 	this[this.dID+"a"]("random", function()
 	{
 		var a = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
