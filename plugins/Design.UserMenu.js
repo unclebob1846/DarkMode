@@ -4,16 +4,10 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 		buttons: {},
 	};
 	this[this.dID]("onLogin", function(){
-		console.log("LOGIN");
-		console.log($(".user-menu"));
 		this.elements["userMenu"] = $(".user-menu");
-		console.log("LOGIN");
 		this.elements["userMenuList"] = self.elements["userMenu"].find("ul");
-		console.log("LOGIN");
 		this.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
-		console.log("LOGIN");
 		this.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
-		console.log("LOGIN");
 		this[self.dID]("addTick", "userMenu", 2000, "tickUserMenu");
 		for (var key in this.config.Design.UserMenu.buttons)
 		{
@@ -27,6 +21,7 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("readyDesignUserMenu", function() {
+
 });
 
 window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
