@@ -21,7 +21,7 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("readyDesignUserMenu", function() {
-
+	
 });
 
 window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
@@ -38,7 +38,7 @@ window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 	{
 		var liElement = $('<li>'+name+'</li>');
 		liElement.click(this.config.Design.UserMenu.buttons[name]);
-		this.elements["userMenuList"].add(liElement);
+		this.elements["userMenuList"].append(liElement);
 	}
 });
  
