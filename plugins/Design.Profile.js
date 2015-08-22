@@ -391,7 +391,7 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 	'<div class="fade">'+
 	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'">' + this.language["Design.Profile"].tabs.dashboard + '</a>'+
 	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'">' + this.language["Design.Profile"].tabs.previousBroadcasts + '</a>'+
-	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language["Design.Profile"].tabs.fansTab.replace("%1", "0") + '</a>'+
+	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language["Design.Profile"].tabs.fans.replace("%1", "0") + '</a>'+
 	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language["Design.Profile"].tabs.fansOf.replace("%1", "0") + '</a>'+
 	'</div>'+
 	'<div id="'+this.config.Design.ids['profileContent']+'"></div>'+
