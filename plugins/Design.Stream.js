@@ -260,46 +260,46 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'">' + this.language["Design.Stream"].tabs.audience + '</a>'+
 							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'">' + this.language["Design.Stream"].tabs.infos + '</a>'+
 							'<div id="'+this.config.Design.ids['infoList']+'">'+
-								'<h2>'+this.language["Design.Steam"].stats.streamer+'</h2>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.age + ':</div>             <div id="'+this.config.Design.ids["streamInfoAge"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.barsEarned + ':</div>      <div id="'+this.config.Design.ids["streamInfoBarsEarned"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.coins + ':</div>           <div id="'+this.config.Design.ids["streamInfoCoins"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.maxLikes + ':</div>        <div id="'+this.config.Design.ids["streamInfoMaxLikes"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.country + ':</div>         <div id="'+this.config.Design.ids["streamInfoCountry"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.fans + ':</div>            <div id="'+this.config.Design.ids["streamInfoFans"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.partner + ':</div>         <div id="'+this.config.Design.ids["streamInfoPartner"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.level + ':</div>           <div id="'+this.config.Design.ids["streamInfoLevel"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.points + ':</div>          <div id="'+this.config.Design.ids["streamInfoPoints"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.device + ':</div>          <div id="'+this.config.Design.ids["streamInfoDevice"]+'" class="value"></div>'+
-								'<div class="label">' + this.language["Design.Steam"].stats.browser + ':</div>         <div id="'+this.config.Design.ids["streamInfoBrowser"]+'" class="value"></div>'+
-								'<div class="label">' + this.language["Design.Steam"].stats.connection + ':</div>      <div id="'+this.config.Design.ids["streamInfoConnection"]+'" class="value"></div>'+
-								'<div class="label">' + this.language["Design.Steam"].stats.osVersion + ':</div>       <div id="'+this.config.Design.ids["streamInfoOSVersion"]+'" class="value"></div>'+
-								'<div class="label">' + this.language["Design.Steam"].stats.provider + ':</div>        <div id="'+this.config.Design.ids["streamInfoProvider"]+'" class="value"></div>'+
-								'<h2>'+this.language["Design.Steam"].stats.stream+'</h2>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.streamURL + ':</div>       <div id="'+this.config.Design.ids["streamInfoStreamURL"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.displayViewers + ':</div>  <div id="'+this.config.Design.ids["streamInfoDisplayViewers"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.mobileViewers + ':</div>   <div id="'+this.config.Design.ids["streamInfoMobileViewers"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.maxViewers + ':</div>      <div id="'+this.config.Design.ids["streamInfoMaxViewers"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.tag + ':</div>             <div id="'+this.config.Design.ids["streamInfoTag"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.position + ':</div>        <div id="'+this.config.Design.ids["streamInfoPosition"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.reconnects + ':</div>      <div id="'+this.config.Design.ids["streamInfoReconnects"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.featuredTime + ':</div>    <div id="'+this.config.Design.ids["streamInfoFeaturedTime"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.giftsValue + ':</div>      <div id="'+this.config.Design.ids["streamInfoGiftsValue"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.newFans + ':</div>         <div id="'+this.config.Design.ids["streamInfoNewFans"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.bitrate + ':</div>         <div id="'+this.config.Design.ids["streamInfoBitrate"]+'" class="value"></div>' +
-								'<div class="label">' + this.language["Design.Steam"].stats.fps + ':</div>             <div id="'+this.config.Design.ids["streamInfoFPS"]+'" class="value"></div>'+
+								'<h2>'+this.language["Design.Stream"].stats.streamer+'</h2>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.age + ':</div>             <div id="'+this.config.Design.ids["streamInfoAge"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.barsEarned + ':</div>      <div id="'+this.config.Design.ids["streamInfoBarsEarned"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.coins + ':</div>           <div id="'+this.config.Design.ids["streamInfoCoins"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.maxLikes + ':</div>        <div id="'+this.config.Design.ids["streamInfoMaxLikes"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.country + ':</div>         <div id="'+this.config.Design.ids["streamInfoCountry"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.fans + ':</div>            <div id="'+this.config.Design.ids["streamInfoFans"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.partner + ':</div>         <div id="'+this.config.Design.ids["streamInfoPartner"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.level + ':</div>           <div id="'+this.config.Design.ids["streamInfoLevel"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.points + ':</div>          <div id="'+this.config.Design.ids["streamInfoPoints"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.device + ':</div>          <div id="'+this.config.Design.ids["streamInfoDevice"]+'" class="value"></div>'+
+								'<div class="label">' + this.language["Design.Stream"].stats.browser + ':</div>         <div id="'+this.config.Design.ids["streamInfoBrowser"]+'" class="value"></div>'+
+								'<div class="label">' + this.language["Design.Stream"].stats.connection + ':</div>      <div id="'+this.config.Design.ids["streamInfoConnection"]+'" class="value"></div>'+
+								'<div class="label">' + this.language["Design.Stream"].stats.osVersion + ':</div>       <div id="'+this.config.Design.ids["streamInfoOSVersion"]+'" class="value"></div>'+
+								'<div class="label">' + this.language["Design.Stream"].stats.provider + ':</div>        <div id="'+this.config.Design.ids["streamInfoProvider"]+'" class="value"></div>'+
+								'<h2>'+this.language["Design.Stream"].stats.stream+'</h2>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.streamURL + ':</div>       <div id="'+this.config.Design.ids["streamInfoStreamURL"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.displayViewers + ':</div>  <div id="'+this.config.Design.ids["streamInfoDisplayViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.mobileViewers + ':</div>   <div id="'+this.config.Design.ids["streamInfoMobileViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.maxViewers + ':</div>      <div id="'+this.config.Design.ids["streamInfoMaxViewers"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.tag + ':</div>             <div id="'+this.config.Design.ids["streamInfoTag"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.position + ':</div>        <div id="'+this.config.Design.ids["streamInfoPosition"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.reconnects + ':</div>      <div id="'+this.config.Design.ids["streamInfoReconnects"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.featuredTime + ':</div>    <div id="'+this.config.Design.ids["streamInfoFeaturedTime"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.giftsValue + ':</div>      <div id="'+this.config.Design.ids["streamInfoGiftsValue"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.newFans + ':</div>         <div id="'+this.config.Design.ids["streamInfoNewFans"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.bitrate + ':</div>         <div id="'+this.config.Design.ids["streamInfoBitrate"]+'" class="value"></div>' +
+								'<div class="label">' + this.language["Design.Stream"].stats.fps + ':</div>             <div id="'+this.config.Design.ids["streamInfoFPS"]+'" class="value"></div>'+
 							'</div>'+
 							'<ul id="'+this.config.Design.ids['viewerList']+'"></ul>'+
 							'<ul id="'+this.config.Design.ids['chatMessages']+'"></ul>'+
 							'<div id="'+this.config.Design.ids['chatOptions']+'">'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" checked id="'+this.config.Design.ids['writeInChat']+'" />' + this.language["Design.Steam"].chat.writeInChat + 
+									'<input type="radio" name="writeTo" checked id="'+this.config.Design.ids['writeInChat']+'" />' + this.language["Design.Stream"].chat.writeInChat + 
 								'</div>'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTrending']+'" />' + this.language["Design.Steam"].chat.writeInTrending + 
+									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTrending']+'" />' + this.language["Design.Stream"].chat.writeInTrending + 
 								'</div>'+
 								'<div class="option">'+
-									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTag']+'" />' + this.language["Design.Steam"].chat.writeInTag + '<input type="text" id="intoTag" />'+
+									'<input type="radio" name="writeTo" id="'+this.config.Design.ids['writeInTag']+'" />' + this.language["Design.Stream"].chat.writeInTag + '<input type="text" id="intoTag" />'+
 								'</div>'+
 							'</div>'+
 							'<textarea id="'+this.config.Design.ids['chatMessage']+'" maxlength="150"></textarea>'+
