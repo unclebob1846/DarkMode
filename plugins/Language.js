@@ -1,8 +1,12 @@
 window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 	var loading = 0;
+	for (var key in this.config.languageTables)
+	{
+		loading++;
+	}
 	var loaded = 0;
 	var self = this;
-    var d = function(key, url)
+    var d = function(dkey, url)
 	{
 		$.ajax(url, {
 			dataType: "json",
@@ -10,7 +14,7 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 			{
 				for (var k in json)
 				{
-					self.config.Language[k][key] = json[k];
+					self.config.Language[k][dkey] = json[k];
 				}
 				loaded++;
 				if (loaded == loading)
@@ -33,7 +37,6 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 	
 	for (var key in this.config.languageTables)
 	{
-		loading++;
 		d(key, this.config.languageTables[key]);
 	}
 });
