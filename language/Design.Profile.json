@@ -5,7 +5,7 @@
 		{
 			"backToProfile": "Zurück zum Profil",
 			"rtmpDump": "RTMPDump Befehl anzeigen"
-		}
+		},
 		"dashboard":
 		{
 			"post": "Absenden",
@@ -13,7 +13,7 @@
 			"like": "Gefällt mir!",
 			"unlike": "Gefällt mir nicht mehr!",
 			"otherLikes": "Gefällt %1 anderen Personen."
-		}
+		},
 		"tabs":
 		{
 			"dashboard": "Pinnwand",
