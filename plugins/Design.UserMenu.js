@@ -49,6 +49,6 @@ window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 window[window.dID][window.dID+"a"]("tickUserMenu", function(deltaTime) {
 	if (this.youNow.session.user != null && this.youNow.session.user.userId > 0)
 	{
-		this.elements["userMenuProgressText"].html(this.language["userProgress"].replace("%1", this.youNow.session.user.progress).replace("%3", Math.floor(this.youNow.session.user.realLevel)+1));
+		this.elements["userMenuProgressText"].html(this.language["userProgress"].replace("%1", this.youNow.session.user.progress).replace("%2", Math.floor(this.youNow.session.user.realLevel)+1));
 	}
 });
