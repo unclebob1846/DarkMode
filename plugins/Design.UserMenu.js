@@ -8,6 +8,10 @@ window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 		this.elements["userMenuList"] = self.elements["userMenu"].find("ul");
 		this.elements["userMenuPanel"] = self.elements["userMenuList"].find(".user");
 		this.elements["userMenuProgressText"] = self.elements["userMenuPanel"].find(".user-progress-text");
+		this.elements["userMenu"].find("[translate=header_profile]").html(this.language.userMenuProfile);
+		this.elements["userMenu"].find("[translate=header_settings]").html(this.language.userMenuSettings);
+		this.elements["userMenu"].find("[translate=header_invite_friends]").html(this.language.userMenuInviteFriends);
+		this.elements["userMenu"].find("[translate=header_logout]").html(this.language.userMenuLogout);
 		this[self.dID]("addTick", "userMenu", 2000, "tickUserMenu");
 		for (var key in this.config.Design.UserMenu.buttons)
 		{
