@@ -6,9 +6,9 @@ window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 	this.config.Design.Profile = {};
 	this[this.dID]("addIDs", ['dashboardComments', 'writeComment', 'postComment', 'dashboardTab', 'previousBroadcastsTab', 'fansTab', 'fanOfTab', 'profile', 'profileHeader', 'profileBottom', 'profileContent', 'profilePage', 'toLive', 'fanButton', 'previousStream', 'previousStreamView', 'rtmpDumpInfo', 'rtmpDump']);
 	this[this.dID]("onPageChange", function(){
-		if (self.config.Router.currentPage != "profile")
+		if (this.config.Router.currentPage != "profile")
 		{
-			self[self.dID]("removeTick", "updateProfileStream");
+			this[this.dID]("removeTick", "updateProfileStream");
 		}
 	});
 	callback();
