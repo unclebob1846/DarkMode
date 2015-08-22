@@ -17,6 +17,7 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 					self.config.Language[k][dkey] = json[k];
 				}
 				loaded++;
+				console.log(dkey + " _ " + loading + " / " + loaded);
 				if (loaded == loading)
 				{
 					self.language = self.config.Language["de-DE"];
@@ -26,6 +27,7 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 			error: function(a, b, c)
 			{
 				loaded++;
+				console.log(dkey + " error_ " + loading + " / " + loaded);
 				if (loaded == loading)
 				{
 					self.language = self.config.Language["de-DE"];
