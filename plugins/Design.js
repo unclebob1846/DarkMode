@@ -481,7 +481,6 @@ window[window.dID][window.dID+"a"]("applyDesign", function()
 	$('.nav-logo').append($('<img src="' + this.config.Design.images.logo + '" style="width:auto;" height="40" />'));
 	$('.search-field').attr("placeholder", "Search AttentionWhore");
 	this.page = $('<div id="'+this.config.Design.ids.darkPage+'"></div>');
-	this.elements = {};
 
 	var sideBarClass = "";
 	var width = 200;
