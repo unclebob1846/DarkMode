@@ -157,7 +157,8 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		catch (e)
 		{
 			var moduleName = this[this[m][f]][0];
-			this[this.dID]("log", "warning", moduleName, "Error while executing "+functionName+" in module "+moduleName+": "+e);
+			var error = new Error();
+			this[this.dID]("log", "warning", moduleName, "Error while executing "+functionName+" in module "+moduleName+": "+error.stack);
 		}
 	}
 	return null;

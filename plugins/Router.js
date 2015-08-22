@@ -42,8 +42,6 @@ window[window.dID][window.dID+"a"]("tickRouter", function(deltaTime) {
 				}
 				this[this.dID](route.functionName, parts);
 			}
-			console.log(this.config.Router.lastURL);
-			console.log(window.location.href);
 			this.config.Router.lastURL = window.location.href;
 		}
 	}
