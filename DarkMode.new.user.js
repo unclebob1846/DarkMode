@@ -49,9 +49,7 @@ function main(w, dID, clientID)
 					"Design.Profile",
 					"Design.Settings",
 					"Design.UserMenu",
-					"MassLiker",
 					"Leveller",
-					"ViewerBot",
 					"AccountRecreator",
 					"Language",
 				]);
