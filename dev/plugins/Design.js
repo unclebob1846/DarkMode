@@ -27,15 +27,12 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 		var loaded = 0;
 		this.config.Design.installedThemes = {};
 		
-		console.log("A");
 		var d = function(url)
 		{
-			console.log("load");
 			$.ajax(url+"?v="+(Math.random()*100000), {
 				dataType: "text",
 				success: function(text, b, c)
 				{
-					console.log("B");
 					var start = text.indexOf("/*");
 					var end = text.indexOf("*/");
 					var header = text.substring(start + 2, end);
@@ -62,7 +59,6 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 				},
 				error: function(a, b, c)
 				{
-					console.log("C");
 					loaded++;
 					if (loading == loaded) 
 					{
@@ -76,6 +72,9 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 		{
 			d(this.config.Design.themes[i]);
 		}
+	}
+	else {
+		callback();
 	}
 	this.config.Design.ready = false;
 });
