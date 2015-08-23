@@ -70,7 +70,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 		
 		for (var i = 0; i < this.config.Design.themes.length; i++)
 		{
-			d(config.Design.themes[i]);
+			d(this.config.Design.themes[i]);
 		}
 	}
 	this.config.Design.ready = false;
