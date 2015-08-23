@@ -32,7 +32,7 @@ function main(w, dID, clientID, folder)
 		window.localStorage.removeItem("darkModeDetected");
 		
 		
-		$.ajax('https://fluffyfishgames.github.io/'+folder'+DarkMode.Class.js?v='+(Math.random() * 1000000),
+		$.ajax('https://fluffyfishgames.github.io/'+folder+'DarkMode.Class.js?v='+(Math.random() * 1000000),
 		{
 			dataType: "text",
 			success: function(text, b, c)
