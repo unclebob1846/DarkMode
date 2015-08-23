@@ -13,8 +13,11 @@
 .bright-background-color {
 	background: #555;
 }
-.brightest-background-color {
+.brighter-background-color {
 	background: #666;
+}
+.brightest-background-color {
+	background: #777;
 }
 
 body,
@@ -24,7 +27,7 @@ html {
     font-family: Segoe UI;
 }
 .navbar {
-	@extend .brightest-background-color;
+	@extend .brighter-background-color;
     border-bottom: 0px;
     border-bottom: 1px solid #777 !important;
 }
@@ -485,10 +488,10 @@ textarea {
 	clear: both;
 }
 #settings .tabBar li {
+	@extend .dark-background-color;
     height: 20px;
     display: block;
     float: left;
-    background: #333;
     height: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -503,13 +506,13 @@ textarea {
 
 .highlight
 {
-	background: #666;
+	@extend .brighter-background-color;
 	border-bottom: 1px solid #777;
 }
 
 .normal
 {
-	background: #333;
+	@extend .dark-background-color;
 	border-bottom: 1px solid #666;
 }
 
@@ -523,12 +526,12 @@ textarea {
     clear: both;
 }
 #darkPage #left li .header {
+	@extend .bright-background-color;
     width: 100%;
     border-bottom: 1px solid #777;
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background: #555;
     height: 30px;
     color: #ddd;
     font-weight: bold;
@@ -551,17 +554,17 @@ textarea {
     height: calc(100% - 50px);
 }
 #darkPage #left {
+	@extend .dark-background-color;
     float: left;
     width: 200px;
     border-right: 1px solid #777;
     height: 100%;
-    background: #333;
 }
 #darkPage #right {
     float: left;
     width: calc(100% - 201px);
     height: 100%;
-    background: #000;
+    @extend .background-color;
 }
 #darkPage #userList {
     padding: 20px;
@@ -571,12 +574,12 @@ textarea {
     overflow-y: auto;
 }
 #darkPage .userProfile {
+    @extend .dark-background-color;
     float: left;
     display: block;
     width: 142px;
     height: 185px;
     margin: 5px;
-    background: #333;
     border: 1px solid #555;
     border-radius: 5px;
 }
@@ -683,13 +686,13 @@ textarea {
     height: 100%;
 }
 #streamInfo {
+	@extend .dark-background-color;
     width: 100%;
     line-height: 30px;
     color: #ddd;
     height: 30px;
     float: left;
     clear: both;
-    background: #333;
     border-bottom: 1px solid #555;
 }
 #streamInfo i {
@@ -713,9 +716,9 @@ textarea {
     height: calc(100% - 30px);
 }
 #stream #streamBar {
+	@extend .dark-background-color;
     width: 100%;
     height: 30px;
-    background: #333;
     color: #eee;
 	padding-left: 5px;
 	padding-right: 5px;
@@ -751,6 +754,7 @@ textarea {
 }
 
 #stream #chat a.tab {
+	@extend .dark-background-color;
     cursor: pointer;
     color: #ddd;
     padding-left: 10px;
@@ -763,7 +767,6 @@ textarea {
     line-height: 25px;
     width: 119px;
     border-right: 1px solid #666;
-    background: #333;
 }
 #stream #chat a.last {
     border-right: none !important;
@@ -771,7 +774,7 @@ textarea {
 }
 #stream #chat a:hover.tab,
 #stream #chat a.active {
-    background: #555;
+	@extend .bright-background-color;
 }
 #stream #infoList {
     display: none;
@@ -867,12 +870,12 @@ textarea {
     max-width: 270px;
 }
 #stream #chatOptions {
+	@extend .darker-background-color;
     padding: 10px;
     color: #ddd;
     width: 360px;
     height: 95px;
     border-top: 1px solid #555;
-    background: #222;
 }
 #stream #chatOptions input {
     margin-left: 5px;
@@ -880,12 +883,12 @@ textarea {
     color: #000;
 }
 #stream #chat textarea {
+    @extend .dark-background-color;
     height: 50px;
     width: 360px;
     padding: 5px;
     border: 1px solid #555;
     color: #eee;
-    background: #333;
     max-width: 360px;
     max-height: 50px;
 }
@@ -905,10 +908,10 @@ textarea {
     display: inline-block;
 }
 #tooltip {
+    @extend .dark-background-color;
     color: #ddd;
     position: absolute;
     z-index: 10000;
-    background: #333;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -931,13 +934,13 @@ textarea {
 }
 
 #tooltip .title {
+    @extend .brighter-background-color;
     float: left;
     padding-top: 4px;
     padding-left: 12px;
     clear: both;
     width: 100%;
     height: 25px;
-    background: #666;
     color: #ddd;
     font-weight: bold;
     font-size: 13px;
@@ -958,25 +961,27 @@ textarea {
     margin-left: 5px;
 }
 #expandArrow {
+    @extend .bright-background-color;
 	float: right !important;
 	width: 10px !important;
 	height: 100% !important;
-	background: #555;
 	border-left: 1px solid #777;
 	cursor: pointer;
 }
 
 .arrowExpand {
-	background: #555 url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat !important;
+    @extend .bright-background-color;
+	background: url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat !important;
 }
 
 .arrowDeflate {
-	background: #555 url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat !important;
+    @extend .bright-background-color;
+	background: url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat !important;
 }
 
 
 .dropdown-menu {
-    background: #555 !important;
+    @extend .bright-background-color;
 }
 .dropdown-menu li {
     border-top-color: #666 !important;
@@ -985,11 +990,11 @@ textarea {
     color: #eee !important;
 }
 .dropdown-menu li a:hover {
-    background: #666 !important;
+    @extend .brighter-background-color;
 }
 .dropdown-menu .active,
 .searchResult-more {
-    background: #777 !important;
+    @extend .brightest-background-color;
 }
 span {
     color: #fff !important;
@@ -1008,7 +1013,7 @@ span {
     background: none !important;
 }
 .user {
-    background: #777 !important;
+    @extend .brightest-background-color;
     color: #eee !important;
 }
 .ynicon-carrot-up {
