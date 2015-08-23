@@ -28,7 +28,9 @@ function main(w, dID, clientID)
 		window.localStorage.removeItem("config.playSounds");
 		window.localStorage.removeItem("inDarkMode");
 		window.localStorage.removeItem("browse");
+		window.localStorage.removeItem("lastVersion");
 		window.localStorage.removeItem("darkModeDetected");
+		
 		
 		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js?v='+(Math.random() * 1000000),
 		{
