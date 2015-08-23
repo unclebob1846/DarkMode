@@ -219,7 +219,7 @@ window[window.dID][window.dID+"a"]("parseLikeCostTooltip", function(data) {
 });
 
 window[window.dID][window.dID+"a"]("parseNobodyLikesTooltip", function(data) {
-	this.elements["tooltip"].html('<div style="padding:5px;"><i class="fa fa-exclamation-triangle" />' + this.language["Design.Stream"].nobodyLikes.replace("%1", data.username) + '</div>');
+	this.elements["tooltip"].html('<div style="padding:5px;"><i style="margin-right:5px;" class="fa fa-exclamation-triangle" />' + this.language["Design.Stream"].nobodyLikes.replace("%1", data.username) + '</div>');
 });
 		
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {

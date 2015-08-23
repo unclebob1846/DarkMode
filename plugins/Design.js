@@ -358,7 +358,7 @@ window[window.dID][window.dID+"a"]("parseStreamTooltip", function(data) {
 	if (data["likes"] != null)
 		extra += '<div class="value"><i class="icon fa fa-thumbs-up" /><span>' + this[this.dID]("parseNumber", data["likes"]) + '</span></div>';
 	if (data["shares"] != null)
-		extra += '<div class="value"><i class="icon fa fa-share" /><span>' + this[this.dID]("parseNumber", data["shares"]) + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-bullhorn" /><span>' + this[this.dID]("parseNumber", data["shares"]) + '</span></div>';
 	if (data["fans"] != null)
 		extra += '<div class="value"><i class="icon fa fa-users" /><span>' + this[this.dID]("parseNumber", data["fans"]) + '</span></div>';
 	if (data["isWatching"] != null)

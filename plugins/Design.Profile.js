@@ -278,14 +278,14 @@ window[window.dID][window.dID+"a"]("changePostLike", function(postId, isComment)
 		{
 			this.config.Design.Profile.posts[postId].liked = false;
 			this.config.Design.Profile.posts[postId].likes--;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.likes+'" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-up" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
 			this[this.dID]("sendRequest", "unlikeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 		else 
 		{
 			this.config.Design.Profile.posts[postId].liked = true;
 			this.config.Design.Profile.posts[postId].likes++;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<img src="'+this.config.Design.images.thumbsDown+'" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-down" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
 			this[this.dID]("sendRequest", "likeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 	}
@@ -319,10 +319,10 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 					'<div style="float:left; width: 200px;">' +
 					'<strong>' + d.toLocaleDateString(this.language.langCode) + ' ' + d.toLocaleTimeString(this.language.langCode) + '</strong>' +
 					'<small style="clear:both;" class="label">#' + this[this.dID]("parseNumber", post.media.broadcast.tags) + '</small>' +
-					'<img class="icon" src="' + this.config.Design.images.views + '"><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.totalViewers) + '</small>' +
-					'<img class="icon" src="' + this.config.Design.images.time + '"><small class="label">' + this[this.dID]("parseTime", post.media.broadcast.broadcastLength) + '</small>' +
-					'<img class="icon" src="' + this.config.Design.images.likes + '"><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.totalLikes) + '</small>' +
-					'<img class="icon" src="' + this.config.Design.images.shares + '"><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.shares) + '</small>' +
+					'<i class="icon fa fa-clock-o" /><small class="label">' + this[this.dID]("parseTime", post.media.broadcast.broadcastLength) + '</small>' +
+					'<i class="icon fa fa-eye" /><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.totalViewers) + '</small>' +
+					'<i class="icon fa fa-thumbs-up" /><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.totalLikes) + '</small>' +
+					'<i class="icon fa fa-bullhorn" /><small class="label">' + this[this.dID]("parseNumber", post.media.broadcast.shares) + '</small>' +
 					'</div>' +
 					'<div style="float:right; width: calc(100% - 210px);">' +
 					gifts +
@@ -337,26 +337,26 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 
 		var options = "";
 		if (post.user.userId == this.youNow.session.user.userId || this.config.Design.Profile.data.userId == this.youNow.session.user.userId)
-			options = '<div class="options"><img src="' + this.config.Design.images.arrowDown + '" /></div>';
+			options = '<div class="options"><i class="icon fa fa-arrow-circle-down" /></div>';
 		
 		var like = "";		
 		this.config.Design.Profile.posts[post.id] = {};
 		this.config.Design.Profile.posts[post.id].likes = parseInt(post.likesCount);
 		if (post.like != null && post.like.user.userId == this.youNow.session.user.userId)
 		{
-			like = '<div class="like"><img src="'+this.config.Design.images.thumbsDown+'" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
+			like = '<div class="like"><i class="icon fa fa-thumbs-down" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = true;
 		}
 		else 
 		{
-			like = '<div class="like"><img src="'+this.config.Design.images.likes+'" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
+			like = '<div class="like"><i class="icon fa fa-thumbs-up" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = false;
 		}
 		var el = null;
 		if (sub == true)
-			el = $('<div class="reply"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.Design.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this[this.dID]("translateTime", post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like);
+			el = $('<div class="reply"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><i class="icon fa fa-star" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this[this.dID]("translateTime", post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like);
 		else
-			el = $('<div class="entry"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><img src="' + this.config.Design.images.star + '" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this[this.dID]("translateTime", post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like + comment + '</div>');
+			el = $('<div class="entry"><a class="header" href="/' + post.user.profileUrlString + '"><img src="' + this[this.dID]("getProfilePicture", post.user.userId) + '"/><div><strong><i class="icon fa fa-star" /><span>' + post.user.level + '</span> ' + post.user.firstName + ' ' + post.user.lastName + '</strong><small>' + this[this.dID]("translateTime", post.timeAgo) + '</small></div></a>' + options + '<div class="content">' + content + '</div>' + like + comment + '</div>');
 			
 		if (post.replies != null) {
 			for (var j = 0; j < post.replies.length; j++) {
@@ -493,9 +493,9 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		socialButtons += '<a style="margin-left: 5px; float: left;" href="http://www.youtube.com/' + this.config.Design.Profile.data.youTubeUserName + '"><img src="' + this.config.Design.images.youtube + '" /></a>';
 	if (this.youNow.session.user.userId > 0) {
 		if (this.config.Design.Profile.isFan)
-			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float: left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-confirm"><img src="' + this.config.Design.images.removeFan + '" />' + this.language["Design.Profile"].unfan + '</button>';
+			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float: left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-confirm"><i class="icon fa fa-user-times" />' + this.language["Design.Profile"].unfan + '</button>';
 		else
-			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float:left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-primary"><img src="' + this.config.Design.images.addFan + '" />' + this.language["Design.Profile"].fan + '</button>';
+			fanButton = '<button style="height:32px; margin-left: 5px; cursor:pointer;float:left;" id="'+this.config.Design.ids.fanButton+'" class="btn btn-primary"><i class="icon fa fa-user-plus" />' + this.language["Design.Profile"].fan + '</button>';
 	}
 	this.elements["profileHeader"].html('<div class="header">' +
 		'<img src="https://cdn2.younow.com/php/api/channel/getCover/channelId=' + this.config.Design.Profile.data.userId + '" />' +
@@ -506,7 +506,7 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		'<img style="height: 200px;" src="https://cdn2.younow.com/php/api/channel/getImage/channelId=' + this.config.Design.Profile.data.userId + '" />' +
 		'<div style="'+(this.config.Design.Profile.streamData.state == 'onBroadcastPlay'?'display:block;':'display:none;')+'" class="live" id="isLive"><img src="'+this.config.Design.images.live+'" /></div>'+
 		'<div class="info">' +
-		'<strong><img style="float: left; margin-right: 5px; margin-top: 2px;" src="' + this.config.Design.images.star + '" /><span>' + this.config.Design.Profile.data.level + '</span> ' + this.config.Design.Profile.data.profile + '</strong><br />' +
+		'<strong><i class="icon fa fa-star" /><span>' + this.config.Design.Profile.data.level + '</span> ' + this.config.Design.Profile.data.profile + '</strong><br />' +
 		this.config.Design.Profile.data.description + '<br />' +
 		'<div style="float:left; clear: both; margin-top:5px;">' +
 		'<div style="float: left;clear:both;width:120px;font-weight:bold;">' + this.language["Design.Profile"].location + ':</div>' +
