@@ -885,6 +885,11 @@ textarea {
     float: left;
     min-width: 200px;
 }
+
+#tooltip .title i {
+	margin-right: 5px;
+}
+
 #tooltip .title {
     float: left;
     padding-top: 4px;
