@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("bootLanguage", function(callback) {
 	var self = this;
     var d = function(dkey, url)
 	{
-		$.ajax(url, {
+		$.ajax(url+"?v="+(Math.random() * 100000), {
 			dataType: "json",
 			success: function(json, b, c)
 			{
