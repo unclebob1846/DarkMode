@@ -113,7 +113,7 @@ window[window.dID][window.dID+"a"]("openProfileTab", function(page)
 	{
 		this.elements["dashboardTab"].addClass("active");
 		this.config.Design.Profile.dashboardPage = -1;
-		this.elements["profileContent"].html('<textarea style="width:100%;height:60px;clear:both;float:left;" id="'+this.config.Design.ids["writeComment"]+'"></textarea><button style="display: block; clear:both;float:right;margin-top:5px;" id="'+this.config.Design.ids['postComment']+'" class="btn btn-confirm">' + this.language["Design.Profile"].dashboard.post + '</button><div id="'+this.config.Design.ids['dashboardComments']+'" style="clear:both;float:left;margin-top:10px;"></div>');
+		this.elements["profileContent"].html('<textarea style="width:100%;height:60px;clear:both;float:left;" id="'+this.config.Design.ids["writeComment"]+'"></textarea><button style="display: block; clear:both;float:right;margin-top:5px;" id="'+this.config.Design.ids['postComment']+'" class="btn btn-confirm"><i class="icon fa fa-commenting" />' + this.language["Design.Profile"].dashboard.post + '</button><div id="'+this.config.Design.ids['dashboardComments']+'" style="clear:both;float:left;margin-top:10px;"></div>');
 		this[this.dID]("updateElements");
 		
 		var self = this;
@@ -520,7 +520,7 @@ window[window.dID][window.dID+"a"]("updateProfilePage", function()
 		'</div>' +
 		'</div>' +
 		'<div class="buttons">' +
-		socialButtons + fanButton + '<button id="'+this.config.Design.ids.toLive+'" style="float:left;height:32px;line-height:12px;font-weight:bold;margin-left:5px;'+(this.config.Design.Profile.streamData.state == 'onBroadcastPlay'?'display:block;':'display:none;')+'" class="btn btn-primary">'+this.language["Design.Profile"].toLive+'</button>'+
+		socialButtons + fanButton + '<button id="'+this.config.Design.ids.toLive+'" style="float:left;height:32px;line-height:12px;font-weight:bold;margin-left:5px;'+(this.config.Design.Profile.streamData.state == 'onBroadcastPlay'?'display:block;':'display:none;')+'" class="btn btn-primary"><i class="icon fa fa-arrow-right" />'+this.language["Design.Profile"].toLive+'</button>'+
 		'</div>' +
 		'</div>'
 	);
