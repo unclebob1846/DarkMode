@@ -1,23 +1,22 @@
-
-#profile .entry .reply,
-#profile #profileHeader .userBar,
+#profile .entry .reply ,
+#profile #profileHeader .userBar ,
 #stream #chatOptions {
 	background-color: #222 !important;
 }
 
-select,
-input[type=text],
-input[type=number],
-textarea,
-#previousStream .header,
-#profile .entry,
-#profile .entry .comment input,
-#settings .tabBar li,
+select ,
+input[type=text] ,
+input[type=number] ,
+textarea ,
+#previousStream .header ,
+#profile .entry ,
+#profile .entry .comment input ,
+#settings .tabBar li ,
 .normal,
-#darkPage #left,
+#darkPage #left ,
 #darkPage .userProfile,
-#streamInfo,
-#stream #streamBar,
+#streamInfo ,
+#stream #streamBar ,
 #stream #chat a.tab,
 #stream #chat textarea,
 #previousStream .header div,
@@ -25,42 +24,42 @@ textarea,
 	background-color: #333 !important;
 }
 
-#previousStream .header a:hover,
-#previousStream .header span:hover,
-#profile .entry .options .optionsMenu,
+#previousStream .header a:hover ,
+#previousStream .header span:hover ,
+#profile .entry .options .optionsMenu ,
 #profile .entry .options .optionsMenu li {
 	background-color: #444 !important;
 }
 
-#profile .entry .options .optionsMenu li:hover,
-#darkPage #left li .header,
-#stream #chat a:hover.tab,
-#stream #chat a.active,
-#expandArrow,
-.arrowExpand,
-.arrowDeflate,
-.dropdown-menu,
-#settings .tabBar li.active,
+#profile .entry .options .optionsMenu li:hover ,
+#darkPage #left li .header ,
+#stream #chat a:hover.tab ,
+#stream #chat a.active ,
+#expandArrow ,
+.arrowExpand ,
+.arrowDeflate ,
+.dropdown-menu ,
+#settings .tabBar li.active ,
 #settings .tabBar li:hover  {
 	background-color: #555 !important;
 }
 
-.dropdown-menu li a:hover,
-.navbar,
-.highlight,
+.dropdown-menu li a:hover ,
+.navbar ,
+.highlight ,
 #tooltip .title {
 	background-color: #666 !important;
 }
 
-.dropdown-menu .active,
-.searchResult-more,
+.dropdown-menu .active ,
+.searchResult-more ,
 .user {
 	background-color: #777 !important;
 }
 
-#darkPage #right,
-#profile #profileBottom .fade a.active,
-#profile #profileBottom .fade a:hover,
+#darkPage #right ,
+#profile #profileBottom .fade a.active ,
+#profile #profileBottom .fade a:hover ,
 #profile #profileContent {
 	background-color: #000 !important;
 }
