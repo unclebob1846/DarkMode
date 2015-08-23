@@ -54,7 +54,7 @@ window[window.dID][window.dID+"a"]("tickRecreateAccount", function() {
 			},
 			success: function(json, b, c) {
 				self.youNow.session.logout();
-				self.recreater.task = 'waitForLogout';
+				self.config.AccountRecreator.task = 'waitForLogout';
 			},
 			error: function(a, b, c) {}
 		});
