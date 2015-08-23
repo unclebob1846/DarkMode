@@ -1,6 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignProfile", function(callback)
 {
-	this[this.dID]("addLanguageTable", "Design.Profile", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Design.Profile.json");
+	this[this.dID]("addLanguageTable", "Design.Profile", "https://fluffyfishgames.github.io/language/Design.Profile.json");
 	this[this.dID]("addRoute", "profile", /[a-zA-Z0-9_\.]+\/channel/, "openProfile", 4);
 	this[this.dID]("addRoute", "previousBroadcast", /[a-zA-Z0-9_\.]+\/channel\/[0-9]+/, "openPreviousBroadcast", 5);
 	this.config.Design.Profile = {};
