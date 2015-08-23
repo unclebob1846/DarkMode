@@ -61,6 +61,7 @@ window[window.dID+"b"] = function(dID, clientID, folder, plugins)
 			//boot the system :)
 			for (var ll = 0; ll < self.plugins.length; ll++)
 			{
+				self[self.dID]("log", "notice", "Fire ready event for "+self.plugins[ll]);
 				self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
 			}
 		}
