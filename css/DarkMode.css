@@ -888,7 +888,7 @@ textarea {
 #tooltip .title {
     float: left;
     padding-top: 4px;
-    padding-left: 5px;
+    padding-left: 10px;
     clear: both;
     width: 100%;
     height: 25px;
@@ -900,15 +900,16 @@ textarea {
 #tooltip .value {
     float: left;
     clear: both;
-    margin-left: 5px;
-    margin-top: 5px;
+    margin-left: 10px;
+    margin-top: 2px;
     color: #999;
 }
-#tooltip .value img {
-    float: left;
+#tooltip .value i {
+	margin-left: 2px;
+	vertical-align: middle;
 }
 #tooltip .value span {
-    float: left;
+	vertical-align: middle;
     margin-left: 5px;
 }
 #expandArrow {
