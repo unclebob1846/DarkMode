@@ -302,11 +302,27 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addSettingsTab", this.language.Design.settingsTitle, function(){
 		
 		var list = $('<ul id="'+self.config.Design.ids["themeList"]+'"></ul>');
-		for (var key in self.config.Design.installedThemes)
+		var previousSelected = null;
+		var n = function(key)
 		{
 			var theme = self.config.Design.installedThemes[key];
-			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><span><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</span></div></li>');
+			var c = "";
+			if (key == self.config.Design.selectedTheme)
+				c = 'class="active"';
+			var element = $('<li '+c+'><img src="'+theme['thumbnail']+'" /><div><span><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</span></div></li>');
+			if (key == self.config.Design.selectedTheme)
+				previousSelected = element;
+			
 			list.append(element);
+			element.click(function(){
+				self[self.dID]("selectTheme", key);
+				previousSelected.removeClass("active");
+				element.addClass("active");
+			});
+		}
+		for (var key in self.config.Design.installedThemes)
+		{
+			n(key);
 		}
 		self.elements.settingsContent.append(list);
 	});

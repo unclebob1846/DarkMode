@@ -964,6 +964,7 @@ button {
 
 #themeList li {
 	padding: 5px;
+	cursor: pointer;
 	width: 100%;
 	float: left;
 	clear: both;
