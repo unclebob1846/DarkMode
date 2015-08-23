@@ -139,6 +139,14 @@ span ,
 	color: #999 !important;
 }
 
+.fade a:hover i, .fade a.active i, .fade a:hover , .fade a.active{
+	color: #222 !Important;
+}
+
+.fade a i, .fade a i, .fade a, .fade a{
+	color: #fff !Important;
+}
+
 #stream #streamInfo .right
 {
 	color: #f00 !important;
