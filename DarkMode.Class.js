@@ -130,7 +130,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		var logElement = $('#'+$.md5(this.dID+"_Log"));
 		if (logElement != null && logElement.length > 0)
 		{
-			logElement.append($('<span><br />' + arguments[1] + ':' + arguments[2]));
+			logElement.append($('<span><br />' + arguments[1] + ':' + arguments[2]+'</span>'));
 		}
 		console.log(arguments);
 		var logElement = Array.prototype.slice.call(arguments, 1);
