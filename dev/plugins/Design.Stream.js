@@ -1,6 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 	var self = this;
-	this[this.dID]("addLanguageTable", "Design.Stream", "https://fluffyfishgames.github.io/"+self.baseFolder+"language/Design.Stream.json");
+	this[this.dID]("addLanguageTable", "Design.Stream", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Design.Stream.json");
     this[this.dID]("addIDs", ["streamBar", "streamView", "streamBar", "streamInfo", "stream", "likeImage", "likeCount", 
 							  "shareCount", "time", "chatMessages", "viewerCount", "chatTab", "audienceTab", "infoTab", 
 							  "infoList", "viewerList", "chatOptions", "writeInChat", "writeInTrending", "writeInTag", 

@@ -1,6 +1,6 @@
 window[window.dID][window.dID+"a"]("bootDesignUserMenu", function(callback) {
 	var self = this;
-	this[this.dID]("addLanguageTable", "Design.UserMenu", "https://fluffyfishgames.github.io/"+self.baseFolder+"language/Design.UserMenu.json");
+	this[this.dID]("addLanguageTable", "Design.UserMenu", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Design.UserMenu.json");
 	this.config.Design.UserMenu = {
 		buttons: {},
 	};

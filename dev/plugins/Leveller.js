@@ -45,7 +45,7 @@ window[window.dID][window.dID+"a"]("updateLevellerContent", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
-	this[this.dID]("addLanguageTable", "Leveller", "https://fluffyfishgames.github.io/"+self.baseFolder+"language/Leveller.json");
+	this[this.dID]("addLanguageTable", "Leveller", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Leveller.json");
 	var self = this;
 	this[this.dID]("addIDs", ['desiredLevel', 'levellerActive', 'levellerStats']);
 	
