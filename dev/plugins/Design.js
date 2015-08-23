@@ -218,8 +218,8 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 window[window.dID][window.dID+"a"]("readyDesign", function() {
 	if (this.config.inDarkMode)
 	{
-		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+self.baseFolder+"css/DarkMode.css");
-		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+self.baseFolder+"css/FontAwesome.css");
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+this.baseFolder+"css/DarkMode.css");
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+this.baseFolder+"css/FontAwesome.css");
 		this[this.dID]("addTick", "design", 20, "tickDesign");
 	}
 	this[this.dID]("addButton");
