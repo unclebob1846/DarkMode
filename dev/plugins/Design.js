@@ -41,7 +41,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 					for (var i = 0; i < lines.length; i++)
 					{
 						var line = lines[i].trim();
-						var parts = line.split(":");
+						var parts = line.split(":", 1);
 						var key = parts[0].trim();
 						var value = parts[1].trim();
 						theme[key.substring(1)] = value;
@@ -302,7 +302,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	this[this.dID]("addSettingsTab", this.language.Design.settingsTitle, function(){
 		
 		var list = $('<ul></ul>');
-		for (var key in self.config.Design.installedThemes.length)
+		for (var key in self.config.Design.installedThemes)
 		{
 			var theme = self.config.Design.installedThemes[key];
 			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><strong>'+theme['name']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</div></li>');
