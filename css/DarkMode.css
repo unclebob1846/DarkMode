@@ -386,6 +386,9 @@ textarea {
     color: #ddd;
     width: 290px;
 }
+#profile #profileHeader .userBar .info i {
+	margin-right: 5px;
+}
 #profile #profileHeader .userBar .info strong {
     font-weight: bold;
     font-size: 13px;
