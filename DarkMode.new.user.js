@@ -107,7 +107,7 @@ function main(w, dID, clientID)
 					span.innerHTML = "Loading...";
 					var logSpan = document.createElement("span");
 					logSpan.setAttribute("id", $.md5(dID+"_Log"));
-					logSpan.setAttribute("style", "position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px); height: calc(100% - 20px);color: #aaa; font-family:Lucidia Console, Console; font-size: 9px;");
+					logSpan.setAttribute("style", "position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px); height: calc(100% - 20px);color: #aaa; font-family:Courier, Console; font-size: 9px;");
 					darkModeLoader.appendChild(logSpan);
 					darkModeLoader.appendChild(span);
 					document.body.appendChild(darkModeLoader);
