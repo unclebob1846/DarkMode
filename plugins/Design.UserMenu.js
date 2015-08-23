@@ -41,7 +41,7 @@ window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, icon, callb
 window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 	if (this.config.loggedIn)
 	{
-		var liElement = $('<li><a><i class="fa fa-'+this.config.Design.UserMenu.buttons[name].icon+'"></i>'+name+'</a></li>');
+		var liElement = $('<li><a><i class="fa fa-'+this.config.Design.UserMenu.buttons[name].icon+' fa-2x" href></i><span>'+name+'</span></a></li>');
 		liElement.click(this.config.Design.UserMenu.buttons[name].callback);
 		this.elements["userMenuList"].append(liElement);
 	}
