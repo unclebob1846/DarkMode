@@ -321,6 +321,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 				self[self.dID]("selectTheme", key);
 				previousSelected.removeClass("active");
 				element.addClass("active");
+				previousSelected = element;
 			});
 		}
 		for (var key in self.config.Design.installedThemes)
