@@ -3,13 +3,17 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 	var self = this;
 	this[this.dID]("addIDs", ['desiredLevel', 'levellerActive', 'levellerStats']);
 	this[this.dID]("onLogout", function(){
-		self.headers["leveller"].content.html(self.language["Leveller"].loginNeeded);
+		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].loginNeeded+'</span>');
 		
 	});
 	this[this.dID]("onLogin", function(){
-		if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
+		if (this.youNow.session.banId > 0)
 		{
-			self.headers["leveller"].content.html(self.language["Leveller"].authNeeded);
+			self.headers["leveller"].content.html('<span>'+self.language["Leveller"].banned+'</span>');
+		}
+		else if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
+		{
+			self.headers["leveller"].content.html('<span>'+self.language["Leveller"].authNeeded+'</span>');
 		}		
 		else
 		{

@@ -10,6 +10,7 @@
 		"leveling": "Leveln...",
 		"renaming": "Name wiederherstellen...",
 		"finished": "Fertig!",
+		"banned": "Du bist gebannt und kannst nicht mehr leveln.",
 		"loginNeeded": "Du musst eingeloggt sein um zu leveln.",
 		"authNeeded": "Dein Account muss entweder mit Instagram (empfohlen), Facebook oder Google+ verbunden sein."
 	}
