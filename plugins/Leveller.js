@@ -6,12 +6,15 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].loginNeeded+'</span>');
 		
 	});
+	this[this.dID]("onBanned", function()
+	{
+		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].banned+'</span>');
+	});
 	this[this.dID]("onLogin", function(){
-		if (this.youNow.session.banId > 0)
-		{
-			self.headers["leveller"].content.html('<span>'+self.language["Leveller"].banned+'</span>');
-		}
-		else if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
+		if (this.config.banned)
+			return;
+		
+		if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
 		{
 			self.headers["leveller"].content.html('<span>'+self.language["Leveller"].authNeeded+'</span>');
 		}		

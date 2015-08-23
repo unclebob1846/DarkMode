@@ -63,6 +63,7 @@ window[window.dID][window.dID+"a"]("bootYouNow", function(callback) {
 	}
 	
 	this.config.loggedIn = this.youNow.session.user != null && this.youNow.session.user.userId > 0 && $(".user-menu")!=null && $(".user-menu").length > 0;
+	this.config.banned = this.youNow.session.user != null && this.youNow.session.banId > 0;
 	callback();
 });
 
@@ -74,6 +75,9 @@ window[window.dID][window.dID+"a"]("readyYouNow", function() {
 			this[this.dID]("fireLogin");
 		else 
 			this[this.dID]("fireLogout");
+			
+		if (this.config.banned)
+			this[this.dID]("fireBanned");
 	}
 });
 
@@ -86,6 +90,13 @@ window[window.dID][window.dID+"a"]("checkUser", function(callback) {
 			this[this.dID]("fireLogin");
 		else 
 			this[this.dID]("fireLogout");
+	}
+	var newBanned = this.youNow.session.user != null && this.youNow.session.banId > 0;
+	if (newBanned != this.config.banned)
+	{
+		this.config.banned = newBanned;
+		if (newBanned)
+			this[this.dID]("fireBanned");
 	}
 });
 
