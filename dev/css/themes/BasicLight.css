@@ -140,11 +140,11 @@ span ,
 	color: #999 !important;
 }
 
-.fade a:hover i, .fade a.active i, .fade a:hover , .fade a.active{
+#profile #profileBottom .fade a:hover i, #profile #profileBottom .fade a.active i, #profile #profileBottom .fade a:hover , #profile #profileBottom .fade a.active{
 	color: #222 !Important;
 }
 
-.fade a i, .fade a i, .fade a, .fade a{
+#profile #profileBottom .fade a i, #profile #profileBottom .fade a i, #profile #profileBottom .fade a, #profile #profileBottom .fade a{
 	color: #fff !Important;
 }
 
