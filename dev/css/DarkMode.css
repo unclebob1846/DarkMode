@@ -478,6 +478,7 @@ textarea {
 }
 #settingsContent {
     float: left;
+	width: 100%;
     clear: both;
 }
 #darkPage #left li .header {
