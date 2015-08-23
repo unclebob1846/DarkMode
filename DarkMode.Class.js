@@ -130,7 +130,17 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		var logElement = $('#'+$.md5(this.dID+"_Log"));
 		if (logElement != null && logElement.length > 0)
 		{
-			logElement.append($('<span><br />' + arguments[1] + ':' + arguments[2]+'</span>'));
+			var n = "";
+			var s = "";
+			if (arguments[1] == "notice")
+				n = "Notice";
+			if (arguments[1] == "warning")
+			{
+				n = "Warning";
+				s = "style=\"color:#ff5555;\"";
+			}
+			
+			logElement.append($('<strong '+s+'>' + n + ':</strong> ' + arguments[2]+'<br />'));
 		}
 		console.log(arguments);
 		var logElement = Array.prototype.slice.call(arguments, 1);
