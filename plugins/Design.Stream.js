@@ -217,6 +217,10 @@ window[window.dID][window.dID+"a"]("openInfo", function() {
 window[window.dID][window.dID+"a"]("parseLikeCostTooltip", function(data) {
 	this.elements["tooltip"].html('<div style="padding:5px;"><img width="16" src="' + this.config.Design.images.coins + '" />' + data["cost"] + '</div>');
 });
+
+window[window.dID][window.dID+"a"]("parseNobodyLikesTooltip", function(data) {
+	this.elements["tooltip"].html('<div style="padding:5px;"><i class="fa fa-exclamation-triangle" />' + this.language["Design.Stream"].nobodyLikes.replace("%1", data.username) + '</div>');
+});
 		
 window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 	if (this.config.Design.Stream.data.user == null || this.config.Design.Stream.data.user.profileUrlString.toLowerCase() != this.config.Design.Stream.name.toLowerCase())
@@ -247,7 +251,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 									'<span id="'+this.config.Design.ids['likeCount']+'"></span>'+
 								'</div>'+
 								'<div class="item">'+
-									'<i class="fa fa-share" />'+
+									'<i class="fa fa-bullhorn" />'+
 									'<span id="'+this.config.Design.ids['shareCount']+'"></span>'+
 								'</div>'+
 								'<div style="float:right;" class="item">'+
@@ -317,14 +321,24 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			this[this.dID]("updateElements");
 			
 			this.elements["likeImage"].click(function() {
-				if (self.config.Design.Stream.Data.username.toLowerCase() != "drachenlord_offiziell")
-					self[self.dID]("like", self.currentStreamer.userId);
+				if (self.config.Config.abusiveUsers.indexOf(self.config.Design.Stream.data.username.toLowerCase()) == -1)
+					self[self.dID]("like", self.config.Design.Stream.data.userId);
 			});
 			this.elements["likeImage"].mousemove(function(e) {
-				self[self.dID]("showTooltip", e, {
-					"type": "likeCost",
-					"cost": self.config.Design.Stream.data.nextLikeCost
-				});
+				if (self.config.Config.abusiveUsers.indexOf(self.config.Design.Stream.data.username.toLowerCase()) == -1)
+				{
+					self[self.dID]("showTooltip", e, {
+						"type": "likeCost",
+						"cost": self.config.Design.Stream.data.nextLikeCost
+					});
+				}
+				else 
+				{
+					self[self.dID]("showTooltip", e, {
+						"type": "nobodyLikes",
+						"username": self.config.Design.Stream.data.username
+					});
+				}
 			});
 			
 			this.elements["likeImage"].mouseout(function(e) {
