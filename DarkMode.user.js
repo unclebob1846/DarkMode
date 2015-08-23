@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name JuhNau DarkMode
 // @description Hides your presence within younow streams and offer some nice features to troll streamers.
-// @version 0.6.2
+// @version 0.6.3
 // @match *://younow.com/*
 // @match *://www.younow.com/*
 // @namespace https://github.com/FluffyFishGames/JuhNau-Darkmode
@@ -10,9 +10,9 @@
 // @updateURL https://FluffyFishGames.github.io/DarkMode.user.js
 // @downloadURL https://FluffyFishGames.github.io/DarkMode.user.js
 // ==/UserScript==
-function main(w, dID, clientID) 
+function main(w, dID, clientID, folder) 
 {
-	function boot(dID, clientID)
+	function boot(dID, clientID, folder)
 	{
 		// remove old stuff :)
 		window.localStorage.removeItem("config.massLiker.likeThreshold");
@@ -32,13 +32,13 @@ function main(w, dID, clientID)
 		window.localStorage.removeItem("darkModeDetected");
 		
 		
-		$.ajax('https://fluffyfishgames.github.io/DarkMode.Class.js?v='+(Math.random() * 1000000),
+		$.ajax('https://fluffyfishgames.github.io/'+folder+'DarkMode.Class.js?v='+(Math.random() * 1000000),
 		{
 			dataType: "text",
 			success: function(text, b, c)
 			{
 				$(document.body).append($('<script>'+text.replace(/window\.dID/g, '"'+dID+'"')+'</script>'));
-				window[dID] = new window[dID+"b"](dID, clientID, [
+				window[dID] = new window[dID+"b"](dID, clientID, folder, [
 					"Init",
 					"Config",
 					"Ticker",
@@ -59,7 +59,7 @@ function main(w, dID, clientID)
 		});
 	}
 
-	function startDarkMode(dID, clientID) {
+	function startDarkMode(dID, clientID, folder) {
 		var xhr;
          
         if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
@@ -116,18 +116,18 @@ function main(w, dID, clientID)
 				}
 				
 				var launch = document.createElement("script");
-				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"');";
+				launch.textContent = "(" + boot.toString() + ")('"+dID+"','"+clientID+"','"+folder+"');";
 				document.body.appendChild(launch);
             } 
         }
          
-        xhr.open('GET', "https://fluffyfishgames.github.io/libs/jquery.js", true);
+        xhr.open('GET', "https://fluffyfishgames.github.io/"+folder+"libs/jquery.js", true);
         xhr.send('');
 	}
 
 	var waitForYouNow = setInterval(function() {
 		if (document.body.getElementsByClassName("nav-logo").length > 0) {
-			startDarkMode(dID, clientID);
+			startDarkMode(dID, clientID, folder);
 			clearInterval(waitForYouNow);
 		}
 	}, 100);
@@ -155,5 +155,5 @@ if (clientID == null || clientID == "")
 // Inject our main script. Yes, this is bad. But you are trying to do bad things either.
 var script = document.createElement('script');
 script.type = "text/javascript";
-script.textContent = '(' + main.toString() + ')(window,\''+sessionID+'\',\''+clientID+'\');';
+script.textContent = '(' + main.toString() + ')(window,\''+sessionID+'\',\''+clientID+'\',\'dev/\');';
 document.body.appendChild(script);

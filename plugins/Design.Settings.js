@@ -27,7 +27,8 @@ window[window.dID][window.dID+"a"]("openSettings", function(callback, page)
 		var li = $('<li style="width:'+(100/c)+'%">'+key+'</li>');
 		li.click(function(){
 			self.elements.settingsContent.html("");
-			self.elements.settingsContent.append(func());
+			func();
+			//self.elements.settingsContent.append(func());
 			for (var k in self.config.Design.Settings.tabsElements)
 				self.config.Design.Settings.tabsElements[k].removeClass("active");
 			self.config.Design.Settings.tabsElements[key].addClass("active");

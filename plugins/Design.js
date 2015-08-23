@@ -1,3 +1,108 @@
+window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
+	this[this.dID]("addLanguageTable", "Design", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Design.json");
+	if (this.config.inDarkMode)
+	{
+		this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow", "themeList"]);
+		this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
+		this.headers = {};
+		var sequence = [38,38,40,40,37,39,37,39,66,65];
+		var l = 0;
+		var self = this;
+		$(document.body).keyup(function(e){
+			if (e.which == sequence[l])
+			{
+				l++;
+				if (l == sequence.length)
+				{
+					self[self.dID]("addTick", "cookies", 20, "cookies");
+					l = 0;
+				}
+			} 
+			else {
+				l = 0;
+			}
+		});
+		
+		var loading = this.config.Design.themes.length;
+		var loaded = 0;
+		this.config.Design.installedThemes = {};
+		
+		var d = function(url)
+		{
+			$.ajax(url+"?v="+(Math.random()*100000), {
+				dataType: "text",
+				success: function(text, b, c)
+				{
+					var start = text.indexOf("/*");
+					var end = text.indexOf("*/");
+					var header = text.substring(start + 2, end);
+					var lines = header.split(/\n/);
+					var theme = {};
+					for (var i = 0; i < lines.length; i++)
+					{
+						var line = lines[i].trim();
+						var n = line.indexOf(":");
+						var key = line.substring(0, n).trim();
+						var value = line.substring(n + 1).trim();
+						theme[key.substring(1)] = value;
+					}
+					if (theme.identifier != null)
+					{
+						theme.text = text.substring(end + 2);
+						self.config.Design.installedThemes[theme.identifier] = theme;
+					}
+					loaded++;
+					if (loading == loaded) 
+					{
+						callback();
+					}
+				},
+				error: function(a, b, c)
+				{
+					loaded++;
+					if (loading == loaded) 
+					{
+						callback();
+					}
+				}
+			});
+		};
+		
+		for (var i = 0; i < this.config.Design.themes.length; i++)
+		{
+			d(this.config.Design.themes[i]);
+		}
+	}
+	else {
+		callback();
+	}
+	this.config.Design.ready = false;
+});
+
+window[window.dID][window.dID+"a"]("selectTheme", function(key) {
+	var theme = this.config.Design.installedThemes[key];
+	if (theme != null)
+	{
+		if (this.config.Design.currentTheme != null)
+			this.config.Design.currentTheme.remove();
+			
+		var text = theme.text;
+		for (var key in this.config.Design.ids)
+		{
+			var r = new RegExp("#"+key+"\\s", "g");
+			text = text.replace(r, "#"+this.config.Design.ids[key]+" ");
+		}
+		var style = $('<style type="text/css"></style>');
+		for (var i = 0; i < text.length; i+=4096)
+		{
+			var textNode = document.createTextNode(text.substring(i, i + 4096));
+			style.append(textNode);
+		}
+		$('head').append(style);
+		this.config.Design.currentTheme = style;
+	}
+});
+
 window[window.dID][window.dID+"a"]("selectHeader", function(key) {
 	var c = 0;
 	for (var k in this.headers) {
@@ -187,45 +292,46 @@ window[window.dID][window.dID+"a"]("cookies", function(callback) {
 	}
 });
 
-window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
-	if (this.config.inDarkMode)
-	{
-		this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
-		this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
-		this.headers = {};
-		var sequence = [38,38,40,40,37,39,37,39,66,65];
-		var l = 0;
-		var self = this;
-		$(document.body).keyup(function(e){
-			if (e.which == sequence[l])
-			{
-				l++;
-				if (l == sequence.length)
-				{
-					self[self.dID]("addTick", "cookies", 20, "cookies");
-					l = 0;
-				}
-			} 
-			else {
-				l = 0;
-			}
-		});
-	}
-	this.config.Design.ready = false;
-	callback();
-});
-
 window[window.dID][window.dID+"a"]("readyDesign", function() {
 	if (this.config.inDarkMode)
 	{
-		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/DarkMode.css");
-		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/css/FontAwesome.css");
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+this.baseFolder+"css/DarkMode.css");
+		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+this.baseFolder+"css/FontAwesome.css");
 		this[this.dID]("addTick", "design", 20, "tickDesign");
 	}
+	this[this.dID]("selectTheme", this.config.Design.selectedTheme);
 	this[this.dID]("addButton");
+	var self = this;
+	this[this.dID]("addSettingsTab", this.language.Design.settingsTitle, function(){
+		
+		var list = $('<ul id="'+self.config.Design.ids["themeList"]+'"></ul>');
+		var previousSelected = null;
+		var n = function(key)
+		{
+			var theme = self.config.Design.installedThemes[key];
+			var c = "";
+			if (key == self.config.Design.selectedTheme)
+				c = 'class="active"';
+			var element = $('<li '+c+'><img src="'+theme['thumbnail']+'" /><div><span><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</span></div></li>');
+			if (key == self.config.Design.selectedTheme)
+				previousSelected = element;
+			
+			list.append(element);
+			element.click(function(){
+				self[self.dID]("selectTheme", key);
+				previousSelected.removeClass("active");
+				element.addClass("active");
+				previousSelected = element;
+			});
+		}
+		for (var key in self.config.Design.installedThemes)
+		{
+			n(key);
+		}
+		self.elements.settingsContent.append(list);
+	});
 	if (this.config.inDarkMode)
 	{
-		var self = this;
 		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, function(){
 			$('#'+$.md5(self.dID+'_Loader')).remove();
 		});
@@ -394,17 +500,20 @@ window[window.dID][window.dID+"a"]("hideTooltip", function() {
 });
 	
 window[window.dID][window.dID+"a"]("addButton", function() {
+	console.log("A");
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
 	if (button != null && button.length > 0)
 	{
 		button.remove();
 	}
+	console.log("B");
 	var self = this;
 
 	var newButton = $("<button></button>");
 	newButton.attr("class", "pull-right btn btn-primary");
-
+	console.log("C");
+	
 	if (this.config.inDarkMode) {
 		newButton.html(this.language["intoLight"]);
 		newButton.css('background-color', '#999');
@@ -417,7 +526,8 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	newButton.css('height', '27');
 	newButton.css('visibility', 'visible');
 	newButton.insertAfter(container);
-
+	console.log("D");
+	
 	newButton.click(function() {
 		window.localStorage.setItem(self[self.dID]("name","inDarkMode"), window.localStorage.getItem(self[self.dID]("name","inDarkMode")) == "1" ? "0" : "1");
 		if (window.localStorage.getItem(self[self.dID]("name","inDarkMode")) == "1") {

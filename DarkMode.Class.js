@@ -1,5 +1,7 @@
-window[window.dID+"b"] = function(dID, clientID, plugins)
+window[window.dID+"b"] = function(dID, clientID, folder, plugins)
 {
+	this.config = {};
+	this.baseFolder = folder;
 	this.plugins = plugins;
 	this.dID = dID;
 	this.clientID = clientID;
@@ -59,6 +61,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			//boot the system :)
 			for (var ll = 0; ll < self.plugins.length; ll++)
 			{
+				self[self.dID]("log", "notice", "Fire ready event for "+self.plugins[ll]);
 				self[self.dID](("ready"+self.plugins[ll]).replace(".",""));
 			}
 		}
@@ -94,7 +97,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		var moduleName = url.substring(url.lastIndexOf("/")).replace(".js", "");
 		self[self.dID]("log", "notice", "Loading module "+moduleName+".");
 		if (!url.startsWith("https://"))
-			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
+			url = 'https://fluffyfishgames.github.io/'+self.baseFolder+'plugins/'+url+'.js';
 	    $.ajax(url+'?v='+(Math.random()*1000000),
 		{
 			dataType: "text",
