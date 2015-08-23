@@ -958,9 +958,11 @@ button {
 #themeList {
 	float: left;
 	clear: both;
+	width: 100%;
 }
 
 #themeList li {
+	width: 100%;
 	float: left;
 	clear: both;
 }
