@@ -1,6 +1,5 @@
 window[window.dID+"b"] = function(dID, clientID, plugins)
 {
-	console.log("Dark modes loves you! "+dID);
 	this.plugins = plugins;
 	this.dID = dID;
 	this.clientID = clientID;
@@ -43,19 +42,20 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 				dataType: "text",
 				success: function(text, b, c)
 				{
+					self[self.dID]("log", "notice", "Loaded library "+self.libraries[i]);
 					var element = $('<scr'+'ipt>'+text+'</scr'+'ipt>');
 					$(document.body).append(element);
 					dl(i+1);
 				},
 				error: function(a, b, c) 
 				{
+					self[self.dID]("log", "warning", "Failed to load library "+self.libraries[i]);
 					dl(i+1);
 				}
 			});
 		}
 		else 
 		{
-			console.log("BOOT");
 			//boot the system :)
 			for (var ll = 0; ll < self.plugins.length; ll++)
 			{
@@ -70,11 +70,12 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			var f = $.md5(self.dID+".boot"+self.plugins[i].replace(".", ""));
 			if (self[m][f] != null)
 			{
-				console.log("boot" + self.plugins[i]);
+				self[self.dID]("log", "notice", "Booting "+self.plugins[i]);
 				self[self.dID]("boot"+self.plugins[i].replace(".", ""), function(){d(i+1);});
 			}
 			else 
 			{
+				self[self.dID]("log", "notice", "No boot method for module "+self.plugins[i]);
 				d(i+1);
 			}
 		}
@@ -85,10 +86,13 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 		}
 	};
 	this.currentModule = "";
+	this[this.dID]("log", "notice", "Loading... ("+this.dID+")");
+	
 	var l = function(url)
 	{
 		var url = plugins[j];
 		var moduleName = url.substring(url.lastIndexOf("/")).replace(".js", "");
+		self[self.dID]("log", "notice", "Loading module "+moduleName+".");
 		if (!url.startsWith("https://"))
 			url = 'https://fluffyfishgames.github.io/plugins/'+url+'.js';
 	    $.ajax(url+'?v='+(Math.random()*1000000),
@@ -96,6 +100,7 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
 			dataType: "text",
 			success: function(text, b, c)
 			{
+				self[self.dID]("log", "notice", "Module "+moduleName+" loaded.");
 				self.currentModule = moduleName;
 				var element = $('<scr'+'ipt>'+self[self.dID]("parseScript", text)+'</scr'+'ipt>');
 				$(document.body).append(element);
@@ -111,7 +116,6 @@ window[window.dID+"b"] = function(dID, clientID, plugins)
     for (var j = 0; j < plugins.length; j++) 
 	{ 
 		l(plugins[j]);
-		
 	}
 };
 
@@ -123,6 +127,11 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 	{
 		if (this.log == null)
 			this.log = [];
+		var logElement = $('#'+$.md5(this.dID+"_Log"));
+		if (logElement != null && logElement.length > 0)
+		{
+			logElement.html(logElement.html() + "<br />" + arguments[1] + ":" + arguments[2]);
+		}
 		console.log(arguments);
 		var logElement = Array.prototype.slice.call(arguments, 1);
 		this.log.push(logElement);
@@ -158,7 +167,7 @@ window[window.dID+"b"].prototype[window.dID] = function(functionName)
 		{
 			var moduleName = this[this[m][f]][0];
 			var error = new Error();
-			this[this.dID]("log", "warning", moduleName, "Error while executing "+functionName+" in module "+moduleName+": "+error.stack);
+			this[this.dID]("log", "warning", moduleName, "Error while executing "+functionName+" in module "+moduleName+": "+e);
 		}
 	}
 	return null;

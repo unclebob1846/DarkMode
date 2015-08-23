@@ -105,6 +105,10 @@ function main(w, dID, clientID)
 					span.setAttribute("style", "display: block; position: absolute; top: calc(50% + 80px); transform: translateY(-50%); width: 100%; font-size: 30px; color:#aaa; text-align: center; font-family: Trebuchet MS;");
 					span.setAttribute("id", $.md5(dID+"_LoaderLabel"));
 					span.innerHTML = "Loading...";
+					var logSpan = document.createElement("span");
+					logSpan.setAttribute("id", $.md5(dID+"_Log"));
+					logSpan.setAttribute("style", "position: absolute; bottom: 10px; left: 10px; width: calc(100% - 20px); height: calc(100% - 20px);color: #aaa;");
+					darkModeLoader.appendChild(logSpan);
 					darkModeLoader.appendChild(span);
 					document.body.appendChild(darkModeLoader);
 				}
