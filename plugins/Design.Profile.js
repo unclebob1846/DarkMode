@@ -389,10 +389,10 @@ window[window.dID][window.dID+"a"]("openProfile", function(parts)
 	'<div id="'+this.config.Design.ids['profileHeader']+'"></div>'+
 	'<div id="'+this.config.Design.ids['profileBottom']+'">'+
 	'<div class="fade">'+
-	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'">' + this.language["Design.Profile"].tabs.dashboard + '</a>'+
-	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'">' + this.language["Design.Profile"].tabs.previousBroadcasts + '</a>'+
-	'<a id="'+this.config.Design.ids['fansTab']+'">' + this.language["Design.Profile"].tabs.fans.replace("%1", "0") + '</a>'+
-	'<a id="'+this.config.Design.ids['fanOfTab']+'">' + this.language["Design.Profile"].tabs.fansOf.replace("%1", "0") + '</a>'+
+	'<a class="active" id="'+this.config.Design.ids['dashboardTab']+'"><i class="icon fa fa-commenting" />' + this.language["Design.Profile"].tabs.dashboard + '</a>'+
+	'<a id="'+this.config.Design.ids['previousBroadcastsTab']+'"><i class="icon fa fa-play-circle" />' + this.language["Design.Profile"].tabs.previousBroadcasts + '</a>'+
+	'<a id="'+this.config.Design.ids['fansTab']+'"><i class="icon fa fa-users" />' + this.language["Design.Profile"].tabs.fans.replace("%1", "0") + '</a>'+
+	'<a id="'+this.config.Design.ids['fanOfTab']+'"><i class="icon fa fa-user-secret" />' + this.language["Design.Profile"].tabs.fansOf.replace("%1", "0") + '</a>'+
 	'</div>'+
 	'<div id="'+this.config.Design.ids['profileContent']+'"></div>'+
 	'</div>'+

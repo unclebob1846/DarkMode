@@ -403,6 +403,10 @@ textarea {
     width: 100%;
     height: calc(100% - 280px);
 }
+#profile #profileBottom .fade i {
+	margin-right: 5px;
+}
+
 #profile #profileBottom .fade {
     position: absolute;
     padding-left: 10px;
