@@ -237,28 +237,28 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 							'</div>'+
 							'<div id="'+this.config.Design.ids['streamBar']+'">' +
 								'<div class="item">'+
-									'<img id="'+this.config.Design.ids['likeImage']+'" src="' + this.config.Design.images.likes + '" />'+
+									'<i class="fa fa-thumbs-up" />'+
 									'<span id="'+this.config.Design.ids['likeCount']+'"></span>'+
 								'</div>'+
 								'<div class="item">'+
-									'<img src="' + this.config.Design.images.shares + '" />'+
+									'<i class="fa fa-share" />'+
 									'<span id="'+this.config.Design.ids['shareCount']+'"></span>'+
 								'</div>'+
 								'<div style="float:right;" class="item">'+
-									'<img src="' + this.config.Design.images.time + '" />'+
+									'<i class="fa fa-clock-o" />'+
 									'<span id="'+this.config.Design.ids['time']+'"></span>'+
 								'</div>'+
 								'<div style="float:right;" class="item">'+
-									'<img src="' + this.config.Design.images.views + '" />'+
+									'<i class="fa fa-eye" />'+
 									'<span id="'+ this.config.Design.ids['viewerCount']+'"></span>'+
 								'</div>' +
 							'</div>'+
 						'</div>'+
 
 						'<div id="'+this.config.Design.ids['chat']+'">'+
-							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'">' + this.language["Design.Stream"].tabs.chat + '</a>'+
-							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'">' + this.language["Design.Stream"].tabs.audience + '</a>'+
-							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'">' + this.language["Design.Stream"].tabs.infos + '</a>'+
+							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'"><i class="fa fa-weixin" />' + this.language["Design.Stream"].tabs.chat + '</a>'+
+							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'"><i class="fa fa-users" />' + this.language["Design.Stream"].tabs.audience + '</a>'+
+							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'"><i class="fa fa-info" />' + this.language["Design.Stream"].tabs.infos + '</a>'+
 							'<div id="'+this.config.Design.ids['infoList']+'">'+
 								'<h2>'+this.language["Design.Stream"].stats.streamer+'</h2>' +
 								'<div class="label">' + this.language["Design.Stream"].stats.age + ':</div>             <div id="'+this.config.Design.ids["streamInfoAge"]+'" class="value"></div>' +
@@ -468,7 +468,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 	var extraRight = "";
 	if (this.config.Design.Stream.data.minChatLevel > 0)
 		extraRight = '<div class="right">' + this.language["Design.Stream"].minChatLevel.replace("%1", this.config.Design.Stream.data.minChatLevel) + '</div>';
-	this.elements["streamInfo"].html('<a style="text-decoration:none; color:#ddd;" href="/'+this.config.Design.Stream.data.user.profileUrlString+'/channel"><img src="' + this[this.dID]("getProfilePicture", this.config.Design.Stream.data.userId) + '" style="margin-top:-5px;margin-right:5px;" height="30" /><img src="' + this.config.Design.images.star + '" style="margin-right: 5px;margin-top:-4px;" />' + Math.floor(this.config.Design.Stream.data.userlevel) + ' <strong>' + this.config.Design.Stream.data.username + '</strong> (' + this.config.Design.Stream.data.country + ')</a> ' + this.language["Design.Stream"].in + ' <a href="/explore/tag/' + this.config.Design.Stream.data.tags[0] + '">#' + this.config.Design.Stream.data.tags[0] + '</A>' + extraRight);
+	this.elements["streamInfo"].html('<a style="text-decoration:none; color:#ddd;" href="/'+this.config.Design.Stream.data.user.profileUrlString+'/channel"><img src="' + this[this.dID]("getProfilePicture", this.config.Design.Stream.data.userId) + '" style="margin-top:-5px;margin-right:5px;" height="30" /><i class="fa fa-star" />' + Math.floor(this.config.Design.Stream.data.userlevel) + ' <strong>' + this.config.Design.Stream.data.username + '</strong> (' + this.config.Design.Stream.data.country + ')</a> ' + this.language["Design.Stream"].in + ' <a href="/explore/tag/' + this.config.Design.Stream.data.tags[0] + '">#' + this.config.Design.Stream.data.tags[0] + '</A>' + extraRight);
 
 	this.elements["likeCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.likes));
 	this.elements["shareCount"].html(this[this.dID]("parseNumber", this.config.Design.Stream.data.shares));
