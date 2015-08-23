@@ -29,8 +29,8 @@ window[window.dID][window.dID+"a"]("readyDesignUserMenu", function() {
 	
 });
 
-window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
-	this.config.Design.UserMenu.buttons[name] = callback;
+window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, icon, callback) {
+	this.config.Design.UserMenu.buttons[name] = {icon: icon, callback: callback};
 	
 	if (this.config.loggedIn)
 	{
@@ -41,8 +41,8 @@ window[window.dID][window.dID+"a"]("addUserMenuItem", function(name, callback) {
 window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 	if (this.config.loggedIn)
 	{
-		var liElement = $('<li><a>'+name+'</a></li>');
-		liElement.click(this.config.Design.UserMenu.buttons[name]);
+		var liElement = $('<li><a><i class="fa fa-'+this.config.Design.UserMenu.buttons[name]+'">'+name+'</i></a></li>');
+		liElement.click(this.config.Design.UserMenu.buttons[name].callback);
 		this.elements["userMenuList"].append(liElement);
 	}
 });
