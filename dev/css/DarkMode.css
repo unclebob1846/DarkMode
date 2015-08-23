@@ -1,23 +1,57 @@
-.darkest-background-color {
-	background: #111;
+#profile .entry .reply,
+#profile #profileHeader .userBar,
+#stream #chatOptions {
+	background-color: #222 !important;
 }
-.darker-background-color {
-	background: #222;
+
+select,
+input[type=text],
+input[type=number],
+textarea,
+#previousStream .header,
+#profile .entry,
+#profile .entry .comment input,
+#settings .tabBar li,
+.normal,
+#darkPage #left,
+#darkPage .userProfile,
+#streamInfo,
+#stream #streamBar,
+#stream #chat a.tab,
+#stream #chat textarea,
+#tooltip {
+	background-color: #333 !important;
 }
-.dark-background-color {
-	background: #333;
+
+#previousStream .header a:hover,
+#previousStream .header span:hover,
+#profile .entry .options .optionsMenu,
+#profile .entry .options .optionsMenu li {
+	background-color: #444 !important;
 }
-.middle-background-color {
-	background: #444;
+
+#profile .entry .options .optionsMenu li:hover,
+#darkPage #left li .header,
+#stream #chat a:hover.tab,
+#stream #chat a.active,
+#expandArrow,
+.arrowExpand,
+.arrowDeflate,
+.dropdown-menu  {
+	background-color: #555 !important;
 }
-.bright-background-color {
-	background: #555;
+
+.dropdown-menu li a:hover,
+.navbar,
+.highlight,
+#tooltip .title {
+	background-color: #666 !important;
 }
-.brighter-background-color {
-	background: #666;
-}
-.brightest-background-color {
-	background: #777;
+
+.dropdown-menu .active,
+.searchResult-more,
+.user {
+	background-color: #777 !important;
 }
 
 body,
@@ -27,7 +61,6 @@ html {
     font-family: Segoe UI;
 }
 .navbar {
-	@extend .brighter-background-color;
     border-bottom: 0px;
     border-bottom: 1px solid #777 !important;
 }
@@ -46,7 +79,6 @@ select,
 input[type=text],
 input[type=number],
 textarea {
-    @extend .dark-background-color;
     font-size: 11px;
     font-family: Segoe UI;
     color: #ddd !important;
@@ -62,7 +94,6 @@ textarea {
     height: 100%;
 }
 #previousStream .header {
-    @extend .dark-background-color;
 	width: 100%;
     height: 30px;
     border-bottom: 1px solid #555;
@@ -82,7 +113,6 @@ textarea {
 }
 #previousStream .header a:hover,
 #previousStream .header span:hover {
-    @extend .middle-background-color;
 }
 #previousStream .header span {
     cursor: pointer;
@@ -134,7 +164,6 @@ textarea {
     width: 100%;
 }
 #profile .entry {
-    @extend .dark-background-color;
     border: 1px solid #222;
     margin-top: 10px;
     width: 100%;
@@ -178,14 +207,12 @@ textarea {
     margin-top: 5px;
 }
 #profile .entry .options .optionsMenu {
-    @extend .middle-background-color;
 	position: absolute;
     margin-top: 2px;
     right: 20px;
     border: 1px solid #111;
 }
 #profile .entry .options .optionsMenu li {
-	@extend .middle-background-color;
     float: left;
     clear: both;
     color: #ddd;
@@ -195,7 +222,6 @@ textarea {
     padding-bottom: 5px;
 }
 #profile .entry .options .optionsMenu li:hover {
-	@extend .bright-background-color;
     float: left;
     clear: both;
 }
@@ -345,14 +371,12 @@ textarea {
     height: 30px;
 }
 #profile .entry .comment input {
-    @extend .dark-background-color;
     border: none;
     width: calc(100% - 30px);
     margin: 0px;
     height: 30px;
 }
 #profile .entry .reply {
-    @extend .darker-background-color;
     border-top: 1px solid #555;
     padding-top: 5px;
     float: left;
@@ -389,7 +413,6 @@ textarea {
     top: 20px;
 }
 #profile #profileHeader .userBar {
-	@extend .darker-background-color;
     float: left;
     clear: both;
     border-radius: 12px;
@@ -488,7 +511,6 @@ textarea {
 	clear: both;
 }
 #settings .tabBar li {
-	@extend .dark-background-color;
     height: 20px;
     display: block;
     float: left;
@@ -506,13 +528,11 @@ textarea {
 
 .highlight
 {
-	@extend .brighter-background-color;
 	border-bottom: 1px solid #777;
 }
 
 .normal
 {
-	@extend .dark-background-color;
 	border-bottom: 1px solid #666;
 }
 
@@ -526,7 +546,6 @@ textarea {
     clear: both;
 }
 #darkPage #left li .header {
-	@extend .bright-background-color;
     width: 100%;
     border-bottom: 1px solid #777;
     padding: 10px;
@@ -554,7 +573,6 @@ textarea {
     height: calc(100% - 50px);
 }
 #darkPage #left {
-	@extend .dark-background-color;
     float: left;
     width: 200px;
     border-right: 1px solid #777;
@@ -574,7 +592,6 @@ textarea {
     overflow-y: auto;
 }
 #darkPage .userProfile {
-    @extend .dark-background-color;
     float: left;
     display: block;
     width: 142px;
@@ -686,7 +703,6 @@ textarea {
     height: 100%;
 }
 #streamInfo {
-	@extend .dark-background-color;
     width: 100%;
     line-height: 30px;
     color: #ddd;
@@ -716,7 +732,6 @@ textarea {
     height: calc(100% - 30px);
 }
 #stream #streamBar {
-	@extend .dark-background-color;
     width: 100%;
     height: 30px;
     color: #eee;
@@ -754,7 +769,6 @@ textarea {
 }
 
 #stream #chat a.tab {
-	@extend .dark-background-color;
     cursor: pointer;
     color: #ddd;
     padding-left: 10px;
@@ -774,7 +788,6 @@ textarea {
 }
 #stream #chat a:hover.tab,
 #stream #chat a.active {
-	@extend .bright-background-color;
 }
 #stream #infoList {
     display: none;
@@ -870,7 +883,6 @@ textarea {
     max-width: 270px;
 }
 #stream #chatOptions {
-	@extend .darker-background-color;
     padding: 10px;
     color: #ddd;
     width: 360px;
@@ -883,7 +895,6 @@ textarea {
     color: #000;
 }
 #stream #chat textarea {
-    @extend .dark-background-color;
     height: 50px;
     width: 360px;
     padding: 5px;
@@ -908,7 +919,6 @@ textarea {
     display: inline-block;
 }
 #tooltip {
-    @extend .dark-background-color;
     color: #ddd;
     position: absolute;
     z-index: 10000;
@@ -934,7 +944,6 @@ textarea {
 }
 
 #tooltip .title {
-    @extend .brighter-background-color;
     float: left;
     padding-top: 4px;
     padding-left: 12px;
@@ -961,7 +970,6 @@ textarea {
     margin-left: 5px;
 }
 #expandArrow {
-    @extend .bright-background-color;
 	float: right !important;
 	width: 10px !important;
 	height: 100% !important;
@@ -970,18 +978,15 @@ textarea {
 }
 
 .arrowExpand {
-    @extend .bright-background-color;
 	background: url(https://fluffyfishgames.github.io/img/arrowRight.png) center center no-repeat !important;
 }
 
 .arrowDeflate {
-    @extend .bright-background-color;
 	background: url(https://fluffyfishgames.github.io/img/arrowLeft.png) center center no-repeat !important;
 }
 
 
 .dropdown-menu {
-    @extend .bright-background-color;
 }
 .dropdown-menu li {
     border-top-color: #666 !important;
@@ -990,11 +995,10 @@ textarea {
     color: #eee !important;
 }
 .dropdown-menu li a:hover {
-    @extend .brighter-background-color;
 }
+
 .dropdown-menu .active,
 .searchResult-more {
-    @extend .brightest-background-color;
 }
 span {
     color: #fff !important;
@@ -1013,7 +1017,6 @@ span {
     background: none !important;
 }
 .user {
-    @extend .brightest-background-color;
     color: #eee !important;
 }
 .ynicon-carrot-up {
