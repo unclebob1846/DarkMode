@@ -41,9 +41,9 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 					for (var i = 0; i < lines.length; i++)
 					{
 						var line = lines[i].trim();
-						var parts = line.split(":", 2);
-						var key = parts[0].trim();
-						var value = parts[1].trim();
+						var n = line.indexOf(":");
+						var key = line.substring(0, n).trim();
+						var value = line.substring(n + 1).trim();
 						theme[key.substring(1)] = value;
 					}
 					if (theme.identifier != null)
@@ -305,7 +305,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 		for (var key in self.config.Design.installedThemes)
 		{
 			var theme = self.config.Design.installedThemes[key];
-			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><strong>'+theme['name']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</div></li>');
+			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</div></li>');
 			list.append(element);
 		}
 		self.elements.settingsContent.append(list);
