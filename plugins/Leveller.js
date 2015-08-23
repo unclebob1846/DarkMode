@@ -2,7 +2,11 @@ window[window.dID][window.dID+"a"]("updateLevellerContent", function(callback) {
 	if (this.headers["leveller"] != null && this.headers["leveller"].content != null)
 	{
 		var self = this;
-		if (this.config.banned)
+		if (!this.config.loggedIn)
+		{
+			this.headers["leveller"].content.html('<span>'+this.language["Leveller"].loginNeeded+'</span>');
+		}
+		else if (this.config.banned)
 		{
 			this.headers["leveller"].content.html('<span>'+this.language["Leveller"].banned+'</span>');
 		}
