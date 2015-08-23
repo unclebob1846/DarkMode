@@ -50,7 +50,7 @@ window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
 
 window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 	var self = this;
-	$.ajax(file, {
+	$.ajax(file+"?v="+(Math.random()*100000), {
 		dataType: "text",
 		success: function(text, b, c)
 		{
