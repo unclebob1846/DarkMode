@@ -14,7 +14,8 @@ html {
 
 #profile .entry .reply ,
 #profile #profileHeader .userBar ,
-#stream #chatOptions {
+#stream #chatOptions,
+#themeList li {
 	background-color: #222 !important;
 }
 
@@ -41,7 +42,9 @@ textarea ,
 #previousStream .header a:hover ,
 #previousStream .header span:hover ,
 #profile .entry .options .optionsMenu ,
-#profile .entry .options .optionsMenu li {
+#profile .entry .options .optionsMenu li ,
+#themeList li.active ,
+#themeList li:hover {
 	background-color: #444 !important;
 }
 

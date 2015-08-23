@@ -477,7 +477,6 @@ textarea {
 #settings .tabBar li:hover {
 }
 #settingsContent {
-    padding: 10px;
     float: left;
     clear: both;
 }
@@ -956,4 +955,22 @@ button {
 	
 }
 
-.
+#themeList {
+	float: left;
+	clear: both;
+}
+
+#themeList li {
+	float: left;
+	clear: both;
+}
+
+#themeList li div {
+	float: left;
+	margin-left: 10px;
+}
+
+#themeList li img {
+	float: left;
+	clear: both;
+}

@@ -2,7 +2,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 	this[this.dID]("addLanguageTable", "Design", "https://fluffyfishgames.github.io/"+this.baseFolder+"language/Design.json");
 	if (this.config.inDarkMode)
 	{
-		this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow"]);
+		this[this.dID]("addIDs", ["darkPage", "left", "right", "tooltip", "expandArrow", "themeList"]);
 		this[this.dID]("addTick", "sidebar", 5000, "tickSidebar");
 		this.headers = {};
 		var sequence = [38,38,40,40,37,39,37,39,66,65];
@@ -301,11 +301,11 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	var self = this;
 	this[this.dID]("addSettingsTab", this.language.Design.settingsTitle, function(){
 		
-		var list = $('<ul></ul>');
+		var list = $('<ul id="'+self.config.Design.ids["themeList"]+'"></ul>');
 		for (var key in self.config.Design.installedThemes)
 		{
 			var theme = self.config.Design.installedThemes[key];
-			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</div></li>');
+			var element = $('<li><img src="'+theme['thumbnail']+'" /><div><span><strong>'+theme['title']+'</strong><br /><small>'+self.language.Design.identifier+':'+theme['identifier']+'<br />'+theme['description']+'</span></div></li>');
 			list.append(element);
 		}
 		self.elements.settingsContent.append(list);
