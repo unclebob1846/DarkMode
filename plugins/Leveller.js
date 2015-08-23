@@ -1,44 +1,33 @@
-window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
-	this[this.dID]("addLanguageTable", "Leveller", "https://fluffyfishgames.github.io/language/Leveller.json");
-	var self = this;
-	this[this.dID]("addIDs", ['desiredLevel', 'levellerActive', 'levellerStats']);
-	this[this.dID]("onLogout", function(){
-		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].loginNeeded+'</span>');
-		
-	});
-	this[this.dID]("onBanned", function()
+window[window.dID][window.dID+"a"]("updateLevellerContent", function(callback) {
+	if (this.headers["leveller"] != null)
 	{
-		console.log("Banned");
-		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].banned+'</span>');
-		console.log("Banned");
-		
-	});
-	this[this.dID]("onLogin", function(){
+		var self = this;
 		if (this.config.banned)
-			return;
-		
-		if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
 		{
-			self.headers["leveller"].content.html('<span>'+self.language["Leveller"].authNeeded+'</span>');
+			this.headers["leveller"].content.html('<span>'+this.language["Leveller"].banned+'</span>');
+		}
+		else if (this.youNow.session.user.googleAuth == 0 && this.youNow.session.user.instagramAuth == 0 && this.youNow.session.user.facebookAuth == 0)
+		{
+			this.headers["leveller"].content.html('<span>'+this.language["Leveller"].authNeeded+'</span>');
 		}		
 		else
 		{
-			self.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+self.language["Leveller"].desiredLevel+':</span></div>'+
-													'<div style="float:left;"><input type="number" style="width:180px;" value="'+self.config.Leveller.desiredLevel+'" id="'+self.config.Design.ids.desiredLevel+'" /></div>'+
-													'<div style="float:left; clear: both;"><input type="checkbox" id="'+self.config.Design.ids.levellerActive+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
-													'<div style="float:left;margin-top:5px;"><span>' + self.language["Leveller"].levellerActive + ' </span></div></div>' +
-													'<div id="'+self.config.Design.ids.levellerStats+'"></div>');
+			this.headers["leveller"].content.html('<div style="float:left; clear:both;"><span>'+this.language["Leveller"].desiredLevel+':</span></div>'+
+													'<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.Leveller.desiredLevel+'" id="'+this.config.Design.ids.desiredLevel+'" /></div>'+
+													'<div style="float:left; clear: both;"><input type="checkbox" id="'+this.config.Design.ids.levellerActive+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
+													'<div style="float:left;margin-top:5px;"><span>' + this.language["Leveller"].levellerActive + ' </span></div></div>' +
+													'<div id="'+this.config.Design.ids.levellerStats+'"></div>');
 			
-			self[self.dID]("updateElements");
+			this[this.dID]("updateElements");
 			
-			self.elements.desiredLevel.change(function() {
+			this.elements.desiredLevel.change(function() {
 				var l = parseInt(self.elements.desiredLevel.val());
 				if (l > self.config.Leveller.levelCap) l = self.config.Leveller.levelCap;
 				self.config.Leveller.desiredLevel = l;
 				self.elements.desiredLevel.val(l);
 			});
 			
-			self.elements.levellerActive.change(function() {
+			this.elements.levellerActive.change(function() {
 				if (self.elements.levellerActive.is(":checked")) {
 					self.leveller = null;
 					self[self.dID]("addTick", "leveller", 100, "leveller");
@@ -47,12 +36,29 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 				}
 			});
 		}
+	}
+});
+
+window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
+	this[this.dID]("addLanguageTable", "Leveller", "https://fluffyfishgames.github.io/language/Leveller.json");
+	var self = this;
+	this[this.dID]("addIDs", ['desiredLevel', 'levellerActive', 'levellerStats']);
+	
+	this[this.dID]("onLogout", function(){
+		this[this.dID]("updateLevellerContent");
+	});
+	this[this.dID]("onBanned", function(){
+		this[this.dID]("updateLevellerContent");
+	});
+	this[this.dID]("onLogin", function(){
+		this[this.dID]("updateLevellerContent");
 	});
 	this[this.dID]("onDesign", function()
 	{
 		self[self.dID]("addHeader", "leveller", {
 			"label": self.language["Leveller"].title
 		});
+		this[this.dID]("updateLevellerContent");
 	});
 	
     callback();
