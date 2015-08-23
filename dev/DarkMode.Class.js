@@ -96,7 +96,7 @@ window[window.dID+"b"] = function(dID, clientID, folder, plugins)
 		var moduleName = url.substring(url.lastIndexOf("/")).replace(".js", "");
 		self[self.dID]("log", "notice", "Loading module "+moduleName+".");
 		if (!url.startsWith("https://"))
-			url = 'https://fluffyfishgames.github.io/plugins/'+self.baseFolder+''+url+'.js';
+			url = 'https://fluffyfishgames.github.io/'+self.baseFolder+'plugins/'+url+'.js';
 	    $.ajax(url+'?v='+(Math.random()*1000000),
 		{
 			dataType: "text",
