@@ -236,7 +236,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 							'<div id="'+this.config.Design.ids['streamView']+'">'+
 							'</div>'+
 							'<div id="'+this.config.Design.ids['streamBar']+'">' +
-								'<div class="item">'+
+								'<div id="'+this.config.Design.ids['likeImage']+'" class="item">'+
 									'<i class="fa fa-thumbs-up" />'+
 									'<span id="'+this.config.Design.ids['likeCount']+'"></span>'+
 								'</div>'+
