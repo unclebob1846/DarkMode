@@ -1,3 +1,4 @@
+
 #profile .entry .reply,
 #profile #profileHeader .userBar,
 #stream #chatOptions {
@@ -19,6 +20,7 @@ textarea,
 #stream #streamBar,
 #stream #chat a.tab,
 #stream #chat textarea,
+#previousStream .header div,
 #tooltip {
 	background-color: #333 !important;
 }
@@ -37,7 +39,9 @@ textarea,
 #expandArrow,
 .arrowExpand,
 .arrowDeflate,
-.dropdown-menu  {
+.dropdown-menu,
+#settings .tabBar li.active,
+#settings .tabBar li:hover  {
 	background-color: #555 !important;
 }
 
@@ -52,6 +56,13 @@ textarea,
 .searchResult-more,
 .user {
 	background-color: #777 !important;
+}
+
+#darkPage #right,
+#profile #profileBottom .fade a.active,
+#profile #profileBottom .fade a:hover,
+#profile #profileContent {
+	background-color: #000 !important;
 }
 
 body,
@@ -125,7 +136,6 @@ textarea {
     font-weight: normal;
     width: 450px;
     font-size: 11px;
-    background: #333;
     border: 1px solid #555;
     display: none;
     position: absolute;
@@ -538,7 +548,6 @@ textarea {
 
 #settings .tabBar li.active,
 #settings .tabBar li:hover {
-    background: #555;
 }
 #settingsContent {
     padding: 10px;
@@ -582,7 +591,6 @@ textarea {
     float: left;
     width: calc(100% - 201px);
     height: 100%;
-    @extend .background-color;
 }
 #darkPage #userList {
     padding: 20px;
