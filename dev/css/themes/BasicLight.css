@@ -16,7 +16,7 @@ html {
 #profile #profileHeader .userBar ,
 #stream #chatOptions,
 #themeList li {
-	background-color: #aaa !important;
+	background-color: #ddd !important;
 }
 
 select ,
@@ -36,7 +36,7 @@ textarea ,
 #stream #chat textarea,
 #previousStream .header div,
 #tooltip {
-	background-color: #bbb !important;
+	background-color: #ddd !important;
 }
 
 #previousStream .header a:hover ,
@@ -45,7 +45,7 @@ textarea ,
 #profile .entry .options .optionsMenu li ,
 #themeList li.active ,
 #themeList li:hover {
-	background-color: #ccc !important;
+	background-color: #eee !important;
 }
 
 #profile .entry .options .optionsMenu li:hover ,
@@ -58,7 +58,7 @@ textarea ,
 .dropdown-menu ,
 #settings .tabBar li.active ,
 #settings .tabBar li:hover  {
-	background-color: #ddd !important;
+	background-color: #eee !important;
 }
 
 .dropdown-menu li a:hover ,
@@ -208,4 +208,36 @@ textarea ,
 
 #profile #profileBottom .fade a {
 	border-color: #000 !important;
+}
+
+.ynicon-user,
+.ynicon-settings,
+.ynicon-audience,
+.ynicon-logout {
+    color: #222 !important;
+}
+
+.icon {
+	color: #222 !important;
+}
+
+button .icon {
+	margin-right: 5px;
+}
+
+button {
+	-webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
+	box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
+}
+
+.btn-primary {
+	background: #9ACD32 !important;
+	border: 1px solid #999900 !important;
+}
+
+.btn-confirm {
+	color: #fff;
+	background: #777777 !important;
+	border: 1px solid #444444 !important;	
 }
