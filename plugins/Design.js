@@ -227,7 +227,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 	{
 		var self = this;
 		$('#'+$.md5(this.dID+'_Loader')).animate({opacity: 0}, 300, function(){
-			//$('#'+$.md5(self.dID+'_Loader')).remove();
+			$('#'+$.md5(self.dID+'_Loader')).remove();
 		});
 		this[window.dID]("applyDesign");
 	}
