@@ -1,3 +1,13 @@
+:root {
+	--dark-shade-background: #333;
+	--medium-shade-background: #444;
+	--light-shade-background: #666;
+	--light-border-color: #777;
+	--dark-border-color: #666;
+	--darker-border-color: #555;
+	--darkest-border-color: #222;
+}
+
 body,
 html {
     background: #000 !important;
@@ -6,8 +16,8 @@ html {
 }
 .navbar {
     border-bottom: 0px;
-    background: #666;
-    border-bottom: 1px solid #777 !important;
+    background: var(---light-shade-background);
+    border-bottom: 1px solid var(--light-border-color) !important;
 }
 .nav-logo {
     float: left;
@@ -24,12 +34,13 @@ select,
 input[type=text],
 input[type=number],
 textarea {
-    background: #333;
+    background: var(--dark-shade-background);
     font-size: 11px;
     font-family: Segoe UI;
     color: #ddd !important;
-    border: 1px solid #666;
+    border: 1px solid var(--dark-border-color);
 }
+
 #darkPage #left li {
     width: calc(100% - 10px);
 	float: left;
@@ -42,14 +53,14 @@ textarea {
 #previousStream .header {
     width: 100%;
     height: 30px;
-    background: #333;
-    border-bottom: 1px solid #555;
+    background: var(--dark-shade-background);
+    border-bottom: 1px solid var(--darker-border-color);
 }
 #previousStream .header a,
 #previousStream .header span {
     float: left;
     width: auto;
-    border-right: 1px solid #555;
+    border-right: 1px solid var(--darker-border-color);
     text-decoration: none;
     font-weight: bold;
     color: #ddd;
@@ -60,21 +71,21 @@ textarea {
 }
 #previousStream .header a:hover,
 #previousStream .header span:hover {
-    background: #444;
+    background: var(--medium-shade-background);
 }
 #previousStream .header span {
     cursor: pointer;
     float: right;
     border-right: none;
-    border-left: 1px solid #555;
+    border-left: 1px solid var(--darker-border-color);
 }
 #previousStream .header div {
     color: #ddd;
     font-weight: normal;
     width: 450px;
     font-size: 11px;
-    background: #333;
-    border: 1px solid #555;
+    background: var(--dark-shade-background);
+    border: 1px solid var(--darker-border-color);
     display: none;
     position: absolute;
     right: 0px;
@@ -112,8 +123,8 @@ textarea {
     width: 100%;
 }
 #profile .entry {
-    background: #333;
-    border: 1px solid #222;
+    background: var(--dark-shade-background);
+    border: 1px solid var(--darkest-border-color);
     margin-top: 10px;
     width: 100%;
     float: left;
@@ -159,13 +170,13 @@ textarea {
     position: absolute;
     margin-top: 2px;
     right: 20px;
-    background: #444;
-    border: 1px solid #111;
+    background: var(--medium-shade-background);
+    border: 1px solid var(--darkest-border-color);
 }
 #profile .entry .options .optionsMenu li {
     float: left;
     clear: both;
-    background: #444;
+    background: var(--medium-shade-background);
     color: #ddd;
     padding: 10px;
     cursor: pointer;
@@ -254,7 +265,7 @@ textarea {
 }
 #profile .entry .content .stream {
     float: left;
-    border: 1px solid #555;
+    border: 1px solid var(--darker-border-color);
     border-radius: 6px;
     clear: both;
     width: 100%;
@@ -298,7 +309,7 @@ textarea {
     cursor: pointer;
     float: left;
     padding-left: 5px;
-    border-top: 1px solid #555 !important;
+    border-top: 1px solid var(--darker-border-color) !important;
     padding-top: 3px;
     padding-bottom: 3px;
     clear: both;
@@ -310,7 +321,7 @@ textarea {
     margin-right: 5px;
 }
 #profile .entry .comment {
-    border-top: 2px solid #555;
+    border-top: 2px solid var(--darker-border-color);
     float: left;
     clear: both;
     width: 100%;
@@ -323,14 +334,14 @@ textarea {
     height: 30px;
 }
 #profile .entry .comment input {
-    background: #333;
+    background: var(--dark-shade-background);
     border: none;
     width: calc(100% - 30px);
     margin: 0px;
     height: 30px;
 }
 #profile .entry .reply {
-    border-top: 1px solid #555;
+    border-top: 1px solid var(--darker-border-color);
     padding-top: 5px;
     background: #222;
     float: left;
@@ -469,12 +480,12 @@ textarea {
     height: 20px;
     display: block;
     float: left;
-    background: #333;
+    background: var(--dark-shade-background);
     height: 30px;
     padding-top: 5px;
     padding-bottom: 5px;
-    border-bottom: 1px solid #666;
-    border-right: 1px solid #666;
+    border-bottom: 1px solid var(--dark-border-color);
+    border-right: 1px solid var(--dark-border-color);
     cursor: pointer;
     text-align: center;
     color: #ddd;
@@ -484,14 +495,14 @@ textarea {
 
 .highlight
 {
-	background: #666;
-	border-bottom: 1px solid #777;
+	background: var(---light-shade-background);
+	border-bottom: 1px solid var(--light-border-color);
 }
 
 .normal
 {
-	background: #333;
-	border-bottom: 1px solid #666;
+	background: var(--dark-shade-background);
+	border-bottom: 1px solid var(--dark-border-color);
 }
 
 #settings .tabBar li.active,
@@ -505,7 +516,7 @@ textarea {
 }
 #darkPage #left li .header {
     width: 100%;
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid var(--light-border-color);
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -517,7 +528,7 @@ textarea {
 }
 #darkPage #left li .content {
     width: 190px;
-    border-bottom: 1px solid #111;
+    border-bottom: 1px solid var(--darkest-border-color);
     padding: 10px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -534,9 +545,9 @@ textarea {
 #darkPage #left {
     float: left;
     width: 200px;
-    border-right: 1px solid #777;
+    border-right: 1px solid var(--light-border-color);
     height: 100%;
-    background: #333;
+    background: var(--dark-shade-background);
 }
 #darkPage #right {
     float: left;
@@ -557,12 +568,12 @@ textarea {
     width: 142px;
     height: 185px;
     margin: 5px;
-    background: #333;
-    border: 1px solid #555;
+    background: var(--dark-shade-background);
+    border: 1px solid var(--darker-border-color);
     border-radius: 5px;
 }
 #darkPage .userProfile div {
-    border: 1px solid #111;
+    border: 1px solid var(--darkest-border-color);
     background: url(http://cdn2.younow.com/images/nothumb.jpg) no-repeat;
     background-size: 1420px 142px;
     float: left;
@@ -670,8 +681,8 @@ textarea {
     height: 30px;
     float: left;
     clear: both;
-    background: #333;
-    border-bottom: 1px solid #555;
+    background: var(--dark-shade-background);
+    border-bottom: 1px solid var(--darker-border-color);
 }
 #streamInfo i {
 	margin-right: 5px;
@@ -682,7 +693,7 @@ textarea {
     height: calc(100% - 170px);
     float: left;
     clear: both;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid var(--darker-border-color);
 }
 #stream .stream {
     width: calc(100% - 360px);
@@ -696,11 +707,11 @@ textarea {
 #stream #streamBar {
     width: 100%;
     height: 30px;
-    background: #333;
+    background: var(--dark-shade-background);
     color: #eee;
 	padding-left: 5px;
 	padding-right: 5px;
-    border-top: 1px solid #555;
+    border-top: 1px solid var(--darker-border-color);
 }
 #stream #streamInfo .right {
     float: right;
@@ -739,12 +750,12 @@ textarea {
     font-size: 12px;
     font-weight: bold;
     float: left;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid var(--darker-border-color);
     height: 25px;
     line-height: 25px;
     width: 119px;
-    border-right: 1px solid #666;
-    background: #333;
+    border-right: 1px solid var(--dark-border-color);
+    background: var(--dark-shade-background);
 }
 #stream #chat a.last {
     border-right: none !important;
@@ -772,7 +783,7 @@ textarea {
     margin: 0px;
     margin-bottom: 5px;
     padding-bottom: 3px;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid var(--darker-border-color);
 }
 #stream #infoList div.label {
     float: left;
@@ -852,7 +863,7 @@ textarea {
     color: #ddd;
     width: 360px;
     height: 95px;
-    border-top: 1px solid #555;
+    border-top: 1px solid var(--darker-border-color);
     background: #222;
 }
 #stream #chatOptions input {
@@ -864,9 +875,9 @@ textarea {
     height: 50px;
     width: 360px;
     padding: 5px;
-    border: 1px solid #555;
+    border: 1px solid var(--darker-border-color);
     color: #eee;
-    background: #333;
+    background: var(--dark-shade-background);
     max-width: 360px;
     max-height: 50px;
 }
@@ -889,7 +900,7 @@ textarea {
     color: #ddd;
     position: absolute;
     z-index: 10000;
-    background: #333;
+    background: var(--dark-shade-background);
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -918,7 +929,7 @@ textarea {
     clear: both;
     width: 100%;
     height: 25px;
-    background: #666;
+    background: var(---light-shade-background);
     color: #ddd;
     font-weight: bold;
     font-size: 13px;
@@ -943,7 +954,7 @@ textarea {
 	width: 10px !important;
 	height: 100% !important;
 	background: #555;
-	border-left: 1px solid #777;
+	border-left: 1px solid var(--light-border-color);
 	cursor: pointer;
 }
 
@@ -966,7 +977,7 @@ textarea {
     color: #eee !important;
 }
 .dropdown-menu li a:hover {
-    background: #666 !important;
+    background: var(---light-shade-background) !important;
 }
 .dropdown-menu .active,
 .searchResult-more {
