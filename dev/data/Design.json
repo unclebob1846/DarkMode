@@ -1,6 +1,11 @@
 {
 	"maxMessages": 200,
 	"playSounds": false,
+	"themes": [
+		"https://fluffyfishgames.github.io/dev/css/themes/BasicDark.css",
+		"https://fluffyfishgames.github.io/dev/css/themes/BasicLight.css"
+	],
+	"selectedTheme": "basicDark",
 	"images": {
 		"logo": "https://fluffyfishgames.github.io/img/whore.png",
 		"star": "https://fluffyfishgames.github.io/img/star_black_16.png",
