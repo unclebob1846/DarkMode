@@ -496,17 +496,20 @@ window[window.dID][window.dID+"a"]("hideTooltip", function() {
 });
 	
 window[window.dID][window.dID+"a"]("addButton", function() {
+	console.log("A");
 	var container = $(".user-actions");
 	var button = $(".user-actions").find("[translate=header_golive]");
 	if (button != null && button.length > 0)
 	{
 		button.remove();
 	}
+	console.log("B");
 	var self = this;
 
 	var newButton = $("<button></button>");
 	newButton.attr("class", "pull-right btn btn-primary");
-
+	console.log("C");
+	
 	if (this.config.inDarkMode) {
 		newButton.html(this.language["intoLight"]);
 		newButton.css('background-color', '#999');
@@ -519,7 +522,8 @@ window[window.dID][window.dID+"a"]("addButton", function() {
 	newButton.css('height', '27');
 	newButton.css('visibility', 'visible');
 	newButton.insertAfter(container);
-
+	console.log("D");
+	
 	newButton.click(function() {
 		window.localStorage.setItem(self[self.dID]("name","inDarkMode"), window.localStorage.getItem(self[self.dID]("name","inDarkMode")) == "1" ? "0" : "1");
 		if (window.localStorage.getItem(self[self.dID]("name","inDarkMode")) == "1") {
