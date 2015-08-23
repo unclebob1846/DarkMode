@@ -42,7 +42,11 @@ window[window.dID][window.dID+"a"]("addUserMenuItemElement", function(name) {
 	if (this.config.loggedIn)
 	{
 		var liElement = $('<li><a href><i style="font-size:22px;vertical-align:middle;padding:0px 18px 0px 7px;line-height:25px;" class="icon fa fa-'+this.config.Design.UserMenu.buttons[name].icon+'"></i><span>'+name+'</span></a></li>');
-		liElement.click(this.config.Design.UserMenu.buttons[name].callback);
+		var self = this;
+		liElement.click(function(){
+			self.config.Design.UserMenu.buttons[name].callback();
+			return false;
+		});
 		this.elements["userMenuList"].append(liElement);
 	}
 });
