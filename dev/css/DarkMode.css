@@ -963,6 +963,7 @@ button {
 }
 
 #themeList li {
+	padding: 5px;
 	width: 100%;
 	float: left;
 	clear: both;
@@ -975,5 +976,6 @@ button {
 
 #themeList li img {
 	float: left;
+	width: 100px;
 	clear: both;
 }

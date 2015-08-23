@@ -97,7 +97,7 @@ textarea ,
 #stream #viewerList li span ,
 #stream #chatOptions ,
 #tooltip ,
-#tooltip .title ,
+#tooltip .title
 {
     color: #ddd !important;
 }
