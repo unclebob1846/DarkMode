@@ -75,7 +75,6 @@ window[window.dID][window.dID+"a"]("readyYouNow", function() {
 			this[this.dID]("fireLogin");
 		else 
 			this[this.dID]("fireLogout");
-			
 		if (this.config.banned)
 			this[this.dID]("fireBanned");
 	}
