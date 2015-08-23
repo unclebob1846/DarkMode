@@ -323,7 +323,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			this.elements["likeImage"].mousemove(function(e) {
 				self[self.dID]("showTooltip", e, {
 					"type": "likeCost",
-					"cost": self.currentStreamer.nextLikeCost
+					"cost": self.config.Design.Stream.data.nextLikeCost
 				});
 			});
 			
