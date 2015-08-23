@@ -8,7 +8,10 @@ window[window.dID][window.dID+"a"]("bootLeveller", function(callback) {
 	});
 	this[this.dID]("onBanned", function()
 	{
+		console.log("Banned");
 		self.headers["leveller"].content.html('<span>'+self.language["Leveller"].banned+'</span>');
+		console.log("Banned");
+		
 	});
 	this[this.dID]("onLogin", function(){
 		if (this.config.banned)
