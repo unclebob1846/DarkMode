@@ -16,9 +16,9 @@ window[window.dID][window.dID+"a"]("updateLevellerContent", function(callback) {
 		}		
 		else
 		{
-			this.headers["leveller"].content.html('<div style="float:left;clear:both"><strong>'+this.language["Leveller"].warningTitle+': </strong>'+this.language["Leveller"].warning+'</div>'+
+			this.headers["leveller"].content.html('<div style="float:left;clear:both;font-size:10px;"><strong>'+this.language["Leveller"].warningTitle+': </strong><span>'+this.language["Leveller"].warning+'</span></div>'+
 													'<div style="float:left; clear:both;"><span>'+this.language["Leveller"].desiredLevel+':</span></div>'+
-													'<div style="float:left;"><input type="number" style="width:180px;" value="'+this.config.Leveller.desiredLevel+'" id="'+this.config.Design.ids.desiredLevel+'" /></div>'+
+													'<div style="float:left;"><input type="number" style="width:160px;" value="'+this.config.Leveller.desiredLevel+'" id="'+this.config.Design.ids.desiredLevel+'" /></div>'+
 													'<div style="float:left; clear: both;"><input type="checkbox" id="'+this.config.Design.ids.levellerActive+'" style="clear:both;margin-right:5px;margin-top:8px;float:left;" />' +
 													'<div style="float:left;margin-top:5px;"><span>' + this.language["Leveller"].levellerActive + ' </span></div></div>' +
 													'<div id="'+this.config.Design.ids.levellerStats+'"></div>');
