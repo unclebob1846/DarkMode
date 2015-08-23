@@ -41,7 +41,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 					for (var i = 0; i < lines.length; i++)
 					{
 						var line = lines[i].trim();
-						var parts = line.split(":", 1);
+						var parts = line.split(":", 2);
 						var key = parts[0].trim();
 						var value = parts[1].trim();
 						theme[key.substring(1)] = value;
