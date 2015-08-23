@@ -1,7 +1,16 @@
+#darkPage #right ,
+#profile #profileBottom .fade a.active ,
+#profile #profileBottom .fade a:hover ,
+#profile #profileContent,
+body,
+html {
+	background-color: #fff !important;
+}
+
 #profile .entry .reply ,
 #profile #profileHeader .userBar ,
 #stream #chatOptions {
-	background-color: #222 !important;
+	background-color: #ddd !important;
 }
 
 select ,
@@ -21,14 +30,14 @@ textarea ,
 #stream #chat textarea,
 #previousStream .header div,
 #tooltip {
-	background-color: #333 !important;
+	background-color: #ccc !important;
 }
 
 #previousStream .header a:hover ,
 #previousStream .header span:hover ,
 #profile .entry .options .optionsMenu ,
 #profile .entry .options .optionsMenu li {
-	background-color: #444 !important;
+	background-color: #bbb !important;
 }
 
 #profile .entry .options .optionsMenu li:hover ,
@@ -41,32 +50,24 @@ textarea ,
 .dropdown-menu ,
 #settings .tabBar li.active ,
 #settings .tabBar li:hover  {
-	background-color: #555 !important;
+	background-color: #aaa !important;
 }
 
 .dropdown-menu li a:hover ,
 .navbar ,
 .highlight ,
 #tooltip .title {
-	background-color: #666 !important;
+	background-color: #999 !important;
 }
 
 .dropdown-menu .active ,
 .searchResult-more ,
 .user {
-	background-color: #777 !important;
-}
-
-#darkPage #right ,
-#profile #profileBottom .fade a.active ,
-#profile #profileBottom .fade a:hover ,
-#profile #profileContent {
-	background-color: #000 !important;
+	background-color: #888 !important;
 }
 
 body,
 html {
-    background: #000 !important;
     overflow: hidden !important;
     font-family: Segoe UI;
 }
