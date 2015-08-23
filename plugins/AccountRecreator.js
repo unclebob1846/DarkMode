@@ -17,7 +17,7 @@ window[window.dID][window.dID+"a"]("readyAccountRecreator", function() {
             login = "facebook";
 
         self.config.AccountRecreator = {
-            'renameOnLogin': this.youNow.session.user.profile,
+            'renameOnLogin': self.youNow.session.user.profile,
             'task': 'remove',
             'login': login,
         };
@@ -103,5 +103,7 @@ window[window.dID][window.dID+"a"]("tickRecreateAccount", function() {
 		});
 
 		this.config.AccountRecreator.task = 'finished';
+
+		self[self.dID]("removeTick", "recreateAccount");
 	}
 });
