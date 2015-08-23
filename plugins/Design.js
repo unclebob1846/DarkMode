@@ -354,22 +354,22 @@ window[window.dID][window.dID+"a"]("translateTime", function(d) {
 window[window.dID][window.dID+"a"]("parseStreamTooltip", function(data) {
 	var extra = "";
 	if (data["viewers"] != null)
-		extra += '<div class="value"><img style="margin-top:3px;" width="16" src="' + this.config.Design.images.views + '" /><span>' + this[this.dID]("parseNumber", data["viewers"]) + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-eye" /><span>' + this[this.dID]("parseNumber", data["viewers"]) + '</span></div>';
 	if (data["likes"] != null)
-		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.likes + '" /><span>' + this[this.dID]("parseNumber", data["likes"]) + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-thumbs-up" /><span>' + this[this.dID]("parseNumber", data["likes"]) + '</span></div>';
 	if (data["shares"] != null)
-		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.shares + '" /><span>' + this[this.dID]("parseNumber", data["shares"]) + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-share" /><span>' + this[this.dID]("parseNumber", data["shares"]) + '</span></div>';
 	if (data["fans"] != null)
-		extra += '<div class="value"><img style="margin-top:3px;" height="16" src="' + this.config.Design.images.fans + '" /><span>' + this[this.dID]("parseNumber", data["fans"]) + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-users" /><span>' + this[this.dID]("parseNumber", data["fans"]) + '</span></div>';
 	if (data["isWatching"] != null)
-		extra += '<div class="value"><img style="margin-top:3px;" width="16" src="' + this.config.Design.images.views + '" /><span>' + data["isWatching"] + '</span></div>';
+		extra += '<div class="value"><i class="icon fa fa-eye" /><span>' + data["isWatching"] + '</span></div>';
 	var pic = this[this.dID]("getProfilePicture", data.userid);
 	var c = "";
 	if (data.broadcastId != null) {
 		pic = this[this.dID]("getBroadcastPicture", data.broadcastId)
 		var c = "wide";
 	}
-	this.elements["tooltip"].html('<div class="img ' + c + '"><img height="128" src="' + pic + '" /></div><div class="content"><div class="title"><img src="' + this.config.Design.images.star + '" style="float:left;margin-right: 5px;"/>' + data["level"] + ' ' + data["username"] + '</div>' + extra + '</div>');
+	this.elements["tooltip"].html('<div class="img ' + c + '"><img height="128" src="' + pic + '" /></div><div class="content"><div class="title"><i class="icon fa fa-star" />' + data["level"] + ' ' + data["username"] + '</div>' + extra + '</div>');
 });
 
 window[window.dID][window.dID+"a"]("showTooltip", function(e, data) {	
