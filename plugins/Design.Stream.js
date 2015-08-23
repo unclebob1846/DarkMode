@@ -325,12 +325,15 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 				self[self.dID]("hideTooltip");
 			});
 			this.elements["audienceTab"].click(function(e) {
+				console.log("A");
 				self[self.dID]("openAudience")
 			});
 			this.elements["infoTab"].click(function(e) {
+				console.log("B");
 				self[self.dID]("openInfo");
 			});
 			this.elements["chatTab"].click(function(e) {
+				console.log("C");
 				self[self.dID]("openChat");
 			});
 			this.elements["writeInTag"].change(function() {
