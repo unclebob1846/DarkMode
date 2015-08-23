@@ -11,7 +11,7 @@ window[window.dID][window.dID+"a"]("bootDesignStream", function(callback) {
 							  "streamInfoStreamURL", "streamInfoDisplayViewers", "streamInfoMobileViewers", 
 							  "streamInfoMaxViewers", "streamInfoTag", "streamInfoPosition", "streamInfoReconnects", 
 							  "streamInfoFeaturedTime", "streamInfoGiftsValue", "streamInfoNewFans", "streamInfoBitrate", 
-							  "streamInfoFPS"]);
+							  "streamInfoFPS", "newChatMessages"]);
     this[this.dID]("addRoute", "stream", /[a-zA-Z0-9_\.]+/, "openStream", 1);
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/flowplayer.js");
 	this[this.dID]("addLibrary", "https://fluffyfishgames.github.io/libs/uaparser.js");
@@ -67,6 +67,7 @@ window[window.dID][window.dID+"a"]("openStream", function(parts) {
 			self.config.Design.Stream.data = json;
 			self[self.dID]("updateStreamInfo");
 			self[self.dID]("updateStreamTrending");
+			self[self.dID]("openChat");
 		}
 		else 
 		{
@@ -172,6 +173,7 @@ window[window.dID][window.dID+"a"]("sendChatMessage", function(streamId, message
 });
 
 window[window.dID][window.dID+"a"]("openAudience", function() {
+	this.config.Design.Stream.currentTab = "audience";
 	this.elements["chatMessage"].css("display", "none");
 	this.elements["chatMessages"].css("display", "none");
 	this.elements["chatOptions"].css("display", "none");
@@ -184,6 +186,9 @@ window[window.dID][window.dID+"a"]("openAudience", function() {
 });
 
 window[window.dID][window.dID+"a"]("openChat", function() {
+	this.config.Design.Stream.currentTab = "chat"
+	this.config.Design.Stream.newChatMessages = 0;
+	this.elements["newChatMessages"].html("");
 	this.elements["chatMessage"].css("display", "block");
 	this.elements["chatMessages"].css("display", "block");
 	this.elements["chatMessages"].scrollTop(this.elements["chatMessages"][0].scrollHeight);
@@ -197,6 +202,7 @@ window[window.dID][window.dID+"a"]("openChat", function() {
 });
 
 window[window.dID][window.dID+"a"]("openInfo", function() {
+	this.config.Design.Stream.currentTab = "info";
 	this.elements["chatMessage"].css("display", "none");
 	this.elements["chatMessages"].css("display", "none");
 	this.elements["chatOptions"].css("display", "none");
@@ -256,7 +262,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 						'</div>'+
 
 						'<div id="'+this.config.Design.ids['chat']+'">'+
-							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'"><i class="fa fa-weixin" />' + this.language["Design.Stream"].tabs.chat + '</a>'+
+							'<a class="tab active" id="'+this.config.Design.ids['chatTab']+'"><i class="fa fa-weixin" />' + this.language["Design.Stream"].tabs.chat + ' <span id="'+this.config.Design.ids['newChatMessages']+'"></span></a>'+
 							'<a class="tab" id="'+this.config.Design.ids['audienceTab']+'"><i class="fa fa-users" />' + this.language["Design.Stream"].tabs.audience + '</a>'+
 							'<a class="tab last" id="'+this.config.Design.ids['infoTab']+'"><i class="fa fa-info" />' + this.language["Design.Stream"].tabs.infos + '</a>'+
 							'<div id="'+this.config.Design.ids['infoList']+'">'+
@@ -325,15 +331,12 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 				self[self.dID]("hideTooltip");
 			});
 			this.elements["audienceTab"].click(function(e) {
-				console.log("A");
 				self[self.dID]("openAudience")
 			});
 			this.elements["infoTab"].click(function(e) {
-				console.log("B");
 				self[self.dID]("openInfo");
 			});
 			this.elements["chatTab"].click(function(e) {
-				console.log("C");
 				self[self.dID]("openChat");
 			});
 			this.elements["writeInTag"].change(function() {
@@ -419,6 +422,13 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 		this.config.Design.Stream.pusherChannel.bind('onChat', function(data) {
 			for (var i = 0; i < data.message.comments.length; i++)
 				self[self.dID]("addChatMessage", data.message.comments[i]);
+			if (self.config.Design.Stream.currentTab != "chat")
+			{
+				if (self.config.Design.Stream.newChatMessages == null)
+					self.config.Design.Stream.newChatMessages = 0;
+				self.config.Design.Stream.newChatMessages += data.message.comments.length;
+				self.elements["newChatMessages"].html("("+self.config.Design.Stream.newChatMessages+")");
+			}
 		});
 		
 		this.elements["chatMessages"].html("");
