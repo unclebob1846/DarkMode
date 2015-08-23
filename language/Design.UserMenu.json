@@ -5,6 +5,6 @@
 		"settings": "Einstellungen",
 		"inviteFriends": "Freunde einladen",
 		"logout": "Ausloggen",
-		"userProgress": "%1% bis Level %2"
+		"userProgress": "Fortschritt: %1% bis Level %2"
 	}
 }

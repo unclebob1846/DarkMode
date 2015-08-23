@@ -1,0 +1,16 @@
+{
+	"de-DE":
+	{
+		"title": "Leveller",
+		"desiredLevel": "Gewünschtes Level",
+		"levellerActive": "Leveller aktivieren",
+		"currentTask": "Derzeitige Aufgabe",
+		"level": "Level",
+		"waiting": "Warte...",
+		"leveling": "Leveln...",
+		"renaming": "Name wiederherstellen...",
+		"finished": "Fertig!",
+		"loginNeeded": "Du musst eingeloggt sein um zu leveln.",
+		"authNeeded": "Dein Account muss entweder mit Instagram (empfohlen), Facebook oder Google+ verbunden sein."
+	}
+}
