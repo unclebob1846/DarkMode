@@ -45,7 +45,7 @@ textarea ,
 #profile .entry .options .optionsMenu li ,
 #themeList li.active ,
 #themeList li:hover {
-	background-color: #eee !important;
+	background-color: #fff !important;
 }
 
 #profile .entry .options .optionsMenu li:hover ,
@@ -58,20 +58,20 @@ textarea ,
 .dropdown-menu ,
 #settings .tabBar li.active ,
 #settings .tabBar li:hover  {
-	background-color: #eee !important;
+	background-color: #fff !important;
 }
 
 .dropdown-menu li a:hover ,
 .navbar ,
 .highlight ,
 #tooltip .title {
-	background-color: #eee !important;
+	background-color: #fff !important;
 }
 
 .dropdown-menu .active ,
 .searchResult-more ,
 .user {
-	background-color: #fff !important;
+	background-color: #ddd !important;
 }
 
 select ,
