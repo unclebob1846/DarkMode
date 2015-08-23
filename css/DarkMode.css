@@ -1017,13 +1017,13 @@ button {
 }
 
 .btn-primary {
-	background: #EF8319 !important;
-	border: 1px solid #77410C !important;
+	background: #9ACD32 !important;
+	border: 1px solid #999900 !important;
 }
 
 .btn-confirm {
-	background: #0000ff !important;
-	border: 1px solid #000044 !important;
+	background: #777777 !important;
+	border: 1px solid #444444 !important;
 	
 }
 
