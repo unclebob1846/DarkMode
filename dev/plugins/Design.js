@@ -23,9 +23,9 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 			}
 		});
 		
-		var loading = config.Design.themes.length;
+		var loading = this.config.Design.themes.length;
 		var loaded = 0;
-		self.config.Design.installedThemes = {};
+		this.config.Design.installedThemes = {};
 		
 		var d = function(url)
 		{
@@ -68,7 +68,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 			});
 		};
 		
-		for (var i = 0; i < config.Design.themes.length; i++)
+		for (var i = 0; i < this.config.Design.themes.length; i++)
 		{
 			d(config.Design.themes[i]);
 		}
