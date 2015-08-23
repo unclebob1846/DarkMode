@@ -146,6 +146,10 @@ textarea {
     display: block;
     width: calc(100% - 55px);
 }
+#profile .entry .header div i{
+    margin-right: 5px;
+}
+
 #profile .entry .options {
     float: right;
     margin-right: 5px;
@@ -301,7 +305,7 @@ textarea {
     width: 100%;
     color: #ddd;
 }
-#profile .entry .like img {
+#profile .entry .like i {
     float: left;
     margin-right: 5px;
 }
@@ -994,3 +998,17 @@ span {
 .icon {
 	color: #eee !important;
 }
+
+button .icon {
+	margin-right: 5px;
+}
+
+.btn-primary {
+	background: #f88017 !important;
+}
+
+.btn-confirm {
+	background: #000080 !important;
+}
+
+.

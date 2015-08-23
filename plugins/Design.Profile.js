@@ -278,14 +278,14 @@ window[window.dID][window.dID+"a"]("changePostLike", function(postId, isComment)
 		{
 			this.config.Design.Profile.posts[postId].liked = false;
 			this.config.Design.Profile.posts[postId].likes--;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-up" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-up" /><strong>'+this.language["Design.Profile"].dashboard.like+'</strong> '+(this.config.Design.Profile.posts[postId].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes): ""));
 			this[this.dID]("sendRequest", "unlikeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 		else 
 		{
 			this.config.Design.Profile.posts[postId].liked = true;
 			this.config.Design.Profile.posts[postId].likes++;
-			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-down" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
+			this.config.Design.Profile.posts[postId].element.find(".like").first().html('<i class="icon fa fa-thumbs-down" /><strong>'+this.language["Design.Profile"].dashboard.unlike+'</strong> '+(this.config.Design.Profile.posts[postId].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[postId].likes - 1): ""));
 			this[this.dID]("sendRequest", "likeObject", {channelID: this.config.Design.Profile.data.channelId, objectID: postId, isComment: isComment?"1":"0"}, function(json, success){});
 		}
 	}
@@ -344,12 +344,12 @@ window[window.dID][window.dID+"a"]("parseProfilePost", function(post, sub)
 		this.config.Design.Profile.posts[post.id].likes = parseInt(post.likesCount);
 		if (post.like != null && post.like.user.userId == this.youNow.session.user.userId)
 		{
-			like = '<div class="like"><i class="icon fa fa-thumbs-down" />'+this.language["Design.Profile"].dashboard.unlike+''+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
+			like = '<div class="like"><i class="icon fa fa-thumbs-down" /><strong>'+this.language["Design.Profile"].dashboard.unlike+'</strong> '+(this.config.Design.Profile.posts[post.id].likes > 1 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes - 1): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = true;
 		}
 		else 
 		{
-			like = '<div class="like"><i class="icon fa fa-thumbs-up" />'+this.language["Design.Profile"].dashboard.like+''+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
+			like = '<div class="like"><i class="icon fa fa-thumbs-up" /><strong>'+this.language["Design.Profile"].dashboard.like+'</strong> '+(this.config.Design.Profile.posts[post.id].likes > 0 ? this.language["Design.Profile"].dashboard.otherLikes.replace('%1', this.config.Design.Profile.posts[post.id].likes): "")+'</div>';
 			this.config.Design.Profile.posts[post.id].liked = false;
 		}
 		var el = null;
