@@ -417,9 +417,10 @@ textarea {
     text-decoration: none;
     cursor: pointer;
     float: left;
-    margin-top: 10px;
+    margin-top: 20px;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid;
+	border-bottom: 0px;
     border-radius: 6px 6px 0px 0px;
     padding-top: 9px;
     font-weight: bold;
