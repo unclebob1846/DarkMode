@@ -9,14 +9,14 @@
 #profile #profileContent,
 body,
 html {
-	background-color: #000 !important;
+	background-color: #fff !important;
 }
 
 #profile .entry .reply ,
 #profile #profileHeader .userBar ,
 #stream #chatOptions,
 #themeList li {
-	background-color: #222 !important;
+	background-color: #aaa !important;
 }
 
 select ,
@@ -36,7 +36,7 @@ textarea ,
 #stream #chat textarea,
 #previousStream .header div,
 #tooltip {
-	background-color: #333 !important;
+	background-color: #bbb !important;
 }
 
 #previousStream .header a:hover ,
@@ -45,7 +45,7 @@ textarea ,
 #profile .entry .options .optionsMenu li ,
 #themeList li.active ,
 #themeList li:hover {
-	background-color: #444 !important;
+	background-color: #ccc !important;
 }
 
 #profile .entry .options .optionsMenu li:hover ,
@@ -58,20 +58,20 @@ textarea ,
 .dropdown-menu ,
 #settings .tabBar li.active ,
 #settings .tabBar li:hover  {
-	background-color: #555 !important;
+	background-color: #ddd !important;
 }
 
 .dropdown-menu li a:hover ,
 .navbar ,
 .highlight ,
 #tooltip .title {
-	background-color: #666 !important;
+	background-color: #eee !important;
 }
 
 .dropdown-menu .active ,
 .searchResult-more ,
 .user {
-	background-color: #777 !important;
+	background-color: #fff !important;
 }
 
 select ,
@@ -97,15 +97,15 @@ textarea ,
 #stream #viewerList li span ,
 #stream #chatOptions ,
 #tooltip ,
-#tooltip .title ,
+#tooltip .title
 {
-    color: #ddd !important;
+    color: #333 !important;
 }
 
 #profile .entry .header div small ,
 #darkPage #left a 
 {
-	color: #aaa !important;
+	color: #555 !important;
 }
 
 #stream #streamBar ,
@@ -116,12 +116,12 @@ textarea ,
 #darkPage h3 ,
 #darkPage h4  
 {
-	color: #eee !important;
+	color: #222 !important;
 }
 
 #profile .entry .content .text
 {
-	color: #ccc !important;
+	color: #444 !important;
 }
 
 #darkPage .userProfile div span ,
@@ -129,7 +129,7 @@ textarea ,
 span ,
 .error
 {
-	color: #fff !important;
+	color: #000 !important;
 }
 
 #darkPage .userProfile small ,
@@ -141,17 +141,17 @@ span ,
 
 #stream #streamInfo .right
 {
-	color: #faa !important;
+	color: #f00 !important;
 }
 
 #stream #infoList div.value
 {
-	color: #bbb !important;
+	color: #666 !important;
 }
 
 #stream #chatOptions input 
 {
-	color: #000 !important;
+	color: #888 !important;
 }
 
 .navbar ,
@@ -159,7 +159,7 @@ span ,
 #darkPage #left li .header ,
 #darkPage #left ,
 #expandArrow {
-	border-color: #777 !important;
+	border-color: #999 !important;
 }
 
 select ,
@@ -169,7 +169,7 @@ textarea ,
 #settings .tabBar li ,
 .normal ,
 .dropdown-menu li {
-	border-color: #666 !important;
+	border-color: #888 !important;
 }
 
 #previousStream .header ,
@@ -188,22 +188,22 @@ textarea ,
 #stream #infoList h2 ,
 #stream #chatOptions ,
 #stream #chat textarea {
-	border-color: #555 !important;
+	border-color: #777 !important;
 }
 
 #profile .entry ,
 #stream #chat {
-	border-color: #222 !important;
+	border-color: #666 !important;
 }
 
 #profile .entry .options .optionsMenu ,
 #darkPage #left li .content ,
 #darkPage .userProfile div {
-	border-color: #111 !important;
+	border-color: #555 !important;
 }
 
 #profile #profileHeader .userBar {
-	border-color: #444 !important;
+	border-color: #666 !important;
 }
 
 #profile #profileBottom .fade a {
