@@ -44,11 +44,35 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 						var n = line.indexOf(":");
 						var key = line.substring(0, n).trim();
 						var value = line.substring(n + 1).trim();
-						theme[key.substring(1)] = value;
+						theme[key] = value;
 					}
 					if (theme.identifier != null)
 					{
 						theme.text = text.substring(end + 2);
+						var t = text.substring(end + 2);
+						var i = t.indexOf("vars");
+						var variables = {};
+						if (i > -1)
+						{
+							var i2 = t.indexOf("{", i);
+							var i3 = t.indexOf("}", i2);
+							if (i2 > -1 && i3 > -1)
+							{
+								var vars = t.substring(i2 + 1, i3);
+								var lines = vars.split(/\n/);
+								for (var k = 0; k < lines.length; k++)
+								{
+									var partsx = lines[k].split(":");
+									if (partsx.length == 2)
+									{
+										variables[partsx[0].trim()] = partsx[1].trim().replace(";","");
+									}
+								}
+								theme.text = text.substring(i3 + 1);
+								theme.variables = variables;
+							}
+						}
+						
 						self.config.Design.installedThemes[theme.identifier] = theme;
 					}
 					loaded++;
@@ -83,6 +107,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 	var theme = this.config.Design.installedThemes[key];
 	if (theme != null)
 	{
+		this.config.Design.currentTheme = theme;
 		this[this.dID]("setConfigValue", "Design.selectedTheme", key);
 		if (this.config.Design.currentTheme != null)
 			this.config.Design.currentTheme.remove();
@@ -98,6 +123,24 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 		{
 			var textNode = document.createTextNode(text.substring(i, i + 4096));
 			style.append(textNode);
+		}
+		
+		if (this.config.Design.stylesheets != null && theme.variables != null)
+		{
+			for (var i = 0; i < this.config.Design.stylesheets.length; i++)
+			{
+				var t = this.config.Design.stylesheets[i].text;
+				for (var key in theme.variables)
+				{
+					t = t.replace("$"+key, theme.variables[key]);
+				}
+				this.config.Design.stylesheets[i].element.html("");
+				for (var i = 0; i < t.length; i+=4096)
+				{
+					var textNode = document.createTextNode(t.substring(i, i + 4096));
+					this.config.Design.stylesheets[i].element.append(textNode);
+				}
+			}
 		}
 		$('head').append(style);
 		this.config.Design.currentTheme = style;
@@ -156,6 +199,8 @@ window[window.dID][window.dID+"a"]("decreaseHeader", function(c, key) {
 
 window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 	var self = this;
+	if (this.config.Design.stylesheets == null)
+		this.config.Design.stylesheets = [];
 	$.ajax(file+"?v="+(Math.random()*100000), {
 		dataType: "text",
 		success: function(text, b, c)
@@ -165,12 +210,24 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				var r = new RegExp("#"+key+"\\s", "g");
 				text = text.replace(r, "#"+self.config.Design.ids[key]+" ");
 			}
+			
+			if (self.config.Design.currentTheme != null && self.config.Design.currentTheme.variables != null)
+			{
+				for (var key in self.config.Design.currentTheme)
+				{
+					text = text.replace("$"+key, self.config.Design.currentTheme.variables[key]);
+				}
+			}
 			var style = $('<style type="text/css"></style>');
 			for (var i = 0; i < text.length; i+=4096)
 			{
 				var textNode = document.createTextNode(text.substring(i, i + 4096));
 				style.append(textNode);
 			}
+			self.config.Design.stylesheets.push({
+				element: style,
+				text: text
+			});
 			$('head').append(style);
 		},
 		error: function(a, b, c)

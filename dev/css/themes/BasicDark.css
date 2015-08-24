@@ -1,211 +1,28 @@
-/* $identifier: basicDark
-   $title: Basic Dark
-   $description: Standard theme
-   $thumbnail: https://fluffyfishgames.github.io/img/basicDarkTheme.png */
+/* identifier: basicDark
+   title: Basic Dark
+   description: Standard theme
+   thumbnail: https://fluffyfishgames.github.io/img/basicDarkTheme.png */
 
-#darkPage #right ,
-#profile #profileBottom .fade a.active ,
-#profile #profileBottom .fade a:hover ,
-#profile #profileContent,
-body,
-html {
-	background-color: #000 !important;
-}
-
-#profile .entry .reply ,
-#profile #profileHeader .userBar ,
-#stream #chatOptions,
-#themeList li {
-	background-color: #222 !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#previousStream .header ,
-#profile .entry ,
-#profile .entry .comment input ,
-#settings .tabBar li ,
-.normal,
-#darkPage #left ,
-#darkPage .userProfile,
-#streamInfo ,
-#stream #streamBar ,
-#stream #chat a.tab,
-#stream #chat textarea,
-#previousStream .header div,
-#tooltip {
-	background-color: #333 !important;
-}
-
-#previousStream .header a:hover ,
-#previousStream .header span:hover ,
-#profile .entry .options .optionsMenu ,
-#profile .entry .options .optionsMenu li ,
-#themeList li.active ,
-#themeList li:hover {
-	background-color: #444 !important;
-}
-
-#profile .entry .options .optionsMenu li:hover ,
-#darkPage #left li .header ,
-#stream #chat a:hover.tab ,
-#stream #chat a.active ,
-#expandArrow ,
-.arrowExpand ,
-.arrowDeflate ,
-.dropdown-menu ,
-#settings .tabBar li.active ,
-#settings .tabBar li:hover  {
-	background-color: #555 !important;
-}
-
-.dropdown-menu li a:hover ,
-.navbar ,
-.highlight ,
-#tooltip .title {
-	background-color: #666 !important;
-}
-
-.dropdown-menu .active ,
-.searchResult-more ,
-.user {
-	background-color: #777 !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#previousStream .header a ,
-#previousStream .header span ,
-#previousStream .header div ,
-#profile .entry .options .optionsMenu li ,
-#profile .entry .header div strong ,
-#profile .entry .content .stream div strong ,
-#profile .entry .content .stream div small ,
-#profile .entry .like ,
-#profile #profileHeader .userBar .info ,
-#profile #profileBottom .fade a ,
-#settings .tabBar li ,
-#darkPage #left li .header ,
-#darkPage #left strong ,
-#streamInfo ,
-#stream #chat a.tab ,
-#stream #infoList div.label ,
-#stream #viewerList li span ,
-#stream #chatOptions ,
-#tooltip ,
-#tooltip .title
+vars
 {
-    color: #ddd !important;
-}
-
-#profile .entry .header div small ,
-#darkPage #left a 
-{
-	color: #aaa !important;
-}
-
-#stream #streamBar ,
-#stream #chat textarea ,
-.dropdown-menu li a ,
-.user ,
-#darkPage h2 ,
-#darkPage h3 ,
-#darkPage h4  
-{
-	color: #eee !important;
-}
-
-#profile .entry .content .text
-{
-	color: #ccc !important;
-}
-
-#darkPage .userProfile div span ,
-#darkPage .userProfile strong ,
-span ,
-.error
-{
-	color: #fff !important;
-}
-
-#darkPage .userProfile small ,
-#stream #viewerList li small ,
-#tooltip .value 
-{
-	color: #999 !important;
-}
-
-#stream #streamInfo .right
-{
-	color: #faa !important;
-}
-
-#stream #infoList div.value
-{
-	color: #bbb !important;
-}
-
-#stream #chatOptions input 
-{
-	color: #000 !important;
-}
-
-.navbar ,
-.highlight ,
-#darkPage #left li .header ,
-#darkPage #left ,
-#expandArrow {
-	border-color: #777 !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#settings .tabBar li ,
-.normal ,
-.dropdown-menu li {
-	border-color: #666 !important;
-}
-
-#previousStream .header ,
-#previousStream .header a ,
-#previousStream .header span ,
-#previousStream .header div ,
-#profile .entry .content .stream ,
-#profile .entry .like ,
-#profile .entry .comment ,
-#profile .entry .reply ,
-#darkPage .userProfile ,
-#streamInfo ,
-#stream .outer ,
-#stream #streamBar ,
-#stream #chat a.tab ,
-#stream #infoList h2 ,
-#stream #chatOptions ,
-#stream #chat textarea {
-	border-color: #555 !important;
-}
-
-#profile .entry ,
-#stream #chat {
-	border-color: #222 !important;
-}
-
-#profile .entry .options .optionsMenu ,
-#darkPage #left li .content ,
-#darkPage .userProfile div {
-	border-color: #111 !important;
-}
-
-#profile #profileHeader .userBar {
-	border-color: #444 !important;
-}
-
-#profile #profileBottom .fade a {
-	border-color: #000 !important;
+	background: #000;
+	backgroundColor0: #111;
+	backgroundColor1: #222;
+	backgroundColor2: #333;
+	backgroundColor3: #444;
+	backgroundColor4: #555;
+	backgroundColor5: #666;
+	primaryTextColor: #eee;
+	secondaryTextColor: #aaa;
+	errorTextColor: #faa;
+	borderColor0: #111;
+	borderColor1: #333;
+	borderColor2: #555;
+	borderColor3: #777;
+	submitButtonColor: #951;
+	submitButtonBorderColor: #fff;
+	confirmButtonColor: #219;
+	confirmButtonBorderColor: #fff;
+	buttonTextColor: #fff;
+	iconColor: #eee;
 }
