@@ -9,7 +9,7 @@ window[window.dID][window.dID+"a"]("readyMacroManager", function(callback) {
 	});
 	
 	this[this.dID]("addHeader", "macroManager", {
-		"label": self.language["MacroManager"].title,
+		"label": this.language["MacroManager"].title,
 		"settings": true
 	});
 	this[this.dID]("updateMacroManagerContent");
