@@ -137,7 +137,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 				}
 				for (var key in theme.variables)
 				{
-					var r = new RegExp("$"+key+"\\s", "g");
+					var r = new RegExp("\\$"+key+"\\s", "g");
 					t = t.replace(r, theme.variables[key]);
 				}
 				this.config.Design.stylesheets[i].element.html("");
