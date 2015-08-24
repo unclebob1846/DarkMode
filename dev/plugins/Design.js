@@ -130,14 +130,20 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 			for (var i = 0; i < this.config.Design.stylesheets.length; i++)
 			{
 				var t = this.config.Design.stylesheets[i].text;
+				for (var key in this.config.Design.ids)
+				{
+					var r = new RegExp("#"+key+"\\s", "g");
+					t = t.replace(r, "#"+this.config.Design.ids[key]+" ");
+				}
 				for (var key in theme.variables)
 				{
-					t = t.replace("$"+key, theme.variables[key]);
+					var r = new RegExp("$"+key+"\\s", "g");
+					t = t.replace(r, theme.variables[key]);
 				}
 				this.config.Design.stylesheets[i].element.html("");
-				for (var i = 0; i < t.length; i+=4096)
+				for (var j = 0; j < t.length; j+=4096)
 				{
-					var textNode = document.createTextNode(t.substring(i, i + 4096));
+					var textNode = document.createTextNode(t.substring(j, j + 4096));
 					this.config.Design.stylesheets[i].element.append(textNode);
 				}
 			}
