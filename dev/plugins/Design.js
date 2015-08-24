@@ -222,7 +222,7 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 				for (var key in self.config.Design.currentTheme)
 				{
 					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")+"\\s", "g");
-					text = text.replace(r, theme.variables[key]);
+					text = text.replace(r, self.config.Design.currentTheme.variables[key]);
 				}
 			}
 			var style = $('<style type="text/css"></style>');
