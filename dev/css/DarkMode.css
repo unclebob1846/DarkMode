@@ -1,6 +1,6 @@
 body,
 html {
-    background: $background !important;
+    background: $siteBackground !important;
     overflow: hidden !important;
     font-family: Segoe UI;
 }
