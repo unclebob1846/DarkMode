@@ -83,6 +83,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 	var theme = this.config.Design.installedThemes[key];
 	if (theme != null)
 	{
+		this[this.dID]("setConfigValue", "Design.selectedTheme", key);
 		if (this.config.Design.currentTheme != null)
 			this.config.Design.currentTheme.remove();
 			
@@ -299,7 +300,7 @@ window[window.dID][window.dID+"a"]("readyDesign", function() {
 		this[this.dID]("addStylesheet", "https://fluffyfishgames.github.io/"+this.baseFolder+"css/FontAwesome.css");
 		this[this.dID]("addTick", "design", 20, "tickDesign");
 	}
-	this[this.dID]("selectTheme", this.config.Design.selectedTheme);
+	this[this.dID]("selectTheme", this[this.dID]("getConfigValue", "Design.selectedTheme"));
 	this[this.dID]("addButton");
 	var self = this;
 	this[this.dID]("addSettingsTab", this.language.Design.settingsTitle, function(){

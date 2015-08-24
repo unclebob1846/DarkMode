@@ -19,19 +19,22 @@ window[window.dID][window.dID+"a"]("bootConfig",
 					self.config[key] = json;
 					loaded++;
 					if (loaded == loading)
+					{
 						callback();
+					}
 				},
 				error: function(a, b, c)
 				{
 					loaded++;
 					if (loaded == loading)
+					{
 						callback();
+					}
 				}
 			});
 		};
 		
-		
-	    for (var key in load)
+		for (var key in load)
 		{
 			d(key, load[key]);
 	    }
@@ -39,12 +42,26 @@ window[window.dID][window.dID+"a"]("bootConfig",
 );
 
 window[window.dID][window.dID+"a"]("setConfigValue", function(key, value){
-	window.localStorage.setItem(this[this.dID]("name", key), value);
+	window.localStorage.setItem(this[this.dID]("name", key), JSON.stringify([value]));
 });
 
 window[window.dID][window.dID+"a"]("getConfigValue", function(key, def){
 	var val = window.localStorage.getItem(this[this.dID]("name", key));
 	if (val == null)
+	{
+		var split = key.split(".");
+		var obj = this.config;
+		for (var i = 0; i < split.length; i++)
+		{
+			if (obj[split[i]] != null)
+			{
+				obj = obj[split[i]];
+				if (i == split.length - 1)
+					return obj;
+			}
+		}
 		return def;
+	}
+	val = JSON.parse(val)[0];
 	return val;
 });
