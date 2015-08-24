@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("readyMacroManager", function(callback) {
 		self.elements.settingsContent.html("Macros");
 	});
 	
-	this[self.dID]("addHeader", "macroManager", {
+	this[this.dID]("addHeader", "macroManager", {
 		"label": self.language["MacroManager"].title,
 		"settings": true
 	});
