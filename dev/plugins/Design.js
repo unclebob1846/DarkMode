@@ -137,7 +137,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 				}
 				for (var key in theme.variables)
 				{
-					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")+"\\s", "g");
+					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), "g");
 					t = t.replace(r, theme.variables[key]);
 				}
 				this.config.Design.stylesheets[i].element.html("");
@@ -219,9 +219,9 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 			
 			if (self.config.Design.currentTheme != null && self.config.Design.currentTheme.variables != null)
 			{
-				for (var key in self.config.Design.currentTheme)
+				for (var key in self.config.Design.currentTheme.variables)
 				{
-					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")+"\\s", "g");
+					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), "g");
 					text = text.replace(r, self.config.Design.currentTheme.variables[key]);
 				}
 			}
