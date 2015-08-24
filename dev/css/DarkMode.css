@@ -69,7 +69,7 @@ textarea {
     border-left: 1px solid $borderColor2;
 }
 #previousStream .header div {
-    color: #ddd;
+    color: $primaryTextColor;
     font-weight: normal;
     width: 450px;
     font-size: 11px;
@@ -430,7 +430,7 @@ textarea {
     margin-left: 10px;
     height: 40px;
     font-size: 15px;
-    color: #ddd;
+    color: $primaryTextColor;
     text-decoration: none;
     cursor: pointer;
     float: left;
@@ -448,7 +448,7 @@ textarea {
     background: #000;
 }
 #profile #profileContent {
-    background: #000;
+    background: $siteBackground;
     position: absolute;
     top: 60px;
     height: calc(100% - 60px);
@@ -542,7 +542,7 @@ textarea {
     float: left;
     width: calc(100% - 201px);
     height: 100%;
-    background: #000;
+    background: $siteBackground;
 }
 #darkPage #userList {
     padding: 20px;
@@ -697,7 +697,7 @@ textarea {
     width: 100%;
     height: 30px;
     background: $backgroundColor2;
-    color: #eee;
+    color: $primaryTextColor;
 	padding-left: 5px;
 	padding-right: 5px;
     border-top: 1px solid $borderColor2;
@@ -942,7 +942,7 @@ textarea {
 	float: right !important;
 	width: 10px !important;
 	height: 100% !important;
-	background: #555;
+	background: $backgroundColor3;
 	border-left: 1px solid $borderColor3;
 	cursor: pointer;
 }
