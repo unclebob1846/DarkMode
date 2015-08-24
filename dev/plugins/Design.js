@@ -137,7 +137,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 				}
 				for (var key in theme.variables)
 				{
-					var r = new RegExp("\\$"+key+"\\s", "g");
+					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")+"\\s", "g");
 					t = t.replace(r, theme.variables[key]);
 				}
 				this.config.Design.stylesheets[i].element.html("");
@@ -221,7 +221,8 @@ window[window.dID][window.dID+"a"]("addStylesheet", function(file) {
 			{
 				for (var key in self.config.Design.currentTheme)
 				{
-					text = text.replace("$"+key, self.config.Design.currentTheme.variables[key]);
+					var r = new RegExp(("$"+key).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")+"\\s", "g");
+					text = text.replace(r, theme.variables[key]);
 				}
 			}
 			var style = $('<style type="text/css"></style>');
