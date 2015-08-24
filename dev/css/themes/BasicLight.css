@@ -1,143 +1,30 @@
-/* $identifier: basicLight
-   $title: Basic Light
-   $description: Standard light theme
-   $thumbnail: https://fluffyfishgames.github.io/img/basicLightTheme.png */
+/* identifier: basicLight
+   title: Basic Light
+   description: Standard light theme
+   thumbnail: https://fluffyfishgames.github.io/img/basicDarkTheme.png */
 
-#darkPage #right ,
-#profile #profileBottom .fade a.active ,
-#profile #profileBottom .fade a:hover ,
-#profile #profileContent,
-body,
-html {
-	background-color: #fff !important;
-}
-
-#profile .entry .reply ,
-#profile #profileHeader .userBar ,
-#stream #chatOptions,
-#themeList li {
-	background-color: #ddd !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#previousStream .header ,
-#profile .entry ,
-#profile .entry .comment input ,
-#settings .tabBar li ,
-.normal,
-#darkPage #left ,
-#darkPage .userProfile,
-#streamInfo ,
-#stream #streamBar ,
-#stream #chat a.tab,
-#stream #chat textarea,
-#previousStream .header div,
-#tooltip {
-	background-color: #ddd !important;
-}
-
-#previousStream .header a:hover ,
-#previousStream .header span:hover ,
-#profile .entry .options .optionsMenu ,
-#profile .entry .options .optionsMenu li ,
-#themeList li.active ,
-#themeList li:hover {
-	background-color: #fff !important;
-}
-
-#profile .entry .options .optionsMenu li:hover ,
-#darkPage #left li .header ,
-#stream #chat a:hover.tab ,
-#stream #chat a.active ,
-#expandArrow ,
-.arrowExpand ,
-.arrowDeflate ,
-.dropdown-menu ,
-#settings .tabBar li.active ,
-#settings .tabBar li:hover  {
-	background-color: #fff !important;
-}
-
-.dropdown-menu li a:hover ,
-.navbar ,
-.highlight ,
-#tooltip .title {
-	background-color: #fff !important;
-}
-
-.dropdown-menu .active ,
-.searchResult-more ,
-.user {
-	background-color: #ddd !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#previousStream .header a ,
-#previousStream .header span ,
-#previousStream .header div ,
-#profile .entry .options .optionsMenu li ,
-#profile .entry .header div strong ,
-#profile .entry .content .stream div strong ,
-#profile .entry .content .stream div small ,
-#profile .entry .like ,
-#profile #profileHeader .userBar .info ,
-#profile #profileBottom .fade a ,
-#settings .tabBar li ,
-#darkPage #left li .header ,
-#darkPage #left strong ,
-#streamInfo ,
-#streamInfo a ,
-#stream #chat a.tab ,
-#stream #infoList div.label ,
-#stream #viewerList li span ,
-#stream #chatOptions ,
-#tooltip ,
-#tooltip .title
+vars
 {
-    color: #333 !important;
-}
-
-#profile .entry .header div small ,
-#darkPage #left a 
-{
-	color: #555 !important;
-}
-
-#stream #streamBar ,
-#stream #chat textarea ,
-.dropdown-menu li a ,
-.user ,
-#darkPage h2 ,
-#darkPage h3 ,
-#darkPage h4  
-{
-	color: #222 !important;
-}
-
-#profile .entry .content .text
-{
-	color: #444 !important;
-}
-
-#darkPage .userProfile div span ,
-#darkPage .userProfile strong ,
-span ,
-.error
-{
-	color: #000 !important;
-}
-
-#darkPage .userProfile small ,
-#stream #viewerList li small ,
-#tooltip .value 
-{
-	color: #999 !important;
+	siteBackground: #fff;
+	backgroundColor0: #fff;
+	backgroundColor1: #fff;
+	backgroundColor2: #eee;
+	backgroundColor3: #eee;
+	backgroundColor4: #ddd;
+	backgroundColor5: #ddd;
+	primaryTextColor: #222;
+	secondaryTextColor: #555;
+	errorTextColor: #f00;
+	borderColor0: #ccc;
+	borderColor1: #ccc;
+	borderColor2: #aaa;
+	borderColor3: #aaa;
+	submitButtonColor: #fd8;
+	submitButtonBorderColor: #444;
+	confirmButtonColor: #44f;
+	confirmButtonBorderColor: #444;
+	buttonTextColor: #333;
+	iconColor: #222;
 }
 
 #profile #profileBottom .fade a:hover i, #profile #profileBottom .fade a.active i, #profile #profileBottom .fade a:hover , #profile #profileBottom .fade a.active{
@@ -146,107 +33,4 @@ span ,
 
 #profile #profileBottom .fade a i, #profile #profileBottom .fade a i, #profile #profileBottom .fade a, #profile #profileBottom .fade a{
 	color: #fff !Important;
-}
-
-#stream #streamInfo .right
-{
-	color: #f00 !important;
-}
-
-#stream #infoList div.value
-{
-	color: #666 !important;
-}
-
-#stream #chatOptions input 
-{
-	color: #888 !important;
-}
-
-.navbar ,
-.highlight ,
-#darkPage #left li .header ,
-#darkPage #left ,
-#expandArrow {
-	border-color: #999 !important;
-}
-
-select ,
-input[type=text] ,
-input[type=number] ,
-textarea ,
-#settings .tabBar li ,
-.normal ,
-.dropdown-menu li {
-	border-color: #888 !important;
-}
-
-#previousStream .header ,
-#previousStream .header a ,
-#previousStream .header span ,
-#previousStream .header div ,
-#profile .entry .content .stream ,
-#profile .entry .like ,
-#profile .entry .comment ,
-#profile .entry .reply ,
-#darkPage .userProfile ,
-#streamInfo ,
-#stream .outer ,
-#stream #streamBar ,
-#stream #chat a.tab ,
-#stream #infoList h2 ,
-#stream #chatOptions ,
-#stream #chat textarea {
-	border-color: #777 !important;
-}
-
-#profile .entry ,
-#stream #chat {
-	border-color: #666 !important;
-}
-
-#profile .entry .options .optionsMenu ,
-#darkPage #left li .content ,
-#darkPage .userProfile div {
-	border-color: #555 !important;
-}
-
-#profile #profileHeader .userBar {
-	border-color: #666 !important;
-}
-
-#profile #profileBottom .fade a {
-	border-color: #000 !important;
-}
-
-.ynicon-user,
-.ynicon-settings,
-.ynicon-audience,
-.ynicon-logout {
-    color: #222 !important;
-}
-
-.icon {
-	color: #222 !important;
-}
-
-button .icon {
-	margin-right: 5px;
-}
-
-button {
-	-webkit-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
-	-moz-box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
-	box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.5);
-}
-
-.btn-primary {
-	background: #9ACD32 !important;
-	border: 1px solid #999900 !important;
-}
-
-.btn-confirm {
-	color: #fff;
-	background: #777777 !important;
-	border: 1px solid #444444 !important;	
 }
