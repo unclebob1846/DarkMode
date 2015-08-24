@@ -68,7 +68,7 @@ window[window.dID][window.dID+"a"]("bootDesign", function(callback) {
 										variables[partsx[0].trim()] = partsx[1].trim().replace(";","");
 									}
 								}
-								theme.text = text.substring(i3 + 1);
+								theme.text = t.substring(i3 + 1);
 								theme.variables = variables;
 							}
 						}
