@@ -42,7 +42,7 @@ window[window.dID][window.dID+"a"]("bootConfig",
 );
 
 window[window.dID][window.dID+"a"]("setConfigValue", function(key, value){
-	window.localStorage.setItem(this[this.dID]("name", key), JSON.stringify(value));
+	window.localStorage.setItem(this[this.dID]("name", key), JSON.stringify([value]));
 });
 
 window[window.dID][window.dID+"a"]("getConfigValue", function(key, def){
@@ -62,6 +62,6 @@ window[window.dID][window.dID+"a"]("getConfigValue", function(key, def){
 		}
 		return def;
 	}
-	val = JSON.parse(val);
+	val = JSON.parse(val)[0];
 	return val;
 });
