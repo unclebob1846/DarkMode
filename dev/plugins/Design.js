@@ -109,8 +109,8 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 	{
 		this.config.Design.currentTheme = theme;
 		this[this.dID]("setConfigValue", "Design.selectedTheme", key);
-		if (this.config.Design.currentTheme != null)
-			this.config.Design.currentTheme.remove();
+		if (this.config.Design.currentTheme.element != null)
+			this.config.Design.currentTheme.element.remove();
 			
 		var text = theme.text;
 		for (var key in this.config.Design.ids)
@@ -143,7 +143,7 @@ window[window.dID][window.dID+"a"]("selectTheme", function(key) {
 			}
 		}
 		$('head').append(style);
-		this.config.Design.currentTheme = style;
+		this.config.Design.currentTheme.element = style;
 	}
 });
 
