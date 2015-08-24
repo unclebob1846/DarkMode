@@ -8,7 +8,7 @@ window[window.dID][window.dID+"a"]("readyMacroManager", function(callback) {
 		self.elements.settingsContent.html("Macros");
 	});
 	
-	self[self.dID]("addHeader", "macroManager", {
+	this[self.dID]("addHeader", "macroManager", {
 		"label": self.language["MacroManager"].title,
 		"settings": true
 	});
@@ -16,7 +16,7 @@ window[window.dID][window.dID+"a"]("readyMacroManager", function(callback) {
 });
 
 window[window.dID][window.dID+"a"]("updateLevellerContent", function(callback) {
-	if (this.headers["macroManager"] != null && this.headers["leveller"].content != null)
+	if (this.headers["macroManager"] != null && this.headers["macroManager"].content != null)
 	{
 		var self = this;
 		if (!this.config.loggedIn)
