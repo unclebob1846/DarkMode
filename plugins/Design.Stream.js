@@ -320,7 +320,7 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 
 			this[this.dID]("updateElements");
 			
-			this.elements["trendingList"].bind('scroll', function(event, delta){
+			this.elements["trendingList"].scroll(function(event, delta){
 				console.log(delta);
 				console.log(event);
 				var w = this.elements["trendingList"][0].scrollWidth;
