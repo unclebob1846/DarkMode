@@ -320,6 +320,19 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 
 			this[this.dID]("updateElements");
 			
+			this.elements["trendingList"].scroll(function(event, delta){
+				console.log(delta);
+				console.log(event);
+				var w = this.elements["trendingList"][0].scrollWidth;
+				var x = this.elements["trendingList"].scrollLeft();
+				x += delta;
+				if (x < 0) x = 0;
+				var max = w - this.elements["trendingList"].width();
+				if (x > max)
+					x = max;
+				this.elements["trendingList"].scrollLeft(x);
+			});
+			
 			this.elements["likeImage"].click(function() {
 				if (self.config.Config.abusiveUsers.indexOf(self.config.Design.Stream.data.username.toLowerCase()) == -1)
 					self[self.dID]("like", self.config.Design.Stream.data.userId);
