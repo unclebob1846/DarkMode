@@ -672,6 +672,7 @@ textarea {
     clear: both;
     background: $backgroundColor2;
     border-bottom: 1px solid $borderColor2;
+    border-right: 1px solid $borderColor3;
 }
 #streamInfo i {
 	margin-right: 5px;
@@ -761,7 +762,7 @@ textarea {
 }
 
 #stream #chat a:hover.active {
-	background: $backgroundColor3 !important;
+	background: $backgroundColor2 !important;
 }
 
 #stream #infoList {
@@ -837,7 +838,7 @@ textarea {
     color: $secondaryTextColor;
 }
 #stream #chatMessages {
-    background: $backgroundColor3;
+    background: $backgroundColor2;
     padding: 5px;
     overflow-y: auto;
     overflow-x: hidden;
