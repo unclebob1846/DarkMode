@@ -740,8 +740,8 @@ textarea {
     font-weight: bold;
     float: left;
     border-bottom: 1px solid $borderColor2;
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
     width: 119px;
     border-right: 1px solid $borderColor3;
     background: $backgroundColor2;
