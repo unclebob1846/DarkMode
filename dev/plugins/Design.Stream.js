@@ -320,17 +320,15 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 
 			this[this.dID]("updateElements");
 			
-			this.elements["trendingList"].bind("DOMMouseWheel mousewheel", function(event, delta){
-				console.log(delta);
-				console.log(event);
-				var w = this.elements["trendingList"][0].scrollWidth;
-				var x = this.elements["trendingList"].scrollLeft();
-				x += delta;
+			this.elements["trendingList"].bind("DOMMouseWheel mousewheel", function(event){
+				var w = self.elements["trendingList"][0].scrollWidth;
+				var x = self.elements["trendingList"].scrollLeft();
+				x += event.originalEvent.deltaY;
 				if (x < 0) x = 0;
-				var max = w - this.elements["trendingList"].width();
+				var max = w - self.elements["trendingList"].width();
 				if (x > max)
 					x = max;
-				this.elements["trendingList"].scrollLeft(x);
+				self.elements["trendingList"].scrollLeft(x);
 			});
 			
 			this.elements["likeImage"].click(function() {
