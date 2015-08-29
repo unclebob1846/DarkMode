@@ -876,7 +876,7 @@ textarea {
 	float: left;
 	clear: both;
     padding: 0px;
-    overflow-x: auto;
+	overflow: hidden;
     white-space: nowrap;
 }
 #stream #trendingList img {
