@@ -679,7 +679,7 @@ textarea {
 
 #stream .outer {
     width: 100%;
-    height: calc(100% - 130px);
+    height: calc(100% - 110px);
     float: left;
     clear: both;
     border-bottom: 1px solid $borderColor2;
