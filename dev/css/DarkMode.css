@@ -672,7 +672,6 @@ textarea {
     clear: both;
     background: $backgroundColor2;
     border-bottom: 1px solid $borderColor2;
-    border-right: 1px solid $borderColor3;
 }
 #streamInfo i {
 	margin-right: 5px;
@@ -744,11 +743,10 @@ textarea {
     height: 30px;
     line-height: 30px;
     width: 119px;
-    border-right: 1px solid $borderColor3;
+    border-left: 1px solid $borderColor3;
     background: $backgroundColor0;
 }
 #stream #chat a.last {
-    border-right: none !important;
     width: 120px !important;
 }
 
@@ -772,7 +770,9 @@ textarea {
     overflow-y: auto;
     overflow-x: hidden;
     height: calc(100% - 25px);
+	border-left: 1px solid $borderColor3;
     clear: both;
+
 }
 #stream #infoList h2 {
     padding-left: 5px;
@@ -807,6 +807,7 @@ textarea {
     padding: 5px;
     overflow-y: auto;
     overflow-x: hidden;
+	border-left: 1px solid $borderColor3;
     height: calc(100% - 25px);
     clear: both;
 }
@@ -839,6 +840,7 @@ textarea {
 }
 #stream #chatMessages {
     background: $backgroundColor2;
+	border-left: 1px solid $borderColor3;
     padding: 5px;
     overflow-y: auto;
     overflow-x: hidden;
