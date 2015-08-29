@@ -240,9 +240,9 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 		{ 
 			this.elements["right"].html(
 				'<div id="'+this.config.Design.ids['stream']+'">'+
-					'<div id="'+this.config.Design.ids['streamInfo']+'"></div>'+
 					'<div class="outer">'+
 						'<div class="stream">'+
+							'<div id="'+this.config.Design.ids['streamInfo']+'"></div>'+
 							'<div id="'+this.config.Design.ids['streamView']+'">'+
 							'</div>'+
 							'<div id="'+this.config.Design.ids['streamBar']+'">' +
