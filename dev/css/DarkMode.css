@@ -679,7 +679,7 @@ textarea {
 
 #stream .outer {
     width: 100%;
-    height: calc(100% - 170px);
+    height: calc(100% - 100px);
     float: left;
     clear: both;
     border-bottom: 1px solid $borderColor2;
@@ -871,18 +871,18 @@ textarea {
     max-height: 50px;
 }
 #stream #trendingList {
-    height: 140px;
+    height: 100px;
     width: 100%;
 	float: left;
 	clear: both;
-    padding: 10px;
+    padding: 0px;
     overflow-x: auto;
     white-space: nowrap;
 }
 #stream #trendingList img {
     width: 133px;
     height: 100px;
-    margin-right: 5px;
+    margin-right: 0px;
     display: inline-block;
 }
 #tooltip {
