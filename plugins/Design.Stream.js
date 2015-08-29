@@ -321,6 +321,8 @@ window[window.dID][window.dID+"a"]("updateStreamInfo", function(deltaTime) {
 			this[this.dID]("updateElements");
 			
 			this.elements["trendingList"].bind('DOMMouseScroll mousewheel', function(event, delta){
+				console.log(delta);
+				console.log(event);
 				var w = this.elements["trendingList"][0].scrollWidth;
 				var x = this.elements["trendingList"].scrollLeft();
 				x += delta;
