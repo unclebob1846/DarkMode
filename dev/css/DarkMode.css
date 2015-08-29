@@ -744,7 +744,7 @@ textarea {
     line-height: 30px;
     width: 119px;
     border-right: 1px solid $borderColor3;
-    background: $backgroundColor2;
+    background: $backgroundColor0;
 }
 #stream #chat a.last {
     border-right: none !important;
@@ -752,14 +752,20 @@ textarea {
 }
 
 #stream #chat a:hover.tab {
-	background: $backgroundColor2;
+	background: $backgroundColor1;
 }
 
 #stream #chat a.active {
-    background: $backgroundColor3;
+    background: $backgroundColor2;
+	border-bottom: none;
 }
+
+#stream #chat a:hover.active {
+	background: $backgroundColor3 !important;
+}
+
 #stream #infoList {
-    background: $backgroundColor3;
+    background: $backgroundColor2;
     display: none;
     padding: 5px;
     overflow-y: auto;
@@ -795,7 +801,7 @@ textarea {
     text-align: right;
 }
 #stream #viewerList {
-    background: $backgroundColor3;
+    background: $backgroundColor2;
     display: none;
     padding: 5px;
     overflow-y: auto;
