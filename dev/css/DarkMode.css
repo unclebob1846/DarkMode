@@ -750,11 +750,16 @@ textarea {
     border-right: none !important;
     width: 120px !important;
 }
-#stream #chat a:hover.tab,
+
+#stream #chat a:hover.tab {
+	background: $backgroundColor2;
+}
+
 #stream #chat a.active {
-    background: $backgroundColor4;
+    background: $backgroundColor3;
 }
 #stream #infoList {
+    background: $backgroundColor3;
     display: none;
     padding: 5px;
     overflow-y: auto;
@@ -790,6 +795,7 @@ textarea {
     text-align: right;
 }
 #stream #viewerList {
+    background: $backgroundColor3;
     display: none;
     padding: 5px;
     overflow-y: auto;
@@ -825,6 +831,7 @@ textarea {
     color: $secondaryTextColor;
 }
 #stream #chatMessages {
+    background: $backgroundColor3;
     padding: 5px;
     overflow-y: auto;
     overflow-x: hidden;
