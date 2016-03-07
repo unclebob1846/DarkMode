@@ -69,7 +69,7 @@
 		}
 	},
 	"getTrending": {
-		"url": "https://cdn2.younow.com/php/api/younow/dashboard/locale=de/trending=%count"
+		"url": "https://cdn2.younow.com/php/api/younow/dashboard/locale=en/trending=%count"
 	},
 	"getViewers": {
 		"url": "$CDNBASE/php/api/broadcast/audience/channelId=%channelID/numOfRecords=%count/start=%start"
@@ -104,7 +104,7 @@
 		"data": "{\"params\":\"query=%query&hitsPerPage=%perPage&page=%page&attributesToHighlight=none&restrictSearchableAttributes=tag\"}"
 	},
 	"trendingUsers": {
-		"url": "$CDNBASE/php/api/younow/trendingUsers/numberOfRecords=%count/startFrom=%startFrom/locale=ww"
+		"url": "$CDNBASE/php/api/younow/trendingUsers/numberOfRecords=%count/startFrom=%startFrom/locale=en"
 	},
 	"getFriends": {
 		"url": "$BASE/php/api/channel/getLocationOnlineFansOf/numberOfRecords=50/channelId=$USERID"
